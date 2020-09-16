@@ -1,29 +1,19 @@
-# README #
+## Usage
 
-This README would normally document whatever steps are necessary to get your application up and running.
+``` bash
+# install dependencies.
+yarn
+```
 
-### What is this repository for? ###
+Available scripts:
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+``` bash
+# Run in development mode.
+yarn dev
 
-### How do I get set up? ###
+# Compile.
+yarn compile
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+# Build an installer for the current platform.
+yarn build
+```
