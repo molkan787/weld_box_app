@@ -51,6 +51,8 @@ export default class Main {
       }
     });
 
+    window.maximize();
+
     // Load target url.
     const target: string = isDevelopment
       ? `http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`
