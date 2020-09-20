@@ -20,10 +20,12 @@
     },
     "dependencies": {
         "d3": "^6.1.1",
+        "rbush": "^3.0.1",
         "source-map-support": "^0.5.19"
     },
     "devDependencies": {
         "@types/d3": "^5.7.2",
+        "@types/rbush": "^3.0.0",
         "css-loader": "^4.3.0",
         "electron": "10.1.2",
         "electron-builder": "^20.8.0",

@@ -1,3 +1,4 @@
+import './styles/diagram.less'
 import { select, zoom } from 'd3';
 import { D3Node, D3NodesMap } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
@@ -5,19 +6,17 @@ import { NodeDragging } from './interactivity/node-dragging';
 import { Node } from './components/node';
 import { Renderer } from './renderer/renderer';
 import { Edge } from './components/edge';
-import './styles/diagram.less'
+import { DiagramState } from './diagram-state';
 
 export class Diagram{
 
+  readonly state = new DiagramState();
   readonly chart: D3Node;
   private rootNode: D3Node;
 
-  // Hash table to store DOM elements used by D3
-  private readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
+  private readonly renderer = new Renderer(this.state);
 
-  private readonly renderer = new Renderer(this.d3NodesMap);
-
-  private readonly nodeDragging = new NodeDragging(this.d3NodesMap, this.renderer);
+  private readonly nodeDragging = new NodeDragging(this.state, this.renderer);
 
   constructor(parentSelector: string, options: DiagramOptions){
     const { width, height, chartClasses } = options;
@@ -45,6 +44,7 @@ export class Diagram{
 
   public addNode(node: Node){
     this.renderer.build(this.rootNode, node);
+    this.state.addNode(node);
     this.nodeDragging.apply(node);
   }
 

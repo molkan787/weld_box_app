@@ -1,13 +1,14 @@
 import { select } from "d3";
 import { Node } from "../components/node";
 import { ATTR, MAIN_ELEMENT, RESIZE_HANDLE } from "../constants";
+import { DiagramState } from "../diagram-state";
 import { Corner, GetRectangleCornerPosition } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
-import { D3Node, D3NodesMap } from "../types/aliases";
+import { D3Node } from "../types/aliases";
 
 export class NodeRenderer{
 
-  constructor(readonly d3NodesMap: D3NodesMap){}
+  constructor(readonly state: DiagramState){}
 
   build(container: D3Node, node: Node){
     const g = container.append('g');
@@ -23,7 +24,7 @@ export class NodeRenderer{
 
     this.addResizeHandles(g);
 
-    this.d3NodesMap.set(node.id, g);
+    this.state.setD3Node(node.id, g);
     this.update(node);
   }
 
@@ -49,7 +50,7 @@ export class NodeRenderer{
 
   /** Updates node's visual position & size in the canvas */
   update(node: Node){
-    const d3Node = this.d3NodesMap.get(node.id);
+    const d3Node = this.state.getD3Node(node.id);
     if(typeof d3Node === 'undefined') return;
 
     const { position: pos, size } = node;
