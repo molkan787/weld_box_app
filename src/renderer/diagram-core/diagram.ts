@@ -5,6 +5,7 @@ import { NodeDragging } from './interactivity/node-dragging';
 import { Node } from './components/node';
 import { Renderer } from './renderer/renderer';
 import { Edge } from './components/edge';
+import './styles/diagram.less'
 
 export class Diagram{
 
