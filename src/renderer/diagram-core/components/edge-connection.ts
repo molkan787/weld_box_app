@@ -4,8 +4,8 @@ import { Node } from "./node";
 
 export class EdgeConnection{
 
-  public edge?: Edge;
-  public node?: Node;
+  public edge: Edge | null = null;
+  public node: Node | null = null;
   public position?: Position;
   public offset?: Position;
 
@@ -38,6 +38,11 @@ export class EdgeConnection{
       const center = {
         x: x + width / 2,
         y: y + height / 2
+      }
+      if(this.node.parent){
+        const pp = this.node.parent.position;
+        center.x += pp.x;
+        center.y += pp.y;
       }
       return center;
     }

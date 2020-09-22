@@ -8,6 +8,7 @@ export class EdgeRenderer{
 
   build(container: D3Node, edge: Edge){
     const line = container.append('line')
+      .classed('edge', true)
       .attr("stroke-width", 2)
       .attr("stroke", "black")
     this.store.setD3Node(edge.id, line);

@@ -7,5 +7,9 @@ export const ATTR = Object.freeze({
 
 export const EVENTS = Object.freeze({
   NODE_BBOX_CHANGED: 'node-bbox-changed',
-  NODE_DROPPED: 'node-dropped'
+  NODE_DRAGGED: 'node-dragged',
+  NODE_DROPPED: 'node-dropped',
+  NODE_ADDED: 'node-added',
+  NODE_DECORATION_CHANGED: 'node-decoration-changed',
+  NODE_PARENT_CHANGED: 'node-parent-changed'
 });

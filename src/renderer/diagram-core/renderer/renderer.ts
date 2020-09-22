@@ -12,14 +12,30 @@ export class Renderer{
 
   readonly nodeRenderer: NodeRenderer;
   readonly edgeRenderer: EdgeRenderer;
+  private rootNode?: D3Node;
 
   constructor(readonly store: DiagramStore){
     this.nodeRenderer = new NodeRenderer(this.store);
     this.edgeRenderer = new EdgeRenderer(this.store);
 
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
+    store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
   }
 
+  /**
+   * Sets the root node (dom element) of the chart
+   * All first level nodes will added as childs of the root node
+   * @param node DOM Element
+   */
+  setRootNode(node: D3Node){
+    this.rootNode = node;
+  }
+
+  /**
+   * Build a DOM element repesenting the diagram component
+   * @param container DOM element to which add childs elements
+   * @param component Diagram component, either `Node` or `Edge` instance
+   */
   build(container: D3Node, component: Component){
     if(component.type === ComponentType.Node){
       this.nodeRenderer.build(container, <Node>component);
@@ -28,6 +44,10 @@ export class Renderer{
     }
   }
 
+  /**
+   * Updates visual representation of a component (Postion & Size on the canvas)
+   * @param component The component instance to be updated
+   */
   update(component: Component){
     if(component.type === ComponentType.Node){
       this.nodeRenderer.update(<Node>component);
@@ -36,6 +56,15 @@ export class Renderer{
     }
   }
 
+  onNodeAdded({ node }: DiagramEvent){
+    const domParent = node.parent && this.store.getD3Node(node.parent.id);
+    const container = <D3Node>(domParent || this.rootNode);
+    this.build(container, node);
+  }
+
+  /**
+   * Handles change of Node's bounding box, Usually triggered by `NodeDragging` module
+   */
   onNodeBBoxChanged(event: DiagramEvent){
     const { node } = event;
     this.nodeRenderer.update(node);
@@ -47,6 +76,7 @@ export class Renderer{
     for(let edge of edges){
       this.edgeRenderer.update(edge);
     }
+
   }
 
 }

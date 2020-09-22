@@ -2,11 +2,13 @@ import './styles/diagram.less'
 import { select, zoom } from 'd3';
 import { D3Node } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
-import { NodeDragging } from './interactivity/node-dragging';
+import { NodeDragging } from './modules/node-dragging';
 import { Node } from './components/node';
 import { Renderer } from './renderer/renderer';
 import { Edge } from './components/edge';
 import { DiagramStore } from './diagram-store';
+import { EVENTS } from './constants';
+import { TreeManager } from './modules/tree-manager';
 
 /**
  * `Diagram`
@@ -20,14 +22,20 @@ export class Diagram{
 
   private readonly renderer = new Renderer(this.store);
 
-  private readonly nodeDragging = new NodeDragging(this.store);
+  private readonly modules: any;
 
   constructor(parentSelector: string, options: DiagramOptions){
     const { width, height, chartClasses } = options;
 
+    this.modules = {
+      nodeDragging: new NodeDragging(this.store),
+      treeManager: new TreeManager(this.store),
+    }
+
     // Initializing d3 chart
     const chart = select(parentSelector)
       .append('svg')
+      .classed('diagram', true)
       .attr('width', width)
       .attr('height', height);
     if(chartClasses) chart.classed(chartClasses, true);
@@ -43,25 +51,22 @@ export class Diagram{
     )
 
     this.chart = chart;
+    this.renderer.setRootNode(this.rootNode);
   }
 
 
+  /**
+   * Add node to the Diagram, This method need to be called for each New Node in order to be part of the Diagram
+   * regardless if the node is child of another node
+   * @param node Node instance to add
+   */
   public addNode(node: Node){
-    this.renderer.build(this.rootNode, node);
     this.store.addNode(node);
-    this.nodeDragging.apply(node);
+    this.store.emit(EVENTS.NODE_ADDED, { node })
   }
 
   public addEdge(edge: Edge){
     this.renderer.build(this.rootNode, edge);
-  }
-
-  private onNodeDragged(event: any, node: Node){
-    let overlapingNodes = this.store.getNodesFromPoint({ x: event.x, y: event.y })
-    overlapingNodes = overlapingNodes.filter(n => n !== node)
-    if(overlapingNodes.length){
-      console.log(overlapingNodes)
-    }
   }
 
   private zoomed({transform}: any) {

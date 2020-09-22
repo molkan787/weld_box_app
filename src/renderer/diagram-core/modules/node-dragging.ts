@@ -3,6 +3,7 @@ import { Node } from '../components/node';
 import { ATTR, EVENTS, RESIZE_HANDLE } from '../constants';
 import { DiagramStore } from '../diagram-store';
 import { Corner, Side } from '../helpers/geometry';
+import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { D3Node } from '../types/aliases';
 
 /**
@@ -16,21 +17,21 @@ export class NodeDragging{
   // Indicate which corner the user used to resize the Node
   private resizeCorner: Corner = Corner.TopLeft;
 
-  constructor(
-    readonly store: DiagramStore
-  ){}
+  constructor(readonly store: DiagramStore){
+    store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(node))
+  }
 
   /**
    * Add interactivity capability to the specified Node
    * @param node Node to add interactivity to
    * @description interactivity capability: Dragging/Moving and Resizing
    */
-  apply(node: Node){
+  private apply(node: Node){
     const d3Node = this.store.getD3Node(node.id);
     if(typeof d3Node === 'undefined'){
       throw new Error(`Node #${node.id} was not found in D3NodesMap`);
     }
-    // TODO: refactor it, reuse the same functions
+    // TODO: refactor it, reuse the same functions instances
     const _drag = drag()
     .on('start', (event: any) => this.dragstarted(d3Node, event))
     .on('drag', (event: any) => this.dragged(d3Node, event, node))
@@ -40,7 +41,7 @@ export class NodeDragging{
   }
 
   /** Handler for on drag start event */
-  dragstarted(d3Node: D3Node, event: any) {
+  private dragstarted(d3Node: D3Node, event: any) {
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -54,7 +55,7 @@ export class NodeDragging{
   }
 
   /** handler for dragged event */
-  dragged(d3Node: D3Node, event: any, node: Node) {
+  private dragged(d3Node: D3Node, event: any, node: Node) {
     const { position: pos, size } = node;
 
     // If we resizing a node, adjust his size and position
@@ -80,11 +81,19 @@ export class NodeDragging{
       pos.y += event.dy;
     }
 
+    this.capNodeBBox(node);
+
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+    if(!this.resizing){
+      this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
+      for(let child of node.children){
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+      }
+    }
   }
 
   /** handler for drag end event */
-  dragended(d3Node: D3Node, event: any, node: Node) {
+  private dragended(d3Node: D3Node, event: any, node: Node) {
     d3Node.attr('cursor', 'default');
 
     // Updates Node's index in the Spatial Map
@@ -92,6 +101,20 @@ export class NodeDragging{
 
     this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
   }
+
+  private capNodeBBox(node: Node){
+    const { parent, position: p, size: s } = node;
+    if(parent){
+      const ps = parent.size;
+      if(p.x < 5) p.x = 5;
+      if(p.y < 5) p.y = 5;
+      if(s.width > ps.width - 10) s.width = Math.round(ps.width - 10);
+      if(s.height > ps.height - 10) s.height = Math.round(ps.height - 10);
+      if(p.x + s.width > ps.width - 10) p.x = Math.round(ps.width - s.width - 5);
+      if(p.y + s.height > ps.height - 10) p.y = Math.round(ps.height - s.height - 5);
+    }
+  }
+
 
   /** Returns the Corner of the Node at which the event started.
    * This method works and should be used only when the drag event was initiated by a resize handle `<circle/>`

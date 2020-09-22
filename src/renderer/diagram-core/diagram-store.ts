@@ -12,7 +12,7 @@ import { DiagramEvent } from "./interfaces/DiagramEvent";
 export class DiagramStore extends EventEmitter{
 
   /** A map to store Actual DOM/SVG elements by Node's id,
-   * where {Node} is a class holding diagram node properties */
+   * where `Node` is a class holding diagram node properties */
   private readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
 
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
@@ -67,6 +67,7 @@ export class DiagramStore extends EventEmitter{
    */
   public refreshNode(node: Node){
     this.removeNode(node);
+    if(node.parent) return;
     this.addNode(node);
   }
 
