@@ -1,41 +1,48 @@
 import { drag, select } from 'd3';
-import { Edge } from '../components/edge';
 import { Node } from '../components/node';
-import { ATTR, RESIZE_HANDLE } from '../constants';
-import { Corner, GetRectangleCornerPosition, Side } from '../helpers/geometry';
-import { Renderer } from '../renderer/renderer';
-import { D3Node, D3NodesMap } from '../types/aliases';
+import { ATTR, EVENTS, RESIZE_HANDLE } from '../constants';
+import { DiagramStore } from '../diagram-store';
+import { Corner, Side } from '../helpers/geometry';
+import { D3Node } from '../types/aliases';
 
+/**
+ * Module thats handles Node Dragging (Moving) and Resizing
+ */
 export class NodeDragging{
 
+  // Indicate if the current dragging is used to resize the Node
   private resizing: boolean = false;
+
+  // Indicate which corner the user used to resize the Node
   private resizeCorner: Corner = Corner.TopLeft;
 
   constructor(
-    readonly d3NodesMap: D3NodesMap,
-    readonly renderer: Renderer
+    readonly store: DiagramStore
   ){}
 
+  /**
+   * Add interactivity capability to the specified Node
+   * @param node Node to add interactivity to
+   * @description interactivity capability: Dragging/Moving and Resizing
+   */
   apply(node: Node){
-    const d3Node = this.d3NodesMap.get(node.id);
+    const d3Node = this.store.getD3Node(node.id);
     if(typeof d3Node === 'undefined'){
       throw new Error(`Node #${node.id} was not found in D3NodesMap`);
     }
-
+    // TODO: refactor it, reuse the same functions
     const _drag = drag()
-    // if the event comes from resize handle use Node's Size as start point otherwise the position
-    // .subject((event: any) => this.getDragStartOrigin(node, event))
     .on('start', (event: any) => this.dragstarted(d3Node, event))
-    .on('drag', (event: any, data: any) => this.dragged(d3Node, event, data))
-    .on('end', () => this.dragended(d3Node))
+    .on('drag', (event: any) => this.dragged(d3Node, event, node))
+    .on('end', (event: any) => this.dragended(d3Node, event, node))
 
     d3Node.call(<any>_drag);
   }
 
-  /** Handler for on drag start */
+  /** Handler for on drag start event */
   dragstarted(d3Node: D3Node, event: any) {
 
-    // if the event comes from resize handle activate resizing mode otherwise deactivate it
+    // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
 
     if(this.resizing){
@@ -46,7 +53,7 @@ export class NodeDragging{
     d3Node.raise().attr('cursor', this.resizing ? 'default' : 'move');
   }
 
-  /** handler for dragged */
+  /** handler for dragged event */
   dragged(d3Node: D3Node, event: any, node: Node) {
     const { position: pos, size } = node;
 
@@ -64,6 +71,8 @@ export class NodeDragging{
       }else{ // corner is on the bottom side
         size.height += event.dy;
       }
+
+      // Cap size to the minimum 1x1
       if(size.width < 1) size.width = 1;
       if(size.height < 1) size.height = 1;
     }else{
@@ -71,41 +80,21 @@ export class NodeDragging{
       pos.y += event.dy;
     }
 
-    this.renderer.update(node);
-    this.updateNodeRelations(node);
+    this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
   }
 
-  /** handler for drag end */
-  dragended(d3Node: D3Node) {
+  /** handler for drag end event */
+  dragended(d3Node: D3Node, event: any, node: Node) {
     d3Node.attr('cursor', 'default');
-  }
 
-  /** Update all elements that relay on the Node's position and/or size */
-  updateNodeRelations(node: Node){
-    // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
-    const edges = <Edge[]>(node.edges.map(ec => ec.edge).filter(e => !!e));
+    // Updates Node's index in the Spatial Map
+    this.store.refreshNode(node);
 
-    // Updating positions of all edges that are connected to the Node currently being moved
-    for(let edge of edges){
-      this.renderer.update(edge);
-    }
-  }
-
-  /** Gets starting position of the drag.
-   * Can be Node's position or one of its resize handle's position
-   * depending on the element that initiated the drag event
-   */
-  private getDragStartOrigin(node: Node, event: any){
-    if(this.isResizeHandleEvent(event)){
-      const corner = this.getResizeHandleCorner(event);
-      return GetRectangleCornerPosition(node.position, node.size, corner);
-    }else{
-      return node.position;
-    }
+    this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
   }
 
   /** Returns the Corner of the Node at which the event started.
-   * This method works and should be used only when the drag event was initiated by a resize handle <circle/>
+   * This method works and should be used only when the drag event was initiated by a resize handle `<circle/>`
    */
   private getResizeHandleCorner(event: any): Corner{
     const srcElement = this.getSrcElement(event);
@@ -114,7 +103,7 @@ export class NodeDragging{
     return parseInt(corner);
   }
 
-  /** Checks if the event was triggered by the resize handle <circle/> */
+  /** Checks if the event was triggered by the resize handle `<circle/>` */
   private isResizeHandleEvent(event: any){
     return this.getSrcElement(event)?.classList.contains(RESIZE_HANDLE);
   }

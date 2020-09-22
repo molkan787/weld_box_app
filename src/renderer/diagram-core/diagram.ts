@@ -1,22 +1,26 @@
 import './styles/diagram.less'
 import { select, zoom } from 'd3';
-import { D3Node, D3NodesMap } from './types/aliases';
+import { D3Node } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
 import { NodeDragging } from './interactivity/node-dragging';
 import { Node } from './components/node';
 import { Renderer } from './renderer/renderer';
 import { Edge } from './components/edge';
-import { DiagramState } from './diagram-state';
+import { DiagramStore } from './diagram-store';
 
+/**
+ * `Diagram`
+ * The main tasks it do is initiating modules and injecting them a `Store` instance for a shared state and events stream
+ */
 export class Diagram{
 
-  readonly state = new DiagramState();
+  readonly store = new DiagramStore();
   readonly chart: D3Node;
   private rootNode: D3Node;
 
-  private readonly renderer = new Renderer(this.state);
+  private readonly renderer = new Renderer(this.store);
 
-  private readonly nodeDragging = new NodeDragging(this.state, this.renderer);
+  private readonly nodeDragging = new NodeDragging(this.store);
 
   constructor(parentSelector: string, options: DiagramOptions){
     const { width, height, chartClasses } = options;
@@ -31,7 +35,7 @@ export class Diagram{
     this.rootNode = chart.append('g');
 
     chart.call(
-      // @ts-ignore : Neccessary because d3.zoom lib types does not extend d3 types
+      // @ts-ignore : (Probably) Neccessary because d3.zoom lib types does not extend d3 types
       zoom()
         .extent([[0, 0], [width, height]])
         .scaleExtent([0.1, 4])
@@ -44,7 +48,7 @@ export class Diagram{
 
   public addNode(node: Node){
     this.renderer.build(this.rootNode, node);
-    this.state.addNode(node);
+    this.store.addNode(node);
     this.nodeDragging.apply(node);
   }
 
@@ -52,6 +56,13 @@ export class Diagram{
     this.renderer.build(this.rootNode, edge);
   }
 
+  private onNodeDragged(event: any, node: Node){
+    let overlapingNodes = this.store.getNodesFromPoint({ x: event.x, y: event.y })
+    overlapingNodes = overlapingNodes.filter(n => n !== node)
+    if(overlapingNodes.length){
+      console.log(overlapingNodes)
+    }
+  }
 
   private zoomed({transform}: any) {
     this.rootNode.attr("transform", transform);

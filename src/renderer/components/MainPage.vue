@@ -15,15 +15,16 @@ export default Vue.extend({
       height: window.innerHeight
     });
 
-    const node1 = new Node({ x: 50, y: 50 }, { width: 100, height: 40, radius: 0 });
-    const node2 = new Node({ x: 250, y: 50 }, { width: 100, height: 40, radius: 0 });
-    const node3 = new Node({ x: 400, y: 250 }, { width: 100, height: 40, radius: 0 });
+    const node1 = new Node({ x: 50, y: 50 }, { width: 120, height: 80, radius: 0 });
+    const node2 = new Node({ x: 250, y: 50 }, { width: 120, height: 80, radius: 0 });
+    const node3 = new Node({ x: 400, y: 250 }, { width: 120, height: 80, radius: 0 });
 
     const edge1 = new Edge(node1.createEdgeConnection(), node2.createEdgeConnection());
     const edge2 = new Edge(node1.createEdgeConnection(), node3.createEdgeConnection());
 
     diagram.addEdge(edge1);
     diagram.addEdge(edge2);
+
     diagram.addNode(node1);
     diagram.addNode(node2);
     diagram.addNode(node3);

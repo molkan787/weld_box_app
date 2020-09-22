@@ -1,6 +1,6 @@
 {
-    "appId": "org.patrickberger.electron-webpack-ts-vue-boilerplate",
-    "productName": "Electron Webpack / Typescript / Vue.js Boilerplate",
+    "appId": "pl.dahmane.boxtree",
+    "productName": "BoxTree",
     "directories": {
         "output": "installer"
     },

@@ -1,12 +1,15 @@
 import { D3Node, D3NodesMap } from "./types/aliases";
 import RBush from 'rbush';
+import EventEmitter from 'eventemitter3';
 import { Node } from "./components/node";
 import { Position } from "./interfaces/Position";
+import { EVENTS } from "./constants";
+import { DiagramEvent } from "./interfaces/DiagramEvent";
 
 /**
- * State object thats holds Maps of Nodes and D3Nodes
+ * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
  */
-export class DiagramState{
+export class DiagramStore extends EventEmitter{
 
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where {Node} is a class holding diagram node properties */
@@ -15,6 +18,12 @@ export class DiagramState{
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
   private readonly nodesSpatialMap: MyRBush = new MyRBush();
 
+
+  constructor(){
+    super();
+    // Updates Node's spatial index each time was dropped
+    this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(node))
+  }
 
   /**
    * Gets D3Node from hash table by Id
@@ -53,20 +62,47 @@ export class DiagramState{
   }
 
   /**
+   * Refresh Node's index in the Spatial Map/Index
+   * @param node The `Node` instance to be refreshed
+   */
+  public refreshNode(node: Node){
+    this.removeNode(node);
+    this.addNode(node);
+  }
+
+  /**
    * Searches for and return nodes that are the specified 2D Point
    * @param point 2D Point thats specify where to search for nodes
    */
   public getNodesFromPoint(point: Position): Node[]{
     // Converts Point to Bounding Box
+    const bbox = this.pointToBBox(point);
+
+    // Run the actual search on the Spatial Map/Index
+    return this.nodesSpatialMap.search(bbox);
+  }
+
+  /** Converts Point to `RBush`s Bounding Box */
+  private pointToBBox(point: Position){
     const { x, y } = point;
-    const bbox = {
+    return {
       minX: x - 1,
       minY: y - 1,
       maxX: x + 1,
       maxY: y + 1
     }
-    // Run the actual search on the Spatial Map/Index
-    return this.nodesSpatialMap.search(bbox);
+  }
+
+  /**
+   * Emits an event
+   * @param type Event's type name
+   * @param event Event's data
+   */
+  // this method is overwriten to force the use of `DiagramEvent` interface as event data object
+  // @ts-ignore
+  emit(type: string, event: DiagramEvent){
+    event.type = type;
+    super.emit(type, event);
   }
 
 }

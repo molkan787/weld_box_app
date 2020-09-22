@@ -1,21 +1,21 @@
 import { Edge } from "../components/edge";
-import { DiagramState } from "../diagram-state";
+import { DiagramStore } from "../diagram-store";
 import { D3Node } from "../types/aliases";
 
 export class EdgeRenderer{
 
-  constructor(readonly state: DiagramState){}
+  constructor(readonly store: DiagramStore){}
 
   build(container: D3Node, edge: Edge){
     const line = container.append('line')
       .attr("stroke-width", 2)
       .attr("stroke", "black")
-    this.state.setD3Node(edge.id, line);
+    this.store.setD3Node(edge.id, line);
     this.update(edge);
   }
 
   update(edge: Edge){
-    const d3Node = this.state.getD3Node(edge.id);
+    const d3Node = this.store.getD3Node(edge.id);
     if(typeof d3Node === 'undefined') return;
 
     const { source, target } = edge;

@@ -1,17 +1,6 @@
 {
-    "name": "electron-webpack-ts-vue-boilerplate",
-    "version": "0.5.0",
-    "license": "MIT",
-    "author": {
-        "name": "Patrick Berger",
-        "email": "pb@patrickberger.org",
-        "url": "https://github.com/patrickberger"
-    },
-    "homepage": "https://github.com/patrickberger/electron-webpack-ts-vue-boilerplate",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/patrickberger/electron-webpack-ts-vue-boilerplate.git"
-    },
+    "name": "boxtree",
+    "version": "0.0.1",
     "scripts": {
         "clean": "rimraf dist installer",
         "compile": "electron-webpack",
@@ -20,6 +9,7 @@
     },
     "dependencies": {
         "d3": "^6.1.1",
+        "eventemitter3": "^4.0.7",
         "rbush": "^3.0.1",
         "source-map-support": "^0.5.19"
     },
