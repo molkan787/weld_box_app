@@ -18,11 +18,13 @@ export class DiagramStore extends EventEmitter{
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
   private readonly nodesSpatialMap: MyRBush = new MyRBush();
 
+  public nodeDraggingTool: boolean = false;
+
 
   constructor(){
     super();
     // Updates Node's spatial index each time was dropped
-    this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(node))
+    this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(<Node>node))
   }
 
   /**
@@ -30,7 +32,11 @@ export class DiagramStore extends EventEmitter{
    * @param id Id of the Node
    */
   public getD3Node(id: number){
-    return this.d3NodesMap.get(id)
+    const n = this.d3NodesMap.get(id);
+    if(typeof n === 'undefined'){
+      throw new Error(`Node #${id} was not found in D3NodesMap`);
+    }
+    return <D3Node>n;
   }
 
   /**
@@ -44,7 +50,7 @@ export class DiagramStore extends EventEmitter{
 
   /**
    * Add a Node to the Spatial Map.
-   * Only first level nodes (not child nodes) should be add to this Spatial Map
+   * Only first level nodes (not child nodes) should be added to this Spatial Map
    * @param node A Node to be stored
    */
   public addNode(node: Node): void{

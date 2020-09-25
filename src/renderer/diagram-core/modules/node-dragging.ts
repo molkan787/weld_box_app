@@ -18,7 +18,7 @@ export class NodeDragging{
   private resizeCorner: Corner = Corner.TopLeft;
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(node))
+    store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
   }
 
   /**
@@ -32,8 +32,9 @@ export class NodeDragging{
       throw new Error(`Node #${node.id} was not found in D3NodesMap`);
     }
     // TODO: refactor it, reuse the same functions instances
+    // and move events handlers attachement in one global place
     const _drag = drag()
-    .on('start', (event: any) => this.dragstarted(d3Node, event))
+    .on('start', (event: any) => this.dragstarted(d3Node, event, node))
     .on('drag', (event: any) => this.dragged(d3Node, event, node))
     .on('end', (event: any) => this.dragended(d3Node, event, node))
 
@@ -41,7 +42,13 @@ export class NodeDragging{
   }
 
   /** Handler for on drag start event */
-  private dragstarted(d3Node: D3Node, event: any) {
+  private dragstarted(d3Node: D3Node, event: any, node: Node) {
+
+    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
+    if(!this.store.nodeDraggingTool){
+      this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: event});
+      return;
+    }
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -56,6 +63,13 @@ export class NodeDragging{
 
   /** handler for dragged event */
   private dragged(d3Node: D3Node, event: any, node: Node) {
+
+    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
+    if(!this.store.nodeDraggingTool){
+      this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event});
+      return;
+    }
+
     const { position: pos, size } = node;
 
     // If we resizing a node, adjust his size and position
@@ -86,14 +100,21 @@ export class NodeDragging{
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
     if(!this.resizing){
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
-      for(let child of node.children){
-        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
-      }
+    }
+    for(let child of node.children){
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
     }
   }
 
   /** handler for drag end event */
   private dragended(d3Node: D3Node, event: any, node: Node) {
+
+    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
+    if(!this.store.nodeDraggingTool){
+      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event});
+      return;
+    }
+
     d3Node.attr('cursor', 'default');
 
     // Updates Node's index in the Spatial Map

@@ -20,6 +20,8 @@ export class Renderer{
 
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
+
+    store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e))
   }
 
   /**
@@ -56,7 +58,8 @@ export class Renderer{
     }
   }
 
-  onNodeAdded({ node }: DiagramEvent){
+  onNodeAdded(event: DiagramEvent){
+    const node = <Node>event.node;
     const domParent = node.parent && this.store.getD3Node(node.parent.id);
     const container = <D3Node>(domParent || this.rootNode);
     this.build(container, node);
@@ -66,7 +69,7 @@ export class Renderer{
    * Handles change of Node's bounding box, Usually triggered by `NodeDragging` module
    */
   onNodeBBoxChanged(event: DiagramEvent){
-    const { node } = event;
+    const node = <Node>event.node;
     this.nodeRenderer.update(node);
 
     // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
@@ -77,6 +80,11 @@ export class Renderer{
       this.edgeRenderer.update(edge);
     }
 
+  }
+
+  onEdgeConnectionsChanged(event: DiagramEvent){
+    const edge = <Edge>event.edge;
+    this.edgeRenderer.update(edge);
   }
 
 }

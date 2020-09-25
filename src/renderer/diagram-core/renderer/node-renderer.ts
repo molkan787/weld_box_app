@@ -1,17 +1,18 @@
 import { select } from "d3";
 import { Node } from "../components/node";
-import { ATTR, EVENTS, MAIN_ELEMENT, RESIZE_HANDLE } from "../constants";
+import { ATTR, EVENTS, HIGHLIGHT_LINE, MAIN_ELEMENT, RESIZE_HANDLE } from "../constants";
 import { DiagramStore } from "../diagram-store";
-import { Corner, GetRectangleCornerPosition } from "../helpers/geometry";
+import { Corner, GetRectangleCornerPosition, Side } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
+import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
 
 export class NodeRenderer{
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(node))
-    store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(node))
+    store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
+    store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
   }
 
   build(container: D3Node, node: Node){
@@ -74,7 +75,28 @@ export class NodeRenderer{
 
   updateDecoration(node: Node){
     const d3Node = this.getD3Node(node);
+
+    // Apply outline, usually used when the node is the drop target for a child node
     d3Node.classed('highlighted', node.highlighted);
+
+    // highlight one of node's side, usually used to show attach point when drawing an edge
+    let line: D3Node = d3Node.select('.' + HIGHLIGHT_LINE);
+    if(node.highlightedWall){
+      if(!line.node()) line = d3Node.append('line').classed(HIGHLIGHT_LINE, true);
+      const { x1, y1, x2, y2 } = this.getRectWallLineCoords(node.size, node.highlightedWall);
+      line
+        .attr('x1', x1)
+        .attr('y1', y1)
+        .attr('x2', x2)
+        .attr('y2', y2)
+        .attr('stroke-width', 12)
+        .attr('stroke', '#1ED76080')
+        .attr('stroke-linecap', 'round')
+        .attr('cursor', 'grab')
+        .attr(ATTR.WALL_SIDE, node.highlightedWall);
+    }else{
+      line.remove();
+    }
   }
 
   /** Updates node's visual position & size in the canvas */
@@ -105,12 +127,17 @@ export class NodeRenderer{
 
   }
 
+  private getRectWallLineCoords(size: Size, wall: Side){
+    const { width, height } = size;
+    if(wall === Side.Top) return { x1: 0, y1: 0, x2: width, y2: 0 };
+    else if(wall === Side.Bottom) return { x1: 0, y1: height, x2: width, y2: height };
+    else if(wall === Side.Left) return { x1: 0, y1: 0, x2: 0, y2: height };
+    else return { x1: width, y1: 0, x2: width, y2: height }; // wall === Side.Right
+  }
+
   private getD3Node(node: Node | number): D3Node{
     const id = node instanceof Node ? node.id : node;
     const d3Node = this.store.getD3Node(id);
-    if(typeof d3Node === 'undefined'){
-      throw new Error(`Node #${id} was not found in D3NodesMap`);
-    }
     return d3Node;
   }
 

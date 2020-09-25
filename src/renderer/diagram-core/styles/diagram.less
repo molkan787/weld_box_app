@@ -1,13 +1,12 @@
 .diagram{
 
-  .highlighted > .node{
-    outline-color: #1ED760;
-    outline-width: 3px;
-    outline-style: solid;
-  }
-
   .node{
     transition: opacity 0.3s;
+    &.highlighted > rect{
+      outline-color: #1ED760;
+      outline-width: 3px;
+      outline-style: solid;
+    }
   }
 
 }

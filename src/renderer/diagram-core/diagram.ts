@@ -9,6 +9,8 @@ import { Edge } from './components/edge';
 import { DiagramStore } from './diagram-store';
 import { EVENTS } from './constants';
 import { TreeManager } from './modules/tree-manager';
+import { EdgeDrawer } from './modules/edge-drawer';
+import { DiagramEvent } from './interfaces/DiagramEvent';
 
 /**
  * `Diagram`
@@ -30,7 +32,10 @@ export class Diagram{
     this.modules = {
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
+      edgeDrawer: new EdgeDrawer(this.store)
     }
+
+    this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
 
     // Initializing d3 chart
     const chart = select(parentSelector)

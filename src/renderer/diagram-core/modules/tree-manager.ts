@@ -17,11 +17,12 @@ export class TreeManager{
     this.setDropTarget(null);
     if(target){
       target.highlighted = false;
-      this.changeNodeParent(event.node, target);
+      this.changeNodeParent(<Node>event.node, target);
     }
   }
 
   private onNodeDragged(event: DiagramEvent){
+    if(!this.store.nodeDraggingTool) return;
     const { node, sourceEvent } = event;
     if(node.parent) return;
     const { x, y } = sourceEvent;

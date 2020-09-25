@@ -1,8 +1,13 @@
+import { Side } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
 import { Component, ComponentType } from "./component";
 import { AttachType, EdgeConnection } from "./edge-connection";
 
+/**
+ * `Node` class holds all properties of diagram's node
+ * This class should be extended for use of business logic properties/attributes
+ */
 export class Node extends Component{
 
   private _parent: Node | null = null;
@@ -10,6 +15,7 @@ export class Node extends Component{
   readonly edges: EdgeConnection[] = [];
 
   public highlighted: boolean = false;
+  public highlightedWall: Side | null = null;
 
   constructor(
     public position: Position,
@@ -38,8 +44,10 @@ export class Node extends Component{
     child._parent = null;
   }
 
-  createEdgeConnection(){
-    const connection = new EdgeConnection(AttachType.Node);
+  createEdgeConnection(wall?: Side){
+    const connection = typeof wall === 'undefined'
+                        ? new EdgeConnection(AttachType.Node)
+                        : new EdgeConnection(AttachType.NodeWall, wall);
     connection.node = this;
     this.edges.push(connection);
     return connection;

@@ -19,6 +19,42 @@ export function GetRectangleCornerPosition(position: Position, size: Size, corne
   }
 }
 
+/**
+ * Check if a point is on top of or close to rectangle's wall.
+ * @param bbox
+ * @param point
+ * @param maxDistance
+ */
+export function TouchesWall(bbox: DOMRect, point: Position, maxDistance: number = 10): Side | null{
+  const ds = getPointToBBoxDistances(bbox, point);
+
+  if(Math.abs(ds.top) <= maxDistance) return Side.Top;
+  else if(Math.abs(ds.right) <= maxDistance) return Side.Right;
+  else if(Math.abs(ds.bottom) <= maxDistance) return Side.Bottom;
+  else if(Math.abs(ds.left) <= maxDistance) return Side.Left;
+
+  return null;
+}
+
+function getPointToBBoxDistances(bbox: DOMRect, point: Position){
+  const { x, y } = point;
+  const { top, bottom, right, left } = bbox;
+  return {
+    top: y - top,
+    bottom: y - bottom,
+    left: x - left,
+    right: x - right
+  }
+}
+
+export function GetRectWallCenterPoint(size: Size, wall: Side){
+  const scaleMatrix = _GetRectWallCenterPoint_ScaleMatrices[wall];
+  return {
+    x: size.width * scaleMatrix.x,
+    y: size.height * scaleMatrix.y
+  }
+}
+
 export enum Side{
   Top = 0b0001,
   Left = 0b0010,
@@ -31,4 +67,11 @@ export enum Corner{
   TopRight = Side.Top | Side.Right,
   BottomRight = Side.Bottom | Side.Right,
   BottomLeft = Side.Bottom | Side.Left
+}
+
+const _GetRectWallCenterPoint_ScaleMatrices = {
+  [Side.Top]: {x: 0.5, y: 0},
+  [Side.Left]: {x: 0, y: 0.5},
+  [Side.Bottom]: {x: 0.5, y: 1},
+  [Side.Right]: {x: 1, y: 0.5},
 }
