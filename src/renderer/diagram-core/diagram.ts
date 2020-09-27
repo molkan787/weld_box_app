@@ -1,5 +1,5 @@
 import './styles/diagram.less'
-import { select, zoom } from 'd3';
+import { select, zoom, ZoomTransform } from 'd3';
 import { D3Node } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
 import { NodeDragging } from './modules/node-dragging';
@@ -11,6 +11,7 @@ import { EVENTS } from './constants';
 import { TreeManager } from './modules/tree-manager';
 import { EdgeDrawer } from './modules/edge-drawer';
 import { DiagramEvent } from './interfaces/DiagramEvent';
+import { Position } from './interfaces/Position';
 
 /**
  * `Diagram`
@@ -21,6 +22,8 @@ export class Diagram{
   readonly store = new DiagramStore();
   readonly chart: D3Node;
   private rootNode: D3Node;
+
+  private rootTransform?: ZoomTransform;
 
   private readonly renderer = new Renderer(this.store);
 
@@ -74,8 +77,29 @@ export class Diagram{
     this.renderer.build(this.rootNode, edge);
   }
 
-  private zoomed({transform}: any) {
+  public activateEdgeDrawer(){
+    // Temporary solution
+    this.store.nodeDraggingTool = false;
+  }
+
+  public deactivateEdgeDrawer(){
+    // Temporary solution
+    this.store.nodeDraggingTool = true;
+  }
+
+  public createNodeAt(point: Position){
+    const width = 120, height = 60;
+    let { x, y } = point;
+    if(this.rootTransform) [x, y] = this.rootTransform.invert([x, y]);
+    x -= width / 2;
+    y -= height / 2;
+    const node = new Node({ x, y }, { width, height, radius: 0 });
+    this.addNode(node);
+  }
+
+  private zoomed({ transform }: any) {
     this.rootNode.attr("transform", transform);
+    this.rootTransform = transform;
   }
 
 }

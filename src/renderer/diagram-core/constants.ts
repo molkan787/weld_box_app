@@ -17,5 +17,8 @@ export const EVENTS = Object.freeze({
   NODE_PARENT_CHANGED: 'node-parent-changed',
 
   EDGE_CREATED: 'edge-created',
-  EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed'
+  EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed',
+
+  DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
+  DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
 });

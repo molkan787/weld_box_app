@@ -18,7 +18,7 @@ export class DiagramStore extends EventEmitter{
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
   private readonly nodesSpatialMap: MyRBush = new MyRBush();
 
-  public nodeDraggingTool: boolean = false;
+  public nodeDraggingTool: boolean = true;
 
 
   constructor(){

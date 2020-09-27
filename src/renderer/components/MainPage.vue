@@ -1,40 +1,76 @@
 <template>
   <div class="main-page">
+    <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
+    <div ref="canvas" id="canvas"></div>
   </div>
 </template>
 
 <script lang="ts">
+import SideBar from './SideBar.vue';
 import Vue from 'vue'
-import { Diagram } from '../diagram-core'
-import { Edge } from '../diagram-core/components/edge';
-import { Node } from '../diagram-core/components/node';
+import { MyDiagram } from '../my-diagram/my-diagram';
+import { EVENTS } from '../diagram-core/constants';
+interface MyData {
+  diagram: MyDiagram | null
+}
 export default Vue.extend({
+  components: {
+    SideBar
+  },
+  data: (): MyData => ({
+    diagram: null,
+  }),
+  methods: {
+    activateTool(name: string){
+      if(name == 'transition'){
+        this.diagram?.activateEdgeDrawer()
+      }
+    },
+    deactivateTool(name: string){
+      if(name == 'transition'){
+        this.diagram?.deactivateEdgeDrawer()
+      }
+    },
+    itemDropped(e: any, itemName: string){
+      if(itemName == 'state'){
+        this.diagram?.createNodeAt({
+          x: e.clientX - 40,
+          y: e.clientY
+        })
+      }
+    }
+  },
   mounted(){
-    const diagram = new Diagram('.main-page', {
-      width: window.innerWidth,
-      height: window.innerHeight
+    this.diagram = new MyDiagram('#canvas');
+    this.diagram.buildTestDiagram();
+
+
+
+    // Temporary
+    this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {
+      // @ts-ignore
+      this.$refs.sideBar.deactivateTool('transition');
     });
 
-    const node1 = new Node({ x: 50, y: 50 }, { width: 200, height: 160, radius: 0 });
-    const node2 = new Node({ x: 350, y: 50 }, { width: 160, height: 120, radius: 0 });
-    const node3 = new Node({ x: 400, y: 250 }, { width: 160, height: 120, radius: 0 });
-    const node4 = new Node({ x: 700, y: 50 }, { width: 100, height: 60, radius: 0 });
-    const node5 = new Node({ x: 700, y: 250 }, { width: 100, height: 60, radius: 0 });
-    const node6 = new Node({ x: 700, y: 450 }, { width: 100, height: 60, radius: 0 });
+    const canvas = <HTMLElement>this.$refs.canvas;
 
-
-    const edge1 = new Edge(node1.createEdgeConnection(), node2.createEdgeConnection());
-    const edge2 = new Edge(node1.createEdgeConnection(), node3.createEdgeConnection());
-
-    diagram.addEdge(edge1);
-    diagram.addEdge(edge2);
-
-    diagram.addNode(node1);
-    diagram.addNode(node2);
-    diagram.addNode(node3);
-    diagram.addNode(node4);
-    diagram.addNode(node5);
-    diagram.addNode(node6);
+    canvas.addEventListener('dragover', e => e.preventDefault());
+    canvas.addEventListener('drop', (e: any) => {
+      e.stopPropagation();
+      const item = e.dataTransfer.getData('item');
+      if(typeof item == 'string' && item.length){
+        this.itemDropped(e, item);
+      }
+    })
   }
 })
 </script>
+
+<style lang="less" scoped>
+.main-page{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+</style>

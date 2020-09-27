@@ -96,7 +96,10 @@ export class EdgeDrawer{
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }
     this.currentEdge = null;
+
+    // TODO: move logic below to the store itself ( store.activateNodeDragging(); )
     this.store.nodeDraggingTool = true;
+    this.store.emit(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, {});
   }
 //#endregion
 

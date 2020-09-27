@@ -1,6 +1,7 @@
-import { App, BrowserWindow } from 'electron';
+import { App, BrowserWindow, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { TopBarMenu } from './topbar-menu';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -35,6 +36,9 @@ export default class Main {
   /** The main window, */
   private static window: BrowserWindow | null;
 
+  /** Top bar menu Controller */
+  private static topbarMenu: TopBarMenu | null;
+
   /**
    * Factory method for the main window.
    *
@@ -50,7 +54,8 @@ export default class Main {
         nodeIntegration: true
       }
     });
-
+    const topbarMenu = new TopBarMenu();
+    Menu.setApplicationMenu(topbarMenu.buildMenu());
     window.maximize();
 
     // Load target url.
@@ -66,6 +71,8 @@ export default class Main {
     if (isDevelopment) {
       window.webContents.openDevTools();
     }
+
+    this.topbarMenu = topbarMenu;
 
     return window;
 
