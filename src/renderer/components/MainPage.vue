@@ -1,12 +1,18 @@
 <template>
   <div class="main-page">
-    <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
-    <div ref="canvas" id="canvas"></div>
+    <TopBar />
+    <div class="middle">
+      <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
+      <div ref="canvas" id="canvas"></div>
+    </div>
+    <StatusBar />
   </div>
 </template>
 
 <script lang="ts">
 import SideBar from './SideBar.vue';
+import TopBar from './TopBar.vue';
+import StatusBar from './StatusBar.vue';
 import Vue from 'vue'
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
@@ -15,7 +21,9 @@ interface MyData {
 }
 export default Vue.extend({
   components: {
-    SideBar
+    SideBar,
+    TopBar,
+    StatusBar
   },
   data: (): MyData => ({
     diagram: null,
@@ -34,8 +42,8 @@ export default Vue.extend({
     itemDropped(e: any, itemName: string){
       if(itemName == 'state'){
         this.diagram?.createNodeAt({
-          x: e.clientX - 40,
-          y: e.clientY
+          x: e.clientX - 40, // -40px because of side bar width (temporary solution)
+          y: e.clientY - 40 // -40px because of top bar height (temporary solution)
         })
       }
     }
@@ -69,8 +77,16 @@ export default Vue.extend({
 <style lang="less" scoped>
 .main-page{
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  .middle{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 60px);
+  }
+
 }
 </style>

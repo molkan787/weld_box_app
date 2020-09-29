@@ -4,8 +4,8 @@ export class MyDiagram extends Diagram{
 
   constructor(parentSelector: string){
     super(parentSelector, {
-      width: window.innerWidth,
-      height: window.innerHeight
+      width: window.innerWidth - 40,
+      height: window.innerHeight - 60
     });
   }
 
