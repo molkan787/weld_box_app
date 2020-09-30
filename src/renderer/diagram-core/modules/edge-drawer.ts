@@ -1,3 +1,4 @@
+import { select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
@@ -15,17 +16,17 @@ export class EdgeDrawer{
   private nodeInSubject: Node | null = null;
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_ADDED, ({node}: DiagramEvent) => this.onNodeAdded(<Node>node));
+    store.on(EVENTS.INIT_CANVAS_CREATED, e => this.onCanvasCreated(e));
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
   }
 
-  onNodeAdded(node: Node){
-    const d3node = this.store.getD3Node(node.id);
-    d3node?.on('mousemove', (e: any) => this.onMouseMove(e, node));
-    d3node?.on('mouseleave', (e: any) => this.onMouseLeave(e, node));
+  onCanvasCreated(e: DiagramEvent){
+    const element = this.store.rootElement; // rootElement is the actual canvas root element
+    element.on('mousemove', (e: any) => this.onMouseMove(e));
   }
+
 
 //#region Edge drawing logic
 
@@ -34,6 +35,15 @@ export class EdgeDrawer{
     const isLine = srcElement.tagName === 'line' && srcElement.classList.contains(HIGHLIGHT_LINE);
     const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
     if(isLine && wall){
+      const node = this.nodeInSubject;
+      // un-highlight node's wall
+      if(node !== null){
+        this.nodeInSubject = null;
+        if(node.highlightedWall !== null){
+          node.highlightedWall = null;
+          this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
+        }
+      }
       this.spawnNewEdge(<Node>event.node, wall, event.sourceEvent);
     }
   }
@@ -60,24 +70,20 @@ export class EdgeDrawer{
     edge.setTarget(targetConnection);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
 
-    const targetCandidateNode = this.store.getNodesFromPoint(point)[0];
-    if(targetCandidateNode && targetCandidateNode !== event.node){
-      const mouseevent = event.sourceEvent.sourceEvent;
-      this.onMouseMove(mouseevent, targetCandidateNode);
-    }
+    const mouseevent = event.sourceEvent.sourceEvent;
+    this.onMouseMove(mouseevent);
   }
 
   getEdgeConnectionOffset(node: Node, wall: Side, sourceEvent: any): Position{
-    // TODO: scale the offset depending on canvas/diagram zoom level
     const { sourceEvent: mouseevent } = sourceEvent;
-    const { clientX, clientY, srcElement } = mouseevent;
-    const bbox = (<HTMLElement>srcElement).getBoundingClientRect();
+    const { clientX, clientY } = mouseevent;
+    const point = this.store.transformClientPoint({ x: clientX, y: clientY });
+    const pos = node.position;
     const offset = { x: 0, y: 0}
     if(wall == Side.Top || wall == Side.Bottom){
-      offset.x = clientX - bbox.x - node.size.width / 2;
-      console.log(clientX, bbox.x, node.size.width)
+      offset.x = point.x - pos.x - node.size.width / 2;
     }else if(wall == Side.Left || wall == Side.Right){
-      offset.y = clientY - bbox.y - node.size.height / 2;
+      offset.y = point.y - pos.y - node.size.height / 2;
     }
     return offset;
   }
@@ -85,9 +91,9 @@ export class EdgeDrawer{
   onNodeDropped(event: DiagramEvent){
     const node = this.nodeInSubject;
     if(node && node.highlightedWall){
-      // const offset = this.getEdgeConnectionOffset(node, node.highlightedWall, event.sourceEvent);
+      const offset = this.getEdgeConnectionOffset(node, node.highlightedWall, event.sourceEvent);
       const targetConnection = node.createEdgeConnection(node.highlightedWall);
-      // targetConnection.offset = offset;
+      targetConnection.offset = offset;
       const edge = <Edge>this.currentEdge;
       edge.setTarget(targetConnection);
       node.highlightedWall = null;
@@ -105,29 +111,34 @@ export class EdgeDrawer{
 
 //#region Node's walls detecting logic
 
-  onMouseMove(event: MouseEvent, node: Node){
+  onMouseMove(event: MouseEvent){
     if(this.store.nodeDraggingTool) return;
 
-    const d3node = this.store.getD3Node(node.id);
-    const bbox = (<HTMLElement>d3node?.node()).getBoundingClientRect();
-    const touchWall = TouchesWall(bbox, {
+    const point = {
       x: event.clientX,
       y: event.clientY
-    })
+    };
+    const transformedPoint = this.store.transformClientPoint(point, true);
+    const node = this.store.getNodesFromPoint(transformedPoint, 8)[0];
+
+    const subject = this.nodeInSubject;
+    if(node !== subject && subject !== null){
+      if(subject.highlightedWall){
+        subject.highlightedWall = null;
+        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+      }
+    }
+
+    if(!node) return;
+
+    const { size, position } = node;
+    const bbox = new DOMRect(position.x, position.y, size.width, size.height);
+    const touchWall = TouchesWall(bbox, transformedPoint, 10);
     if(node.highlightedWall !== touchWall){
       node.highlightedWall = touchWall;
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
     }
     this.nodeInSubject = touchWall ? node : null;
-  }
-
-  onMouseLeave(event: MouseEvent, node: Node){
-    if(this.store.nodeDraggingTool) return;
-
-    if(node.highlightedWall){
-      node.highlightedWall = null;
-      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
-    }
   }
 
 //#endregion

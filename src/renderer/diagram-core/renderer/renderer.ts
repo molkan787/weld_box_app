@@ -12,7 +12,8 @@ export class Renderer{
 
   readonly nodeRenderer: NodeRenderer;
   readonly edgeRenderer: EdgeRenderer;
-  private rootNode?: D3Node;
+  private nodesLayer?: D3Node;
+  private edgesLayer?: D3Node;
 
   constructor(readonly store: DiagramStore){
     this.nodeRenderer = new NodeRenderer(this.store);
@@ -25,12 +26,13 @@ export class Renderer{
   }
 
   /**
-   * Sets the root node (dom element) of the chart
-   * All first level nodes will added as childs of the root node
-   * @param node DOM Element
+   * Sets canvas layers that will be used as parents of nodes & edges separatly
+   * @param nodesLayer D3 selection of DOM/SVG elements that should be used as nodes parent (container)
+   * @param edgesLayer D3 selection of DOM/SVG elements that should be used as edges parent (container)
    */
-  setRootNode(node: D3Node){
-    this.rootNode = node;
+  setLayers(nodesLayer: D3Node, edgesLayer: D3Node){
+    this.nodesLayer = nodesLayer;
+    this.edgesLayer = edgesLayer;
   }
 
   /**
@@ -40,9 +42,9 @@ export class Renderer{
    */
   build(container: D3Node, component: Component){
     if(component.type === ComponentType.Node){
-      this.nodeRenderer.build(container, <Node>component);
+      this.nodeRenderer.build(container || this.nodesLayer, <Node>component);
     }else if(component.type === ComponentType.Edge){
-      this.edgeRenderer.build(container, <Edge>component);
+      this.edgeRenderer.build(container || this.edgesLayer, <Edge>component);
     }
   }
 
@@ -61,7 +63,7 @@ export class Renderer{
   onNodeAdded(event: DiagramEvent){
     const node = <Node>event.node;
     const domParent = node.parent && this.store.getD3Node(node.parent.id);
-    const container = <D3Node>(domParent || this.rootNode);
+    const container = <D3Node>domParent;
     this.build(container, node);
   }
 

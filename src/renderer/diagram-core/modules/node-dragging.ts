@@ -74,22 +74,23 @@ export class NodeDragging{
 
     // If we resizing a node, adjust his size and position
     if(this.resizing){
-      if(this.resizeCorner & Side.Left){ // Checks if the corner is on the left side
-        pos.x += event.dx
-        size.width -= event.dx;
-      }else{ // corner is on the right side
-        size.width += event.dx;
-      }
-      if(this.resizeCorner & Side.Top){ // Checks if the corner is on the top side
-        pos.y += event.dy
-        size.height -= event.dy;
-      }else{ // corner is on the bottom side
-        size.height += event.dy;
-      }
+      const { width, height } = size;
+
+      const left = this.resizeCorner & Side.Left, // checks if the corner is on the left side
+            top = this.resizeCorner & Side.Top; // checks if the corner is on the top side
+
+      // adjust the size by deltas change
+      size.width += left ? -event.dx : event.dx;
+      size.height += top ? -event.dy : event.dy;
 
       // Cap size to the minimum 1x1
       if(size.width < 1) size.width = 1;
       if(size.height < 1) size.height = 1;
+
+      // adjust node's position if it is being resized from top or left side
+      if(left) pos.x -= size.width - width; // adjust x by the diffrence in previous & new width
+      if(top) pos.y -= size.height - height; // same here
+
     }else{
       pos.x += event.dx;
       pos.y += event.dy;

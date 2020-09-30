@@ -5,6 +5,7 @@ import { Node } from "./components/node";
 import { Position } from "./interfaces/Position";
 import { EVENTS } from "./constants";
 import { DiagramEvent } from "./interfaces/DiagramEvent";
+import { ZoomTransform } from "d3";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -20,11 +21,49 @@ export class DiagramStore extends EventEmitter{
 
   public nodeDraggingTool: boolean = true;
 
+  /** Holds canvas zoom & drag transform */
+  private _zoomTransform: ZoomTransform | null = null;
+
+  /**
+   * Holds canvas offset relative to the top left corner of the web page.
+   * Correctness of this value is important for a correct user interaction
+  */
+  private _canvasOffset: Position = { x: 0, y: 0 };
+
+  private _rootElement: D3Node | null = null;
 
   constructor(){
     super();
     // Updates Node's spatial index each time was dropped
     this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(<Node>node))
+  }
+
+  public get zoomTransform(){
+    return this._zoomTransform;
+  }
+
+  public setZoomTransform(transform: ZoomTransform){
+    this._zoomTransform = transform;
+  }
+
+  public get canvasOffset(){
+    return this._canvasOffset;
+  }
+
+  public setCanvasOffset(offset: Position){
+    this._canvasOffset = offset;
+  }
+
+  public get rootElement(){
+    return <D3Node>this._rootElement;
+  }
+
+  public setRootElement(element: D3Node){
+    if(this._rootElement != null){
+      throw new Error('setRootElement() can be called only one time at initialization')
+    }
+    this._rootElement = element;
+    this.emit(EVENTS.INIT_CANVAS_CREATED, {});
   }
 
   /**
@@ -81,22 +120,40 @@ export class DiagramStore extends EventEmitter{
    * Searches for and return nodes that are the specified 2D Point
    * @param point 2D Point thats specify where to search for nodes
    */
-  public getNodesFromPoint(point: Position): Node[]{
+  public getNodesFromPoint(point: Position, radius: number = 1): Node[]{
     // Converts Point to Bounding Box
-    const bbox = this.pointToBBox(point);
+    const bbox = this.pointToBBox(point, radius);
 
     // Run the actual search on the Spatial Map/Index
     return this.nodesSpatialMap.search(bbox);
   }
 
   /** Converts Point to `RBush`s Bounding Box */
-  private pointToBBox(point: Position){
+  private pointToBBox(point: Position, radius: number){
     const { x, y } = point;
     return {
-      minX: x - 1,
-      minY: y - 1,
-      maxX: x + 1,
-      maxY: y + 1
+      minX: x - radius,
+      minY: y - radius,
+      maxX: x + radius,
+      maxY: y + radius
+    }
+  }
+
+  public transformClientPoint(point: Position, roundNumbers: boolean = false){
+    let { x, y } = point;
+    x -= this.canvasOffset.x;
+    y -= this.canvasOffset.y;
+    if(this.zoomTransform){
+      // scale and move the point according the canvas zoom level and drag offset
+      [x, y] = this.zoomTransform.invert([x, y]);
+    }
+    if(roundNumbers){
+      return {
+        x: Math.round(x),
+        y: Math.round(y)
+      };
+    }else{
+      return { x, y };
     }
   }
 

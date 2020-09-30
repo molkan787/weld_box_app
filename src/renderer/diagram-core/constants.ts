@@ -21,4 +21,6 @@ export const EVENTS = Object.freeze({
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
+
+  INIT_CANVAS_CREATED: 'init-canvas-created'
 });

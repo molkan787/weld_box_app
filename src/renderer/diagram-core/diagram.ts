@@ -21,9 +21,11 @@ export class Diagram{
 
   readonly store = new DiagramStore();
   readonly chart: D3Node;
-  private rootNode: D3Node;
+  private rootGroup: D3Node;
+  private nodesLayer: D3Node;
+  private edgesLayer: D3Node;
 
-  private rootTransform?: ZoomTransform;
+  private zoomTransform?: ZoomTransform;
 
   private readonly renderer = new Renderer(this.store);
 
@@ -48,18 +50,24 @@ export class Diagram{
       .attr('height', height);
     if(chartClasses) chart.classed(chartClasses, true);
 
-    this.rootNode = chart.append('g');
+    const { x, y } = (<SVGSVGElement>chart.node()).getBoundingClientRect();
+    this.store.setCanvasOffset({ x, y });
 
-    chart.call(
-      // @ts-ignore : (Probably) Neccessary because d3.zoom lib types does not extend d3 types
-      zoom()
-        .extent([[0, 0], [width, height]])
-        .scaleExtent([0.1, 4])
-        .on('zoom', payload => this.zoomed(payload))
-    )
+    this.store.setRootElement(chart);
+
+    this.rootGroup = chart.append('g')
+    this.edgesLayer = this.rootGroup.append('g');
+    this.nodesLayer = this.rootGroup.append('g');
+
+    const _zoom = zoom()
+    .extent([[0, 0], [width, height]])
+    .scaleExtent([0.1, 4])
+    .on('zoom', payload => this.zoomed(payload))
+
+    chart.call(<any>_zoom);
 
     this.chart = chart;
-    this.renderer.setRootNode(this.rootNode);
+    this.renderer.setLayers(this.nodesLayer, this.edgesLayer);
   }
 
 
@@ -74,7 +82,7 @@ export class Diagram{
   }
 
   public addEdge(edge: Edge){
-    this.renderer.build(this.rootNode, edge);
+    this.renderer.build(this.edgesLayer, edge);
   }
 
   public activateEdgeDrawer(){
@@ -90,7 +98,7 @@ export class Diagram{
   public createNodeAt(point: Position){
     const width = 120, height = 60;
     let { x, y } = point;
-    if(this.rootTransform) [x, y] = this.rootTransform.invert([x, y]);
+    if(this.zoomTransform) [x, y] = this.zoomTransform.invert([x, y]);
     x -= width / 2;
     y -= height / 2;
     const node = new Node({ x, y }, { width, height, radius: 0 });
@@ -98,8 +106,9 @@ export class Diagram{
   }
 
   private zoomed({ transform }: any) {
-    this.rootNode.attr("transform", transform);
-    this.rootTransform = transform;
+    this.rootGroup.attr("transform", transform);
+    this.zoomTransform = transform;
+    this.store.setZoomTransform(transform);
   }
 
 }

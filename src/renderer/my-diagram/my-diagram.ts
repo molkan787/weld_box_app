@@ -1,4 +1,5 @@
 import { Diagram, Node, Edge } from "../diagram-core";
+import { Side } from "../diagram-core/helpers/geometry";
 
 export class MyDiagram extends Diagram{
 
@@ -18,8 +19,8 @@ export class MyDiagram extends Diagram{
     const node6 = new Node({ x: 700, y: 450 }, { width: 100, height: 60, radius: 0 });
 
 
-    const edge1 = new Edge(node1.createEdgeConnection(), node2.createEdgeConnection());
-    const edge2 = new Edge(node1.createEdgeConnection(), node3.createEdgeConnection());
+    const edge1 = new Edge(node1.createEdgeConnection(Side.Right), node2.createEdgeConnection(Side.Left));
+    const edge2 = new Edge(node1.createEdgeConnection(Side.Bottom), node3.createEdgeConnection(Side.Top));
 
     this.addEdge(edge1);
     this.addEdge(edge2);
