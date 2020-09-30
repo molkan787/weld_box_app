@@ -133,8 +133,8 @@ export class NodeDragging{
       if(p.y < 5) p.y = 5;
       if(s.width > ps.width - 10) s.width = Math.round(ps.width - 10);
       if(s.height > ps.height - 10) s.height = Math.round(ps.height - 10);
-      if(p.x + s.width > ps.width - 10) p.x = Math.round(ps.width - s.width - 5);
-      if(p.y + s.height > ps.height - 10) p.y = Math.round(ps.height - s.height - 5);
+      if(p.x + s.width - 5 > ps.width - 10) p.x = Math.round(ps.width - s.width - 5);
+      if(p.y + s.height - 5 > ps.height - 10) p.y = Math.round(ps.height - s.height - 5);
     }
   }
 
