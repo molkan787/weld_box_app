@@ -77,7 +77,7 @@ export class EdgeDrawer{
   getEdgeConnectionOffset(node: Node, wall: Side, sourceEvent: any): Position{
     const { sourceEvent: mouseevent } = sourceEvent;
     const { clientX, clientY } = mouseevent;
-    const point = this.store.transformClientPoint({ x: clientX, y: clientY });
+    const point = this.store.transformClientPoint({ x: clientX, y: clientY }, true);
     const pos = node.position;
     const offset = { x: 0, y: 0}
     if(wall == Side.Top || wall == Side.Bottom){

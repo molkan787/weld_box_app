@@ -84,8 +84,9 @@ export class NodeDragging{
       size.height += top ? -event.dy : event.dy;
 
       // Cap size to the minimum 1x1
-      if(size.width < 1) size.width = 1;
-      if(size.height < 1) size.height = 1;
+      const minW = 20;
+      if(size.width < minW) size.width = minW;
+      if(size.height < minW) size.height = minW;
 
       // adjust node's position if it is being resized from top or left side
       if(left) pos.x -= size.width - width; // adjust x by the diffrence in previous & new width
