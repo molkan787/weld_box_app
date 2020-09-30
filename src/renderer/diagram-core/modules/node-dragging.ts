@@ -19,6 +19,7 @@ export class NodeDragging{
 
   constructor(readonly store: DiagramStore){
     store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
+    store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
   }
 
   /**
@@ -100,6 +101,7 @@ export class NodeDragging{
     this.capNodeBBox(node);
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+
     if(!this.resizing){
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
     }
@@ -123,6 +125,12 @@ export class NodeDragging{
     this.store.refreshNode(node);
 
     this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
+  }
+
+  private onNodeParentChanged(event: DiagramEvent){
+    const node = <Node>event.node;
+    this.capNodeBBox(node);
+    this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
   }
 
   private capNodeBBox(node: Node){

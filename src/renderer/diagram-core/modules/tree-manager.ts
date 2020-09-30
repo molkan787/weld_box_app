@@ -24,7 +24,7 @@ export class TreeManager{
   private onNodeDragged(event: DiagramEvent){
     if(!this.store.nodeDraggingTool) return;
     const { node, sourceEvent } = event;
-    if(node.parent) return;
+    if(node?.parent) return;
     const { x, y } = sourceEvent;
     let overlapingNodes = this.store.getNodesFromPoint({ x, y });
     overlapingNodes = overlapingNodes.filter(n => n !== node && !n.parent)

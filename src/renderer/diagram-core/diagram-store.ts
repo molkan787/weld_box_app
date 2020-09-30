@@ -117,8 +117,9 @@ export class DiagramStore extends EventEmitter{
   }
 
   /**
-   * Searches for and return nodes that are the specified 2D Point
+   * Searches for and return nodes that overlaps with a point or bounding box (can be specified using `radius` parameter)
    * @param point 2D Point thats specify where to search for nodes
+   * @param radius Number of pixels to enlarge the target bouding box (ex: a radius of 2 gives a box of 4x4)
    */
   public getNodesFromPoint(point: Position, radius: number = 1): Node[]{
     // Converts Point to Bounding Box
