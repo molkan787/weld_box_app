@@ -1,4 +1,3 @@
-import { select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
@@ -119,7 +118,7 @@ export class EdgeDrawer{
       y: event.clientY
     };
     const transformedPoint = this.store.transformClientPoint(point, true);
-    const node = this.store.getNodesFromPoint(transformedPoint, 8)[0];
+    const node = this.store.getNodesFromPoint(transformedPoint, 6)[0];
 
     const subject = this.nodeInSubject;
     if(node !== subject && subject !== null){
