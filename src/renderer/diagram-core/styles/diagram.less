@@ -2,10 +2,18 @@
 
   .node{
     transition: opacity 0.3s;
+
     &.highlighted > rect{
       outline-color: #1ED760;
       outline-width: 3px;
       outline-style: solid;
+    }
+
+    &.selected > rect{
+      outline-style: dashed;
+      outline-width: 2px;
+      outline-offset: 2px;
+      outline-color: #3c3c3c;
     }
   }
 

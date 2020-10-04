@@ -41,10 +41,11 @@ export default Vue.extend({
     },
     itemDropped(e: any, itemName: string){
       if(itemName == 'state'){
-        this.diagram?.createNodeAt({
+        const node = this.diagram?.createNodeAt({
           x: e.clientX - 40, // -40px because of side bar width (temporary solution)
           y: e.clientY - 40 // -40px because of top bar height (temporary solution)
         })
+        if(node) node.title = `State ${node.id}`;
       }
     }
   },
@@ -86,6 +87,10 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     height: calc(100vh - 60px);
+  }
+
+  #canvas{
+    background-color: #434343;
   }
 
 }

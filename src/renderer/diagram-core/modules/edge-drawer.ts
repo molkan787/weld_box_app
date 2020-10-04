@@ -1,7 +1,7 @@
 import { Edge } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
-import { ATTR, EVENTS, HIGHLIGHT_LINE } from "../constants";
+import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { Side, TouchesWall } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
@@ -31,7 +31,7 @@ export class EdgeDrawer{
 
   onNodeDragStart(event: DiagramEvent){
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
-    const isLine = srcElement.tagName === 'line' && srcElement.classList.contains(HIGHLIGHT_LINE);
+    const isLine = srcElement.tagName === 'line' && srcElement.classList.contains(CLASSES.HIGHLIGHT_LINE);
     const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
     if(isLine && wall){
       const node = this.nodeInSubject;

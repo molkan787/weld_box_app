@@ -1,12 +1,15 @@
 import { select } from "d3";
 import { Node } from "../components/node";
-import { ATTR, EVENTS, HIGHLIGHT_LINE, MAIN_ELEMENT, RESIZE_HANDLE } from "../constants";
+import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { Corner, GetRectangleCornerPosition, Side } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
+import { cs } from "./utils";
+
+const HEADER_HEIGHT = 30;
 
 export class NodeRenderer{
 
@@ -18,15 +21,31 @@ export class NodeRenderer{
   build(container: D3Node, node: Node){
     const g = container.append('g');
 
+    g.data([node]);
+
     g.classed('node', true)
       .append('rect')
-      .classed(MAIN_ELEMENT, true)
-      .attr('fill', '#EBEBEB')
-      .attr('stroke', '#3A3A3A')
-      .attr('rx', 8)
-      .attr('ry', 8);
+      .classed(CLASSES.MAIN_ELEMENT, true);
 
-    g.data([node]);
+    const header = g.append('g').classed('header', true);
+    header.append('rect')
+            .classed(CLASSES.HEADER_BG, true)
+            .attr('height', HEADER_HEIGHT);
+
+    header.append('text')
+            .classed(CLASSES.HEADER_TEXT, true)
+
+
+    const body = g.append('g')
+                    .classed(CLASSES.NODE_BODY, true);
+    // body.append('foreignObject')
+    //       .attr('x', 0)
+    //       .attr('y', 30)
+    //       .attr('width', 350)
+    //       .attr('height', 200)
+    //       .append('xhtml:input')
+    //         .text('foo')
+
 
     this.addResizeHandles(g, node.id);
 
@@ -35,35 +54,17 @@ export class NodeRenderer{
 
   }
 
-  private addResizeHandles(g: D3Node, nodeId: number){
-    this.createResizeHandle(g, nodeId, Corner.TopLeft);
-    this.createResizeHandle(g, nodeId, Corner.TopRight);
-    this.createResizeHandle(g, nodeId, Corner.BottomRight);
-    this.createResizeHandle(g, nodeId, Corner.BottomLeft);
-  }
-
-  private createResizeHandle(g: D3Node, nodeId: number, corner: Corner){
-    const cursor = corner === Corner.TopRight || corner === Corner.BottomLeft
-                    ? 'nesw-resize' : 'nwse-resize';
-    return g
-      .append('circle')
-      .classed(RESIZE_HANDLE + ' node-' + nodeId, true)
-      .attr('r', 6)
-      .attr('fill', '#0765B6')
-      .attr('cursor', cursor)
-      .attr(ATTR.CORNER, corner)
-  }
-
   /** Update node's visual representation */
   update(node: Node){
     this.updateBBox(node);
     this.updateDecoration(node);
+    this.updateHeader(node);
   }
 
   /** Updates element's position in the dom tree,
    * this method need to be called each time Node's parent was changed */
   updateNodeParent(node: Node){
-    const parentElement: HTMLElement = this.getD3Node(node.parent || -1).node();
+    const parentElement = <HTMLElement>this.getD3Node(node.parent || -1).select(cs(CLASSES.NODE_BODY)).node();
     const element: HTMLElement = this.getD3Node(node).node();
     parentElement.appendChild(element);
     this.updateBBox(node);
@@ -80,9 +81,9 @@ export class NodeRenderer{
     d3Node.classed('highlighted', node.highlighted);
 
     // highlight one of node's side, usually used to show attach point when drawing an edge
-    let line: D3Node = d3Node.select('.' + HIGHLIGHT_LINE);
+    let line: D3Node = d3Node.select('.' + CLASSES.HIGHLIGHT_LINE);
     if(node.highlightedWall){
-      if(!line.node()) line = d3Node.append('line').classed(HIGHLIGHT_LINE, true);
+      if(!line.node()) line = d3Node.append('line').classed(CLASSES.HIGHLIGHT_LINE, true);
       const { x1, y1, x2, y2 } = this.getRectWallLineCoords(node.size, node.highlightedWall);
       line
         .attr('x1', x1)
@@ -91,7 +92,6 @@ export class NodeRenderer{
         .attr('y2', y2)
         .attr('stroke-width', 12)
         .attr('stroke', '#1ED76080')
-        .attr('stroke-linecap', 'round')
         .attr('cursor', 'grab')
         .attr(ATTR.WALL_SIDE, node.highlightedWall);
     }else{
@@ -109,12 +109,15 @@ export class NodeRenderer{
     d3Node.attr('transform', `translate(${pos.x},${pos.y})`);
 
     d3Node.select('rect')
-    .attr('width', width)
-    .attr('height', height)
+            .attr('width', width)
+            .attr('height', height)
+
+    d3Node.select(cs(CLASSES.HEADER_BG))
+            .attr('width', width)
 
     const origin: Position = { x: 0, y: 0 };
 
-    const selector = `.${RESIZE_HANDLE}.node-${node.id}`;
+    const selector = `.${CLASSES.RESIZE_HANDLE}.node-${node.id}`;
     d3Node
       .selectAll(selector)
       .nodes()
@@ -127,12 +130,38 @@ export class NodeRenderer{
 
   }
 
+  private updateHeader(node: Node){
+    const d3Node = this.getD3Node(node);
+    d3Node.select(cs(CLASSES.HEADER_TEXT))
+            .text(node.title);
+  }
+
   private getRectWallLineCoords(size: Size, wall: Side){
     const { width, height } = size;
     if(wall === Side.Top) return { x1: 0, y1: 0, x2: width, y2: 0 };
     else if(wall === Side.Bottom) return { x1: 0, y1: height, x2: width, y2: height };
     else if(wall === Side.Left) return { x1: 0, y1: 0, x2: 0, y2: height };
     else return { x1: width, y1: 0, x2: width, y2: height }; // wall === Side.Right
+  }
+
+
+  private addResizeHandles(g: D3Node, nodeId: number){
+    this.createResizeHandle(g, nodeId, Corner.TopLeft);
+    this.createResizeHandle(g, nodeId, Corner.TopRight);
+    this.createResizeHandle(g, nodeId, Corner.BottomRight);
+    this.createResizeHandle(g, nodeId, Corner.BottomLeft);
+  }
+
+  private createResizeHandle(g: D3Node, nodeId: number, corner: Corner){
+    const cursor = corner === Corner.TopRight || corner === Corner.BottomLeft
+                    ? 'nesw-resize' : 'nwse-resize';
+    return g
+      .append('circle')
+      .classed(CLASSES.RESIZE_HANDLE + ' node-' + nodeId, true)
+      .attr('r', 6)
+      .attr('fill', 'transparent')
+      .attr('cursor', cursor)
+      .attr(ATTR.CORNER, corner)
   }
 
   private getD3Node(node: Node | number): D3Node{

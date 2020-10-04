@@ -1,6 +1,6 @@
 import { drag, select } from 'd3';
 import { Node } from '../components/node';
-import { ATTR, EVENTS, RESIZE_HANDLE } from '../constants';
+import { ATTR, EVENTS, CLASSES } from '../constants';
 import { DiagramStore } from '../diagram-store';
 import { Corner, Side } from '../helpers/geometry';
 import { DiagramEvent } from '../interfaces/DiagramEvent';
@@ -85,9 +85,10 @@ export class NodeDragging{
       size.height += top ? -event.dy : event.dy;
 
       // Cap size to the minimum 1x1
-      const minW = 20;
+      const minW = 120;
+      const minH = 60;
       if(size.width < minW) size.width = minW;
-      if(size.height < minW) size.height = minW;
+      if(size.height < minH) size.height = minH;
 
       // adjust node's position if it is being resized from top or left side
       if(left) pos.x -= size.width - width; // adjust x by the diffrence in previous & new width
@@ -136,11 +137,13 @@ export class NodeDragging{
   private capNodeBBox(node: Node){
     const { parent, position: p, size: s } = node;
     if(parent){
+      const minY = 33;
+      const margY = minY + 5;
       const ps = parent.size;
       if(p.x < 5) p.x = 5;
-      if(p.y < 5) p.y = 5;
+      if(p.y < minY) p.y = minY;
       if(s.width > ps.width - 10) s.width = Math.round(ps.width - 10);
-      if(s.height > ps.height - 10) s.height = Math.round(ps.height - 10);
+      if(s.height > ps.height - margY) s.height = Math.round(ps.height - margY);
       if(p.x + s.width - 5 > ps.width - 10) p.x = Math.round(ps.width - s.width - 5);
       if(p.y + s.height - 5 > ps.height - 10) p.y = Math.round(ps.height - s.height - 5);
     }
@@ -159,7 +162,7 @@ export class NodeDragging{
 
   /** Checks if the event was triggered by the resize handle `<circle/>` */
   private isResizeHandleEvent(event: any){
-    return this.getSrcElement(event)?.classList.contains(RESIZE_HANDLE);
+    return this.getSrcElement(event)?.classList.contains(CLASSES.RESIZE_HANDLE);
   }
 
   /** Grabs and return srcElement from the source event */

@@ -1,5 +1,5 @@
 <template>
-  <div class="top-bar pane-secondary">
+  <div class="top-bar pane">
     <div class="icon">
       <NewProjectIcon />
     </div>

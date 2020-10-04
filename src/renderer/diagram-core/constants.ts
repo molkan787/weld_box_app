@@ -1,7 +1,3 @@
-export const MAIN_ELEMENT = 'main-element';
-export const RESIZE_HANDLE = 'resize-handle';
-export const HIGHLIGHT_LINE = 'highlight-line';
-
 export const ATTR = Object.freeze({
   CORNER: 'data-corner',
   WALL_SIDE: 'data-wall-side',
@@ -24,3 +20,12 @@ export const EVENTS = Object.freeze({
 
   INIT_CANVAS_CREATED: 'init-canvas-created'
 });
+
+export const CLASSES = Object.freeze({
+  MAIN_ELEMENT: 'main-element',
+  RESIZE_HANDLE: 'resize-handle',
+  HIGHLIGHT_LINE: 'highlight-line',
+  HEADER_BG: 'header-bg',
+  HEADER_TEXT: 'header-text',
+  NODE_BODY: 'node-body',
+})

@@ -1,6 +1,7 @@
 import { Side } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
+import { D3Node } from "../types/aliases";
 import { Component, ComponentType } from "./component";
 import { AttachType, EdgeConnection } from "./edge-connection";
 
@@ -17,11 +18,15 @@ export class Node extends Component{
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
 
+  public title: string;
+
   constructor(
     public position: Position,
-    public size: Size
+    public size: Size,
+    data?: any
   ){
     super(ComponentType.Node);
+    this.title = data?.title || '';
   }
 
   public get parent(){
@@ -65,5 +70,9 @@ export class Node extends Component{
     }
     return false;
   }
+
+  public buildingNode(d3node: D3Node){}
+
+  public buildingHeader(header: D3Node){}
 
 }

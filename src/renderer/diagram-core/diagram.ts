@@ -47,7 +47,8 @@ export class Diagram{
       .append('svg')
       .classed('diagram', true)
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height)
+      .attr('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
     if(chartClasses) chart.classed(chartClasses, true);
 
     const { x, y } = (<SVGSVGElement>chart.node()).getBoundingClientRect();
@@ -102,7 +103,8 @@ export class Diagram{
     x -= width / 2;
     y -= height / 2;
     const node = new Node({ x, y }, { width, height, radius: 0 });
-    this.addNode(node);
+    setTimeout(() => this.addNode(node), 0);
+    return node;
   }
 
   private zoomed({ transform }: any) {
