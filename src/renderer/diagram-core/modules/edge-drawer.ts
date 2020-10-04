@@ -44,17 +44,19 @@ export class EdgeDrawer{
           this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
         }
       }
-      this.spawnNewEdge(<Node>event.node, wall, event.sourceEvent);
+      this.spawnNewEdge(<Node>event.node, wall, event);
     }
   }
 
-  spawnNewEdge(node: Node, wall: Side, sourceEvent: any){
-    const { x, y } = sourceEvent;
-    const sourceOffset = this.getEdgeConnectionOffset(node, wall, sourceEvent);
+  spawnNewEdge(node: Node, wall: Side, event: DiagramEvent){
+    const srcEvent = event.sourceEvent;
+    const { x, y } = srcEvent.sourceEvent;
+    const targetPoint = this.store.transformClientPoint({ x, y });
+    const sourceOffset = this.getEdgeConnectionOffset(node, wall, srcEvent);
     const source = node.createEdgeConnection(wall);
     const target = new EdgeConnection(AttachType.Position);
     source.offset = sourceOffset;
-    target.position = { x, y };
+    target.position = targetPoint;
     const edge = new Edge(source, target);
     this.currentEdge = edge;
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
@@ -63,7 +65,7 @@ export class EdgeDrawer{
   onNodeDragged(event: DiagramEvent){
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
-    const { x, y } = event.sourceEvent;
+    const { x, y } = event.sourceEvent.sourceEvent;
     const point = this.store.transformClientPoint({ x, y });
     const targetConnection = new EdgeConnection(AttachType.Position);
     targetConnection.position = point;
