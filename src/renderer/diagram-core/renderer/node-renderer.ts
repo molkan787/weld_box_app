@@ -19,37 +19,20 @@ export class NodeRenderer{
   }
 
   build(container: D3Node, node: Node){
-    const g = container.append('g');
+    const root = container.append('div');
+    root.data([node]).classed('node', true);
 
-    g.data([node]);
+    root.append('div').classed(CLASSES.NODE_BODY, true);
 
-    g.classed('node', true)
-      .append('rect')
-      .classed(CLASSES.MAIN_ELEMENT, true);
-
-    const header = g.append('g').classed('header', true);
-    header.append('rect')
-            .classed(CLASSES.HEADER_BG, true)
-            .attr('height', HEADER_HEIGHT);
-
-    header.append('text')
+    const header = root.append('div').classed('header', true);
+    header.append('span')
             .classed(CLASSES.HEADER_TEXT, true)
 
 
-    const body = g.append('g')
-                    .classed(CLASSES.NODE_BODY, true);
-    // body.append('foreignObject')
-    //       .attr('x', 0)
-    //       .attr('y', 30)
-    //       .attr('width', 350)
-    //       .attr('height', 200)
-    //       .append('xhtml:input')
-    //         .text('foo')
 
+    this.addResizeHandles(root, node.id);
 
-    this.addResizeHandles(g, node.id);
-
-    this.store.setD3Node(node.id, g);
+    this.store.setD3Node(node.id, root);
     this.update(node);
 
   }
@@ -83,17 +66,9 @@ export class NodeRenderer{
     // highlight one of node's side, usually used to show attach point when drawing an edge
     let line: D3Node = d3Node.select('.' + CLASSES.HIGHLIGHT_LINE);
     if(node.highlightedWall){
-      if(!line.node()) line = d3Node.append('line').classed(CLASSES.HIGHLIGHT_LINE, true);
-      const { x1, y1, x2, y2 } = this.getRectWallLineCoords(node.size, node.highlightedWall);
-      line
-        .attr('x1', x1)
-        .attr('y1', y1)
-        .attr('x2', x2)
-        .attr('y2', y2)
-        .attr('stroke-width', 12)
-        .attr('stroke', '#1ED76080')
-        .attr('cursor', 'grab')
-        .attr(ATTR.WALL_SIDE, node.highlightedWall);
+      if(!line.node()) line = d3Node.append('span').classed(CLASSES.HIGHLIGHT_LINE, true);
+      // const { x1, y1, x2, y2 } = this.getRectWallLineCoords(node.size, node.highlightedWall);
+      line.attr(ATTR.WALL_SIDE, node.highlightedWall);
     }else{
       line.remove();
     }
@@ -106,27 +81,10 @@ export class NodeRenderer{
     const { position: pos, size } = node;
     const { width, height } = size;
 
-    d3Node.attr('transform', `translate(${pos.x},${pos.y})`);
-
-    d3Node.select('rect')
-            .attr('width', width)
-            .attr('height', height)
-
-    d3Node.select(cs(CLASSES.HEADER_BG))
-            .attr('width', width)
-
-    const origin: Position = { x: 0, y: 0 };
-
-    const selector = `.${CLASSES.RESIZE_HANDLE}.node-${node.id}`;
-    d3Node
-      .selectAll(selector)
-      .nodes()
-      .forEach((n: any) => {
-        const d3n = select(n);
-        const corner = parseInt(d3n.attr(ATTR.CORNER));
-        const pos = GetRectangleCornerPosition(origin, node.size, corner);
-        d3n.attr('cx', pos.x).attr('cy', pos.y)
-      })
+    d3Node.style('left', pos.x + 'px')
+          .style('top', pos.y + 'px')
+          .style('width', width + 'px')
+          .style('height', height + 'px');
 
   }
 
@@ -156,12 +114,10 @@ export class NodeRenderer{
     const cursor = corner === Corner.TopRight || corner === Corner.BottomLeft
                     ? 'nesw-resize' : 'nwse-resize';
     return g
-      .append('circle')
+      .append('span')
       .classed(CLASSES.RESIZE_HANDLE + ' node-' + nodeId, true)
-      .attr('r', 6)
-      .attr('fill', 'transparent')
-      .attr('cursor', cursor)
       .attr(ATTR.CORNER, corner)
+      .style('cursor', cursor);
   }
 
   private getD3Node(node: Node | number): D3Node{

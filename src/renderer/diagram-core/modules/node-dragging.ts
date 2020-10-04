@@ -59,7 +59,7 @@ export class NodeDragging{
     }
 
     // bring the dragged node to the front and change his cursor
-    d3Node.raise().attr('cursor', this.resizing ? 'default' : 'move');
+    d3Node.raise().style('cursor', this.resizing ? 'default' : 'move');
   }
 
   /** handler for dragged event */
@@ -70,7 +70,10 @@ export class NodeDragging{
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event});
       return;
     }
-
+    let { dx, dy } = event;
+    const scale = 1 / (this.store.zoomTransform?.k || 1);
+    dx *= scale;
+    dy *= scale;
     const { position: pos, size } = node;
 
     // If we resizing a node, adjust his size and position
@@ -81,8 +84,8 @@ export class NodeDragging{
             top = this.resizeCorner & Side.Top; // checks if the corner is on the top side
 
       // adjust the size by deltas change
-      size.width += left ? -event.dx : event.dx;
-      size.height += top ? -event.dy : event.dy;
+      size.width += left ? -dx : dx;
+      size.height += top ? -dy : dy;
 
       // Cap size to the minimum 1x1
       const minW = 120;
@@ -95,11 +98,11 @@ export class NodeDragging{
       if(top) pos.y -= size.height - height; // same here
 
     }else{
-      pos.x += event.dx;
-      pos.y += event.dy;
+      pos.x += dx;
+      pos.y += dy;
     }
 
-    this.capNodeBBox(node);
+    // this.capNodeBBox(node);
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
 
@@ -120,7 +123,7 @@ export class NodeDragging{
       return;
     }
 
-    d3Node.attr('cursor', 'default');
+    d3Node.style('cursor', 'default');
 
     // Updates Node's index in the Spatial Map
     this.store.refreshNode(node);
@@ -137,7 +140,7 @@ export class NodeDragging{
   private capNodeBBox(node: Node){
     const { parent, position: p, size: s } = node;
     if(parent){
-      const minY = 33;
+      const minY = 30;
       const margY = minY + 5;
       const ps = parent.size;
       if(p.x < 5) p.x = 5;
@@ -151,7 +154,7 @@ export class NodeDragging{
 
 
   /** Returns the Corner of the Node at which the event started.
-   * This method works and should be used only when the drag event was initiated by a resize handle `<circle/>`
+   * This method works and should be used only when the drag event was initiated by a resize handle `<span/>`
    */
   private getResizeHandleCorner(event: any): Corner{
     const srcElement = this.getSrcElement(event);
@@ -160,7 +163,7 @@ export class NodeDragging{
     return parseInt(corner);
   }
 
-  /** Checks if the event was triggered by the resize handle `<circle/>` */
+  /** Checks if the event was triggered by the resize handle `<span/>` */
   private isResizeHandleEvent(event: any){
     return this.getSrcElement(event)?.classList.contains(CLASSES.RESIZE_HANDLE);
   }

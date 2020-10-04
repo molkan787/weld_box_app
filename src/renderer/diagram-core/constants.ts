@@ -22,7 +22,7 @@ export const EVENTS = Object.freeze({
 });
 
 export const CLASSES = Object.freeze({
-  MAIN_ELEMENT: 'main-element',
+  ROOT_ELEMENT: 'root-element',
   RESIZE_HANDLE: 'resize-handle',
   HIGHLIGHT_LINE: 'highlight-line',
   HEADER_BG: 'header-bg',

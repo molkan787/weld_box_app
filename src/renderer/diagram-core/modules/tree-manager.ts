@@ -1,3 +1,4 @@
+import { BBox } from "rbush";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -23,10 +24,17 @@ export class TreeManager{
 
   private onNodeDragged(event: DiagramEvent){
     if(!this.store.nodeDraggingTool) return;
-    const { node, sourceEvent } = event;
+    const { node } = event;
     if(node?.parent) return;
-    const { x, y } = sourceEvent;
-    let overlapingNodes = this.store.getNodesFromPoint({ x, y });
+    const { position: pos, size } = <Node>node;
+    const padd = 25;
+    const bbox: BBox = {
+      minX: pos.x + padd,
+      minY: pos.y + padd,
+      maxX: pos.x + size.width - padd,
+      maxY: pos.y + size.height - padd,
+    }
+    let overlapingNodes = this.store.getNodesFromBBox(bbox);
     overlapingNodes = overlapingNodes.filter(n => n !== node && !n.parent)
     this.setDropTarget(overlapingNodes[0] || null);
   }

@@ -1,20 +1,80 @@
 .diagram{
 
+  position: relative;
+  overflow: hidden;
+
+  .root-group{
+    transform-origin: 0 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  div{
+    position: absolute;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+  }
+
   .node{
     transition: opacity 0.3s;
 
-    &.highlighted > rect{
+    .header{
+      margin: -1px -1px 0 -1px;
+      width: calc(100% + 2px);
+    }
+    .header-text{
+      cursor: default;
+    }
+
+    .node-body{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    &.highlighted{
       outline-color: #1ED760;
       outline-width: 3px;
       outline-style: solid;
     }
 
-    &.selected > rect{
+    &.selected{
       outline-style: dashed;
       outline-width: 2px;
       outline-offset: 2px;
       outline-color: #3c3c3c;
     }
+
+    .resize-handle{
+      position: absolute;
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      margin: -8px;
+      background-color: transparent;
+
+      &[data-corner="3"]{  top: 0; left: 0; }
+      &[data-corner="9"]{  top: 0; right: 0; }
+      &[data-corner="6"]{  bottom: 0; left: 0; }
+      &[data-corner="12"]{  bottom: 0; right: 0; }
+    }
+
+    .highlight-line{
+      position: absolute;
+      display: inline-block;
+      cursor: grab;
+      background-color: #1ED76080;
+      width: 12px;
+      height: 12px;
+      margin: -8px;
+      @full: calc(100% + 16px);
+      &[data-wall-side="1"]{ top: 0; left: 0; width: @full; }
+      &[data-wall-side="2"]{ top: 0; left: 0; height: @full; }
+      &[data-wall-side="4"]{ bottom: 0; left: 0; width: @full; }
+      &[data-wall-side="8"]{ top: 0; right: 0; height: @full; }
+    }
+
   }
 
 }

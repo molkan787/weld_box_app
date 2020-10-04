@@ -21,7 +21,6 @@ export class Diagram{
 
   readonly store = new DiagramStore();
   readonly chart: D3Node;
-  private rootGroup: D3Node;
   private nodesLayer: D3Node;
   private edgesLayer: D3Node;
 
@@ -44,21 +43,22 @@ export class Diagram{
 
     // Initializing d3 chart
     const chart = select(parentSelector)
-      .append('svg')
+      .append('div')
       .classed('diagram', true)
-      .attr('width', width)
-      .attr('height', height)
-      .attr('xmlns:xhtml', 'http://www.w3.org/1999/xhtml');
+      .attr('style', `width:${width}px;height:${height}px`)
     if(chartClasses) chart.classed(chartClasses, true);
 
-    const { x, y } = (<SVGSVGElement>chart.node()).getBoundingClientRect();
+    const { x, y } = (<HTMLElement>chart.node()).getBoundingClientRect();
     this.store.setCanvasOffset({ x, y });
 
     this.store.setRootElement(chart);
 
-    this.rootGroup = chart.append('g')
-    this.edgesLayer = this.rootGroup.append('g');
-    this.nodesLayer = this.rootGroup.append('g');
+    this.edgesLayer = chart.append('svg')
+                            .attr('width', width)
+                            .attr('height', height)
+                            .append('g')
+
+    this.nodesLayer = chart.append('div');
 
     const _zoom = zoom()
     .extent([[0, 0], [width, height]])
@@ -108,7 +108,11 @@ export class Diagram{
   }
 
   private zoomed({ transform }: any) {
-    this.rootGroup.attr("transform", transform);
+    transform.toString2 = function (){
+      return "translate(" + this.x + "px," + this.y + "px) scale(" + this.k + ")";
+    }
+    this.nodesLayer.attr('style', 'transform:' + transform.toString2());
+    this.edgesLayer.attr('transform', transform);
     this.zoomTransform = transform;
     this.store.setZoomTransform(transform);
   }

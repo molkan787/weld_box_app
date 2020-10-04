@@ -1,5 +1,5 @@
 import { D3Node, D3NodesMap } from "./types/aliases";
-import RBush from 'rbush';
+import RBush, { BBox } from 'rbush';
 import EventEmitter from 'eventemitter3';
 import { Node } from "./components/node";
 import { Position } from "./interfaces/Position";
@@ -129,6 +129,11 @@ export class DiagramStore extends EventEmitter{
     return this.nodesSpatialMap.search(bbox);
   }
 
+  public getNodesFromBBox(bbox: BBox): Node[]{
+    // Run the actual search on the Spatial Map/Index
+    return this.nodesSpatialMap.search(bbox);
+  }
+
   /** Converts Point to `RBush`s Bounding Box */
   private pointToBBox(point: Position, radius: number){
     const { x, y } = point;
@@ -140,12 +145,16 @@ export class DiagramStore extends EventEmitter{
     }
   }
 
-  public transformClientPoint(point: Position, roundNumbers: boolean = false){
+  public transformClientPoint(point: Position, roundNumbers: boolean = false): Position{
     let { x, y } = point;
     x -= this.canvasOffset.x;
     y -= this.canvasOffset.y;
+    return this.transformPoint({ x, y }, roundNumbers);
+  }
+  public transformPoint(point: Position, roundNumbers: boolean = false): Position{
+    let { x, y } = point;
     if(this.zoomTransform){
-      // scale and move the point according the canvas zoom level and drag offset
+      // scale and move the point according to the canvas zoom level and drag offset
       [x, y] = this.zoomTransform.invert([x, y]);
     }
     if(roundNumbers){

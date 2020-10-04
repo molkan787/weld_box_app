@@ -11,7 +11,7 @@ export class EdgeDrawer{
 
   private currentEdge: Edge | null = null;
 
-  /** Could be the Source node or target candidate */
+  /** Can be the Source node or target candidate */
   private nodeInSubject: Node | null = null;
 
   constructor(readonly store: DiagramStore){
@@ -31,8 +31,9 @@ export class EdgeDrawer{
 
   onNodeDragStart(event: DiagramEvent){
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
-    const isLine = srcElement.tagName === 'line' && srcElement.classList.contains(CLASSES.HIGHLIGHT_LINE);
+    const isLine = srcElement.classList.contains(CLASSES.HIGHLIGHT_LINE);
     const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
+
     if(isLine && wall){
       const node = this.nodeInSubject;
       // un-highlight node's wall
@@ -63,7 +64,7 @@ export class EdgeDrawer{
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
     const { x, y } = event.sourceEvent;
-    const point = { x, y };
+    const point = this.store.transformClientPoint({ x, y });
     const targetConnection = new EdgeConnection(AttachType.Position);
     targetConnection.position = point;
     edge.setTarget(targetConnection);
