@@ -96,13 +96,13 @@ export class Diagram{
     this.store.nodeDraggingTool = true;
   }
 
-  public createNodeAt(point: Position){
-    const width = 120, height = 60;
+  public createNodeAt(point: Position, nodeClass: typeof Node){
+    const width = 240, height = 120;
     let { x, y } = point;
     if(this.zoomTransform) [x, y] = this.zoomTransform.invert([x, y]);
     x -= width / 2;
     y -= height / 2;
-    const node = new Node({ x, y }, { width, height, radius: 0 });
+    const node = new nodeClass({ x, y }, { width, height, radius: 0 });
     setTimeout(() => this.addNode(node), 0);
     return node;
   }

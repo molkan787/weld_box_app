@@ -1,15 +1,11 @@
-import { select } from "d3";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
-import { Corner, GetRectangleCornerPosition, Side } from "../helpers/geometry";
+import { Corner, Side } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
-import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
 import { cs } from "./utils";
-
-const HEADER_HEIGHT = 30;
 
 export class NodeRenderer{
 
@@ -28,13 +24,12 @@ export class NodeRenderer{
     header.append('span')
             .classed(CLASSES.HEADER_TEXT, true)
 
-
-
     this.addResizeHandles(root, node.id);
 
     this.store.setD3Node(node.id, root);
     this.update(node);
 
+    node.DOMElementBuilt(root);
   }
 
   /** Update node's visual representation */

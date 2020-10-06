@@ -16,6 +16,7 @@ import StatusBar from './StatusBar.vue';
 import Vue from 'vue'
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
+import { State } from '../my-diagram/state';
 interface MyData {
   diagram: MyDiagram | null
 }
@@ -44,7 +45,7 @@ export default Vue.extend({
         const node = this.diagram?.createNodeAt({
           x: e.clientX - 40, // -40px because of side bar width (temporary solution)
           y: e.clientY - 40 // -40px because of top bar height (temporary solution)
-        })
+        }, State)
         if(node) node.title = `State ${node.id}`;
       }
     }

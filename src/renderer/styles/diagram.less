@@ -1,20 +1,24 @@
 .diagram{
-  background-color: #434343;
+  background-color: #18191D;
 
   .node{
-    background-color: #434343;
-    border: 4px solid #FFFFFF;
+    background-color: #24252A;
+    border: 3px solid #3B3D44;
+    color: white;
+    border-radius: 6px;
 
-    .header{
-      background-color: #FFFFFF;
+    & > .header{
+      background-color: #3B3D44;
       height: 30px;
+
+      .header-text{
+        display: inline-block;
+        padding: 3px 0 0 7px;
+        font-size: 17px;
+        font-weight: bold;
+      }
     }
 
-    .header-text{
-      transform: translate(7px, 20px);
-      font-size: 18px;
-      font-weight: bold;
-    }
   }
 
   .edge{

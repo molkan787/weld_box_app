@@ -49,6 +49,10 @@ export class Node extends Component{
     child._parent = null;
   }
 
+  /**
+   * Create a new `EdgeConnection` instance and link it to the current `Node` instance
+   * @param wall
+   */
   createEdgeConnection(wall?: Side){
     const connection = typeof wall === 'undefined'
                         ? new EdgeConnection(AttachType.Node)
@@ -58,6 +62,10 @@ export class Node extends Component{
     return connection;
   }
 
+  /**
+   * Unlink an edge connection and remove it from the node instance
+   * @param connection EdgeConnection instance that need to be removed
+   */
   removeEdgeConnection(connection: EdgeConnection): boolean{
     if(connection.node !== this){
       throw new Error(`Requested removal of Edge Connection from an incorrect Node`);
@@ -71,8 +79,11 @@ export class Node extends Component{
     return false;
   }
 
-  public buildingNode(d3node: D3Node){}
-
-  public buildingHeader(header: D3Node){}
+  /**
+   * A life cycle hook, called after initial build of DOM element of the node.
+   * Can be used to add custom content
+   * @param d3node D3's selection of node's DOM element
+   */
+  public DOMElementBuilt(d3node: D3Node){}
 
 }
