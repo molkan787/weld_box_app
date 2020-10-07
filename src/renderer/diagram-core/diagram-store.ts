@@ -6,6 +6,8 @@ import { Position } from "./interfaces/Position";
 import { EVENTS } from "./constants";
 import { DiagramEvent } from "./interfaces/DiagramEvent";
 import { ZoomTransform } from "d3";
+import { DiagramOptions } from "./interfaces/DiagramOptions";
+import { Margin } from "./interfaces/Margin";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -17,7 +19,7 @@ export class DiagramStore extends EventEmitter{
   private readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
 
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
-  private readonly nodesSpatialMap: MyRBush = new MyRBush();
+  private readonly nodesSpatialMap: MyRBush = new MyRBush(this);
 
   public nodeDraggingTool: boolean = true;
 
@@ -32,8 +34,20 @@ export class DiagramStore extends EventEmitter{
 
   private _rootElement: D3Node | null = null;
 
-  constructor(){
+  public readonly nodePadding: Margin;
+
+  constructor(public readonly diagramOptions: DiagramOptions){
     super();
+
+    const { nodeBorderWidth, nodeHeaderHeight } = diagramOptions;
+
+    this.nodePadding = Object.freeze({
+      top: nodeHeaderHeight + nodeBorderWidth - 1,
+      right: nodeBorderWidth,
+      bottom: nodeBorderWidth,
+      left: nodeBorderWidth
+    })
+
     // Updates Node's spatial index each time was dropped
     this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(<Node>node))
   }
@@ -112,7 +126,6 @@ export class DiagramStore extends EventEmitter{
    */
   public refreshNode(node: Node){
     this.removeNode(node);
-    if(node.parent) return;
     this.addNode(node);
   }
 
@@ -145,12 +158,26 @@ export class DiagramStore extends EventEmitter{
     }
   }
 
+  /**
+   * Maps client point (relative to top left corner of the web page) to the canvas point.
+   * Basically adds offset and scales the point accoding to the canvas zoom level and drag position,
+   * also adds the offset of the canvas wrapper relative the the web page
+   * @param point Point to be mapped
+   * @param roundNumbers if `true` the returned x, y will be rounded to the nearest integers
+   */
   public transformClientPoint(point: Position, roundNumbers: boolean = false): Position{
     let { x, y } = point;
     x -= this.canvasOffset.x;
     y -= this.canvasOffset.y;
     return this.transformPoint({ x, y }, roundNumbers);
   }
+
+  /**
+   * Maps point (relative to top left corner of canvas wrapper element) to the canvas point.
+   * Basically adds offset and scales the point accoding to the canvas zoom level and drag position
+   * @param point Point to be mapped
+   * @param roundNumbers if `true` the returned x, y will be rounded to the nearest integers
+   */
   public transformPoint(point: Position, roundNumbers: boolean = false): Position{
     let { x, y } = point;
     if(this.zoomTransform){
@@ -186,8 +213,15 @@ export class DiagramStore extends EventEmitter{
  */
 class MyRBush extends RBush<Node>{
 
+  constructor(readonly store: DiagramStore){
+    super();
+  }
+
+  // TODO: Cache absolute position instead of re-calculate each time
+
   toBBox(node: Node){
-    const { position: p, size: s } = node;
+    const s = node.size;
+    const p = node.getAbsolutePosition();
     return {
       minX: p.x,
       minY: p.y,
@@ -197,11 +231,15 @@ class MyRBush extends RBush<Node>{
   }
 
   compareMinX(a: Node, b: Node){
-    return a.position.x - b.position.x;
+    const ap = a.getAbsolutePosition();
+    const bp = b.getAbsolutePosition();
+    return ap.x - bp.x;
   }
 
   compareMinY(a: Node, b: Node){
-    return a.position.y - b.position.y;
+    const ap = a.getAbsolutePosition();
+    const bp = b.getAbsolutePosition();
+    return ap.y - bp.y;
   }
 
 

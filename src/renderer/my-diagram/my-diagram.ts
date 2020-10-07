@@ -7,7 +7,9 @@ export class MyDiagram extends Diagram{
   constructor(parentSelector: string){
     super(parentSelector, {
       width: window.innerWidth - 40,
-      height: window.innerHeight - 60
+      height: window.innerHeight - 60,
+      nodeBorderWidth: 3,
+      nodeHeaderHeight: 30
     });
   }
 

@@ -44,7 +44,6 @@ export class NodeDragging{
 
   /** Handler for on drag start event */
   private dragstarted(d3Node: D3Node, event: any, node: Node) {
-
     // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
     if(!this.store.nodeDraggingTool){
       this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: event});
@@ -102,11 +101,16 @@ export class NodeDragging{
       pos.y += dy;
     }
 
-    // this.capNodeBBox(node);
+    this.capNodeBBox(node);
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
 
-    if(!this.resizing){
+    if(this.resizing){
+      // caps size & position of any child that exceeds parent's box
+      for(let child of node.children){
+        this.capNodeBBox(child)
+      }
+    }else{
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
     }
     for(let child of node.children){
@@ -125,9 +129,6 @@ export class NodeDragging{
 
     d3Node.style('cursor', 'default');
 
-    // Updates Node's index in the Spatial Map
-    this.store.refreshNode(node);
-
     this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
   }
 
@@ -139,17 +140,22 @@ export class NodeDragging{
 
   private capNodeBBox(node: Node){
     const { parent, position: p, size: s } = node;
+    let changed = false;
     if(parent){
-      const minY = 30;
-      const margY = minY + 5;
       const ps = parent.size;
-      if(p.x < 5) p.x = 5;
-      if(p.y < minY) p.y = minY;
-      if(s.width > ps.width - 10) s.width = Math.round(ps.width - 10);
-      if(s.height > ps.height - margY) s.height = Math.round(ps.height - margY);
-      if(p.x + s.width - 5 > ps.width - 10) p.x = Math.round(ps.width - s.width - 5);
-      if(p.y + s.height - 5 > ps.height - 10) p.y = Math.round(ps.height - s.height - 5);
+      const { top, right, bottom, left } = this.store.nodePadding;
+      const extp = 1; // extra padding
+      const maxW = ps.width - left - right - extp;
+      const maxH = ps.height - top - bottom - extp;
+
+      if(p.x < extp && (changed = true)) p.x = extp;
+      if(p.y < extp && (changed = true)) p.y = extp;
+      if(s.width > maxW && (changed = true)) s.width = Math.round(maxW);
+      if(s.height > maxH && (changed = true)) s.height = Math.round(maxH);
+      if(p.x + s.width > maxW && (changed = true)) p.x = Math.round(maxW - s.width);
+      if(p.y + s.height > maxH && (changed = true)) p.y = Math.round(maxH - s.height);
     }
+    return changed;
   }
 
 

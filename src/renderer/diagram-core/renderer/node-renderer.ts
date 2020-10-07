@@ -15,14 +15,18 @@ export class NodeRenderer{
   }
 
   build(container: D3Node, node: Node){
-    const root = container.append('div');
+    const child = node.parent != null;
+    const con = child ? container.select(cs(CLASSES.NODE_BODY)) : container;
+    const root = con.append('div');
     root.data([node]).classed('node', true);
-
-    root.append('div').classed(CLASSES.NODE_BODY, true);
 
     const header = root.append('div').classed('header', true);
     header.append('span')
             .classed(CLASSES.HEADER_TEXT, true)
+
+    root.append('svg').classed('svg-layer', true).append('g');
+
+    root.append('div').classed(CLASSES.NODE_BODY, true);
 
     this.addResizeHandles(root, node.id);
 
@@ -81,6 +85,8 @@ export class NodeRenderer{
           .style('width', width + 'px')
           .style('height', height + 'px');
 
+    const svgGroup = d3Node.select('.svg-layer g');
+    svgGroup.attr('transform', `translate(${-pos.x}, ${-pos.y})`)
   }
 
   private updateHeader(node: Node){

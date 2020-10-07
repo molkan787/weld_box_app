@@ -20,7 +20,7 @@ export function GetRectangleCornerPosition(position: Position, size: Size, corne
 }
 
 /**
- * Check if a point is on top of or close to rectangle's wall.
+ * Check if a point is on top of or close to rectangle's wall, and return the wall if there is any
  * @param bbox
  * @param point
  * @param maxDistance
@@ -74,4 +74,12 @@ const _GetRectWallCenterPoint_ScaleMatrices = {
   [Side.Left]: {x: 0, y: 0.5},
   [Side.Bottom]: {x: 0.5, y: 1},
   [Side.Right]: {x: 1, y: 0.5},
+}
+
+
+export function addPoints(p1: Position, p2: Position): Position{
+  return {
+    x: p1.x + p2.x,
+    y: p1.y + p2.y
+  }
 }

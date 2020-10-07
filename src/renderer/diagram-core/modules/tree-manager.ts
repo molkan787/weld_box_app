@@ -54,10 +54,11 @@ export class TreeManager{
 
   private changeNodeParent(node: Node, newParent: Node){
     newParent.addChild(node);
-    const pp = newParent.position;
+    const { top, left } = this.store.nodePadding;
+    const pp = newParent.getAbsolutePosition();
     const cp = node.position;
-    cp.x -= pp.x;
-    cp.y -= pp.y;
+    cp.x -= pp.x + left;
+    cp.y -= pp.y + top;
     this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node });
   }
 

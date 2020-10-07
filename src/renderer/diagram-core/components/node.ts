@@ -1,4 +1,5 @@
-import { Side } from "../helpers/geometry";
+import { DiagramStore } from "../diagram-store";
+import { addPoints, Side } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
@@ -10,6 +11,8 @@ import { AttachType, EdgeConnection } from "./edge-connection";
  * This class should be extended for use of business logic properties/attributes
  */
 export class Node extends Component{
+
+  public store?: DiagramStore;
 
   private _parent: Node | null = null;
   readonly children: Node[] = [];
@@ -31,6 +34,14 @@ export class Node extends Component{
 
   public get parent(){
     return this._parent;
+  }
+
+  /**
+   * Return the first Node in the hirechy going upward starting the current node
+   * @param fallback This parameter can be ignored, it is used for internal functionality
+   */
+  public getTopParent(fallback: Node | null = null): Node | null{
+    return this._parent?.getTopParent(this._parent) || fallback;
   }
 
   addChild(child: Node){
@@ -77,6 +88,22 @@ export class Node extends Component{
       return true;
     }
     return false;
+  }
+
+  /**
+   * Calculates & return Node's absolute position with respect of parent's position and padding
+   */
+  public getAbsolutePosition(): Position{
+    const pad = (<DiagramStore>this.store).nodePadding;
+    if(this.parent != null){
+      const pp = this.parent.getAbsolutePosition();
+      const ap = addPoints(pp, this.position);
+      ap.x += pad.left;
+      ap.y += pad.top;
+      return ap;
+    }else{
+      return this.position;
+    }
   }
 
   /**

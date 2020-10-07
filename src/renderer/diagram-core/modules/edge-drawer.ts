@@ -80,7 +80,7 @@ export class EdgeDrawer{
     const { sourceEvent: mouseevent } = sourceEvent;
     const { clientX, clientY } = mouseevent;
     const point = this.store.transformClientPoint({ x: clientX, y: clientY }, true);
-    const pos = node.position;
+    const pos = node.getAbsolutePosition();
     const offset = { x: 0, y: 0}
     if(wall == Side.Top || wall == Side.Bottom){
       offset.x = point.x - pos.x - node.size.width / 2;
@@ -121,26 +121,41 @@ export class EdgeDrawer{
       y: event.clientY
     };
     const transformedPoint = this.store.transformClientPoint(point, true);
-    const node = this.store.getNodesFromPoint(transformedPoint, 6)[0];
+    const nodes = this.store.getNodesFromPoint(transformedPoint, 6);
 
-    const subject = this.nodeInSubject;
-    if(node !== subject && subject !== null){
-      if(subject.highlightedWall){
-        subject.highlightedWall = null;
-        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+    let subject: Node | null = null;
+    let touchedWall: Side | null = null;
+
+    // Find a node that one of his walls was touched (overlapped) with mouse pointer
+    for(let node of nodes){
+      const { size } = node;
+      const position = node.getAbsolutePosition();
+      const bbox = new DOMRect(position.x, position.y, size.width, size.height);
+      const wall = TouchesWall(bbox, transformedPoint, 10);
+      if(wall != null){
+        subject = node;
+        touchedWall = wall;
+        break;
       }
     }
 
-    if(!node) return;
+    const prevSubject = this.nodeInSubject;
 
-    const { size, position } = node;
-    const bbox = new DOMRect(position.x, position.y, size.width, size.height);
-    const touchWall = TouchesWall(bbox, transformedPoint, 10);
-    if(node.highlightedWall !== touchWall){
-      node.highlightedWall = touchWall;
-      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
+    // if that was previously a subject node and was is not the new found one
+    // un-highlight the wall of that previous subject
+    if(subject !== prevSubject && prevSubject !== null){
+      if(prevSubject.highlightedWall){
+        prevSubject.highlightedWall = null;
+        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: prevSubject, sourceEvent: event });
+      }
     }
-    this.nodeInSubject = touchWall ? node : null;
+
+    if(subject && touchedWall && subject.highlightedWall !== touchedWall){
+      subject.highlightedWall = touchedWall;
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+    }
+    this.nodeInSubject = subject;
+
   }
 
 //#endregion

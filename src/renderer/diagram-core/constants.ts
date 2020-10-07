@@ -13,6 +13,7 @@ export const EVENTS = Object.freeze({
   NODE_PARENT_CHANGED: 'node-parent-changed',
 
   EDGE_CREATED: 'edge-created',
+  EDGE_ADDED: 'edge-added',
   EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',

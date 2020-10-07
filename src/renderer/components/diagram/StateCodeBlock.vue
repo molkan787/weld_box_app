@@ -1,17 +1,23 @@
 <template>
-  <div class="code-block" :class="{expanded}">
+  <div class="code-block">
     <div class="header">
       Statements <span class="counts">{{ statementBlocks.length }}</span>
       <button @click="expanded = !expanded">{{ expanded ? '-' : '+' }}</button>
     </div>
 
-    <div class="statement-blocks">
-      <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
-        <span class="name">{{ sb.name }}</span>
-        <div class="statements">
-          <pre>{{ sb.statements }}</pre>
+    <div v-if="expanded">
+      <div class="statement-blocks">
+        <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
+          <span class="name">{{ sb.name }}</span>
+          <div class="statements">
+            <pre>{{ sb.statements }}</pre>
+          </div>
         </div>
       </div>
+
+      <button @click="addBlockClick" class="add-block">
+        Add Statement Block
+      </button>
     </div>
 
   </div>
@@ -19,25 +25,31 @@
 
 <script>
 export default {
+  props: {
+    state: {
+      type: Object,
+      required: true
+    }
+  },
   data:() => ({
     statementsCount: 2,
-    expanded: false,
-    statementBlocks: [
-      {
-        name: 'Statement Block 1',
-        statements: [
-          'Statement#1;',
-          'Statement#2;'
-        ].join('\n')
-      },
-      {
-        name: 'Statement Block 1',
-        statements: [
-          'Statement#1;'
-        ].join('\n')
+    expanded: true,
+  }),
+  computed: {
+    statementBlocks(){
+      return this.state.statementBlocks;
+    }
+  },
+  methods: {
+    addBlockClick(){
+      const arr = this.state.statementBlocks;
+      const block = {
+        name: `Statement Block ${arr.length + 1}`,
+        statements: 'Statement#1;'
       }
-    ]
-  })
+      arr.push(block);
+    }
+  }
 }
 </script>
 
@@ -47,10 +59,7 @@ export default {
   width: 150px;
   height: 18px;
   overflow: hidden;
-
-  &.expanded{
-    height: fit-content;
-  }
+  height: fit-content;
 
   div{
     position: unset;
@@ -62,7 +71,10 @@ export default {
 
     button{
       float: right;
-      margin-top: -3px;
+      margin-top: -2px;
+      margin-right: 1px;
+      height: 16px;
+      padding: 0px 4px;
     }
 
     .counts{
@@ -91,6 +103,23 @@ export default {
           margin: 0;
         }
       }
+    }
+  }
+
+  .add-block{
+    display: inline-block;
+    width: 100%;
+    border: none;
+    color: white;
+    background-color: #121316;
+    outline: none;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 9px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    &:hover{
+      background-color: #17181b;
     }
   }
 

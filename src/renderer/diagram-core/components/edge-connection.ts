@@ -47,24 +47,19 @@ export class EdgeConnection{
       return this.position;
     }else if(this.attachType == AttachType.Node && node){
       // Calculte center point of the rectangle
-      const { x, y} = node.position;
+      const { x, y} = node.getAbsolutePosition();
       const { width, height } = node.size;
       const center = {
         x: x + width / 2,
         y: y + height / 2
       }
-      if (node.parent){
-        const pp = node.parent.position;
-        center.x += pp.x;
-        center.y += pp.y;
-      }
       return center;
     }else if(this.attachType == AttachType.NodeWall && node){
       const offset = GetRectWallCenterPoint(node.size, this.nodeWall);
-      const pp = node.parent?.position || { x: 0, y: 0 };
+      const position = node.getAbsolutePosition();
       return {
-        x: node.position.x + offset.x + pp.x,
-        y: node.position.y + offset.y + pp.y
+        x: position.x + offset.x,
+        y: position.y + offset.y
       }
     }
 

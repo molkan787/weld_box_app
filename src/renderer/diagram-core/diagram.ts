@@ -19,7 +19,7 @@ import { Position } from './interfaces/Position';
  */
 export class Diagram{
 
-  readonly store = new DiagramStore();
+  readonly store = new DiagramStore(this.options);
   readonly chart: D3Node;
   private nodesLayer: D3Node;
   private edgesLayer: D3Node;
@@ -30,7 +30,7 @@ export class Diagram{
 
   private readonly modules: any;
 
-  constructor(parentSelector: string, options: DiagramOptions){
+  constructor(parentSelector: string, public readonly options: DiagramOptions){
     const { width, height, chartClasses } = options;
 
     this.modules = {
@@ -78,12 +78,14 @@ export class Diagram{
    * @param node Node instance to add
    */
   public addNode(node: Node){
+    node.store = this.store;
     this.store.addNode(node);
     this.store.emit(EVENTS.NODE_ADDED, { node })
   }
 
   public addEdge(edge: Edge){
-    this.renderer.build(this.edgesLayer, edge);
+    this.store.emit(EVENTS.EDGE_ADDED, { edge })
+    // this.renderer.build(this.edgesLayer, edge);
   }
 
   public activateEdgeDrawer(){

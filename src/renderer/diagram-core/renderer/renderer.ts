@@ -21,8 +21,10 @@ export class Renderer{
 
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
+    store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
 
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e))
+    store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
   }
 
   /**
@@ -67,6 +69,10 @@ export class Renderer{
     this.build(container, node);
   }
 
+  onEdgeAdded(event: DiagramEvent){
+    this.build(<D3Node>this.edgesLayer, <Edge>event.edge);
+  }
+
   /**
    * Handles change of Node's bounding box, Usually triggered by `NodeDragging` module
    */
@@ -87,6 +93,12 @@ export class Renderer{
   onEdgeConnectionsChanged(event: DiagramEvent){
     const edge = <Edge>event.edge;
     this.edgeRenderer.update(edge);
+    this.edgeRenderer.setupShadows(edge);
+  }
+
+  onNodeParentChanged(event: DiagramEvent){
+    const edges = (<Node>event.node).edges;
+    edges.forEach(ec => this.edgeRenderer.setupShadows(<Edge>ec.edge));
   }
 
 }
