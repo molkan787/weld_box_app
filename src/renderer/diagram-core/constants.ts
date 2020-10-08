@@ -15,6 +15,7 @@ export const EVENTS = Object.freeze({
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',
   EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed',
+  EDGE_CONNECTIONS_UPDATED: 'edge-connections-updated',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',

@@ -113,9 +113,7 @@ export class NodeDragging{
     }else{
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
     }
-    for(let child of node.children){
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
-    }
+
   }
 
   /** handler for drag end event */

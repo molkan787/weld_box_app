@@ -24,9 +24,12 @@ export class NodeRenderer{
     header.append('span')
             .classed(CLASSES.HEADER_TEXT, true)
 
-    root.append('svg').classed('svg-layer', true).append('g');
-
     root.append('div').classed(CLASSES.NODE_BODY, true);
+
+    root.append('svg')
+          .attr('id', this.getSVGLayerId(node))
+          .classed('svg-layer', true)
+          .append('g');
 
     this.addResizeHandles(root, node.id);
 
@@ -85,8 +88,17 @@ export class NodeRenderer{
           .style('width', width + 'px')
           .style('height', height + 'px');
 
-    const svgGroup = d3Node.select('.svg-layer g');
-    svgGroup.attr('transform', `translate(${-pos.x}, ${-pos.y})`)
+    const ap = node.getAbsolutePosition();
+    const svgGroup = d3Node.select(this.getSVGGroupSelector(node));
+    svgGroup.attr('transform', `translate(${-ap.x}, ${-ap.y})`)
+  }
+
+  public getSVGGroupSelector(node: Node){
+    return `#${this.getSVGLayerId(node)} g`
+  }
+
+  public getSVGLayerId(node: Node){
+    return `node-${node.id}-svg-layer`
   }
 
   private updateHeader(node: Node){

@@ -1,5 +1,5 @@
 import './styles/diagram.less'
-import { select, zoom, ZoomTransform } from 'd3';
+import { select, zoom, ZoomTransform, event, interpolateZoom } from 'd3';
 import { D3Node } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
 import { NodeDragging } from './modules/node-dragging';
@@ -60,10 +60,12 @@ export class Diagram{
 
     this.nodesLayer = chart.append('div');
 
+
     const _zoom = zoom()
     .extent([[0, 0], [width, height]])
     .scaleExtent([0.1, 4])
     .on('zoom', payload => this.zoomed(payload))
+    // .filter((e: any) => e.type !== 'wheel' || e.ctrlKey)
 
     chart.call(<any>_zoom);
 
@@ -81,6 +83,7 @@ export class Diagram{
     node.store = this.store;
     this.store.addNode(node);
     this.store.emit(EVENTS.NODE_ADDED, { node })
+    console.log(node)
   }
 
   public addEdge(edge: Edge){

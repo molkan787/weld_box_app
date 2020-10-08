@@ -1,5 +1,6 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge } from "../components/edge";
+import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -21,10 +22,12 @@ export class Renderer{
 
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
-    store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
-
-    store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e))
     store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
+
+    store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
+    store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, e => this.onEdgeConnectionsUpdated(e));
+    store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e));
+
   }
 
   /**
@@ -42,11 +45,13 @@ export class Renderer{
    * @param container DOM element to which add childs elements
    * @param component Diagram component, either `Node` or `Edge` instance
    */
-  build(container: D3Node, component: Component){
+  build(container: D3Node | null, component: Component){
     if(component.type === ComponentType.Node){
-      this.nodeRenderer.build(container || this.nodesLayer, <Node>component);
+      this.nodeRenderer.build(container || <D3Node>this.nodesLayer, <Node>component);
     }else if(component.type === ComponentType.Edge){
-      this.edgeRenderer.build(container || this.edgesLayer, <Edge>component);
+      const edge = <Edge>component;
+      const _container = container || this.getEdgeContainer(edge);
+      this.edgeRenderer.build(_container, <Edge>component);
     }
   }
 
@@ -62,6 +67,50 @@ export class Renderer{
     }
   }
 
+  rebuildEdge(edge: Edge){
+    this.edgeRenderer.destroyElement(edge);
+    this.build(null, edge);
+  }
+
+  getEdgeContainer(edge: Edge): D3Node{
+    const at1 = edge.source.attachType;
+    const at2 = edge.target.attachType;
+    const node1 = at1 == AttachType.Node || at1 == AttachType.NodeWall ? edge.source.node : null;
+    const node2 = at2 == AttachType.Node || at2 == AttachType.NodeWall ? edge.target.node : null;
+    const commonParent = this.findNearestCommonParent(node1, node2);
+
+    if(commonParent === null){
+      return <D3Node>this.edgesLayer;
+    }else{
+      const selector = this.nodeRenderer.getSVGGroupSelector(commonParent);
+      return this.store.getD3Node(commonParent.id).select(selector);
+    }
+  }
+
+  private findNearestCommonParent(node1: Node | null, node2: Node | null): Node | null{
+    const h1 = node1?.getHierarchyPath() || [];
+    const h2 = node2?.getHierarchyPath() || [];
+    h1.pop();
+    h2.pop();
+    let wereSame = false;
+    let parent: Node | null = null;
+    const len = Math.max(h1.length, h2.length);
+    for(let i = 0; i < len; i++){
+      const p1 = h1[i];
+      const p2 = h2[i];
+      const same = p1 === p2;
+      if(same){
+        wereSame = true;
+        parent = p1;
+      }else if(wereSame){
+        break;
+      }else{
+        parent = p1 || p2;
+      }
+    }
+    return parent;
+  }
+
   onNodeAdded(event: DiagramEvent){
     const node = <Node>event.node;
     const domParent = node.parent && this.store.getD3Node(node.parent.id);
@@ -70,7 +119,7 @@ export class Renderer{
   }
 
   onEdgeAdded(event: DiagramEvent){
-    this.build(<D3Node>this.edgesLayer, <Edge>event.edge);
+    this.build(null, <Edge>event.edge);
   }
 
   /**
@@ -88,17 +137,25 @@ export class Renderer{
       this.edgeRenderer.update(edge);
     }
 
+    for(let child of node.children){
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+    }
+
+  }
+
+  onEdgeConnectionsUpdated(event: DiagramEvent){
+    const edge = <Edge>event.edge;
+    this.edgeRenderer.update(edge);
   }
 
   onEdgeConnectionsChanged(event: DiagramEvent){
     const edge = <Edge>event.edge;
-    this.edgeRenderer.update(edge);
-    this.edgeRenderer.setupShadows(edge);
+    this.rebuildEdge(edge);
   }
 
   onNodeParentChanged(event: DiagramEvent){
     const edges = (<Node>event.node).edges;
-    edges.forEach(ec => this.edgeRenderer.setupShadows(<Edge>ec.edge));
+    edges.forEach(ec => this.rebuildEdge(<Edge>ec.edge));
   }
 
 }

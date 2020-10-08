@@ -44,6 +44,15 @@ export class Node extends Component{
     return this._parent?.getTopParent(this._parent) || fallback;
   }
 
+  public getHierarchyPath(): Node[]{
+    const path: Node[] = [this];
+    let n: Node | null = this;
+    while(n = n.parent){
+      path.push(n);
+    }
+    return path.reverse();
+  }
+
   addChild(child: Node){
     const exist = this.children.includes(child);
     if(!exist){

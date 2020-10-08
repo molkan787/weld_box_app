@@ -70,7 +70,7 @@ export class EdgeDrawer{
     const targetConnection = new EdgeConnection(AttachType.Position);
     targetConnection.position = point;
     edge.setTarget(targetConnection);
-    this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
+    this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
 
     const mouseevent = event.sourceEvent.sourceEvent;
     this.onMouseMove(mouseevent);
