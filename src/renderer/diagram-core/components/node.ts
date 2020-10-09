@@ -18,6 +18,7 @@ export class Node extends Component{
   readonly children: Node[] = [];
   readonly edges: EdgeConnection[] = [];
 
+  public showContent: boolean = false;
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
 

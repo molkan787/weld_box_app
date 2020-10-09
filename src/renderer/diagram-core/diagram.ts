@@ -83,7 +83,6 @@ export class Diagram{
     node.store = this.store;
     this.store.addNode(node);
     this.store.emit(EVENTS.NODE_ADDED, { node })
-    console.log(node)
   }
 
   public addEdge(edge: Edge){
