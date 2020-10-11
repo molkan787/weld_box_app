@@ -67,27 +67,6 @@ export class TreeManager{
     return items.sort((a, b) => a.dist - b.dist).map(item => item.node);
   }
 
-  private findNearestNode(bbox: BBox, nodes: Node[], excludes: Node[]){
-    const len = nodes.length;
-    let nearest: Node | null = null;
-    let record = Infinity;
-    for(let i = 0; i < len; i++){
-      const node = nodes[i];
-      if(excludes.includes(node)) continue;
-      const { size } = node;
-      const pos = node.getAbsolutePosition();
-      const diffSum = Math.abs(pos.x - bbox.minX)
-                    + Math.abs(pos.y - bbox.minY)
-                    + Math.abs(pos.x + size.width - bbox.maxX)
-                    + Math.abs(pos.y + size.height - bbox.maxY);
-      if(diffSum < record){
-        record = diffSum;
-        nearest = node;
-      }
-    }
-    return nearest;
-  }
-
   private isInChildsBranches(root: Node, target: Node){
     const childs = root.children;
     const len = childs.length;

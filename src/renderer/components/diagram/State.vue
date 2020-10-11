@@ -2,6 +2,8 @@
   <div class="state">
     <StateIndicators :state="state" />
     <StateCodeBlock :state="state" />
+    <button @click="state.showContent = !state.showContent">{{ state.showContent ? 'Hide content' : 'Show content' }}</button>
+    <button @click="openState">Open</button>
   </div>
 </template>
 
@@ -17,6 +19,11 @@ export default {
     state: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    openState(){
+      this.state.open();
     }
   }
 }

@@ -14,7 +14,11 @@ export class MyDiagram extends Diagram{
   }
 
   buildTestDiagram(){
-    const node1 = new State({ x: 80, y: 60 }, { width:750, height: 480, radius: 0 }, { title: 'State 1' });
+    const node1 = new State({ x: 80, y: 60 }, { width:750, height: 480, radius: 0 }, { title: 'State 1', showContent: true });
+    // @ts-ignore
+    window.state = node1;
+    // @ts-ignore
+    window.diagram = this;
     // const node2 = new Node({ x: 350, y: 50 }, { width: 160, height: 120, radius: 0 });
     // const node3 = new Node({ x: 400, y: 250 }, { width: 160, height: 120, radius: 0 });
     // const node4 = new Node({ x: 700, y: 50 }, { width: 100, height: 60, radius: 0 });

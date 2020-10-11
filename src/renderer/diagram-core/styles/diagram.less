@@ -19,6 +19,12 @@
   .node{
     transition: opacity 0.3s;
 
+    &.content-hidden{
+      & > .svg-layer, & > .node-body{
+        display: none;
+      }
+    }
+
     .svg-layer{
       position: absolute;
       width: 100%;

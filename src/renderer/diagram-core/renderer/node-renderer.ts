@@ -1,9 +1,8 @@
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
-import { Corner, Side } from "../helpers/geometry";
+import { Corner } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
-import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
 import { cs } from "./utils";
 
@@ -12,6 +11,7 @@ export class NodeRenderer{
   constructor(readonly store: DiagramStore){
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
+    store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
   }
 
   build(container: D3Node, node: Node){
@@ -25,7 +25,6 @@ export class NodeRenderer{
             .classed(CLASSES.HEADER_TEXT, true)
 
     root.append('div').classed(CLASSES.NODE_BODY, true);
-
     root.append('svg')
           .attr('id', this.getSVGLayerId(node))
           .classed('svg-layer', true)
@@ -41,9 +40,15 @@ export class NodeRenderer{
 
   /** Update node's visual representation */
   update(node: Node){
+    this.updateAttributes(node);
     this.updateBBox(node);
     this.updateDecoration(node);
     this.updateHeader(node);
+  }
+
+  updateAttributes(node: Node){
+    const d3Node = this.getD3Node(node);
+    d3Node.classed(CLASSES.CONTENT_HIDDEN, !node.showContent);
   }
 
   /** Updates element's position in the dom tree,
@@ -66,10 +71,9 @@ export class NodeRenderer{
     d3Node.classed('highlighted', node.highlighted);
 
     // highlight one of node's side, usually used to show attach point when drawing an edge
-    let line: D3Node = d3Node.select('.' + CLASSES.HIGHLIGHT_LINE);
+    let line: D3Node = d3Node.select(cs(CLASSES.HIGHLIGHT_LINE));
     if(node.highlightedWall){
       if(!line.node()) line = d3Node.append('span').classed(CLASSES.HIGHLIGHT_LINE, true);
-      // const { x1, y1, x2, y2 } = this.getRectWallLineCoords(node.size, node.highlightedWall);
       line.attr(ATTR.WALL_SIDE, node.highlightedWall);
     }else{
       line.remove();
@@ -88,6 +92,7 @@ export class NodeRenderer{
           .style('width', width + 'px')
           .style('height', height + 'px');
 
+    if(!node.showContent) return;
     const ap = node.getAbsolutePosition();
     const svgGroup = d3Node.select(this.getSVGGroupSelector(node));
     svgGroup.attr('transform', `translate(${-ap.x}, ${-ap.y})`)
@@ -106,15 +111,6 @@ export class NodeRenderer{
     d3Node.select(cs(CLASSES.HEADER_TEXT))
             .text(node.title);
   }
-
-  private getRectWallLineCoords(size: Size, wall: Side){
-    const { width, height } = size;
-    if(wall === Side.Top) return { x1: 0, y1: 0, x2: width, y2: 0 };
-    else if(wall === Side.Bottom) return { x1: 0, y1: height, x2: width, y2: height };
-    else if(wall === Side.Left) return { x1: 0, y1: 0, x2: 0, y2: height };
-    else return { x1: width, y1: 0, x2: width, y2: height }; // wall === Side.Right
-  }
-
 
   private addResizeHandles(g: D3Node, nodeId: number){
     this.createResizeHandle(g, nodeId, Corner.TopLeft);

@@ -61,7 +61,10 @@ export class NodeDragging{
     d3Node.raise().style('cursor', this.resizing ? 'default' : 'move');
   }
 
-  /** handler for dragged event */
+  /**
+   * handler for dragged event.
+   * this function will either move the node in the canvas or just resize the node according to mouse movement
+   */
   private dragged(d3Node: D3Node, event: any, node: Node) {
 
     // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
@@ -101,14 +104,19 @@ export class NodeDragging{
       pos.y += dy;
     }
 
-    this.capNodeBBox(node);
+    // Skip size capping if the node is current open the canvas as a sub-chart
+    if(!node.props.isOpen){
+      this.capNodeBBox(node);
+    }
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
 
     if(this.resizing){
-      // caps size & position of any child that exceeds parent's box
-      for(let child of node.children){
-        this.capNodeBBox(child)
+      // caps size & position of any child that exceeds parent's box, only if node's content is visible
+      if(node.showContent){
+        for(let child of node.children){
+          this.capNodeBBox(child)
+        }
       }
     }else{
       this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });

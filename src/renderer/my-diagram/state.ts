@@ -7,7 +7,7 @@ import { StatementBlock } from "./statement-block";
 export class State extends Node{
 
   // Internal props
-  private codeBlockVM?: Vue;
+  private vm?: Vue;
 
   // Business props
   public isSubTask: boolean = false;
@@ -20,13 +20,13 @@ export class State extends Node{
   DOMElementBuilt(node: D3Node){
     const content = node.append('div');
 
-    this.codeBlockVM = new Vue({
+    this.vm = new Vue({
       data: { state: this },
       components: { StateComponent },
       template: '<StateComponent :state="state"/>'
     });
 
-    this.codeBlockVM.$mount(<HTMLElement>content.node());
+    this.vm.$mount(<HTMLElement>content.node());
   }
 
 }

@@ -1,4 +1,5 @@
-import { DiagramStore } from "../diagram-store";
+import { EVENTS } from "../constants";
+import { DiagramStore, MyRBush } from "../diagram-store";
 import { addPoints, Side } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
@@ -18,23 +19,56 @@ export class Node extends Component{
   readonly children: Node[] = [];
   readonly edges: EdgeConnection[] = [];
 
-  public showContent: boolean = false;
+  private _showContent: boolean = true;
+
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
 
   public title: string;
 
+  public readonly props: {
+    isOpen: boolean,
+    openState: {
+      size?: Size,
+      position?: Position
+    },
+    normalState: {
+      size?: Size,
+      position?: Position
+    }
+  } = { isOpen: false, openState: {}, normalState: {} };
+
   constructor(
     public position: Position,
     public size: Size,
-    data?: any
+    options?: any
   ){
     super(ComponentType.Node);
-    this.title = data?.title || '';
+    this.title = options?.title || '';
+    const sc = options?.showContent;
+    this._showContent = typeof sc == 'boolean' ? sc : true;
+  }
+
+  public open(){
+    this.store?.emit(EVENTS.DIAGRAM_OPEN_NODE, { node: this });
+  }
+
+  public get showContent(){
+    return this._showContent;
+  }
+
+  public set showContent(value: boolean){
+    const previous = this._showContent;
+    this._showContent = value;
+    this.store?.emit(EVENTS.NODE_ATTRS_CHANGED, { node: this });
+    if(previous !== value){
+      const eventName = value ? EVENTS.NODE_CONTENT_GOT_SHOWN : EVENTS.NODE_CONTENT_GOT_HIDDEN;
+      this.store?.emit(eventName, { node: this });
+    }
   }
 
   public get parent(){
-    return this._parent;
+    return this.props.isOpen ? null : this._parent;
   }
 
   /**
@@ -52,6 +86,24 @@ export class Node extends Component{
       path.push(n);
     }
     return path.reverse();
+  }
+
+  /**
+   * Returns all descendents (This node, childs nodes and recursively all sub-childs).
+   * This method its self doesn't use recursive calls, instead stack approach
+   * @param skipHiddenNodes set to true to skip children of nodes with hidden content (`Node.showContent == false`)
+   */
+  public getAllDescendentsNodes(skipHiddenNodes: boolean = false): Node[]{
+    const allNodes: Node[] = [];
+    const stack: Node[] = [this];
+    while(stack.length > 0){
+      const n = <Node>stack.shift();
+      allNodes.push(n);
+      if(!(skipHiddenNodes && !n.showContent)){
+        stack.push(...n.children);
+      }
+    }
+    return allNodes;
   }
 
   addChild(child: Node){
@@ -101,7 +153,7 @@ export class Node extends Component{
   }
 
   /**
-   * Calculates & return Node's absolute position with respect of parent's position and padding
+   * Calculates & return Node's absolute position with respect of parent's absolute position and padding
    */
   public getAbsolutePosition(): Position{
     const pad = (<DiagramStore>this.store).nodePadding;

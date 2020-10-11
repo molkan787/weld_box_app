@@ -6,4 +6,5 @@ export interface DiagramEvent{
   readonly sourceEvent?: any;
   readonly node?: Node,
   readonly edge?: Edge,
+  readonly data?: any
 }

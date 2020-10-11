@@ -37,29 +37,4 @@ export class EdgeRenderer{
     select(`#edge-${edge.id}`).remove();
   }
 
-  // setupShadows(edge: Edge){
-  //   this.removeAllShadows(edge);
-  //   const p1 = edge.source?.attachType === AttachType.NodeWall && edge.source?.node?.getTopParent();
-  //   const p2 = edge.target?.attachType === AttachType.NodeWall && edge.target?.node?.getTopParent();
-  //   if(p1) this.createShadow(edge, p1);
-  //   if(p2) this.createShadow(edge, p2);
-  // }
-
-  // createShadow(edge: Edge, node: Node){
-  //   const d3node = this.store.getD3Node(node.id);
-  //   const container = d3node.select('.svg-layer').select('g');
-  //   container
-  //     .append('use')
-  //     .classed(this.getShadowsClass(edge), true)
-  //     .attr('href', '#edge-' + edge.id);
-  // }
-
-  // removeAllShadows(edge: Edge){
-  //   return select('.' + this.getShadowsClass(edge)).remove();
-  // }
-
-  // getShadowsClass(edge: Edge){
-  //   return `edge-${edge.id}-shadow`;
-  // }
-
 }

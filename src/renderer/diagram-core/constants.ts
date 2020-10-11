@@ -11,6 +11,9 @@ export const EVENTS = Object.freeze({
   NODE_ADDED: 'node-added',
   NODE_DECORATION_CHANGED: 'node-decoration-changed',
   NODE_PARENT_CHANGED: 'node-parent-changed',
+  NODE_ATTRS_CHANGED: 'node-attrs-changed',
+  NODE_CONTENT_GOT_SHOWN: 'node-content-got-shown',
+  NODE_CONTENT_GOT_HIDDEN: 'node-content-got-hidden',
 
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',
@@ -19,6 +22,10 @@ export const EVENTS = Object.freeze({
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
+  DIAGRAM_OPEN_NODE: 'diagram-open-node',
+  DIAGRAM_BACK: 'diagram-back',
+  DIAGRAM_ZOOM_CHANGED: 'diagram-zoom-changed',
+  DIAGRAM_SET_ZOOM: 'diagram-set-zoom',
 
   INIT_CANVAS_CREATED: 'init-canvas-created'
 });
@@ -30,4 +37,5 @@ export const CLASSES = Object.freeze({
   HEADER_BG: 'header-bg',
   HEADER_TEXT: 'header-text',
   NODE_BODY: 'node-body',
+  CONTENT_HIDDEN: 'content-hidden'
 })

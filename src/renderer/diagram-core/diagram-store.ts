@@ -14,12 +14,14 @@ import { Margin } from "./interfaces/Margin";
  */
 export class DiagramStore extends EventEmitter{
 
+  public readonly nodes: Node[] = [];
+
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */
-  private readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
+  public readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
 
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
-  private readonly nodesSpatialMap: MyRBush = new MyRBush(this);
+  public nodesSpatialMap: MyRBush = new MyRBush();
 
   public nodeDraggingTool: boolean = true;
 
@@ -56,8 +58,9 @@ export class DiagramStore extends EventEmitter{
     return this._zoomTransform;
   }
 
-  public setZoomTransform(transform: ZoomTransform){
+  public setZoomTransform(transform: ZoomTransform | null){
     this._zoomTransform = transform;
+    this.emit(EVENTS.DIAGRAM_ZOOM_CHANGED, {});
   }
 
   public get canvasOffset(){
@@ -107,6 +110,7 @@ export class DiagramStore extends EventEmitter{
    * @param node A Node to be stored
    */
   public addNode(node: Node): void{
+    this.nodes.push(node);
     this.nodesSpatialMap.insert(node);
   }
 
@@ -117,6 +121,8 @@ export class DiagramStore extends EventEmitter{
    * @param node The `Node` instance to be removed
    */
   public removeNode(node: Node): void{
+    const idx = this.nodes.indexOf(node);
+    this.nodes.splice(idx, 1);
     this.nodesSpatialMap.remove(node);
   }
 
@@ -211,9 +217,9 @@ export class DiagramStore extends EventEmitter{
 /**
  * `MyRBush` extends `RBush` to customize data format
  */
-class MyRBush extends RBush<Node>{
+export class MyRBush extends RBush<Node>{
 
-  constructor(readonly store: DiagramStore){
+  constructor(){
     super();
   }
 

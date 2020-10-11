@@ -6,6 +6,7 @@
     <div class="icon">
       <NewProjectIcon />
     </div>
+    <button @click="$emit('back-click')">Back</button>
   </div>
 </template>
 

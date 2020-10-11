@@ -1,5 +1,5 @@
 import './styles/diagram.less'
-import { select, zoom, ZoomTransform, event, interpolateZoom } from 'd3';
+import { select, zoom, ZoomBehavior, ZoomTransform, zoomIdentity } from 'd3';
 import { D3Node } from './types/aliases';
 import { DiagramOptions } from './interfaces/DiagramOptions';
 import { NodeDragging } from './modules/node-dragging';
@@ -12,6 +12,7 @@ import { TreeManager } from './modules/tree-manager';
 import { EdgeDrawer } from './modules/edge-drawer';
 import { DiagramEvent } from './interfaces/DiagramEvent';
 import { Position } from './interfaces/Position';
+import { SubChart } from './modules/sub-chart';
 
 /**
  * `Diagram`
@@ -25,6 +26,7 @@ export class Diagram{
   private edgesLayer: D3Node;
 
   private zoomTransform?: ZoomTransform;
+  private zoomController: ZoomBehavior<Element, unknown>;
 
   private readonly renderer = new Renderer(this.store);
 
@@ -36,10 +38,13 @@ export class Diagram{
     this.modules = {
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
-      edgeDrawer: new EdgeDrawer(this.store)
+      edgeDrawer: new EdgeDrawer(this.store),
+      subChart: new SubChart(this.store)
     }
 
     this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
+    this.store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
+    this.store.on(EVENTS.DIAGRAM_SET_ZOOM, e => this.setZoom(e));
 
     // Initializing d3 chart
     const chart = select(parentSelector)
@@ -54,25 +59,46 @@ export class Diagram{
     this.store.setRootElement(chart);
 
     this.edgesLayer = chart.append('svg')
+                            .classed('edges-layer', true)
                             .attr('width', width)
                             .attr('height', height)
-                            .append('g')
+                            .append('g');
 
-    this.nodesLayer = chart.append('div');
+    this.nodesLayer = chart.append('div')
+                            .classed('nodes-layer', true);
 
 
     const _zoom = zoom()
     .extent([[0, 0], [width, height]])
     .scaleExtent([0.1, 4])
-    .on('zoom', payload => this.zoomed(payload))
+    .on('zoom', (payload: any) => this.store.setZoomTransform(payload.transform))
     // .filter((e: any) => e.type !== 'wheel' || e.ctrlKey)
 
     chart.call(<any>_zoom);
 
     this.chart = chart;
     this.renderer.setLayers(this.nodesLayer, this.edgesLayer);
+    this.zoomController = _zoom;
   }
 
+  resetZoom(){
+    this.setZoom({
+      data: zoomIdentity
+    })
+  }
+
+  setZoom(e: DiagramEvent): void {
+    const zoom = <ZoomTransform | null>e.data;
+    this.zoomController.transform(this.chart, zoom || zoomIdentity);
+  }
+
+  public back(){
+    this.store.emit(EVENTS.DIAGRAM_BACK, {});
+  }
+
+  public openNode(node: Node){
+    this.store.emit(EVENTS.DIAGRAM_OPEN_NODE, { node });
+  }
 
   /**
    * Add node to the Diagram, This method need to be called for each New Node in order to be part of the Diagram
@@ -111,14 +137,19 @@ export class Diagram{
     return node;
   }
 
-  private zoomed({ transform }: any) {
+  private onZoomChanged() {
+    const transform: any = this.store.zoomTransform;
     transform.toString2 = function (){
       return "translate(" + this.x + "px," + this.y + "px) scale(" + this.k + ")";
     }
-    this.nodesLayer.attr('style', 'transform:' + transform.toString2());
-    this.edgesLayer.attr('transform', transform);
+    if(transform){
+      this.nodesLayer.style('transform', transform.toString2());
+      this.edgesLayer.attr('transform', transform);
+    }else{
+      this.nodesLayer.style('transform', null);
+      this.edgesLayer.attr('transform', null);
+    }
     this.zoomTransform = transform;
-    this.store.setZoomTransform(transform);
   }
 
 }

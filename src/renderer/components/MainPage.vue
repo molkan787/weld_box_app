@@ -1,6 +1,6 @@
 <template>
   <div class="main-page">
-    <TopBar />
+    <TopBar @back-click="backClick" />
     <div class="middle">
       <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
       <div ref="canvas" id="canvas"></div>
@@ -30,6 +30,9 @@ export default Vue.extend({
     diagram: null,
   }),
   methods: {
+    backClick(){
+      this.diagram?.back();
+    },
     activateTool(name: string){
       if(name == 'transition'){
         this.diagram?.activateEdgeDrawer()
