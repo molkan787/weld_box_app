@@ -1,9 +1,11 @@
+import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
-import { Corner } from "../helpers/geometry";
+import { Corner, Side } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { D3Node } from "../types/aliases";
+import { cloneObject } from "../utils";
 import { cs } from "./utils";
 
 export class NodeRenderer{
@@ -12,7 +14,10 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
+    store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
+    store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
   }
+
 
   build(container: D3Node, node: Node){
     const child = node.parent != null;
@@ -127,6 +132,43 @@ export class NodeRenderer{
       .classed(CLASSES.RESIZE_HANDLE + ' node-' + nodeId, true)
       .attr(ATTR.CORNER, corner)
       .style('cursor', cursor);
+  }
+
+  /** Destorys attach box of all edges of the specified node */
+  destoryEdgesAttachBoxes(node: Node){
+    const container = this.getD3Node(node);
+    const selector = `.node-${node.id}-` + CLASSES.ATTACH_BOX;
+    container.selectAll(selector).remove();
+  }
+
+  /** Build edge target box */
+  buildEdgesAttachBoxes(node: Node){
+    const container = this.getD3Node(node);
+    for(const edge of node.edges){
+      if(edge.attachType === AttachType.NodeBody && !edge.isBridge){
+        this.buildEdgeAttachBox(node, container, edge);
+      }
+    }
+  }
+
+  buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection){
+    const wall = edge.nodeWall;
+    const eab = container.append('span');
+    eab.classed(CLASSES.ATTACH_BOX, true)
+        .classed(`node-${node.id}-` + CLASSES.ATTACH_BOX, true)
+        .attr(ATTR.WALL_SIDE, wall)
+        .attr(ATTR.COMPONENT_ID, edge.id);
+
+    if(edge.offset){
+      const pos = cloneObject(edge.offset);
+      const isVertical = wall == Side.Top || wall == Side.Bottom;
+      if(isVertical){
+        pos.y *= -1
+      }else{
+        pos.x *= -1;
+      }
+      eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
+    }
   }
 
   private getD3Node(node: Node | number): D3Node{

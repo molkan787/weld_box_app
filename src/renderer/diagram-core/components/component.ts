@@ -12,5 +12,6 @@ export class Component{
 
 export enum ComponentType {
   Node = 'node-component',
-  Edge = 'edge-component'
+  Edge = 'edge-component',
+  EdgeConnection = 'edge-connection-component',
 }

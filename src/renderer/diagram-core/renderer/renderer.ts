@@ -29,6 +29,9 @@ export class Renderer{
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, e => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e));
 
+    store.on(EVENTS.DIAGRAM_DESTROY_EDGES, (e) => this.onDestroyEdges(e));
+    store.on(EVENTS.DIAGRAM_BUILD_EDGES, (e) => this.onBuildEdges(e));
+
   }
 
   /**
@@ -76,8 +79,8 @@ export class Renderer{
   getEdgeContainer(edge: Edge): D3Node{
     const at1 = edge.source.attachType;
     const at2 = edge.target.attachType;
-    const node1 = at1 == AttachType.Node || at1 == AttachType.NodeWall ? edge.source.node : null;
-    const node2 = at2 == AttachType.Node || at2 == AttachType.NodeWall ? edge.target.node : null;
+    const node1 = at1 == AttachType.NodeBody || at1 == AttachType.NodeWall ? edge.source.node : null;
+    const node2 = at2 == AttachType.NodeBody || at2 == AttachType.NodeWall ? edge.target.node : null;
     const commonParent = this.findNearestCommonParent(node1, node2);
 
     if(commonParent === null){
@@ -105,8 +108,6 @@ export class Renderer{
         parent = p1;
       }else if(wereSame){
         break;
-      }else{
-        parent = p1 || p2;
       }
     }
     return parent;
@@ -133,9 +134,11 @@ export class Renderer{
     // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
     const edges = <Edge[]>(node.edges.map(ec => ec.edge).filter(e => !!e));
 
-    // Updating positions of all edges that are connected to the Node currently being moved
-    for(let edge of edges){
-      this.edgeRenderer.update(edge);
+    if(!node.props.isOpen){
+      // Updating positions of all edges that are connected to the Node currently being moved
+      for(let edge of edges){
+        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
+      }
     }
 
     // If node's content (childs) are hidden we don't need to update them
@@ -166,6 +169,20 @@ export class Renderer{
     const node = <Node>event.node;
     if(node.showContent){
       this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+    }
+  }
+
+  onDestroyEdges(event: DiagramEvent){
+    const edges = <Edge[]>event.data;
+    for(const edge of edges){
+      this.edgeRenderer.destroyElement(edge);
+    }
+  }
+
+  onBuildEdges(event: DiagramEvent){
+    const edges = <Edge[]>event.data;
+    for(const edge of edges){
+      this.build(null, edge);
     }
   }
 

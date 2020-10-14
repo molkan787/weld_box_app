@@ -3,6 +3,11 @@
   position: relative;
   overflow: hidden;
 
+  & > .edges-layer{
+    position: absolute;
+    pointer-events: none;
+  }
+
   .root-group{
     transform-origin: 0 0;
     width: 100%;
@@ -23,6 +28,33 @@
       & > .svg-layer, & > .node-body{
         display: none;
       }
+    }
+
+    @ab-width: 10px;
+    @ab-offset: -@ab-width / 2;
+    span.attach-box{
+      position: absolute;
+      display: block;
+      box-sizing: border-box;
+      width: @ab-width;
+      height: @ab-width;
+      margin: @ab-offset;
+      background-color: #24252A;
+      border: 2px solid white;
+      cursor: grab;
+      &[data-wall-side="1"]{ top: 0; left: 50%; }
+      &[data-wall-side="2"]{ top: 50%; left: 0; }
+      &[data-wall-side="4"]{ bottom: 0; left: 50%; }
+      &[data-wall-side="8"]{ top: 50%; right: 0; }
+    }
+
+    rect.attach-box{
+      width: @ab-width;
+      height: @ab-width;
+      transform: translate(@ab-offset,  @ab-offset);
+      fill: #24252A;
+      stroke-width: 2px;
+      stroke: white;
     }
 
     .svg-layer{

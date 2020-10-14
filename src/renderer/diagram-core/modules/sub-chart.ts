@@ -5,6 +5,8 @@ import { DiagramStore, MyRBush } from "../diagram-store";
 import { D3Node } from "../types/aliases";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "../renderer/utils";
+import { cloneObject } from "../utils";
+import { AttachType, EdgeConnection } from "../components/edge-connection";
 
 export class SubChart{
 
@@ -55,12 +57,19 @@ export class SubChart{
     this.store.nodesSpatialMap = new MyRBush();
     node.showContent = true;
     this.store.nodesSpatialMap.insert(node);
+
+    this.buildNodeBodyEdges(node);
+
+    this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
   }
 
   public back(){
     if(this.currentNode === null) return;
 
     const currentNode = this.currentNode;
+
+    this.store.emit(EVENTS.NODE_CLOSING, { node: currentNode });
+
     const chartItem = <ChartItem>this.stack.pop();
 
     const currentD3Node = this.store.getD3Node(currentNode.id);
@@ -76,11 +85,25 @@ export class SubChart{
     const zoom = this.zoomTransforms.get(chartItem.node?.id || 0);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
 
+    this.destroyNodeBodyEdges(currentNode);
+
     this.addD3NodesToDocument(chartItem.d3Nodes);
 
     this.addDomNodeToOriginalParent(currentNode);
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode });
+
+    this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: currentNode });
+  }
+
+  private destroyNodeBodyEdges(node: Node){
+    const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
+    this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges })
+  }
+
+  private buildNodeBodyEdges(node: Node){
+    const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
+    this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges })
   }
 
   private addDomNodeToOriginalParent(node: Node){
@@ -132,12 +155,6 @@ export class SubChart{
 
   private onNodeContentGotShown(event: DiagramEvent){
     const node = <Node>event.node;
-    // if the node is open on the canvas we can skip adjustement,
-    // because they was already done be the open() or back() functions of this module
-    // if(node.props.isOpen) return;
-
-    // remove existing Spatial Map of that specific node and its children
-    // this.spatialMaps.set(node.id, null);
 
     const allDesendents = node.getAllDescendentsNodes(true);
 
@@ -160,15 +177,8 @@ export class SubChart{
       this.store.nodesSpatialMap.remove(allDesendents[i]);
     }
 
-    // const spatialMap = this.buildNodeSpatialMap(node);
-    // this.spatialMaps.set(node.id, spatialMap);
-
   }
 
-}
-
-function cloneObject<T>(obj: T): T{
-  return <T>Object.assign({}, obj);
 }
 
 interface ChartItem{

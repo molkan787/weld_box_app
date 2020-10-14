@@ -58,14 +58,14 @@ export class Diagram{
 
     this.store.setRootElement(chart);
 
+    this.nodesLayer = chart.append('div')
+                            .classed('nodes-layer', true);
+
     this.edgesLayer = chart.append('svg')
                             .classed('edges-layer', true)
                             .attr('width', width)
                             .attr('height', height)
                             .append('g');
-
-    this.nodesLayer = chart.append('div')
-                            .classed('nodes-layer', true);
 
 
     const _zoom = zoom()

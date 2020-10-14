@@ -3,7 +3,9 @@ import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
-import { Side, TouchesWall } from "../helpers/geometry";
+import { isPointInsideBBox, Side, TouchesWall } from "../helpers/geometry";
+import { distSqrd } from "../helpers/geometry";
+import { capNumber } from "../helpers/math";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
 
@@ -19,6 +21,8 @@ export class EdgeDrawer{
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
+    store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, (e) => this.onEdgeConnectionsUpdated(e));
+    store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, (e) => this.onEdgeConnectionsChanged(e));
   }
 
   onCanvasCreated(e: DiagramEvent){
@@ -31,35 +35,61 @@ export class EdgeDrawer{
 
   onNodeDragStart(event: DiagramEvent){
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
-    const isLine = srcElement.classList.contains(CLASSES.HIGHLIGHT_LINE);
-    const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
+    const isAB = srcElement.classList.contains(CLASSES.ATTACH_BOX);
+    // const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
 
-    if(isLine && wall){
-      const node = this.nodeInSubject;
-      // un-highlight node's wall
-      if(node !== null){
-        this.nodeInSubject = null;
-        if(node.highlightedWall !== null){
-          node.highlightedWall = null;
-          this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
-        }
+    if(isAB){
+      const node = <Node>event.node;
+      const edgeId = parseInt(srcElement.getAttribute(ATTR.COMPONENT_ID) || '0');
+      const edgeConnection = this.getNodeEdgeConnection(node, edgeId)
+      if(edgeConnection){
+        this.spawnNewEdgeFromAttachBox(node, edgeConnection, event);
       }
-      this.spawnNewEdge(<Node>event.node, wall, event);
+    }
+
+    const node = this.nodeInSubject;
+    if(node !== null){
+      this.nodeInSubject = null;
+      const wall = node.highlightedWall;
+
+      // un-highlight node
+      node.highlightedWall = null;
+      node.highlighted = false;
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node, sourceEvent: event });
+
+      this.spawnNewEdge(node, wall, event);
     }
   }
 
-  spawnNewEdge(node: Node, wall: Side, event: DiagramEvent){
+  spawnNewEdgeFromAttachBox(node: Node, attachBox: EdgeConnection, event: DiagramEvent){
     const srcEvent = event.sourceEvent;
     const { x, y } = srcEvent.sourceEvent;
     const targetPoint = this.store.transformClientPoint({ x, y });
-    const sourceOffset = this.getEdgeConnectionOffset(node, wall, srcEvent);
-    const source = node.createEdgeConnection(wall);
+    const target = new EdgeConnection(AttachType.Position);
+    target.position = targetPoint;
+    const source = node.createEdgeConnection();
+    source.bridgeTo = attachBox;
+    const edge = new Edge(source, target);
+    this.currentEdge = edge;
+    this.store.emit(EVENTS.EDGE_CREATED, { edge });
+  }
+
+  spawnNewEdge(node: Node, wall: Side | null, event: DiagramEvent){
+    const srcEvent = event.sourceEvent;
+    const { x, y } = srcEvent.sourceEvent;
+    const targetPoint = this.store.transformClientPoint({ x, y });
+    const sourceOffset = this.getEdgeConnectionOffset(node, wall || Side.Top, srcEvent);
+    const source = node.createEdgeConnection(wall || undefined);
     const target = new EdgeConnection(AttachType.Position);
     source.offset = sourceOffset;
     target.position = targetPoint;
     const edge = new Edge(source, target);
     this.currentEdge = edge;
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
+  }
+
+  getNodeEdgeConnection(node: Node, edgeId: number): EdgeConnection | null{
+    return node.edges.find(e => e.id === edgeId) || null;
   }
 
   onNodeDragged(event: DiagramEvent){
@@ -92,13 +122,12 @@ export class EdgeDrawer{
 
   onNodeDropped(event: DiagramEvent){
     const node = this.nodeInSubject;
-    if(node && node.highlightedWall){
-      const offset = this.getEdgeConnectionOffset(node, node.highlightedWall, event.sourceEvent);
-      const targetConnection = node.createEdgeConnection(node.highlightedWall);
-      targetConnection.offset = offset;
-      const edge = <Edge>this.currentEdge;
+    const edge = this.currentEdge;
+    if(node && edge){
+      const targetConnection = node.createEdgeConnection(node.highlightedWall || undefined);
       edge.setTarget(targetConnection);
       node.highlightedWall = null;
+      node.highlighted = false;
       this.currentEdge = null;
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
@@ -111,7 +140,7 @@ export class EdgeDrawer{
   }
 //#endregion
 
-//#region Node's walls detecting logic
+//#region Attach object finding logic
 
   onMouseMove(event: MouseEvent){
     if(this.store.nodeDraggingTool) return;
@@ -127,7 +156,7 @@ export class EdgeDrawer{
     let touchedWall: Side | null = null;
 
     // Find a node that one of his walls was touched (overlapped) with mouse pointer
-    for(let node of nodes){
+    for(const node of nodes){
       const { size } = node;
       const position = node.getAbsolutePosition();
       const bbox = new DOMRect(position.x, position.y, size.width, size.height);
@@ -139,23 +168,144 @@ export class EdgeDrawer{
       }
     }
 
-    const prevSubject = this.nodeInSubject;
-
-    // if that was previously a subject node and was is not the new found one
-    // un-highlight the wall of that previous subject
-    if(subject !== prevSubject && prevSubject !== null){
-      if(prevSubject.highlightedWall){
-        prevSubject.highlightedWall = null;
-        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: prevSubject, sourceEvent: event });
+    if(subject === null){
+      for(const node of nodes){
+        if(node.showContent === false){
+          const pos = node.getAbsolutePosition(true);
+          const size = node.size;
+          const rect = new DOMRect(pos.x, pos.y, size.width, size.height);
+          const inside = isPointInsideBBox(transformedPoint, rect, 10);
+          if(inside){
+            subject = node;
+            break;
+          }
+        }
       }
     }
 
-    if(subject && touchedWall && subject.highlightedWall !== touchedWall){
-      subject.highlightedWall = touchedWall;
-      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+    const prevSubject = this.nodeInSubject;
+
+    // if that was previously a subject node and its not the newly found one
+    // un-highlight the wall of that previous subject
+    if(prevSubject !== null){
+      if(subject !== prevSubject){
+        prevSubject.highlightedWall = null;
+        prevSubject.highlighted = false;
+      }else if(touchedWall === null){
+        prevSubject.highlightedWall = null;
+      }
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: prevSubject, sourceEvent: event });
     }
+
+    if(subject){
+      if(touchedWall){
+        if(subject.highlightedWall !== touchedWall){
+          subject.highlightedWall = touchedWall;
+          subject.highlighted = false;
+          this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+        }
+      }else{
+        if(subject.highlighted === false){
+          subject.highlightedWall = null;
+          subject.highlighted = true;
+          this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject, sourceEvent: event });
+        }
+      }
+    }
+
     this.nodeInSubject = subject;
 
+  }
+
+//#endregion
+
+//#region Edge Connections dynamic positioning logic
+
+  private onEdgeConnectionsUpdated(event: DiagramEvent){
+    if(event.sender === this) return;
+    this.repositionEdge(<Edge>event.edge);
+  }
+
+  private onEdgeConnectionsChanged(event: DiagramEvent){
+    this.repositionEdge(<Edge>event.edge);
+    this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, {
+      edge: event.edge,
+      sender: this,
+      sourceEvent: event,
+    });
+  }
+
+  private repositionEdge(edge: Edge){
+    let { source, target } = edge;
+    this.repositionEdgeConnection(source, target);
+    this.repositionEdgeConnection(target, source);
+  }
+
+  private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection){
+    if(!subject.isBridge && subject.isAttachedToNode() && subject.node && !subject.node.props.isOpen){
+      const _pointsTo = pointsTo.getInstance();
+      const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
+      const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);
+      subject.offset = offset;
+      subject.nodeWall = wall;
+    }
+  }
+
+  private findBestPositionToPoint(node: Node, point: Position, secondAxisOffset: number = 0){
+    const { x: tx, y: ty } = point;
+    const { x, y } = node.getAbsolutePosition();
+    const { width, height } = node.size;
+    const topDist = distSqrd(x + width / 2, y, tx, ty);
+    const bottomDist = distSqrd(x + width / 2, y + height, tx, ty);
+    const leftDist = distSqrd(x, y + height / 2, tx, ty);
+    const rightDist = distSqrd(x + width, y + height / 2, tx, ty);
+
+    let minVertical = Infinity;
+    let verticalSide = null;
+    if(topDist <= bottomDist){
+      minVertical = topDist;
+      verticalSide = Side.Top;
+    }else{
+      minVertical = bottomDist;
+      verticalSide = Side.Bottom;
+    }
+
+    let minHorizontal = Infinity;
+    let horizontalSide = null;
+    if(leftDist <= rightDist){
+      minHorizontal = leftDist;
+      horizontalSide = Side.Left;
+    }else{
+      minHorizontal = rightDist;
+      horizontalSide = Side.Right;
+    }
+
+    const sao = secondAxisOffset;
+    const padd = 0;
+    const scale = 0.7;
+    if(minVertical <= minHorizontal){
+      return {
+        wall: verticalSide,
+        distance: minVertical,
+        offset: {
+          y: sao ? (verticalSide == Side.Top ? sao : -sao) : 0,
+          x: this.calcOffset(point.x, x, width, padd, scale)
+        }
+      }
+    }else{
+      return {
+        wall: horizontalSide,
+        distanceSquared: minHorizontal,
+        offset: {
+          y: this.calcOffset(point.y, y, height, padd, scale),
+          x: sao ? (horizontalSide == Side.Left ? sao : -sao) : 0
+        }
+      }
+    }
+  }
+
+  private calcOffset(target: number, position: number, size: number, padding: number, scale: number){
+    return (capNumber(target, position + padding, position + size - padding) - position - size / 2) * scale;
   }
 
 //#endregion

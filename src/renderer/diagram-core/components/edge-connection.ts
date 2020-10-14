@@ -1,28 +1,60 @@
 import { Side, GetRectWallCenterPoint } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { Position } from "../interfaces/Position";
+import { Component, ComponentType } from "./component";
 import { Edge } from "./edge";
 import { Node } from "./node";
 
-export class EdgeConnection{
+export class EdgeConnection extends Component{
 
   public edge: Edge | null = null;
   public node: Node | null = null;
   public position?: Position;
   public offset?: Position;
+  public bridgeTo: EdgeConnection | null = null;
 
   constructor(
     public attachType: AttachType = AttachType.Position,
     public nodeWall: Side = Side.Top
-  ){}
+  ){
+    super(ComponentType.EdgeConnection);
+  }
 
-  public getCoordinates(): Position{
+  /**
+   * If this `EdgeConnection` instance is a bridge to another instance returns the last one, otherwise returns itself
+   */
+  public getInstance(): EdgeConnection{
+    return this.bridgeTo ? this.bridgeTo.getInstance() : this;
+  }
+
+  public get isBridge(){
+    return this.bridgeTo !== null;
+  }
+
+  public isAttachedToNode(){
+    return this.attachType === AttachType.NodeBody || this.attachType === AttachType.NodeWall;
+  }
+
+  public getAttachedNode(){
+    return this.isAttachedToNode() && this.node;
+  }
+
+  public getCoordinates(skipOffset: boolean = false): Position{
     let result = this.getOrigin();
-    if(this.offset){
+    if(!skipOffset && this.offset){
       const {x: x1, y: y1} = result;
       let {x: x2, y: y2} = this.offset;
 
       const node = this.node;
+
+      if(node?.props.isOpen && this.attachType === AttachType.NodeBody){
+        // if the attach type is NodeBody and its node is open,
+        // we need to invert the secondary axis's offset
+        // because the attachement box of the edge should be outside node's rectangle if it the node is open (open as a sub-chart)
+        const isVertical = this.nodeWall === Side.Top || this.nodeWall === Side.Bottom;
+        isVertical ? y2 *= -1 : x2 *= -1;
+      }
+
       if(this.attachType == AttachType.NodeWall && node != null){
         const hw = node.size.width / 2;
         const hh = node.size.height / 2;
@@ -45,16 +77,7 @@ export class EdgeConnection{
     const node = this.node;
     if(this.attachType == AttachType.Position && this.position){
       return this.position;
-    }else if(this.attachType == AttachType.Node && node){
-      // Calculte center point of the rectangle
-      const { x, y} = node.getAbsolutePosition();
-      const { width, height } = node.size;
-      const center = {
-        x: x + width / 2,
-        y: y + height / 2
-      }
-      return center;
-    }else if(this.attachType == AttachType.NodeWall && node){
+    }else if((this.attachType == AttachType.NodeWall || this.attachType == AttachType.NodeBody) && node){
       const offset = GetRectWallCenterPoint(node.size, this.nodeWall);
       const position = node.getAbsolutePosition();
       return {
@@ -70,7 +93,6 @@ export class EdgeConnection{
 
 export enum AttachType{
   Position = 'position',
-  Node = 'node',
+  NodeBody = 'node',
   NodeWall = 'node-wall',
-  EdgeSource = 'edge-source'
 }

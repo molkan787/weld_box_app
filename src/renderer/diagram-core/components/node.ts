@@ -35,7 +35,8 @@ export class Node extends Component{
     normalState: {
       size?: Size,
       position?: Position
-    }
+    },
+    absolutePosition?: Position
   } = { isOpen: false, openState: {}, normalState: {} };
 
   constructor(
@@ -128,7 +129,7 @@ export class Node extends Component{
    */
   createEdgeConnection(wall?: Side){
     const connection = typeof wall === 'undefined'
-                        ? new EdgeConnection(AttachType.Node)
+                        ? new EdgeConnection(AttachType.NodeBody)
                         : new EdgeConnection(AttachType.NodeWall, wall);
     connection.node = this;
     this.edges.push(connection);
@@ -155,17 +156,21 @@ export class Node extends Component{
   /**
    * Calculates & return Node's absolute position with respect of parent's absolute position and padding
    */
-  public getAbsolutePosition(): Position{
+  public getAbsolutePosition(useCachedPosition: boolean = false): Position{
+    if(useCachedPosition && this.props.absolutePosition) return this.props.absolutePosition;
     const pad = (<DiagramStore>this.store).nodePadding;
+    let result = null;
     if(this.parent != null){
       const pp = this.parent.getAbsolutePosition();
       const ap = addPoints(pp, this.position);
       ap.x += pad.left;
       ap.y += pad.top;
-      return ap;
+      result = ap;
     }else{
-      return this.position;
+      result = this.position;
     }
+    this.props.absolutePosition = result;
+    return result;
   }
 
   /**

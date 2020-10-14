@@ -47,12 +47,28 @@ function getPointToBBoxDistances(bbox: DOMRect, point: Position){
   }
 }
 
+  /**
+  *
+  * @param point Point to check if it is inside the rectangle
+  * @param rect The rectangle
+  * @param p Padding
+  */
+  export function isPointInsideBBox(point: Position, rect: DOMRect, p: number){
+    const { x, y } = point;
+    const { top, left, bottom, right } = rect;
+    return (x >= left + p) && (x <= right - p) && (y >= top + p) && (y <= bottom - p);
+  }
+
 export function GetRectWallCenterPoint(size: Size, wall: Side){
   const scaleMatrix = _GetRectWallCenterPoint_ScaleMatrices[wall];
   return {
     x: size.width * scaleMatrix.x,
     y: size.height * scaleMatrix.y
   }
+}
+
+export function distSqrd(x1: number, y1: number, x2: number, y2: number): number{
+  return Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
 }
 
 export enum Side{

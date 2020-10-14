@@ -32,8 +32,7 @@ export default {
     }
   },
   data:() => ({
-    statementsCount: 2,
-    expanded: true,
+    expanded: false,
   }),
   computed: {
     statementBlocks(){
