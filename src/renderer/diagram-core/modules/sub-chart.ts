@@ -6,14 +6,13 @@ import { D3Node } from "../types/aliases";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "../renderer/utils";
 import { cloneObject } from "../utils";
-import { AttachType, EdgeConnection } from "../components/edge-connection";
 
 export class SubChart{
 
   private readonly zoomTransforms: Map<number, ZoomTransform> = new Map();
   private readonly stack: ChartItem[] = [];
 
-  private currentNode: Node | null = null;
+  public currentNode: Node | null = null;
 
   constructor(public store: DiagramStore){
     store.on(EVENTS.DIAGRAM_OPEN_NODE, ({node}: DiagramEvent) => this.open(<Node>node));
@@ -21,6 +20,16 @@ export class SubChart{
     store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
     store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onNodeContentGotShown(e));
     store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onNodeContentGotHidden(e));
+    store.on(EVENTS.NODE_DOUBLE_CLICK, e => this.onNodeDoubleClick(e));
+  }
+
+  onNodeDoubleClick(e: DiagramEvent): void {
+    const node = <Node>e.node;
+
+    // Open node if its content is hidden, and is not currently open
+    if(!node.showContent && !node.props.isOpen){
+      this.open(node);
+    }
   }
 
   private onZoomChanged(): void {

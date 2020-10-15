@@ -42,6 +42,7 @@ export class Renderer{
   setLayers(nodesLayer: D3Node, edgesLayer: D3Node){
     this.nodesLayer = nodesLayer;
     this.edgesLayer = edgesLayer;
+    this.edgeRenderer.prepareLayer(edgesLayer);
   }
 
   /**
@@ -77,10 +78,9 @@ export class Renderer{
   }
 
   getEdgeContainer(edge: Edge): D3Node{
-    const at1 = edge.source.attachType;
-    const at2 = edge.target.attachType;
-    const node1 = at1 == AttachType.NodeBody || at1 == AttachType.NodeWall ? edge.source.node : null;
-    const node2 = at2 == AttachType.NodeBody || at2 == AttachType.NodeWall ? edge.target.node : null;
+    const { source, target } = edge;
+    const node1 = source.isAttachedToNode() ? source.node : null;
+    const node2 = target.isAttachedToNode() ? target.node : null;
     const commonParent = this.findNearestCommonParent(node1, node2);
 
     if(commonParent === null){

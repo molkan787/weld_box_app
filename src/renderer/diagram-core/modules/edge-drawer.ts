@@ -131,6 +131,19 @@ export class EdgeDrawer{
       this.currentEdge = null;
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
+    }else if(edge && edge.source.node){
+      const srcNode = edge.source.node;
+      const srcPos = srcNode.getAbsolutePosition();
+      const trgPos = <Position>edge.target.position;
+      const offset: Position = {
+        x: trgPos.x - srcPos.x,
+        y: trgPos.y - srcPos.y
+      }
+      const target = new EdgeConnection(AttachType.Node);
+      target.offset = offset;
+      target.node = srcNode;
+      edge.target = target;
+      this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge, sourceEvent: event });
     }
     this.currentEdge = null;
 
@@ -150,7 +163,8 @@ export class EdgeDrawer{
       y: event.clientY
     };
     const transformedPoint = this.store.transformClientPoint(point, true);
-    const nodes = this.store.getNodesFromPoint(transformedPoint, 6);
+    let nodes = this.store.getNodesFromPoint(transformedPoint, 6);
+    nodes = nodes.filter(n => !!n.parent);
 
     let subject: Node | null = null;
     let touchedWall: Side | null = null;
@@ -242,7 +256,8 @@ export class EdgeDrawer{
   }
 
   private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection){
-    if(!subject.isBridge && subject.isAttachedToNode() && subject.node && !subject.node.props.isOpen){
+    const eligibleAttach = subject.attachType == AttachType.NodeBody || subject.attachType == AttachType.NodeWall;
+    if(!subject.isBridge && eligibleAttach && subject.node && !subject.node.props.isOpen){
       const _pointsTo = pointsTo.getInstance();
       const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);

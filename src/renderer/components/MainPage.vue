@@ -1,11 +1,12 @@
 <template>
   <div class="main-page">
-    <TopBar @back-click="backClick" />
+    <TopBar @back-click="backClick" :showBackButton="showBackButton" />
     <div class="middle">
       <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
+    <ContextMenu ref="menu" />
   </div>
 </template>
 
@@ -13,10 +14,12 @@
 import SideBar from './SideBar.vue';
 import TopBar from './TopBar.vue';
 import StatusBar from './StatusBar.vue';
-import Vue from 'vue'
+import ContextMenu from './ContextMenu.vue';
+import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
 import { State } from '../my-diagram/state';
+import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
 interface MyData {
   diagram: MyDiagram | null
 }
@@ -24,11 +27,17 @@ export default Vue.extend({
   components: {
     SideBar,
     TopBar,
-    StatusBar
+    StatusBar,
+    ContextMenu
   },
   data: (): MyData => ({
     diagram: null,
   }),
+  computed: {
+    showBackButton(){
+      return this.diagram && this.diagram.currentNode;
+    }
+  },
   methods: {
     backClick(){
       this.diagram?.back();
@@ -46,8 +55,8 @@ export default Vue.extend({
     itemDropped(e: any, itemName: string){
       if(itemName == 'state'){
         const node = this.diagram?.createNodeAt({
-          x: e.clientX - 40, // -40px because of side bar width (temporary solution)
-          y: e.clientY - 40 // -40px because of top bar height (temporary solution)
+          x: e.clientX,
+          y: e.clientY - 50 // -40px because of top bar height (temporary solution)
         }, State)
         if(node) node.title = `State ${node.id}`;
       }
@@ -57,7 +66,8 @@ export default Vue.extend({
     this.diagram = new MyDiagram('#canvas');
     this.diagram.buildTestDiagram();
 
-
+    // @ts-ignore
+    this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
 
     // Temporary
     this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {
@@ -90,7 +100,7 @@ export default Vue.extend({
     flex: 1;
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 70px);
   }
 
   #canvas{

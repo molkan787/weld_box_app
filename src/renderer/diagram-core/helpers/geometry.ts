@@ -71,6 +71,19 @@ export function distSqrd(x1: number, y1: number, x2: number, y2: number): number
   return Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
 }
 
+export function movePoint(x: number, y: number, direction: Side, moveBy: number): [number, number]{
+  switch (direction) {
+    case Side.Top:
+      return [x, y - moveBy]
+    case Side.Bottom:
+      return [x, y + moveBy]
+    case Side.Left:
+      return [x - moveBy, y]
+    case Side.Right:
+      return [x + moveBy, y]
+  }
+}
+
 export enum Side{
   Top = 0b0001,
   Left = 0b0010,

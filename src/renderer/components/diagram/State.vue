@@ -1,19 +1,17 @@
 <template>
   <div class="state">
-    <StateIndicators :state="state" />
+    <StateHeader :state="state" />
     <StateCodeBlock :state="state" />
-    <button @click="state.showContent = !state.showContent">{{ state.showContent ? 'Hide content' : 'Show content' }}</button>
-    <button @click="openState">Open</button>
   </div>
 </template>
 
 <script>
 import StateCodeBlock from './StateCodeBlock';
-import StateIndicators from './StateIndicators';
+import StateHeader from './StateHeader';
 export default {
   components: {
     StateCodeBlock,
-    StateIndicators
+    StateHeader
   },
   props: {
     state: {
@@ -35,9 +33,5 @@ export default {
 }
 .code-block{
   top: 29px;
-}
-.state-indicators{
-  float: right;
-  position: relative;
 }
 </style>

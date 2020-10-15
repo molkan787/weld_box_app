@@ -10,10 +10,18 @@ export class State extends Node{
   private vm?: Vue;
 
   // Business props
-  public isSubTask: boolean = false;
   public isHistoric: boolean = false;
   public priority: number = 0;
   public decomposition: StateDecomposition = StateDecomposition.Serial;
+
+  public get isSubTask(){
+    return !this.showContent || this.props.isOpen;
+  }
+
+  public set isSubTask(value: boolean){
+    if(this.props.isOpen) return;
+    this.showContent = !value;
+  }
 
   public readonly statementBlocks: StatementBlock[] = [];
 

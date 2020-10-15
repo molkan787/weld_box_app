@@ -36,9 +36,6 @@ export default class Main {
   /** The main window, */
   private static window: BrowserWindow | null;
 
-  /** Top bar menu Controller */
-  private static topbarMenu: TopBarMenu | null;
-
   /**
    * Factory method for the main window.
    *
@@ -71,8 +68,6 @@ export default class Main {
     if (isDevelopment) {
       window.webContents.openDevTools();
     }
-
-    this.topbarMenu = topbarMenu;
 
     return window;
 

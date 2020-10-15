@@ -36,7 +36,7 @@ export class TreeManager{
       maxY: pos.y + size.height - padd,
     }
     let overlapingNodes = this.store.getNodesFromBBox(bbox);
-    overlapingNodes = overlapingNodes.filter(n => n !== node)
+    overlapingNodes = overlapingNodes.filter(n => n !== node && n.showContent)
     const excludes = [...node.children];
     const candidates = this.sortNodesByDistance(bbox, overlapingNodes, excludes);
     for(let candidate of candidates){

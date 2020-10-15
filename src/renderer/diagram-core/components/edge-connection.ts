@@ -32,7 +32,9 @@ export class EdgeConnection extends Component{
   }
 
   public isAttachedToNode(){
-    return this.attachType === AttachType.NodeBody || this.attachType === AttachType.NodeWall;
+    return this.attachType === AttachType.NodeBody ||
+           this.attachType === AttachType.NodeWall ||
+           this.attachType === AttachType.Node
   }
 
   public getAttachedNode(){
@@ -84,6 +86,8 @@ export class EdgeConnection extends Component{
         x: position.x + offset.x,
         y: position.y + offset.y
       }
+    }else if(this.attachType === AttachType.Node && node){
+      return node.getAbsolutePosition();
     }
 
     return {x: 0, y: 0};
@@ -93,6 +97,7 @@ export class EdgeConnection extends Component{
 
 export enum AttachType{
   Position = 'position',
-  NodeBody = 'node',
+  NodeBody = 'node-body',
   NodeWall = 'node-wall',
+  Node = 'node',
 }

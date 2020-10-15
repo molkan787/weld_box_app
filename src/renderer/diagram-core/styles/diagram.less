@@ -39,8 +39,9 @@
       width: @ab-width;
       height: @ab-width;
       margin: @ab-offset;
-      background-color: #24252A;
-      border: 2px solid white;
+      background-color: #595b61;
+      border: none;
+      border-radius: 2px;
       cursor: grab;
       &[data-wall-side="1"]{ top: 0; left: 50%; }
       &[data-wall-side="2"]{ top: 50%; left: 0; }
@@ -52,9 +53,10 @@
       width: @ab-width;
       height: @ab-width;
       transform: translate(@ab-offset,  @ab-offset);
-      fill: #24252A;
-      stroke-width: 2px;
-      stroke: white;
+      fill: #595b61;
+      stroke-width: 0;
+      rx: 2;
+      ry: 2;
     }
 
     .svg-layer{
@@ -85,10 +87,11 @@
     }
 
     &.selected{
-      outline-style: dashed;
+      outline-style: solid;
       outline-width: 2px;
-      outline-offset: 2px;
-      outline-color: #3c3c3c;
+      outline-offset: 0px;
+      outline-color: #23BB72;
+      box-shadow: 0px 4px 15px 0px #23BB72;
     }
 
     .resize-handle{
@@ -121,6 +124,12 @@
       &[data-wall-side="8"]{ top: 0; right: 0; height: @full; }
     }
 
+  }
+
+  .edge{
+    & > path{
+      fill: none;
+    }
   }
 
 }

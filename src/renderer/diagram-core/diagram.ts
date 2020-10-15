@@ -13,6 +13,7 @@ import { EdgeDrawer } from './modules/edge-drawer';
 import { DiagramEvent } from './interfaces/DiagramEvent';
 import { Position } from './interfaces/Position';
 import { SubChart } from './modules/sub-chart';
+import { DomEventsAttacher } from './modules/dom-events-attacher';
 
 /**
  * `Diagram`
@@ -36,6 +37,7 @@ export class Diagram{
     const { width, height, chartClasses } = options;
 
     this.modules = {
+      domEventsAttacher: new DomEventsAttacher(this.store),
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
       edgeDrawer: new EdgeDrawer(this.store),
@@ -72,7 +74,7 @@ export class Diagram{
     .extent([[0, 0], [width, height]])
     .scaleExtent([0.1, 4])
     .on('zoom', (payload: any) => this.store.setZoomTransform(payload.transform))
-    // .filter((e: any) => e.type !== 'wheel' || e.ctrlKey)
+    .filter((e: any) => e.type !== 'dblclick')
 
     chart.call(<any>_zoom);
 
@@ -90,6 +92,10 @@ export class Diagram{
   setZoom(e: DiagramEvent): void {
     const zoom = <ZoomTransform | null>e.data;
     this.zoomController.transform(this.chart, zoom || zoomIdentity);
+  }
+
+  public get currentNode(): Node{
+    return this.modules?.subChart?.currentNode;
   }
 
   public back(){
@@ -150,6 +156,11 @@ export class Diagram{
       this.edgesLayer.attr('transform', null);
     }
     this.zoomTransform = transform;
+  }
+
+  public on(eventType: string, handler: (e: DiagramEvent) => void){
+    this.store.on(eventType, handler);
+    return this;
   }
 
 }

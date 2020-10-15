@@ -18,6 +18,8 @@ export const EVENTS = Object.freeze({
   NODE_GOT_OPEN: 'node-got-open',
   NODE_GOT_CLOSED: 'node-got-closed',
   NODE_CLOSING: 'node-closing',
+  NODE_CONTEXT_MENU: 'node-context-menu',
+  NODE_DOUBLE_CLICK: 'node-double-click',
 
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',
@@ -32,6 +34,7 @@ export const EVENTS = Object.freeze({
   DIAGRAM_SET_ZOOM: 'diagram-set-zoom',
   DIAGRAM_DESTROY_EDGES: 'diagram-destroy-edges',
   DIAGRAM_BUILD_EDGES: 'diagram-build-edges',
+
 
   INIT_CANVAS_CREATED: 'init-canvas-created'
 });

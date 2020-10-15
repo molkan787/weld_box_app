@@ -1,11 +1,11 @@
 <template>
   <div class="state-indicators">
-    <div class="priority" v-if="requirePriority || true">
+    <div class="priority" v-if="requirePriority">
       <input type="text" v-model="state.priority">
       <PriorityIcon />
     </div>
-    <ParallelIcon v-if="isParallel || true" />
-    <HistoricIcon v-if="isHistoric || true" />
+    <ParallelIcon v-if="isParallel" />
+    <HistoricIcon v-if="isHistoric" />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
       return this.state.decomposition == StateDecomposition.Parallel;
     },
     requirePriority(){
-      const p = this.state.parent;
+      const p = this.state._parent;
       return p && p.decomposition == StateDecomposition.Parallel;
     }
   }

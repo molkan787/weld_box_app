@@ -1,5 +1,5 @@
 import { EVENTS } from "../constants";
-import { DiagramStore, MyRBush } from "../diagram-store";
+import { DiagramStore } from "../diagram-store";
 import { addPoints, Side } from "../helpers/geometry";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
@@ -91,8 +91,8 @@ export class Node extends Component{
 
   /**
    * Returns all descendents (This node, childs nodes and recursively all sub-childs).
-   * This method its self doesn't use recursive calls, instead stack approach
-   * @param skipHiddenNodes set to true to skip children of nodes with hidden content (`Node.showContent == false`)
+   * This method its self doesn't use recursive calls, it use stack approach instead
+   * @param skipHiddenNodes set to true to skip children of nodes with hidden content, with exception of calling node's children
    */
   public getAllDescendentsNodes(skipHiddenNodes: boolean = false): Node[]{
     const allNodes: Node[] = [];
@@ -100,7 +100,7 @@ export class Node extends Component{
     while(stack.length > 0){
       const n = <Node>stack.shift();
       allNodes.push(n);
-      if(!(skipHiddenNodes && !n.showContent)){
+      if(!(skipHiddenNodes && !n.showContent && n !== this)){
         stack.push(...n.children);
       }
     }

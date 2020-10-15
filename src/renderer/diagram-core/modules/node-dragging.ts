@@ -30,14 +30,26 @@ export class NodeDragging{
   private apply(node: Node){
     const d3Node = this.store.getD3Node(node.id);
     if(typeof d3Node === 'undefined'){
-      throw new Error(`Node #${node.id} was not found in D3NodesMap`);
+      throw new Error(`D3 Selection of Node #${node.id} not found`);
     }
     // TODO: refactor it, reuse the same functions instances
     // and move events handlers attachement in one global place
     const _drag = drag()
     .on('start', (event: any) => this.dragstarted(d3Node, event, node))
     .on('drag', (event: any) => this.dragged(d3Node, event, node))
-    .on('end', (event: any) => this.dragended(d3Node, event, node))
+    .on('end', (event: any) => this.dragended(d3Node, event, node));
+
+    // this will prevent dragging a node if is open as sub-chart,
+    // instead, the canvas will be dragged.
+    // this eliminates recursive updates on all nested childs of that node when is open
+    _drag.filter((e: any, node: any) => {
+      if(!this.store.nodeDraggingTool) return true;
+      if(node.props.isOpen){
+        return this.isResizeHandleEvent(e);
+      }else{
+        return true;
+      }
+    });
 
     d3Node.call(<any>_drag);
   }
@@ -176,13 +188,13 @@ export class NodeDragging{
   }
 
   /** Checks if the event was triggered by the resize handle `<span/>` */
-  private isResizeHandleEvent(event: any){
+  private isResizeHandleEvent(event: any): boolean{
     return this.getSrcElement(event)?.classList.contains(CLASSES.RESIZE_HANDLE);
   }
 
   /** Grabs and return srcElement from the source event */
   private getSrcElement(event: any){
-    return event?.sourceEvent?.srcElement;
+    return event?.srcElement || event?.sourceEvent?.srcElement;
   }
 
 }

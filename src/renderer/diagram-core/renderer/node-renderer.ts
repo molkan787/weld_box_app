@@ -25,9 +25,9 @@ export class NodeRenderer{
     const root = con.append('div');
     root.data([node]).classed('node', true);
 
-    const header = root.append('div').classed('header', true);
-    header.append('span')
-            .classed(CLASSES.HEADER_TEXT, true)
+    root.append('div').classed('header', true);
+    // header.append('span')
+    //         .classed(CLASSES.HEADER_TEXT, true)
 
     root.append('div').classed(CLASSES.NODE_BODY, true);
     root.append('svg')
@@ -48,7 +48,7 @@ export class NodeRenderer{
     this.updateAttributes(node);
     this.updateBBox(node);
     this.updateDecoration(node);
-    this.updateHeader(node);
+    // this.updateHeader(node);
   }
 
   updateAttributes(node: Node){
