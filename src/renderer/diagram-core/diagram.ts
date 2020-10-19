@@ -37,11 +37,11 @@ export class Diagram{
     const { width, height, chartClasses } = options;
 
     this.modules = {
-      domEventsAttacher: new DomEventsAttacher(this.store),
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
       edgeDrawer: new EdgeDrawer(this.store),
-      subChart: new SubChart(this.store)
+      subChart: new SubChart(this.store),
+      domEventsAttacher: new DomEventsAttacher(this.store), // its important to keep domEventsAttacher the last one
     }
 
     this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
@@ -52,6 +52,7 @@ export class Diagram{
     const chart = select(parentSelector)
       .append('div')
       .classed('diagram', true)
+      .attr('canvas', 'true')
       .attr('style', `width:${width}px;height:${height}px`)
     if(chartClasses) chart.classed(chartClasses, true);
 
@@ -61,9 +62,11 @@ export class Diagram{
     this.store.setRootElement(chart);
 
     this.nodesLayer = chart.append('div')
+                            .attr('canvas', 'true')
                             .classed('nodes-layer', true);
 
     this.edgesLayer = chart.append('svg')
+                            .attr('canvas', 'true')
                             .classed('edges-layer', true)
                             .attr('width', width)
                             .attr('height', height)
@@ -74,13 +77,20 @@ export class Diagram{
     .extent([[0, 0], [width, height]])
     .scaleExtent([0.1, 4])
     .on('zoom', (payload: any) => this.store.setZoomTransform(payload.transform))
-    .filter((e: any) => e.type !== 'dblclick')
 
     chart.call(<any>_zoom);
+    chart.on("dblclick.zoom", null);
+    chart.on('click', (e: any) => this.onChartClick(e));
 
     this.chart = chart;
     this.renderer.setLayers(this.nodesLayer, this.edgesLayer);
     this.zoomController = _zoom;
+  }
+
+  onChartClick(e: MouseEvent): void {
+    if((<HTMLElement>e.target).getAttribute('canvas') === 'true'){
+      this.store.emit(EVENTS.NODE_SELECTED, {})
+    }
   }
 
   resetZoom(){

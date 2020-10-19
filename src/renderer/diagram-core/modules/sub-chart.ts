@@ -57,7 +57,7 @@ export class SubChart{
 
     this.currentNode = node;
 
-    const zoom = this.zoomTransforms.get(node.id) || zoomIdentity.translate(50, 50);
+    const zoom = this.zoomTransforms.get(node.id) || zoomIdentity.translate(70, 50);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
 
     const nodesLayer = this._getNodesLayerDomElement();

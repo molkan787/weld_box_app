@@ -1,7 +1,7 @@
 <template>
-  <div class="state-header">
+  <div class="state-header" @click="onClick()">
     <span class="title">
-      {{ state.title }}
+      {{ state.name }}
       <div v-if="state.isSubTask" class="label">SUBTASK</div>
     </span>
     <StateIndicators :state="state" />
@@ -20,6 +20,11 @@ export default {
       required: true
     }
   },
+  methods: {
+    onClick(){
+      this.state.select();
+    }
+  }
 }
 </script>
 

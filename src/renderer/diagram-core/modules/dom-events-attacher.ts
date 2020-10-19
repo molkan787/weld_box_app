@@ -8,7 +8,7 @@ export class DomEventsAttacher{
   private contextMenuLocked: boolean = false;
   private readonly handlers = {
     contextmenu: (e: any, node: any) => this.onContextMenu(e, node),
-    dblclick: (e: any, node: any) => this.onDoubleClick(e, node)
+    dblclick: (e: any, node: any) => this.onDoubleClick(e, node),
   };
 
   constructor(private readonly store: DiagramStore){
@@ -26,6 +26,7 @@ export class DomEventsAttacher{
     if(this.contextMenuLocked) return;
     this.lockContextMenu();
     this.store.emit(EVENTS.NODE_CONTEXT_MENU, { node, sourceEvent: e });
+    this.store.emit(EVENTS.NODE_SELECTED, { node, sourceEvent: e });
   }
 
   lockContextMenu(){

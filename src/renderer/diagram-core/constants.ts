@@ -20,6 +20,7 @@ export const EVENTS = Object.freeze({
   NODE_CLOSING: 'node-closing',
   NODE_CONTEXT_MENU: 'node-context-menu',
   NODE_DOUBLE_CLICK: 'node-double-click',
+  NODE_SELECTED: 'node-selected',
 
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',

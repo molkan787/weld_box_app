@@ -10,14 +10,16 @@ import { cs } from "./utils";
 
 export class NodeRenderer{
 
+  private selectedNode: Node | null = null;
+
   constructor(readonly store: DiagramStore){
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
     store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
+    store.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.nodeSelected(<Node>node));
   }
-
 
   build(container: D3Node, node: Node){
     const child = node.parent != null;
@@ -25,22 +27,35 @@ export class NodeRenderer{
     const root = con.append('div');
     root.data([node]).classed('node', true);
 
-    root.append('div').classed('header', true);
-    // header.append('span')
-    //         .classed(CLASSES.HEADER_TEXT, true)
+    if(node.isBasic){
+      root.classed('basic', true);
+    }else{
+      root.append('div').classed('header', true);
+      root.append('div').classed(CLASSES.NODE_BODY, true);
+      root.append('svg')
+            .attr('id', this.getSVGLayerId(node))
+            .classed('svg-layer', true)
+            .append('g');
 
-    root.append('div').classed(CLASSES.NODE_BODY, true);
-    root.append('svg')
-          .attr('id', this.getSVGLayerId(node))
-          .classed('svg-layer', true)
-          .append('g');
-
-    this.addResizeHandles(root, node.id);
+      this.addResizeHandles(root, node.id);
+    }
 
     this.store.setD3Node(node.id, root);
     this.update(node);
 
     node.DOMElementBuilt(root);
+  }
+
+
+  nodeSelected(node: Node): void {
+    const previous = this.selectedNode;
+    this.selectedNode = node;
+    if(previous){
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: previous });
+    }
+    if(node){
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
+    }
   }
 
   /** Update node's visual representation */
@@ -74,6 +89,7 @@ export class NodeRenderer{
 
     // Apply outline, usually used when the node is the drop target for a child node
     d3Node.classed('highlighted', node.highlighted);
+    d3Node.classed('selected', this.selectedNode === node);
 
     // highlight one of node's side, usually used to show attach point when drawing an edge
     let line: D3Node = d3Node.select(cs(CLASSES.HIGHLIGHT_LINE));

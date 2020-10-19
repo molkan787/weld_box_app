@@ -18,13 +18,14 @@ export class Node extends Component{
   private _parent: Node | null = null;
   readonly children: Node[] = [];
   readonly edges: EdgeConnection[] = [];
+  readonly isBasic: boolean = false;
 
   private _showContent: boolean = true;
 
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
 
-  public title: string;
+  public name: string;
 
   public readonly props: {
     isOpen: boolean,
@@ -42,12 +43,13 @@ export class Node extends Component{
   constructor(
     public position: Position,
     public size: Size,
-    options?: any
+    options?: NodeOptions
   ){
     super(ComponentType.Node);
-    this.title = options?.title || '';
+    this.name = options?.name || '';
     const sc = options?.showContent;
     this._showContent = typeof sc == 'boolean' ? sc : true;
+    if(options?.basic) this.isBasic = true;
   }
 
   public open(){
@@ -173,6 +175,10 @@ export class Node extends Component{
     return result;
   }
 
+  public select(){
+    this.store?.emit(EVENTS.NODE_SELECTED, { node: this });
+  }
+
   /**
    * A life cycle hook, called after initial build of DOM element of the node.
    * Can be used to add custom content
@@ -180,4 +186,10 @@ export class Node extends Component{
    */
   public DOMElementBuilt(d3node: D3Node){}
 
+}
+
+export interface NodeOptions{
+  name?: string;
+  showContent?: boolean;
+  basic?: boolean;
 }

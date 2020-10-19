@@ -6,6 +6,7 @@
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
+    <PropertiesPanel :object="selectedObject" />
     <ContextMenu ref="menu" />
   </div>
 </template>
@@ -15,23 +16,28 @@ import SideBar from './SideBar.vue';
 import TopBar from './TopBar.vue';
 import StatusBar from './StatusBar.vue';
 import ContextMenu from './ContextMenu.vue';
+import PropertiesPanel from './PropertiesPanel.vue';
 import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
 import { State } from '../my-diagram/state';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
+import { Node } from '../diagram-core';
 interface MyData {
-  diagram: MyDiagram | null
+  diagram: MyDiagram | null,
+  selectedObject: Node | null
 }
 export default Vue.extend({
   components: {
     SideBar,
     TopBar,
     StatusBar,
-    ContextMenu
+    ContextMenu,
+    PropertiesPanel
   },
   data: (): MyData => ({
     diagram: null,
+    selectedObject: null,
   }),
   computed: {
     showBackButton(){
@@ -58,7 +64,7 @@ export default Vue.extend({
           x: e.clientX,
           y: e.clientY - 50 // -40px because of top bar height (temporary solution)
         }, State)
-        if(node) node.title = `State ${node.id}`;
+        if(node) node.name = `State ${node.id}`;
       }
     }
   },
@@ -68,6 +74,8 @@ export default Vue.extend({
 
     // @ts-ignore
     this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
+
+    this.diagram.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.selectedObject = (node || null));
 
     // Temporary
     this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {
