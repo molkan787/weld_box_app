@@ -8,4 +8,5 @@ export interface DiagramEvent{
   readonly node?: Node;
   readonly edge?: Edge;
   readonly data?: any;
+  readonly simulated?: boolean;
 }

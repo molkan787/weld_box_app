@@ -127,12 +127,6 @@ export class NodeRenderer{
     return `node-${node.id}-svg-layer`
   }
 
-  private updateHeader(node: Node){
-    const d3Node = this.getD3Node(node);
-    d3Node.select(cs(CLASSES.HEADER_TEXT))
-            .text(node.title);
-  }
-
   private addResizeHandles(g: D3Node, nodeId: number){
     this.createResizeHandle(g, nodeId, Corner.TopLeft);
     this.createResizeHandle(g, nodeId, Corner.TopRight);

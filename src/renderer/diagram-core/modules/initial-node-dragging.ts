@@ -28,7 +28,7 @@ export class InitialNodeDragging{
     if(this.subject){
       const node = this.subject;
       this.subject = null;
-      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent });
+      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent, simulated: true });
     }
   }
 
@@ -39,7 +39,7 @@ export class InitialNodeDragging{
     const position = this.getNodePositionFromClientPoint(node.size, { x, y });
     node.position = position;
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent });
-    this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent });
+    this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent, simulated: true });
   }
 
   getNodePositionFromClientPoint(nodeSize: Size, clientPoint: Position): Position{

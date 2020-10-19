@@ -18,49 +18,20 @@ export class NodeDragging{
   private resizeCorner: Corner = Corner.TopLeft;
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
+    // store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
-  }
-
-  /**
-   * Add interactivity capability to the specified Node
-   * @param node Node to add interactivity to
-   * @description interactivity capability: Dragging/Moving and Resizing
-   */
-  private apply(node: Node){
-    const d3Node = this.store.getD3Node(node.id);
-    if(typeof d3Node === 'undefined'){
-      throw new Error(`D3 Selection of Node #${node.id} not found`);
-    }
-    // TODO: refactor it, reuse the same functions instances
-    // and move events handlers attachement in one global place
-    const _drag = drag()
-    .on('start', (event: any) => this.dragstarted(d3Node, event, node))
-    .on('drag', (event: any) => this.dragged(d3Node, event, node))
-    .on('end', (event: any) => this.dragended(d3Node, event, node));
-
-    // this will prevent dragging a node if is open as sub-chart,
-    // instead, the canvas will be dragged.
-    // this eliminates recursive updates on all nested childs of that node when is open
-    _drag.filter((e: any, node: any) => {
-      if(!this.store.nodeDraggingTool) return true;
-      if(node.props.isOpen){
-        return this.isResizeHandleEvent(e);
-      }else{
-        return true;
-      }
-    });
-
-    d3Node.call(<any>_drag);
+    store.on(EVENTS.NODE_DRAGSTART, e => this.dragstarted(e))
+    store.on(EVENTS.NODE_DRAGGED, e => this.dragged(e))
+    store.on(EVENTS.NODE_DROPPED, e => this.dragended(e))
   }
 
   /** Handler for on drag start event */
-  private dragstarted(d3Node: D3Node, event: any, node: Node) {
-    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
-    if(!this.store.nodeDraggingTool){
-      this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: event});
-      return;
-    }
+  private dragstarted(e: DiagramEvent) {
+    if(!this.store.nodeDraggingTool || e.simulated) return;
+
+    const node = <Node>e.node;
+    const event = e.sourceEvent;
+    const d3Node = this.store.getD3Node(node.id);
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -78,13 +49,11 @@ export class NodeDragging{
    * handler for dragged event.
    * this function will either move the node in the canvas or just resize the node according to mouse movement
    */
-  private dragged(d3Node: D3Node, event: any, node: Node) {
+  private dragged(e: DiagramEvent) {
+    if(!this.store.nodeDraggingTool || e.simulated) return;
 
-    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
-    if(!this.store.nodeDraggingTool){
-      this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event});
-      return;
-    }
+    const node = <Node>e.node;
+    const event = e.sourceEvent;
     let { dx, dy } = event;
     const scale = 1 / (this.store.zoomTransform?.k || 1);
     dx *= scale;
@@ -131,24 +100,18 @@ export class NodeDragging{
           this.capNodeBBox(child)
         }
       }
-    }else{
-      this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: event });
     }
 
   }
 
   /** handler for drag end event */
-  private dragended(d3Node: D3Node, event: any, node: Node) {
+  private dragended(e: DiagramEvent) {
+    if(!this.store.nodeDraggingTool || e.simulated) return;
 
-    // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
-    if(!this.store.nodeDraggingTool){
-      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
-      return;
-    }
+    const node = <Node>e.node;
+    const d3Node = this.store.getD3Node(node.id);
 
     d3Node.style('cursor', 'default');
-
-    this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
   }
 
   private onNodeParentChanged(event: DiagramEvent){

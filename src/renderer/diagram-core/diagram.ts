@@ -43,7 +43,7 @@ export class Diagram{
       edgeDrawer: new EdgeDrawer(this.store),
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
-      domEventsAttacher: new DomEventsAttacher(this.store), // its important to keep domEventsAttacher the last one
+      domEventsAttacher: new DomEventsAttacher(this.store), // its important initialize DomEventsAttacher after all other modules
     }
 
     this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
@@ -127,6 +127,7 @@ export class Diagram{
     node.store = this.store;
     this.store.addNode(node);
     this.store.emit(EVENTS.NODE_ADDED, { node })
+    console.log(node)
   }
 
   public addEdge(edge: Edge){

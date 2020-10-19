@@ -29,6 +29,8 @@ export class EdgeDrawer{
 //#region Edge drawing logic
 
   onNodeDragStart(event: DiagramEvent){
+    if(this.store.nodeDraggingTool) return;
+
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
     const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
     // const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
@@ -88,6 +90,8 @@ export class EdgeDrawer{
   }
 
   onNodeDragged(event: DiagramEvent){
+    if(this.store.nodeDraggingTool) return;
+
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
     const { x, y } = event.sourceEvent.sourceEvent;
@@ -116,6 +120,8 @@ export class EdgeDrawer{
   }
 
   onNodeDropped(event: DiagramEvent){
+    if(this.store.nodeDraggingTool) return;
+
     const node = this.nodeInSubject;
     const edge = this.currentEdge;
     if(node && edge){
