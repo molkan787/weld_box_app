@@ -11,6 +11,7 @@ import { cs } from "./utils";
 export class NodeRenderer{
 
   private selectedNode: Node | null = null;
+  private nodesLayer: D3Node | null = null;
 
   constructor(readonly store: DiagramStore){
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
@@ -19,6 +20,10 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.nodeSelected(<Node>node));
+  }
+
+  public setLayer(layer: D3Node){
+    this.nodesLayer = layer;
   }
 
   build(container: D3Node, node: Node){
@@ -74,7 +79,11 @@ export class NodeRenderer{
   /** Updates element's position in the dom tree,
    * this method need to be called each time Node's parent was changed */
   updateNodeParent(node: Node){
-    const parentElement = <HTMLElement>this.getD3Node(node.parent || -1).select(cs(CLASSES.NODE_BODY)).node();
+    const parentElement = <HTMLElement>(
+      node.parent ? this.getD3Node(node.parent).select(cs(CLASSES.NODE_BODY))
+                  : <D3Node>this.nodesLayer
+    ).node();
+
     const element: HTMLElement = this.getD3Node(node).node();
     parentElement.appendChild(element);
     this.updateBBox(node);

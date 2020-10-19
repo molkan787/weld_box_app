@@ -11,6 +11,7 @@ export class TreeManager{
   constructor(readonly store: DiagramStore){
     store.on(EVENTS.NODE_DRAGGED, e => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
+    store.on(EVENTS.NODE_DRAGGED_OUT_OF_PARENT, e => this.onNodeDraggedOutOfParent(e));
   }
 
   private onNodeDropped(event: DiagramEvent){
@@ -100,7 +101,15 @@ export class TreeManager{
       x: cp.x - pp.x - left,
       y: cp.y - pp.y - top,
     }
+    node.parent?.removeChild(node);
     newParent.addChild(node);
+    this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node });
+  }
+
+  private onNodeDraggedOutOfParent(e: DiagramEvent): void {
+    const node = <Node>e.node;
+    node.position = node.getAbsolutePosition();
+    node.parent?.removeChild(node);
     this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node });
   }
 

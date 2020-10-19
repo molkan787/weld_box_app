@@ -22,6 +22,7 @@ export class DomEventsAttacher{
       .on('start', (e: any, node: any) => this.onDragStart(e, node))
       .on('drag', (e: any, node: any) => this.onDragged(e, node))
       .on('end', (e: any, node: any) => this.onDragEnd(e, node))
+      .subject(() => ({ x: 0, y: 0 }))
       .filter((e: any, node: any) => {
         if(!this.store.nodeDraggingTool) return true;
         if(node.props.isOpen){

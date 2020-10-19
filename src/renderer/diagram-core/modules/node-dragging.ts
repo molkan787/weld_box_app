@@ -1,10 +1,12 @@
-import { drag, select } from 'd3';
+import { select } from 'd3';
 import { Node } from '../components/node';
 import { ATTR, EVENTS, CLASSES } from '../constants';
 import { DiagramStore } from '../diagram-store';
 import { Corner, Side } from '../helpers/geometry';
 import { DiagramEvent } from '../interfaces/DiagramEvent';
-import { D3Node } from '../types/aliases';
+import { Position } from '../interfaces/Position';
+import { Size } from '../interfaces/Size';
+import { cloneObject } from '../utils';
 
 /**
  * Module thats handles Node Dragging (Moving) and Resizing
@@ -16,6 +18,10 @@ export class NodeDragging{
 
   // Indicate which corner the user used to resize the Node
   private resizeCorner: Corner = Corner.TopLeft;
+
+  private startingSize: Size = { width: 0, height: 0, radius: 0 };
+  private startingPosition: Position = { x: 0, y: 0 };
+  private startingAbsolutePosition: Position = { x: 0, y: 0 };
 
   constructor(readonly store: DiagramStore){
     // store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
@@ -32,6 +38,10 @@ export class NodeDragging{
     const node = <Node>e.node;
     const event = e.sourceEvent;
     const d3Node = this.store.getD3Node(node.id);
+
+    this.startingAbsolutePosition = cloneObject(node.getAbsolutePosition());
+    this.startingPosition = cloneObject(node.position);
+    this.startingSize = cloneObject(node.size);
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -54,41 +64,54 @@ export class NodeDragging{
 
     const node = <Node>e.node;
     const event = e.sourceEvent;
-    let { dx, dy } = event;
+    let { x, y } = event;
     const scale = 1 / (this.store.zoomTransform?.k || 1);
-    dx *= scale;
-    dy *= scale;
+    x *= scale;
+    y *= scale;
     const { position: pos, size } = node;
+    const spos = this.startingPosition;
 
     // If we are resizing a node, adjust his size and position
     if(this.resizing){
-      const { width, height } = size;
+      const ssize = this.startingSize;
 
       const left = this.resizeCorner & Side.Left, // checks if the corner is on the left side
             top = this.resizeCorner & Side.Top; // checks if the corner is on the top side
 
       // adjust the size by deltas change
-      size.width += left ? -dx : dx;
-      size.height += top ? -dy : dy;
+      size.width = ssize.width + (left ? -x : x);
+      size.height = ssize.height + (top ? -y : y);
 
       // Cap size to the minimum 180x100
       const minW = 180;
       const minH = 100;
-      if(size.width < minW) size.width = minW;
-      if(size.height < minH) size.height = minH;
+
+      const overX = minW - size.width;
+      const overY = minH - size.height;
+
+      if(overX > 0) size.width = minW;
+      if(overY > 0) size.height = minH;
 
       // adjust node's position if it is being resized from top or left side
-      if(left) pos.x -= size.width - width; // adjust x by the diffrence in previous & new width
-      if(top) pos.y -= size.height - height; // same here
+      if(left) pos.x = spos.x + x - (overX > 0 ? overX : 0); // adjust x by the diffrence in previous & new width
+      if(top) pos.y = spos.y + y - (overY > 0 ? overY : 0); // same here
 
     }else{
-      pos.x += dx;
-      pos.y += dy;
+      pos.x = spos.x + x;
+      pos.y = spos.y + y;
     }
 
-    // Skip size capping if the node is current open the canvas as a sub-chart
+    // Skip size capping if the node is currently open the canvas as a sub-chart
     if(!node.props.isOpen){
       this.capNodeBBox(node);
+      if(!this.resizing){
+        const minDiff = 100;
+        const xDiff = Math.abs(pos.x - (spos.x + x));
+        const yDiff = Math.abs(pos.y - (spos.y + y));
+        if(xDiff > minDiff || yDiff > minDiff){
+          this.nodeDraggedOutOfParent(node);
+        }
+      }
     }
 
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
@@ -112,6 +135,11 @@ export class NodeDragging{
     const d3Node = this.store.getD3Node(node.id);
 
     d3Node.style('cursor', 'default');
+  }
+
+  private nodeDraggedOutOfParent(node: Node){
+    this.store.emit(EVENTS.NODE_DRAGGED_OUT_OF_PARENT, { node });
+    this.startingPosition = this.startingAbsolutePosition;
   }
 
   private onNodeParentChanged(event: DiagramEvent){

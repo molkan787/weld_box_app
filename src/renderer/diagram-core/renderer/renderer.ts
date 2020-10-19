@@ -42,6 +42,7 @@ export class Renderer{
   setLayers(nodesLayer: D3Node, edgesLayer: D3Node){
     this.nodesLayer = nodesLayer;
     this.edgesLayer = edgesLayer;
+    this.nodeRenderer.setLayer(nodesLayer);
     this.edgeRenderer.prepareLayer(edgesLayer);
   }
 
