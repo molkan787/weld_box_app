@@ -14,6 +14,7 @@ import { DiagramEvent } from './interfaces/DiagramEvent';
 import { Position } from './interfaces/Position';
 import { SubChart } from './modules/sub-chart';
 import { DomEventsAttacher } from './modules/dom-events-attacher';
+import { InitialNodeDragging } from './modules/initial-node-dragging';
 
 /**
  * `Diagram`
@@ -41,6 +42,7 @@ export class Diagram{
       treeManager: new TreeManager(this.store),
       edgeDrawer: new EdgeDrawer(this.store),
       subChart: new SubChart(this.store),
+      initialNodeDragging: new InitialNodeDragging(this.store),
       domEventsAttacher: new DomEventsAttacher(this.store), // its important to keep domEventsAttacher the last one
     }
 
@@ -48,7 +50,7 @@ export class Diagram{
     this.store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
     this.store.on(EVENTS.DIAGRAM_SET_ZOOM, e => this.setZoom(e));
 
-    // Initializing d3 chart
+    // Initializing diagram canvas
     const chart = select(parentSelector)
       .append('div')
       .classed('diagram', true)
@@ -142,15 +144,16 @@ export class Diagram{
     this.store.nodeDraggingTool = true;
   }
 
-  public createNodeAt(point: Position, nodeClass: typeof Node){
-    const width = 240, height = 120;
-    let { x, y } = point;
-    if(this.zoomTransform) [x, y] = this.zoomTransform.invert([x, y]);
-    x -= width / 2;
-    y -= height / 2;
-    const node = new nodeClass({ x, y }, { width, height, radius: 0 });
-    setTimeout(() => this.addNode(node), 0);
-    return node;
+  public spawnNodeAt(point: Position, node: Node){
+    this.addNode(node);
+    this.store.emit(EVENTS.DIAGRAM_START_NODE_DRAGGING, {
+      node,
+      data: point
+    })
+  }
+
+  public simulateCanvasMouseMove(event: MouseEvent){
+    this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: event });
   }
 
   private onZoomChanged() {

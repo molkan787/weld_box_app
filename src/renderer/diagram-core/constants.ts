@@ -36,6 +36,11 @@ export const EVENTS = Object.freeze({
   DIAGRAM_DESTROY_EDGES: 'diagram-destroy-edges',
   DIAGRAM_BUILD_EDGES: 'diagram-build-edges',
 
+  DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
+
+  CANVAS_MOUSEMOVE: 'canvas-mousemove',
+  CANVAS_MOUSEUP: 'canvas-mouseup',
+
 
   INIT_CANVAS_CREATED: 'init-canvas-created'
 });

@@ -13,6 +13,16 @@ export class DomEventsAttacher{
 
   constructor(private readonly store: DiagramStore){
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
+    store.on(EVENTS.INIT_CANVAS_CREATED, (e: DiagramEvent) => this.onCanvasCreated(e));
+  }
+
+  onCanvasCreated(de: DiagramEvent): void {
+    this.store.rootElement.on('mousemove', (e: any) => {
+      this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e });
+    });
+    this.store.rootElement.on('mouseup', (e: any) => {
+      this.store.emit(EVENTS.CANVAS_MOUSEUP, { sourceEvent: e });
+    });
   }
 
   onNodeAdded(e: DiagramEvent): void {

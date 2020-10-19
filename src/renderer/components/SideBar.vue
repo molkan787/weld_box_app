@@ -1,29 +1,50 @@
 <template>
-  <div class="side-bar pane">
-    <div title="State (Drag & Drop)" class="icon" :class="{active: activeTool == 'state'}" draggable @dragstart="dragStart">
+  <div class="side-bar pane" @mousemove="onMouseMove">
+    <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
     <div title="Transition (Toggle)" class="icon" :class="{active: activeTool == 'transition'}" @click="iconClick('transition')">
       <TransitionIcon />
     </div>
+    <div title="State" class="icon" @mousedown="onMouseDown($event, 'message')">
+      <MessageIcon />
+    </div>
+    <div title="State" class="icon" @mousedown="onMouseDown($event, 'event')">
+      <EventIcon />
+    </div>
   </div>
 </template>
 
 <script>
+import { BasicNode } from '../my-diagram/basic-node';
+import { ObjectType } from '../my-diagram/interfaces/object-type';
+import { State } from '../my-diagram/state';
 import StateIcon from './icons/State';
 import TransitionIcon from './icons/Transition';
+import MessageIcon from './icons/Message';
+import EventIcon from './icons/Event';
 export default {
   components: {
     StateIcon,
-    TransitionIcon
+    TransitionIcon,
+    MessageIcon,
+    EventIcon
+  },
+  props: {
+    diagram: {
+      type: Object,
+    }
   },
   data: () => ({
     activeTool: ''
   }),
   methods: {
-    dragStart(e){
-      e.dataTransfer.effectAllowed = 'move';
-      e.dataTransfer.setData('item', 'state');
+    onMouseMove(event){
+      this.diagram.simulateCanvasMouseMove(event);
+    },
+    onMouseDown(event, objectType){
+      const { clientX: x, clientY: y } = event;
+      this.diagram.spawnNodeAt({ x, y }, this.createObjectInstance(objectType))
     },
     iconClick(name){
       if(this.activeTool == name){
@@ -37,6 +58,16 @@ export default {
     deactivateTool(name){
       if(this.activeTool == name){
         this.activeTool = '';
+      }
+    },
+    createObjectInstance(objectType){
+      switch (objectType) {
+        case 'state':
+          return new State();
+        case 'message':
+          return new BasicNode({ x: 0, y: 0 }, ObjectType.Message);
+        case 'event':
+          return new BasicNode({ x: 0, y: 0 }, ObjectType.Event);
       }
     }
   }

@@ -6,12 +6,12 @@
 
           <div class="field disabled">
             <label>Object</label>
-            <input type="text" :value="object.what">
+            <input class="capitalize" type="text" :value="object.what">
           </div>
 
           <div class="field">
             <label>Name</label>
-            <input type="text" v-model="object.title">
+            <input type="text" v-model="object.name">
           </div>
 
           <div class="field" v-if="needsPriority">
@@ -128,6 +128,9 @@ export default {
     label{
       cursor: pointer;
     }
+  }
+  .capitalize{
+    text-transform: capitalize;
   }
 }
 </style>

@@ -3,6 +3,10 @@
   position: relative;
   overflow: hidden;
 
+  *:not(input){
+    user-select: none;
+  }
+
   & > .edges-layer{
     position: absolute;
     pointer-events: none;

@@ -17,17 +17,12 @@ export class EdgeDrawer{
   private nodeInSubject: Node | null = null;
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.INIT_CANVAS_CREATED, e => this.onCanvasCreated(e));
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, (e) => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, (e) => this.onEdgeConnectionsChanged(e));
-  }
-
-  onCanvasCreated(e: DiagramEvent){
-    const element = this.store.rootElement; // rootElement is the actual canvas root element
-    element.on('mousemove', (e: any) => this.onMouseMove(e));
+    store.on(EVENTS.CANVAS_MOUSEMOVE, (e: DiagramEvent) => this.onMouseMove(e.sourceEvent))
   }
 
 
@@ -35,7 +30,7 @@ export class EdgeDrawer{
 
   onNodeDragStart(event: DiagramEvent){
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
-    const isAB = srcElement.classList.contains(CLASSES.ATTACH_BOX);
+    const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
     // const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
 
     if(isAB){

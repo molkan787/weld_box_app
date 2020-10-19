@@ -2,7 +2,7 @@
   <div class="main-page">
     <TopBar @back-click="backClick" :showBackButton="showBackButton" />
     <div class="middle">
-      <SideBar ref="sideBar" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
+      <SideBar ref="sideBar" :diagram="diagram" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />

@@ -91,7 +91,7 @@ export class NodeDragging{
     dy *= scale;
     const { position: pos, size } = node;
 
-    // If we resizing a node, adjust his size and position
+    // If we are resizing a node, adjust his size and position
     if(this.resizing){
       const { width, height } = size;
 
@@ -102,9 +102,9 @@ export class NodeDragging{
       size.width += left ? -dx : dx;
       size.height += top ? -dy : dy;
 
-      // Cap size to the minimum 1x1
-      const minW = 120;
-      const minH = 60;
+      // Cap size to the minimum 180x100
+      const minW = 180;
+      const minH = 100;
       if(size.width < minW) size.width = minW;
       if(size.height < minH) size.height = minH;
 
@@ -142,7 +142,7 @@ export class NodeDragging{
 
     // If NodeDragging Tool is turned off, re-emits drag events for use in other tools
     if(!this.store.nodeDraggingTool){
-      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event});
+      this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: event });
       return;
     }
 
