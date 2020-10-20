@@ -6,7 +6,6 @@ import { DiagramEvent } from "../interfaces/DiagramEvent";
 
 export class DomEventsAttacher{
 
-  private contextMenuLocked: boolean = false;
   private readonly handlers = {
     contextmenu: (e: any, node: any) => this.onContextMenu(e, node),
     dblclick: (e: any, node: any) => this.onDoubleClick(e, node),
@@ -24,6 +23,10 @@ export class DomEventsAttacher{
       .on('end', (e: any, node: any) => this.onDragEnd(e, node))
       .subject(() => ({ x: 0, y: 0 }))
       .filter((e: any, node: any) => {
+        if(e.target.tagName == 'INPUT'){
+          e.stopPropagation();
+          return false;
+        }
         if(!this.store.nodeDraggingTool) return true;
         if(node.props.isOpen){
           return this.isResizeHandleEvent(e);
@@ -53,15 +56,9 @@ export class DomEventsAttacher{
   // -----------------------------------------------------------
 
   onContextMenu(e: MouseEvent, node: Node){
-    if(this.contextMenuLocked) return;
-    this.lockContextMenu();
+    e.stopPropagation();
     this.store.emit(EVENTS.NODE_CONTEXT_MENU, { node, sourceEvent: e });
     this.store.emit(EVENTS.NODE_SELECTED, { node, sourceEvent: e });
-  }
-
-  lockContextMenu(){
-    this.contextMenuLocked = true;
-    setTimeout(() => this.contextMenuLocked = false, 5);
   }
 
   onDoubleClick(e: MouseEvent, node: Node){
