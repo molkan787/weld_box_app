@@ -165,7 +165,7 @@ export class EdgeDrawer{
     };
     const transformedPoint = this.store.transformClientPoint(point, true);
     let nodes = this.store.getNodesFromPoint(transformedPoint, 6);
-    nodes = nodes.filter(n => !!n.parent);
+    nodes = nodes.filter(n => !!n.parent && !n.isBasic);
 
     let subject: Node | null = null;
     let touchedWall: Side | null = null;
