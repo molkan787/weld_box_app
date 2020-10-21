@@ -3,23 +3,18 @@ import { D3Node } from "../diagram-core/types/aliases";
 import BasicNodeComponent from '../components/diagram/BasicNode.vue';
 import Vue from 'vue';
 import { Position } from "../diagram-core/interfaces/Position";
-import { ObjectType } from "./interfaces/object-type";
-import { ObjectProps } from "./interfaces/object-props";
 
-export class BasicNode extends Node implements ObjectProps{
+export class BasicNode extends Node{
 
   // Internal props
   private vm?: Vue;
 
-  // Business props
-  public readonly what: ObjectType;
-
-  constructor(position: Position, what: ObjectType, options?: NodeOptions){
+  constructor(position: Position, options?: NodeOptions){
     super(position, { width: 40, height: 40, radius: 0 }, {
       ...options,
       basic: true
     });
-    this.what = what;
+
   }
 
   DOMElementBuilt(node: D3Node){

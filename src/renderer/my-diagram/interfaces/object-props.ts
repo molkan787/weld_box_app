@@ -4,4 +4,5 @@ export interface ObjectProps{
   id: number;
   name: string;
   what: ObjectType;
+  properties: Object;
 }

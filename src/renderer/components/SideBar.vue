@@ -23,6 +23,8 @@ import StateIcon from './icons/State';
 import TransitionIcon from './icons/Transition';
 import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
+import { MessageNode } from '../my-diagram/MessageNode';
+import { EventNode } from '../my-diagram/EventNode';
 export default {
   components: {
     StateIcon,
@@ -60,14 +62,14 @@ export default {
         this.activeTool = '';
       }
     },
-    createObjectInstance(objectType){
-      switch (objectType) {
-        case 'state':
+    createObjectInstance(_objectType){
+      switch (_objectType) {
+        case ObjectType.State:
           return new State();
-        case 'message':
-          return new BasicNode({ x: 0, y: 0 }, ObjectType.Message);
-        case 'event':
-          return new BasicNode({ x: 0, y: 0 }, ObjectType.Event);
+        case ObjectType.Message:
+          return new MessageNode({ x: 0, y: 0 });
+        case ObjectType.Event:
+          return new EventNode({ x: 0, y: 0 });
       }
     }
   }

@@ -6,7 +6,7 @@
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
-    <PropertiesPanel :object="selectedObject" />
+    <PropertiesPanel ref="propsPanel" :object="selectedObject" />
     <ContextMenu ref="menu" />
   </div>
 </template>
@@ -20,9 +20,10 @@ import PropertiesPanel from './PropertiesPanel.vue';
 import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
-import { State } from '../my-diagram/state';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
 import { Node } from '../diagram-core';
+import { ObjectProps } from '../my-diagram/interfaces/object-props';
+import { ObjectType } from '../my-diagram/interfaces/object-type';
 interface MyData {
   diagram: MyDiagram | null,
   selectedObject: Node | null
@@ -58,15 +59,6 @@ export default Vue.extend({
         this.diagram?.deactivateEdgeDrawer()
       }
     },
-    itemDropped(e: any, itemName: string){
-      if(itemName == 'state'){
-        const node = this.diagram?.createNodeAt({
-          x: e.clientX,
-          y: e.clientY - 50 // -40px because of top bar height (temporary solution)
-        }, State)
-        if(node) node.name = `State ${node.id}`;
-      }
-    }
   },
   mounted(){
     this.diagram = new MyDiagram('#canvas');
@@ -83,16 +75,14 @@ export default Vue.extend({
       this.$refs.sideBar.deactivateTool('transition');
     });
 
-    const canvas = <HTMLElement>this.$refs.canvas;
-
-    canvas.addEventListener('dragover', e => e.preventDefault());
-    canvas.addEventListener('drop', (e: any) => {
-      e.stopPropagation();
-      const item = e.dataTransfer.getData('item');
-      if(typeof item == 'string' && item.length){
-        this.itemDropped(e, item);
+    this.diagram.on(EVENTS.NODE_INITIAL_DROP, (e: DiagramEvent) => {
+      const object = <ObjectProps><unknown>e.node;
+      if(object.what == ObjectType.Message || object.what == ObjectType.Event){
+        e.node?.select();
+        (<any>this.$refs.propsPanel).show();
       }
-    })
+    });
+
   }
 })
 </script>

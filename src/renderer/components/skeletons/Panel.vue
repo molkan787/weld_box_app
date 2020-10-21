@@ -19,7 +19,15 @@ export default {
   },
   data: () => ({
     open: false
-  })
+  }),
+  methods: {
+    show(){
+      this.open = true;
+    },
+    hide(){
+      this.open = false;
+    }
+  }
 }
 </script>
 

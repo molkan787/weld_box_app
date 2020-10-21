@@ -1,7 +1,7 @@
 <template>
   <div class="state-indicators">
     <div class="priority" v-if="requirePriority">
-      <input type="text" v-model="state.priority">
+      <input type="text" v-model="props.priority">
       <PriorityIcon />
     </div>
     <ParallelIcon v-if="isParallel" />
@@ -27,15 +27,18 @@ export default {
     }
   },
   computed: {
+    props(){
+      return this.state.properties;
+    },
     isHistoric(){
-      return this.state.isHistoric;
+      return this.props.historic;
     },
     isParallel(){
-      return this.state.decomposition == StateDecomposition.Parallel;
+      return this.props.decomposition == StateDecomposition.Parallel;
     },
     requirePriority(){
       const p = this.state._parent;
-      return p && p.decomposition == StateDecomposition.Parallel;
+      return p && p.properties.decomposition == StateDecomposition.Parallel;
     }
   }
 }

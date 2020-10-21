@@ -29,6 +29,7 @@ export class InitialNodeDragging{
       const node = this.subject;
       this.subject = null;
       this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent, simulated: true });
+      this.store.emit(EVENTS.NODE_INITIAL_DROP, { node, sourceEvent, simulated: true });
     }
   }
 

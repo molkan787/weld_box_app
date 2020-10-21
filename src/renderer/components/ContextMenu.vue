@@ -4,15 +4,15 @@
           Sub-task <CheckedIcon class="checked-icon" v-if="node.isSubTask" />
       </li>
       <li class="separator"></li>
-      <li @click="node.decomposition = StDe.Parallel">
-        Parallel <CheckedIcon class="checked-icon" v-if="node.decomposition === StDe.Parallel" />
+      <li @click="props.decomposition = StDe.Parallel">
+        Parallel <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Parallel" />
       </li>
-      <li @click="node.decomposition = StDe.Serial">
-        Serial <CheckedIcon class="checked-icon" v-if="node.decomposition === StDe.Serial" />
+      <li @click="props.decomposition = StDe.Serial">
+        Serial <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Serial" />
       </li>
       <li class="separator"></li>
-      <li @click="node.isHistoric = !node.isHistoric">
-        Historic <CheckedIcon class="checked-icon" v-if="node.isHistoric" />
+      <li @click="props.historic = !props.historic">
+        Historic <CheckedIcon class="checked-icon" v-if="props.historic" />
       </li>
   </ContextMenu>
 </template>
@@ -33,6 +33,9 @@ export default {
   computed: {
     isOpen(){
       return this.node.props && this.node.props.isOpen;
+    },
+    props(){
+      return this.node.properties || {};
     }
   },
   methods: {

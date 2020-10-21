@@ -28,6 +28,7 @@
       </div>
 
       <button @click="addBlockClick" class="add-block">
+        <PlusSignIcon :size="14" />
         Add Statement Block
       </button>
     </div>
@@ -38,10 +39,12 @@
 <script>
 import ArrowTopIcon from '../icons/ArrowTop';
 import CloseIcon from '../icons/Close';
+import PlusSignIcon from '../icons/PlusSign';
 export default {
   components: {
     ArrowTopIcon,
-    CloseIcon
+    CloseIcon,
+    PlusSignIcon
   },
   props: {
     state: {
@@ -202,6 +205,11 @@ export default {
     transition: background-color 0.2s;
     &:hover{
       background-color: #17181b;
+    }
+    svg{
+      position: relative;
+      top: 2px;
+      left: -5px;
     }
   }
 

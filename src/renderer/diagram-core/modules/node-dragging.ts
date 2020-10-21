@@ -82,8 +82,8 @@ export class NodeDragging{
       size.width = ssize.width + (left ? -x : x);
       size.height = ssize.height + (top ? -y : y);
 
-      // Cap size to the minimum 180x100
-      const minW = 180;
+      // Cap size to the minimum 200x100
+      const minW = 200;
       const minH = 100;
 
       const overX = minW - size.width;

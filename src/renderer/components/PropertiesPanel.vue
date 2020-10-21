@@ -1,34 +1,10 @@
 <template>
-  <Panel text="Properties">
+  <Panel text="Properties" ref="panel">
     <div class="properties-panel">
       <template v-if="object">
-        <div class="form">
-
-          <div class="field disabled">
-            <label>Object</label>
-            <input class="capitalize" type="text" :value="object.what">
-          </div>
-
-          <div class="field">
-            <label>Name</label>
-            <input type="text" v-model="object.name">
-          </div>
-
-          <div class="field" v-if="needsPriority">
-            <label>Priority</label>
-            <input type="number" v-model="object.priority">
-          </div>
-
-          <div class="field">
-            <label>Type</label>
-            <RadioButtonGroup :items="decompositionItems" v-model="object.decomposition" />
-            <div class="checkbox">
-              <input type="checkbox" v-model="object.isHistoric" id="isHistoric">
-              <label for="isHistoric">Historic</label>
-            </div>
-          </div>
-
-        </div>
+        <StateForm v-if="object.what == 'state'" :object="object" />
+        <MessageForm v-else-if="object.what == 'message'" :object="object" />
+        <EventForm v-else-if="object.what == 'event'" :object="object" />
       </template>
       <template v-else>
         <div class="placeholder">
@@ -42,11 +18,15 @@
 <script>
 import { StateDecomposition } from '../my-diagram/state';
 import Panel from './skeletons/Panel';
-import RadioButtonGroup from './skeletons/RadioButtonGroup';
+import StateForm from './properties-forms/StateForm';
+import MessageForm from './properties-forms/MessageForm';
+import EventForm from './properties-forms/EventForm';
 export default {
   components: {
     Panel,
-    RadioButtonGroup
+    StateForm,
+    MessageForm,
+    EventForm
   },
   props: {
     object: {
@@ -54,18 +34,18 @@ export default {
       default: null
     }
   },
-  computed:{
-    needsPriority(){
-      const o = this.object;
-      return o && o._parent && o._parent.decomposition === StateDecomposition.Parallel;
+  watch: {
+    object(val){
+      if(val == null){
+        this.$refs.panel.hide();
+      }
     }
   },
-  data: () => ({
-    decompositionItems: [
-      { text: 'Serial', value: 'serial' },
-      { text: 'Parallel', value: 'parallel' }
-    ]
-  })
+  methods: {
+    show(){
+      this.$refs.panel.show();
+    }
+  }
 }
 </script>
 
@@ -91,46 +71,5 @@ export default {
     }
   }
 }
-.form{
-  width: 100%;
-  box-sizing: border-box;
-  padding: 16px;
-  .field{
-    &:not(:last-child){
-      margin-bottom: 16px;
-    }
-    label{
-      padding-left: 2px;
-      font-size: 14px;
-    }
-    input:not([type="checkbox"]){
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: 6px;
-      border: none;
-      background: #141519;
-      color: white;
-      padding: 8px 12px;
-      font-size: 14px;
-      font-weight: bold;
-      outline: none;
-      margin-top: 4px;
-    }
-    &.disabled{
-      input{
-        background: #3B3D44;
-        pointer-events: none;
-      }
-    }
-  }
-  .checkbox{
-    margin-top: 4px;
-    label{
-      cursor: pointer;
-    }
-  }
-  .capitalize{
-    text-transform: capitalize;
-  }
-}
+
 </style>

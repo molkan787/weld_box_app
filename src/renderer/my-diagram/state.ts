@@ -14,14 +14,16 @@ export class State extends Node implements ObjectProps{
   private vm?: Vue;
 
   // Business props
-  public isHistoric: boolean = false;
-  public priority: number = 0;
-  public decomposition: StateDecomposition = StateDecomposition.Serial;
   public what: ObjectType = ObjectType.State;
+  public properties = {
+    historic: false,
+    priority: 0,
+    decomposition: StateDecomposition.Serial
+  };
 
   constructor(
     position: Position = { x: 0, y: 0 },
-    size: Size = { width: 180, height: 100, radius: 0 },
+    size: Size = { width: 200, height: 100, radius: 0 },
     options: NodeOptions = {}
   ){
     super(position, size, options);
