@@ -101,7 +101,7 @@ export class NodeDragging{
       pos.y = spos.y + y;
     }
 
-    // Skip size capping if the node is currently open the canvas as a sub-chart
+    // Skip size capping if the node is currently open on the canvas as a sub-chart
     if(!node.props.isOpen){
       this.capNodeBBox(node);
       if(!this.resizing){

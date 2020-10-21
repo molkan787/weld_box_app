@@ -2,15 +2,27 @@
   <div class="code-block">
     <div class="header">
       Statements <span class="counts">{{ statementBlocks.length }}</span>
-      <button @click="expanded = !expanded">{{ expanded ? '-' : '+' }}</button>
+      <div class="toggle" :class="{ collapsed: !expanded }" @click="expanded = !expanded">
+        <ArrowTopIcon :width="12" :height="7.5" />
+      </div>
     </div>
 
     <div v-if="expanded">
       <div class="statement-blocks">
         <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
-          <span class="name">{{ sb.name }}</span>
+          <div class="sb-header">
+            <input v-model="sb.name" type="text">
+            <button @click="removeBlock(sb)" title="Remove">
+              <CloseIcon :size="9" />
+            </button>
+          </div>
           <div class="statements">
-            <pre>{{ sb.statements }}</pre>
+            <div class="execution">
+              <div :class="{checked: sb.execution.en}" @click="sb.execution.en = !sb.execution.en" class="item">EN</div>
+              <div :class="{checked: sb.execution.du}" @click="sb.execution.du = !sb.execution.du" class="item">DU</div>
+              <div :class="{checked: sb.execution.ex}" @click="sb.execution.ex = !sb.execution.ex" class="item">EX</div>
+            </div>
+            <textarea v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
@@ -24,7 +36,13 @@
 </template>
 
 <script>
+import ArrowTopIcon from '../icons/ArrowTop';
+import CloseIcon from '../icons/Close';
 export default {
+  components: {
+    ArrowTopIcon,
+    CloseIcon
+  },
   props: {
     state: {
       type: Object,
@@ -32,7 +50,7 @@ export default {
     }
   },
   data:() => ({
-    expanded: false,
+    expanded: true,
   }),
   computed: {
     statementBlocks(){
@@ -40,14 +58,27 @@ export default {
     }
   },
   methods: {
+    removeBlock(sb){
+      const arr = this.state.statementBlocks;
+      const index = arr.indexOf(sb);
+      index >= 0 && arr.splice(index, 1);
+    },
     addBlockClick(){
       const arr = this.state.statementBlocks;
       const block = {
         name: `Statement Block ${arr.length + 1}`,
-        statements: 'Statement#1;'
+        statements: 'Statement#1;',
+        execution: {
+          en: false,
+          du: false,
+          ex: false,
+        }
       }
       arr.push(block);
     }
+  },
+  mounted(){
+    // this.addBlockClick();
   }
 }
 </script>
@@ -55,8 +86,7 @@ export default {
 <style lang="less" scoped>
 .code-block{
   background-color: #2B2D32;
-  width: 150px;
-  height: 18px;
+  width: 180px;
   overflow: hidden;
   height: fit-content;
 
@@ -65,21 +95,32 @@ export default {
   }
 
   .header{
-    padding: 3px 0 0 5px;
-    font-size: 11px;
+    padding: 4px 0 3px 7px;
+    font-size: 12px;
 
-    button{
-      float: right;
-      margin-top: -2px;
-      margin-right: 1px;
-      height: 16px;
-      padding: 0px 4px;
+    .toggle{
+      position: absolute;
+      width: 22px;
+      height: 21px;
+      top: 0;
+      left: calc(100% - 22px);
+      border-left: 1.5px solid #212327;
+      box-sizing: border-box;
+      text-align: center;
+      cursor: pointer;
+      padding-top: 2px;
+      padding-right: 1px;
+      &.collapsed > svg{
+        transform: scale(-1);
+      }
     }
 
     .counts{
+      display: inline-block;
       background-color: #18191D;
+      color: #8B8C8E;
       border-radius: 50%;
-      padding: 1px;
+      padding: 1px 0;
       font-size: 10px;
       width: 14px;
       display: inline-block;
@@ -88,18 +129,60 @@ export default {
   }
 
   .statement-blocks{
-    .item{
+    & > .item{
       margin: 5px 0;
-      .name{
-        color: rgb(185, 185, 185);
-        padding: 3px;
+      .sb-header{
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        input{
+          border: none;
+          background: none;
+          color: rgb(185, 185, 185);
+          padding: 3px 3px 3px 6px;
+          outline-color: #23BB72;
+          min-width: 0;
+          flex: 1;
+        }
+        button{
+          width: 24px;
+          border: none;
+          background: none;
+          outline: none;
+          cursor: pointer;
+        }
       }
       .statements{
-        margin-left: 8px;
+        margin-left: 10px;
         border-left: 2px solid #68696D;
         padding: 5px;
-        pre{
-          margin: 0;
+
+        textarea{
+          min-width: 96%;
+          max-width: 96%;
+          height: 50px;
+          background: none;
+          border: none;
+          color: white;
+          font-size: 15px;
+        }
+
+        .execution{
+          padding-bottom: 6px;
+
+          & > .item{
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            background-color: #18191D;
+            border-radius: 50px;
+            padding: 2px 11px;
+            cursor: pointer;
+            &.checked{
+              background-color: #3B3D44;
+            }
+          }
+
         }
       }
     }

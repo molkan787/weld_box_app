@@ -23,7 +23,8 @@ export class DomEventsAttacher{
       .on('end', (e: any, node: any) => this.onDragEnd(e, node))
       .subject(() => ({ x: 0, y: 0 }))
       .filter((e: any, node: any) => {
-        if(e.target.tagName == 'INPUT'){
+        const tn = e.target.tagName;
+        if(tn == 'INPUT' || tn == 'TEXTAREA'){
           e.stopPropagation();
           return false;
         }
