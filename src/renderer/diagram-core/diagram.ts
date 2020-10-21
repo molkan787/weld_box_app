@@ -40,7 +40,7 @@ export class Diagram{
     this.modules = {
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
-      edgeDrawer: new EdgeDrawer(this.store),
+      edgeDrawer: new EdgeDrawer(this.store, options),
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
       edgeSelector: new EdgeSelector(this.store),

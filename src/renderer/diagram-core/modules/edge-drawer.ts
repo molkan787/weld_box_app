@@ -7,6 +7,8 @@ import { isPointInsideBBox, Side, TouchesWall } from "../helpers/geometry";
 import { distSqrd } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { DiagramOptions } from "../interfaces/DiagramOptions";
+import { EdgeInstanceCreator } from "../interfaces/EdgeInstanceCreator";
 import { Position } from "../interfaces/Position";
 
 export class EdgeDrawer{
@@ -16,7 +18,12 @@ export class EdgeDrawer{
   /** Can be the Source node or target candidate */
   private nodeInSubject: Node | null = null;
 
-  constructor(readonly store: DiagramStore){
+  private edgeFactory: EdgeInstanceCreator;
+
+  constructor(readonly store: DiagramStore, options: DiagramOptions){
+    this.edgeFactory = options.edgeFactory
+                      || ((s: EdgeConnection, t: EdgeConnection) => new Edge(s, t));
+
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
@@ -66,7 +73,7 @@ export class EdgeDrawer{
     target.position = targetPoint;
     const source = node.createEdgeConnection();
     source.bridgeTo = attachBox;
-    const edge = new Edge(source, target);
+    const edge = this.edgeFactory(source, target);
     this.currentEdge = edge;
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
   }
@@ -80,7 +87,7 @@ export class EdgeDrawer{
     const target = new EdgeConnection(AttachType.Position);
     source.offset = sourceOffset;
     target.position = targetPoint;
-    const edge = new Edge(source, target);
+    const edge = this.edgeFactory(source, target);
     this.currentEdge = edge;
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
   }
