@@ -21,12 +21,12 @@ import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
-import { Node } from '../diagram-core';
 import { ObjectProps } from '../my-diagram/interfaces/object-props';
 import { ObjectType } from '../my-diagram/interfaces/object-type';
+import { Component } from '../diagram-core/components/component';
 interface MyData {
   diagram: MyDiagram | null,
-  selectedObject: Node | null
+  selectedObject: Component | null
 }
 export default Vue.extend({
   components: {
@@ -68,6 +68,7 @@ export default Vue.extend({
     this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
 
     this.diagram.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.selectedObject = (node || null));
+    this.diagram.on(EVENTS.EDGE_SELECTED, ({ edge }: DiagramEvent) => this.selectedObject = (edge || null));
 
     // Temporary
     this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {

@@ -1,7 +1,7 @@
 export enum ObjectType{
   State = 'state',
   Thread = 'thread',
-  Transition = 'transition',
+  Edge = 'edge',
   Message = 'message',
   Event = 'event'
 }

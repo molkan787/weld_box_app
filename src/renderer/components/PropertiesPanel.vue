@@ -5,6 +5,7 @@
         <StateForm v-if="object.what == 'state'" :object="object" />
         <MessageForm v-else-if="object.what == 'message'" :object="object" />
         <EventForm v-else-if="object.what == 'event'" :object="object" />
+        <EdgeForm v-else-if="object.what == 'edge'" :object="object" />
       </template>
       <template v-else>
         <div class="placeholder">
@@ -21,12 +22,14 @@ import Panel from './skeletons/Panel';
 import StateForm from './properties-forms/StateForm';
 import MessageForm from './properties-forms/MessageForm';
 import EventForm from './properties-forms/EventForm';
+import EdgeForm from './properties-forms/EdgeForm';
 export default {
   components: {
     Panel,
     StateForm,
     MessageForm,
-    EventForm
+    EventForm,
+    EdgeForm
   },
   props: {
     object: {

@@ -1,5 +1,6 @@
-import { Diagram, Edge } from "../diagram-core";
+import { Diagram } from "../diagram-core";
 import { Side } from "../diagram-core/helpers/geometry";
+import { MyEdge } from "./my-edge";
 import { MessageNode } from "./MessageNode";
 import { State } from "./state";
 
@@ -10,7 +11,8 @@ export class MyDiagram extends Diagram{
       width: window.innerWidth,
       height: window.innerHeight - 70,
       nodeBorderWidth: 3,
-      nodeHeaderHeight: 30
+      nodeHeaderHeight: 30,
+      edgeFactory: (s, t) => new MyEdge(s, t)
     });
   }
 
@@ -21,7 +23,7 @@ export class MyDiagram extends Diagram{
     node1.addChild(node2);
     node1.addChild(node3);
 
-    const edge1 = new Edge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
+    const edge1 = new MyEdge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
 
     this.addNode(node1);
     this.addNode(node2);
