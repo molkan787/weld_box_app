@@ -10,8 +10,10 @@ import { cs } from "./utils";
 
 export class EdgeRenderer{
 
+  /** Currently selected edge */
   private selectedEdge: Edge | null = null;
 
+  /** D3 Module that generate edge curve path */
   private readonly lineGenerator: Line<[number, number]>;
 
   constructor(readonly store: DiagramStore){
