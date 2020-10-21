@@ -1,37 +1,59 @@
 import { curveBundle, Line, line, select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
-import { CLASSES } from "../constants";
+import { ATTR, CLASSES, EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { movePoint, Side } from "../helpers/geometry";
 import { D3Node } from "../types/aliases";
+import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "./utils";
 
 export class EdgeRenderer{
+
+  private selectedEdge: Edge | null = null;
 
   private readonly lineGenerator: Line<[number, number]>;
 
   constructor(readonly store: DiagramStore){
     this.lineGenerator = line().curve(curveBundle);
+    store.on(EVENTS.EDGE_DECORATION_CHANGED, ({ edge }: DiagramEvent) => this.updateDecoration(<Edge>edge));
+    store.on(EVENTS.EDGE_SELECTED, e => this.onEdgeSelected(e));
+  }
+
+  onEdgeSelected(e: DiagramEvent): void {
+    const previous = this.selectedEdge;
+    this.selectedEdge = e.edge || null;
+    if(previous){
+      previous.highlighted = false;
+    }
+    if(e.edge){
+      e.edge.highlighted = true;
+    }
   }
 
   prepareLayer(layer: D3Node){
+    const container = layer.append('defs');
+    this.buildEdgeMarker(container, false);
+    this.buildEdgeMarker(container, true);
+  }
+
+  buildEdgeMarker(container: D3Node, highlighted: boolean){
     const markerBoxWidth = 12, markerBoxHeight = 12;
-    layer.append('defs')
-    .append('marker')
-    .attr('id', 'arrow')
-    .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight].join(' '))
-    .attr('refX', 10)
-    .attr('refY', markerBoxHeight / 2)
-    .attr('markerWidth', markerBoxWidth)
-    .attr('markerHeight', markerBoxHeight)
-    .attr('orient', 'auto')
-    .append('path')
-    .attr('d', 'M5.97046 1.89949L10.2131 6.14213L5.97046 10.3848')
-    .attr('fill', 'none')
-    .attr('stroke', 'white')
-    .attr('stroke-linecap', 'round')
-    .attr('stroke-linejoin', 'round')
+    container
+      .append('marker')
+      .attr('id', highlighted ? 'arrow-highlighted' : 'arrow')
+      .attr('viewBox', [0, 0, markerBoxWidth, markerBoxHeight].join(' '))
+      .attr('refX', 10)
+      .attr('refY', markerBoxHeight / 2)
+      .attr('markerWidth', markerBoxWidth)
+      .attr('markerHeight', markerBoxHeight)
+      .attr('orient', 'auto')
+      .append('path')
+      .attr('d', 'M5.97046 1.89949L10.2131 6.14213L5.97046 10.3848')
+      .attr('fill', 'none')
+      .attr('stroke', highlighted ? '#06ff87' : 'white')
+      .attr('stroke-linecap', 'round')
+      .attr('stroke-linejoin', 'round')
   }
 
   rebuild(container: D3Node, edge: Edge){
@@ -58,6 +80,7 @@ export class EdgeRenderer{
     }
 
     g.append('path')
+      .attr(ATTR.COMPONENT_ID, edge.id)
       .attr('marker-end', 'url(#arrow)')
       .attr("stroke-width", '2');
 
@@ -116,6 +139,14 @@ export class EdgeRenderer{
     const pathData = <string>this.lineGenerator(points);
 
     return pathData;
+  }
+
+  updateDecoration(edge: Edge){
+    const d3Node = this.store.getD3Node(edge.id);
+    if(typeof d3Node === 'undefined') return;
+    d3Node.classed(CLASSES.HIGHLIGHTED, edge.highlighted);
+    d3Node.select('path')
+          .attr('marker-end', edge.highlighted ? 'url(#arrow-highlighted)' : 'url(#arrow)')
   }
 
   destroyElement(edge: Edge){

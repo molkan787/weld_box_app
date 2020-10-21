@@ -32,6 +32,15 @@ export class Renderer{
     store.on(EVENTS.DIAGRAM_DESTROY_EDGES, (e) => this.onDestroyEdges(e));
     store.on(EVENTS.DIAGRAM_BUILD_EDGES, (e) => this.onBuildEdges(e));
 
+    // if a node got selected, diselect any selected edge
+    store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => {
+      if(e.node) store.emit(EVENTS.EDGE_SELECTED, {});
+    })
+    // if an edge got selected, diselect any selected node
+    store.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => {
+      if(e.edge) store.emit(EVENTS.NODE_SELECTED, {});
+    })
+
   }
 
   /**

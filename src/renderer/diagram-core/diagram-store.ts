@@ -8,6 +8,7 @@ import { DiagramEvent } from "./interfaces/DiagramEvent";
 import { ZoomTransform } from "d3";
 import { DiagramOptions } from "./interfaces/DiagramOptions";
 import { Margin } from "./interfaces/Margin";
+import { Edge } from "./components/edge";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -15,6 +16,8 @@ import { Margin } from "./interfaces/Margin";
 export class DiagramStore extends EventEmitter{
 
   public readonly nodes: Node[] = [];
+
+  public readonly edges: Map<number, Edge> = new Map();
 
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */
@@ -93,6 +96,14 @@ export class DiagramStore extends EventEmitter{
       throw new Error(`Node #${id} was not found in D3NodesMap`);
     }
     return <D3Node>n;
+  }
+
+  public addEdge(edge: Edge){
+    this.edges.set(edge.id, edge);
+  }
+
+  public getEdgeById(id: number){
+    return this.edges.get(id) || null;
   }
 
   /**

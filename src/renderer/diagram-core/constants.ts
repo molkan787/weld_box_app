@@ -28,6 +28,8 @@ export const EVENTS = Object.freeze({
   EDGE_ADDED: 'edge-added',
   EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed',
   EDGE_CONNECTIONS_UPDATED: 'edge-connections-updated',
+  EDGE_DECORATION_CHANGED: 'edge-decoration-changed',
+  EDGE_SELECTED: 'edge-selected',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
@@ -42,6 +44,7 @@ export const EVENTS = Object.freeze({
 
   CANVAS_MOUSEMOVE: 'canvas-mousemove',
   CANVAS_MOUSEUP: 'canvas-mouseup',
+  CANVAS_MOUSEDOWN: 'canvas-mousedown',
 
 
   INIT_CANVAS_CREATED: 'init-canvas-created'
@@ -58,4 +61,6 @@ export const CLASSES = Object.freeze({
   ATTACH_BOX: 'attach-box',
   SOURCE_ATTACH_BOX: 'source-attach-box',
   TARGET_ATTACH_BOX: 'target-attach-box',
+  SVG_CLICKABLE: 'svg-clickable',
+  HIGHLIGHTED: 'highlighted',
 })

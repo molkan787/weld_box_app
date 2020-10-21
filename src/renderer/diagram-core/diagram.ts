@@ -15,6 +15,7 @@ import { Position } from './interfaces/Position';
 import { SubChart } from './modules/sub-chart';
 import { DomEventsAttacher } from './modules/dom-events-attacher';
 import { InitialNodeDragging } from './modules/initial-node-dragging';
+import { EdgeSelector } from './modules/edge-selector';
 
 /**
  * `Diagram`
@@ -27,7 +28,6 @@ export class Diagram{
   private nodesLayer: D3Node;
   private edgesLayer: D3Node;
 
-  private zoomTransform?: ZoomTransform;
   private zoomController: ZoomBehavior<Element, unknown>;
 
   private readonly renderer = new Renderer(this.store);
@@ -43,6 +43,7 @@ export class Diagram{
       edgeDrawer: new EdgeDrawer(this.store),
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
+      edgeSelector: new EdgeSelector(this.store),
       domEventsAttacher: new DomEventsAttacher(this.store), // its important initialize DomEventsAttacher after all other modules
     }
 
@@ -92,6 +93,7 @@ export class Diagram{
   onChartClick(e: MouseEvent): void {
     if((<HTMLElement>e.target).getAttribute('canvas') === 'true'){
       this.store.emit(EVENTS.NODE_SELECTED, {})
+      this.store.emit(EVENTS.EDGE_SELECTED, {})
     }
   }
 
@@ -130,8 +132,9 @@ export class Diagram{
   }
 
   public addEdge(edge: Edge){
+    edge.store = this.store;
+    this.store.addEdge(edge);
     this.store.emit(EVENTS.EDGE_ADDED, { edge })
-    // this.renderer.build(this.edgesLayer, edge);
   }
 
   public activateEdgeDrawer(){
@@ -168,7 +171,6 @@ export class Diagram{
       this.nodesLayer.style('transform', null);
       this.edgesLayer.attr('transform', null);
     }
-    this.zoomTransform = transform;
   }
 
   public on(eventType: string, handler: (e: DiagramEvent) => void){

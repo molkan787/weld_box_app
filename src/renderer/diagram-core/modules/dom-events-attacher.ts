@@ -23,6 +23,7 @@ export class DomEventsAttacher{
       .on('end', (e: any, node: any) => this.onDragEnd(e, node))
       .subject(() => ({ x: 0, y: 0 }))
       .filter((e: any, node: any) => {
+        this.store.emit(EVENTS.CANVAS_MOUSEDOWN, { sourceEvent: e, simulated: true });
         const tn = e.target.tagName;
         if(tn == 'INPUT' || tn == 'TEXTAREA'){
           e.stopPropagation();
@@ -43,6 +44,9 @@ export class DomEventsAttacher{
     });
     this.store.rootElement.on('mouseup', (e: any) => {
       this.store.emit(EVENTS.CANVAS_MOUSEUP, { sourceEvent: e });
+    });
+    this.store.rootElement.on('mousedown', (e: any) => {
+      this.store.emit(EVENTS.CANVAS_MOUSEDOWN, { sourceEvent: e });
     });
   }
 

@@ -1,4 +1,5 @@
 import { Diagram, Edge } from "../diagram-core";
+import { Side } from "../diagram-core/helpers/geometry";
 import { MessageNode } from "./MessageNode";
 import { State } from "./state";
 
@@ -15,20 +16,20 @@ export class MyDiagram extends Diagram{
 
   buildTestDiagram(){
     const node1 = new State({ x: 140, y: 60 }, { width:750, height: 480, radius: 0 }, { name: 'State 1', showContent: true });
-    // const node2 = new MessageNode({ x: 20, y: 150 }, { name: 'Child 1' });
-    // const node3 = new MessageNode({ x: 450, y: 180 }, { name: 'Child 2' });
-    // node1.addChild(node2);
-    // node1.addChild(node3);
+    const node2 = new MessageNode({ x: 20, y: 150 }, { name: 'Child 1' });
+    const node3 = new MessageNode({ x: 450, y: 180 }, { name: 'Child 2' });
+    node1.addChild(node2);
+    node1.addChild(node3);
 
-    // const edge1 = new Edge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
+    const edge1 = new Edge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
 
     this.addNode(node1);
-    // this.addNode(node2);
-    // this.addNode(node3);
+    this.addNode(node2);
+    this.addNode(node3);
 
-    // setTimeout(() =>node2.select(), 0)
+    // setInterval(() => edge1.select(), 0);
 
-    // this.addEdge(edge1);
+    this.addEdge(edge1);
   }
 
 }

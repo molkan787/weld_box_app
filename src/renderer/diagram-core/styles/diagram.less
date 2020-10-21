@@ -1,7 +1,13 @@
 .diagram{
-
+  @selectedEdgeColor: #06ff87;
   position: relative;
   overflow: hidden;
+
+  &.svg-clickable{
+    svg:not(.edges-layer){
+      pointer-events: all !important;
+    }
+  }
 
   *:not(input){
     user-select: none;
@@ -131,6 +137,11 @@
   }
 
   .edge{
+    &.highlighted{
+      & > path{
+        stroke: @selectedEdgeColor;
+      }
+    }
     & > path{
       fill: none;
     }
