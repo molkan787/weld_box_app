@@ -16,6 +16,7 @@ export class SubChart{
 
   constructor(public store: DiagramStore){
     store.on(EVENTS.DIAGRAM_OPEN_NODE, ({node}: DiagramEvent) => this.open(<Node>node));
+    store.on(EVENTS.DIAGRAM_JUMP_TO_NODE, ({node}: DiagramEvent) => this.jumpTo(<Node>node));
     store.on(EVENTS.DIAGRAM_BACK, () => this.back());
     store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
     store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onNodeContentGotShown(e));
@@ -37,6 +38,12 @@ export class SubChart{
     const zoom = this.store.zoomTransform;
     if(zoom){
       this.zoomTransforms.set(key, zoom);
+    }
+  }
+
+  public jumpTo(node: Node){
+    while(this.stack.length && this.currentNode !== node){
+      this.back();
     }
   }
 
@@ -70,6 +77,7 @@ export class SubChart{
     this.buildNodeBodyEdges(node);
 
     this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
+    this.emitChangeEvent();
   }
 
   public back(){
@@ -103,6 +111,8 @@ export class SubChart{
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode });
 
     this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: currentNode });
+
+    this.emitChangeEvent();
   }
 
   private destroyNodeBodyEdges(node: Node){
@@ -186,6 +196,12 @@ export class SubChart{
       this.store.nodesSpatialMap.remove(allDesendents[i]);
     }
 
+  }
+
+  private emitChangeEvent(){
+    const items = this.stack.map(si => si.node);
+    items.push(this.currentNode);
+    this.store.emit(EVENTS.DIAGRAM_CHARTS_PATH_CHANGED, { data: items });
   }
 
 }

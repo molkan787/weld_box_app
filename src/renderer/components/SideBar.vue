@@ -1,5 +1,5 @@
 <template>
-  <div class="side-bar pane" @mousemove="onMouseMove">
+  <div class="side-bar blured-bg" @mousemove="onMouseMove">
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
@@ -87,9 +87,7 @@ export default {
   height: auto;
   box-sizing: border-box;
   padding: 4px;
-  background-color: #27282d;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
 
   .icon{
     @iw: @w - 8px;

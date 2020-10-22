@@ -34,11 +34,13 @@ export const EVENTS = Object.freeze({
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
   DIAGRAM_OPEN_NODE: 'diagram-open-node',
+  DIAGRAM_JUMP_TO_NODE: 'diagram-jump-to-node',
   DIAGRAM_BACK: 'diagram-back',
   DIAGRAM_ZOOM_CHANGED: 'diagram-zoom-changed',
   DIAGRAM_SET_ZOOM: 'diagram-set-zoom',
   DIAGRAM_DESTROY_EDGES: 'diagram-destroy-edges',
   DIAGRAM_BUILD_EDGES: 'diagram-build-edges',
+  DIAGRAM_CHARTS_PATH_CHANGED: 'diagram-charts-path-changed',
 
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
 

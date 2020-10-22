@@ -1,11 +1,12 @@
 <template>
   <div class="main-page">
-    <TopBar @back-click="backClick" :showBackButton="showBackButton" />
+    <TopBar />
     <div class="middle">
       <SideBar ref="sideBar" :diagram="diagram" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
+    <Breadcrumb @item-click="breadcrumbItemClick" :nodes="chartsPathNodes" />
     <PropertiesPanel ref="propsPanel" :object="selectedObject" />
     <ContextMenu ref="menu" />
   </div>
@@ -17,6 +18,7 @@ import TopBar from './TopBar.vue';
 import StatusBar from './StatusBar.vue';
 import ContextMenu from './ContextMenu.vue';
 import PropertiesPanel from './PropertiesPanel.vue';
+import Breadcrumb from './Breadcrumb.vue';
 import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
@@ -24,9 +26,11 @@ import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
 import { ObjectProps } from '../my-diagram/interfaces/object-props';
 import { ObjectType } from '../my-diagram/interfaces/object-type';
 import { Component } from '../diagram-core/components/component';
+import { Node } from '../diagram-core';
 interface MyData {
   diagram: MyDiagram | null,
-  selectedObject: Component | null
+  selectedObject: Component | null,
+  chartsPathNodes: (Node | null)[]
 }
 export default Vue.extend({
   components: {
@@ -34,18 +38,18 @@ export default Vue.extend({
     TopBar,
     StatusBar,
     ContextMenu,
-    PropertiesPanel
+    PropertiesPanel,
+    Breadcrumb
   },
   data: (): MyData => ({
     diagram: null,
     selectedObject: null,
+    chartsPathNodes: [null],
   }),
-  computed: {
-    showBackButton(){
-      return this.diagram && this.diagram.currentNode;
-    }
-  },
   methods: {
+    breadcrumbItemClick(node: Node){
+      this.diagram?.jumpToNode(node);
+    },
     backClick(){
       this.diagram?.back();
     },
@@ -79,6 +83,8 @@ export default Vue.extend({
 
     this.diagram.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
     this.diagram.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
+
+    this.diagram.on(EVENTS.DIAGRAM_CHARTS_PATH_CHANGED, (e: DiagramEvent) => this.chartsPathNodes = e.data);
 
     // Temporary
     this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {

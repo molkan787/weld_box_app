@@ -120,6 +120,10 @@ export class Diagram{
     this.store.emit(EVENTS.DIAGRAM_OPEN_NODE, { node });
   }
 
+  public jumpToNode(node: Node){
+    this.store.emit(EVENTS.DIAGRAM_JUMP_TO_NODE, { node });
+  }
+
   /**
    * Add node to the Diagram, This method need to be called for each New Node in order to be part of the Diagram
    * regardless if the node is child of another node

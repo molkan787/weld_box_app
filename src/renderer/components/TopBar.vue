@@ -9,7 +9,6 @@
     <div class="icon">
       <OpenProjectIcon />
     </div>
-    <button v-if="showBackButton" @click="$emit('back-click')">Back</button>
   </div>
 </template>
 
@@ -22,9 +21,6 @@ export default {
     LogoIcon,
     NewProjectIcon,
     OpenProjectIcon,
-  },
-  props: {
-    showBackButton: false
   }
 }
 </script>

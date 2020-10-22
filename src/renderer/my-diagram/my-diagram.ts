@@ -23,7 +23,7 @@ export class MyDiagram extends Diagram{
     node1.addChild(node2);
     node1.addChild(node3);
 
-    const edge1 = new MyEdge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
+    // const edge1 = new MyEdge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
 
     this.addNode(node1);
     this.addNode(node2);
@@ -31,7 +31,7 @@ export class MyDiagram extends Diagram{
 
     // setInterval(() => edge1.select(), 0);
 
-    this.addEdge(edge1);
+    // this.addEdge(edge1);
   }
 
 }
