@@ -48,7 +48,7 @@ export class NodeDragging{
 
     if(this.resizing){
       this.resizeCorner = this.getResizeHandleCorner(event);
-      this.store.emit(EVENTS.NODE_SELECTED, { node });
+      this.store.emit(EVENTS.NODE_SELECTED, { node, simulated: true });
     }
 
     // bring the dragged node to the front and change his cursor

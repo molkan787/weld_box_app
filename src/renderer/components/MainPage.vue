@@ -59,6 +59,16 @@ export default Vue.extend({
         this.diagram?.deactivateEdgeDrawer()
       }
     },
+    handleObjectSelected(e: DiagramEvent){
+      if(e.type == EVENTS.NODE_SELECTED){
+        this.selectedObject = e.node || null;
+      }else{
+        this.selectedObject = e.edge || null;
+      }
+      if(this.selectedObject && !e.simulated){
+        (<any>this.$refs.propsPanel).show();
+      }
+    }
   },
   mounted(){
     this.diagram = new MyDiagram('#canvas');
@@ -67,8 +77,8 @@ export default Vue.extend({
     // @ts-ignore
     this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
 
-    this.diagram.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.selectedObject = (node || null));
-    this.diagram.on(EVENTS.EDGE_SELECTED, ({ edge }: DiagramEvent) => this.selectedObject = (edge || null));
+    this.diagram.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
+    this.diagram.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
 
     // Temporary
     this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {

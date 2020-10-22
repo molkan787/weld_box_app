@@ -63,7 +63,7 @@ export class DomEventsAttacher{
   onContextMenu(e: MouseEvent, node: Node){
     e.stopPropagation();
     this.store.emit(EVENTS.NODE_CONTEXT_MENU, { node, sourceEvent: e });
-    this.store.emit(EVENTS.NODE_SELECTED, { node, sourceEvent: e });
+    this.store.emit(EVENTS.NODE_SELECTED, { node, sourceEvent: e, simulated: true });
   }
 
   onDoubleClick(e: MouseEvent, node: Node){
