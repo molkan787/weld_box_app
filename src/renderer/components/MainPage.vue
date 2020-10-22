@@ -100,6 +100,12 @@ export default Vue.extend({
       }
     });
 
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      if(e.key == 'Delete'){
+        this.diagram?.deleteSelectedComponent();
+      }
+    });
+
   }
 })
 </script>

@@ -23,6 +23,7 @@ export const EVENTS = Object.freeze({
   NODE_SELECTED: 'node-selected',
   NODE_DRAGGED_OUT_OF_PARENT: 'node-dragged-out-of-parent',
   NODE_INITIAL_DROP: 'node-initial-drop',
+  NODE_DELETED: 'node-deleted',
 
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',
@@ -30,6 +31,7 @@ export const EVENTS = Object.freeze({
   EDGE_CONNECTIONS_UPDATED: 'edge-connections-updated',
   EDGE_DECORATION_CHANGED: 'edge-decoration-changed',
   EDGE_SELECTED: 'edge-selected',
+  EDGE_DELETED: 'edge-deleted',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
@@ -43,6 +45,8 @@ export const EVENTS = Object.freeze({
   DIAGRAM_CHARTS_PATH_CHANGED: 'diagram-charts-path-changed',
 
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
+  DIAGRAM_DELETE_COMPONENT: 'diagram-delete-component',
+
 
   CANVAS_MOUSEMOVE: 'canvas-mousemove',
   CANVAS_MOUSEUP: 'canvas-mouseup',

@@ -16,6 +16,8 @@ import { SubChart } from './modules/sub-chart';
 import { DomEventsAttacher } from './modules/dom-events-attacher';
 import { InitialNodeDragging } from './modules/initial-node-dragging';
 import { EdgeSelector } from './modules/edge-selector';
+import { ComponentType } from './components/component';
+import { ComponentDeleter } from './modules/component-deleter';
 
 /**
  * `Diagram`
@@ -44,6 +46,7 @@ export class Diagram{
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
       edgeSelector: new EdgeSelector(this.store),
+      componentDeleter: new ComponentDeleter(this.store),
       domEventsAttacher: new DomEventsAttacher(this.store), // its important initialize DomEventsAttacher after all other modules
     }
 
@@ -92,8 +95,7 @@ export class Diagram{
 
   onChartClick(e: MouseEvent): void {
     if((<HTMLElement>e.target).getAttribute('canvas') === 'true'){
-      this.store.emit(EVENTS.NODE_SELECTED, {})
-      this.store.emit(EVENTS.EDGE_SELECTED, {})
+      this.deselectAll();
     }
   }
 
@@ -110,6 +112,22 @@ export class Diagram{
 
   public get currentNode(): Node{
     return this.modules?.subChart?.currentNode;
+  }
+
+  public deselectAll(){
+    this.store.emit(EVENTS.NODE_SELECTED, {});
+    this.store.emit(EVENTS.EDGE_SELECTED, {});
+  }
+
+  public deleteSelectedComponent(): boolean{
+    const component = this.store.selectedComponent;
+    this.deselectAll();
+    if(component){
+      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: component });
+      return true;
+    }else{
+      return false;
+    }
   }
 
   public back(){

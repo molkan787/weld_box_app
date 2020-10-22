@@ -1,5 +1,4 @@
 import { Diagram } from "../diagram-core";
-import { Side } from "../diagram-core/helpers/geometry";
 import { MyEdge } from "./my-edge";
 import { MessageNode } from "./MessageNode";
 import { State } from "./state";

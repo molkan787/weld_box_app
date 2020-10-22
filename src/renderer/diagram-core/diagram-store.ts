@@ -9,6 +9,7 @@ import { ZoomTransform } from "d3";
 import { DiagramOptions } from "./interfaces/DiagramOptions";
 import { Margin } from "./interfaces/Margin";
 import { Edge } from "./components/edge";
+import { Component } from "./components/component";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -17,7 +18,9 @@ export class DiagramStore extends EventEmitter{
 
   public readonly nodes: Node[] = [];
 
-  public readonly edges: Map<number, Edge> = new Map();
+  public readonly edgesMap: Map<number, Edge> = new Map();
+
+  public selectedComponent: Component | null = null;
 
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */
@@ -99,11 +102,11 @@ export class DiagramStore extends EventEmitter{
   }
 
   public addEdge(edge: Edge){
-    this.edges.set(edge.id, edge);
+    this.edgesMap.set(edge.id, edge);
   }
 
   public getEdgeById(id: number){
-    return this.edges.get(id) || null;
+    return this.edgesMap.get(id) || null;
   }
 
   /**
@@ -116,8 +119,7 @@ export class DiagramStore extends EventEmitter{
   }
 
   /**
-   * Add a Node to the Spatial Map.
-   * Only first level nodes (not child nodes) should be added to this Spatial Map
+   * Add a Node to diagram's indices store.
    * @param node A Node to be stored
    */
   public addNode(node: Node): void{
@@ -126,9 +128,9 @@ export class DiagramStore extends EventEmitter{
   }
 
   /**
-   * Remove Node from the Spatial Map.
+   * Remove Node from diagram's indices store.
    * All `Node`s that was removed from the Diagram and/or was destroyed,
-   * Need to be also removed from this Spatial Map
+   * Need to be also removed from indices
    * @param node The `Node` instance to be removed
    */
   public removeNode(node: Node): void{

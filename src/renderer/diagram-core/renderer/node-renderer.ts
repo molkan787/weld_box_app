@@ -19,7 +19,8 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
     store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
-    store.on(EVENTS.NODE_SELECTED, ({ node }: DiagramEvent) => this.nodeSelected(<Node>node));
+    store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
+    store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
   }
 
   public setLayer(layer: D3Node){
@@ -52,9 +53,10 @@ export class NodeRenderer{
   }
 
 
-  nodeSelected(node: Node): void {
+  nodeSelected(event: DiagramEvent): void {
+    const node = event.node;
     const previous = this.selectedNode;
-    this.selectedNode = node;
+    this.selectedNode = node || null;
     if(previous){
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: previous });
     }
@@ -188,6 +190,12 @@ export class NodeRenderer{
       }
       eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
     }
+  }
+
+  private destroyNode(node: Node){
+    console.log('deleted: ', node)
+    const d3node = this.getD3Node(node);
+    d3node.remove();
   }
 
   private getD3Node(node: Node | number): D3Node{

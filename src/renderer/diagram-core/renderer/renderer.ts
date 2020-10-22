@@ -34,11 +34,13 @@ export class Renderer{
 
     // if a node got selected, diselect any selected edge
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => {
-      if(e.node) store.emit(EVENTS.EDGE_SELECTED, {});
+      if(e.node) store.emit(EVENTS.EDGE_SELECTED, { simulated: true });
+      store.selectedComponent = e.node || null;
     })
     // if an edge got selected, diselect any selected node
     store.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => {
-      if(e.edge) store.emit(EVENTS.NODE_SELECTED, {});
+      if(e.edge) store.emit(EVENTS.NODE_SELECTED, { simulated: true });
+      store.selectedComponent = e.edge || null;
     })
 
   }

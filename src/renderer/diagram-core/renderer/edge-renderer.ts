@@ -20,6 +20,7 @@ export class EdgeRenderer{
     this.lineGenerator = line().curve(curveBundle);
     store.on(EVENTS.EDGE_DECORATION_CHANGED, ({ edge }: DiagramEvent) => this.updateDecoration(<Edge>edge));
     store.on(EVENTS.EDGE_SELECTED, e => this.onEdgeSelected(e));
+    store.on(EVENTS.EDGE_DELETED, ({ edge }: DiagramEvent) => this.destroyElement(<Edge>edge));
   }
 
   onEdgeSelected(e: DiagramEvent): void {
