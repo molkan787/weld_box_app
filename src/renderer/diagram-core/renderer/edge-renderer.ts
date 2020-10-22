@@ -55,6 +55,7 @@ export class EdgeRenderer{
       .attr('d', 'M5.97046 1.89949L10.2131 6.14213L5.97046 10.3848')
       .attr('fill', 'none')
       .attr('stroke', highlighted ? '#06ff87' : 'white')
+      .attr('stroke-width', '1')
       .attr('stroke-linecap', 'round')
       .attr('stroke-linejoin', 'round')
   }
@@ -65,9 +66,10 @@ export class EdgeRenderer{
   }
 
   build(container: D3Node, edge: Edge){
+    const htmlId = 'edge-' + edge.id;
     const g = container.append('g');
     g.classed('edge', true)
-      .attr('id', 'edge-' + edge.id);
+      .attr('id', htmlId);
 
     const { source, target } = edge;
     if(source.getInstance().attachType === AttachType.NodeBody){
@@ -83,9 +85,13 @@ export class EdgeRenderer{
     }
 
     g.append('path')
-      .attr(ATTR.COMPONENT_ID, edge.id)
-      .attr('marker-end', 'url(#arrow)')
-      .attr("stroke-width", '2');
+      .attr('id', htmlId + '-path')
+      .attr('marker-end', 'url(#arrow)');
+
+    g.append('use')
+    .attr('xlink:href', `#${htmlId}-path`)
+    .attr('stroke-width', '12px')
+    .attr(ATTR.COMPONENT_ID, edge.id);
 
     this.store.setD3Node(edge.id, g);
     this.update(edge);
