@@ -1,4 +1,4 @@
-import { curveBasis, curveBundle, Line, line, select } from "d3";
+import { curveBasis, Line, line, select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
 import { ATTR, CLASSES, EVENTS } from "../constants";

@@ -193,7 +193,6 @@ export class NodeRenderer{
   }
 
   private destroyNode(node: Node){
-    console.log('deleted: ', node)
     const d3node = this.getD3Node(node);
     d3node.remove();
   }
