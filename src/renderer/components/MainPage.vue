@@ -97,6 +97,10 @@ export default Vue.extend({
     window.addEventListener('keydown', (e: KeyboardEvent) => {
       if(e.key == 'Delete'){
         this.diagram?.deleteSelectedComponent();
+      }else if(e.key == 'z' && e.ctrlKey){
+        this.diagram?.undo();
+      }else if(e.key == 'y' && e.ctrlKey){
+        this.diagram?.redo();
       }
     });
 

@@ -11,6 +11,7 @@ import { Margin } from "./interfaces/Margin";
 import { Edge } from "./components/edge";
 import { Component } from "./components/component";
 import { DiagramModule } from "./module";
+import { ActionsArchiver } from "./modules/actions-archiver";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -22,6 +23,8 @@ export class DiagramStore extends EventEmitter{
   public readonly edgesMap: Map<number, Edge> = new Map();
 
   public selectedComponent: Component | null = null;
+
+  public readonly actionsArchiver: ActionsArchiver = new ActionsArchiver(this);
 
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */

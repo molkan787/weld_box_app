@@ -1,4 +1,5 @@
 import { DiagramStore } from "./diagram-store";
+import { Action } from "./interfaces/Action";
 
 export class DiagramModule{
 
@@ -21,6 +22,10 @@ export class DiagramModule{
 
   protected deactivate(){
     this.store.deactiveModule(this);
+  }
+
+  protected pushAction(action: Action){
+    this.store.actionsArchiver.push(action);
   }
 
 }

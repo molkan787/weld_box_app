@@ -1,4 +1,4 @@
-import { active, select } from 'd3';
+import { select } from 'd3';
 import { Node } from '../components/node';
 import { ATTR, EVENTS, CLASSES, MODULES } from '../constants';
 import { DiagramStore } from '../diagram-store';
@@ -137,6 +137,33 @@ export class NodeDragging extends DiagramModule{
     const d3Node = this.store.getD3Node(node.id);
 
     d3Node.style('cursor', 'default');
+
+    const old_size = cloneObject(this.startingSize);
+    const old_position = cloneObject(this.startingPosition);
+    const new_size = cloneObject(node.size);
+    const new_position = cloneObject(node.position);
+    this.pushAction({
+      undo: [
+        {
+          do(){
+            node.size = old_size;
+            node.position = old_position;
+          },
+          events: [EVENTS.NODE_BBOX_CHANGED],
+          eventsPayload: { node }
+        }
+      ],
+      redo: [
+        {
+          do(){
+            node.size = new_size;
+            node.position = new_position;
+          },
+          events: [EVENTS.NODE_BBOX_CHANGED],
+          eventsPayload: { node }
+        }
+      ]
+    })
   }
 
   private nodeDraggedOutOfParent(node: Node){

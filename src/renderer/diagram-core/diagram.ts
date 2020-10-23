@@ -133,6 +133,14 @@ export class Diagram{
     }
   }
 
+  public undo(){
+    this.store.actionsArchiver.undo();
+  }
+
+  public redo(){
+    this.store.actionsArchiver.redo();
+  }
+
   public back(){
     this.store.emit(EVENTS.DIAGRAM_BACK, {});
   }
