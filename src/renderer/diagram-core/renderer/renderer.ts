@@ -28,6 +28,7 @@ export class Renderer{
     store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, e => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, e => this.onEdgeConnectionsChanged(e));
+    store.on(EVENTS.EDGE_RESHAPED, e => this.onEdgeReshaped(e));
 
     store.on(EVENTS.DIAGRAM_DESTROY_EDGES, (e) => this.onDestroyEdges(e));
     store.on(EVENTS.DIAGRAM_BUILD_EDGES, (e) => this.onBuildEdges(e));
@@ -170,6 +171,11 @@ export class Renderer{
   onEdgeConnectionsChanged(event: DiagramEvent){
     const edge = <Edge>event.edge;
     this.rebuildEdge(edge);
+  }
+
+  onEdgeReshaped(event: DiagramEvent){
+    const edge = <Edge>event.edge;
+    this.edgeRenderer.update(edge);
   }
 
   onNodeParentChanged(event: DiagramEvent){

@@ -35,7 +35,7 @@ export class DomEventsAttacher{
         }else{
           return true;
         }
-      });;
+      });
   }
 
   onCanvasCreated(de: DiagramEvent): void {
@@ -70,14 +70,16 @@ export class DomEventsAttacher{
     this.store.emit(EVENTS.NODE_DOUBLE_CLICK, { node, sourceEvent: e });
   }
 
-  onDragStart(e: MouseEvent, node: Node) {
+  onDragStart(e: DragEvent, node: Node) {
     this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: e });
   }
-  onDragged(e: MouseEvent, node: Node) {
+  onDragged(e: any, node: Node) {
     this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: e });
+    this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e.sourceEvent });
   }
-  onDragEnd(e: MouseEvent, node: Node) {
+  onDragEnd(e: any, node: Node) {
     this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: e });
+    this.store.emit(EVENTS.CANVAS_MOUSEUP, { sourceEvent: e.sourceEvent });
   }
 
   // ---------------- Helpers ----------------

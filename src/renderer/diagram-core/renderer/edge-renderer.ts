@@ -1,4 +1,4 @@
-import { curveBundle, Line, line, select } from "d3";
+import { curveBasis, curveBundle, Line, line, select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
 import { ATTR, CLASSES, EVENTS } from "../constants";
@@ -7,6 +7,7 @@ import { movePoint, Side } from "../helpers/geometry";
 import { D3Node } from "../types/aliases";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "./utils";
+import { Position } from "../interfaces/Position";
 
 export class EdgeRenderer{
 
@@ -17,7 +18,7 @@ export class EdgeRenderer{
   private readonly lineGenerator: Line<[number, number]>;
 
   constructor(readonly store: DiagramStore){
-    this.lineGenerator = line().curve(curveBundle);
+    this.lineGenerator = line().curve(curveBasis);
     store.on(EVENTS.EDGE_DECORATION_CHANGED, ({ edge }: DiagramEvent) => this.updateDecoration(<Edge>edge));
     store.on(EVENTS.EDGE_SELECTED, e => this.onEdgeSelected(e));
     store.on(EVENTS.EDGE_DELETED, ({ edge }: DiagramEvent) => this.destroyElement(<Edge>edge));
@@ -116,7 +117,8 @@ export class EdgeRenderer{
 
     const pathData = this.generatorCurvePath(
       source.nodeWall || Side.Top, x1, y1, sourceOffset,
-      target.nodeWall || Side.Top, x2, y2, targetOffset
+      target.nodeWall || Side.Top, x2, y2, targetOffset,
+      edge.shapePoints
     );
     d3Node.select('path')
             .attr('d', pathData);
@@ -137,11 +139,17 @@ export class EdgeRenderer{
 
   generatorCurvePath(
     side1: Side, x1: number, y1: number, offset1: number,
-    side2: Side, x2: number, y2: number, offset2: number
+    side2: Side, x2: number, y2: number, offset2: number,
+    shapePoints: Position[]
   ): string{
     const points: [number, number][] = [];
     points.push([x1, y1]);
     points.push(movePoint(x1, y1, side1, offset1));
+
+    for(let p of shapePoints){
+      points.push([ p.x + x1, p.y + y1 ]);
+    }
+
     points.push(movePoint(x2, y2, side2, offset2));
     points.push([x2, y2]);
 

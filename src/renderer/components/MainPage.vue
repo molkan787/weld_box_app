@@ -69,9 +69,9 @@ export default Vue.extend({
       }else{
         this.selectedObject = e.edge || null;
       }
-      if(this.selectedObject && !e.simulated){
-        (<any>this.$refs.propsPanel).show();
-      }
+      // if(this.selectedObject && !e.simulated){
+      //   (<any>this.$refs.propsPanel).show();
+      // }
     }
   },
   mounted(){
@@ -85,12 +85,6 @@ export default Vue.extend({
     this.diagram.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
 
     this.diagram.on(EVENTS.DIAGRAM_CHARTS_PATH_CHANGED, (e: DiagramEvent) => this.chartsPathNodes = e.data);
-
-    // Temporary
-    this.diagram.store.on(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, () => {
-      // @ts-ignore
-      this.$refs.sideBar.deactivateTool('transition');
-    });
 
     this.diagram.on(EVENTS.NODE_INITIAL_DROP, (e: DiagramEvent) => {
       const object = <ObjectProps><unknown>e.node;

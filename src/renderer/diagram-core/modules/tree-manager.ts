@@ -1,6 +1,6 @@
 import { BBox } from "rbush";
 import { Node } from "../components/node";
-import { EVENTS } from "../constants";
+import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 
@@ -24,7 +24,7 @@ export class TreeManager{
   }
 
   private onNodeDragged(event: DiagramEvent){
-    if(!this.store.nodeDraggingTool) return;
+    if(this.store.activeModule?.name != MODULES.NODE_DRAGGING) return;
     const node = <Node>event.node;
     // if(node?.parent) return;
     const { size } = node;

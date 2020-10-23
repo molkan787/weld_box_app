@@ -10,6 +10,7 @@ import { DiagramOptions } from "./interfaces/DiagramOptions";
 import { Margin } from "./interfaces/Margin";
 import { Edge } from "./components/edge";
 import { Component } from "./components/component";
+import { DiagramModule } from "./module";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -29,7 +30,8 @@ export class DiagramStore extends EventEmitter{
   /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
   public nodesSpatialMap: MyRBush = new MyRBush();
 
-  public nodeDraggingTool: boolean = true;
+  public modulesStack: DiagramModule[] = [];
+  public activeModule: DiagramModule | null = null;
 
   /** Holds canvas zoom & drag transform */
   private _zoomTransform: ZoomTransform | null = null;
@@ -87,6 +89,29 @@ export class DiagramStore extends EventEmitter{
     }
     this._rootElement = element;
     this.emit(EVENTS.INIT_CANVAS_CREATED, {});
+  }
+
+  public activateModule(module: DiagramModule){
+    if(module === this.activeModule) return;
+    if(this.activeModule){
+      this.modulesStack.push(this.activeModule);
+    }
+    this.activeModule = module;
+    this.emitActiveModuleChanged();
+  }
+
+  public deactiveModule(module: DiagramModule){
+    if(module !== this.activeModule) return;
+    if(this.modulesStack.length > 0){
+      this.activeModule = <DiagramModule>this.modulesStack.pop();
+    }else{
+      this.activeModule = null;
+    }
+    this.emitActiveModuleChanged();
+  }
+
+  private emitActiveModuleChanged(){
+    this.emit(EVENTS.DIAGRAM_ACTIVE_MODULE_CHANGED, { data: this.activeModule });
   }
 
   /**

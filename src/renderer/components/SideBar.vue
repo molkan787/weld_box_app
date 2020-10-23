@@ -3,7 +3,7 @@
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
-    <div title="Transition (Toggle)" class="icon" :class="{active: activeTool == 'transition'}" @click="iconClick('transition')">
+    <div title="Transition (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="iconClick('transition')">
       <TransitionIcon />
     </div>
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'message')">
@@ -25,6 +25,7 @@ import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
 import { MessageNode } from '../my-diagram/MessageNode';
 import { EventNode } from '../my-diagram/EventNode';
+import { MODULES } from '../diagram-core';
 export default {
   components: {
     StateIcon,
@@ -37,9 +38,12 @@ export default {
       type: Object,
     }
   },
-  data: () => ({
-    activeTool: ''
-  }),
+  computed: {
+    isEdgeDrawerActive(){
+      const s = this.diagram && this.diagram.store;
+      return s && s.activeModule && s.activeModule.name == MODULES.EDGE_DRAWER;
+    }
+  },
   methods: {
     onMouseMove(event){
       this.diagram.simulateCanvasMouseMove(event);
@@ -51,15 +55,8 @@ export default {
     iconClick(name){
       if(this.activeTool == name){
         this.$emit('deactivate-tool', name);
-        this.activeTool = '';
       }else{
         this.$emit('activate-tool', name);
-        this.activeTool = name;
-      }
-    },
-    deactivateTool(name){
-      if(this.activeTool == name){
-        this.activeTool = '';
       }
     },
     createObjectInstance(_objectType){

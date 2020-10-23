@@ -16,8 +16,8 @@ import { SubChart } from './modules/sub-chart';
 import { DomEventsAttacher } from './modules/dom-events-attacher';
 import { InitialNodeDragging } from './modules/initial-node-dragging';
 import { EdgeSelector } from './modules/edge-selector';
-import { ComponentType } from './components/component';
 import { ComponentDeleter } from './modules/component-deleter';
+import { EdgeReshaper } from './modules/edge-reshaper';
 
 /**
  * `Diagram`
@@ -40,15 +40,18 @@ export class Diagram{
     const { width, height, chartClasses } = options;
 
     this.modules = {
+      edgeSelector: new EdgeSelector(this.store),
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
       edgeDrawer: new EdgeDrawer(this.store, options),
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
-      edgeSelector: new EdgeSelector(this.store),
       componentDeleter: new ComponentDeleter(this.store),
+      edgeReshaper: new EdgeReshaper(this.store),
       domEventsAttacher: new DomEventsAttacher(this.store), // its important initialize DomEventsAttacher after all other modules
     }
+
+    this.modules.nodeDragging.activate();
 
     this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
     this.store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
@@ -160,13 +163,11 @@ export class Diagram{
   }
 
   public activateEdgeDrawer(){
-    // Temporary solution
-    this.store.nodeDraggingTool = false;
+    this.modules.edgeDrawer.activate();
   }
 
   public deactivateEdgeDrawer(){
-    // Temporary solution
-    this.store.nodeDraggingTool = true;
+    this.modules.edgeDrawer.deactivate();
   }
 
   public spawnNodeAt(point: Position, node: Node){

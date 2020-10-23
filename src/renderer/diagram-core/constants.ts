@@ -1,3 +1,9 @@
+export const MODULES = Object.freeze({
+  NODE_DRAGGING: 'node-dragging',
+  EDGE_DRAWER: 'edge-drawer',
+  EDGE_RESHAPER: 'edge-reshaper',
+});
+
 export const ATTR = Object.freeze({
   CORNER: 'data-corner',
   WALL_SIDE: 'data-wall-side',
@@ -30,6 +36,7 @@ export const EVENTS = Object.freeze({
   EDGE_CONNECTIONS_CHANGED: 'edge-connections-changed',
   EDGE_CONNECTIONS_UPDATED: 'edge-connections-updated',
   EDGE_DECORATION_CHANGED: 'edge-decoration-changed',
+  EDGE_RESHAPED: 'edge-reshaped',
   EDGE_SELECTED: 'edge-selected',
   EDGE_DELETED: 'edge-deleted',
 
@@ -46,6 +53,7 @@ export const EVENTS = Object.freeze({
 
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
   DIAGRAM_DELETE_COMPONENT: 'diagram-delete-component',
+  DIAGRAM_ACTIVE_MODULE_CHANGED: 'diagram-active-module-changed',
 
 
   CANVAS_MOUSEMOVE: 'canvas-mousemove',

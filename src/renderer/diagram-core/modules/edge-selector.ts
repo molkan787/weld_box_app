@@ -9,9 +9,9 @@ export class EdgeSelector{
   }
 
   onMouseDown(e: DiagramEvent): void {
-    const event = <MouseEvent>e.sourceEvent;
+    const sourceEvent = <MouseEvent>e.sourceEvent;
     this.store.rootElement.classed(CLASSES.SVG_CLICKABLE, true);
-    const { clientX, clientY } = event;
+    const { clientX, clientY } = sourceEvent;
     const el = document.elementFromPoint(clientX, clientY);
     this.store.rootElement.classed(CLASSES.SVG_CLICKABLE, false);
     if(el){
@@ -20,7 +20,7 @@ export class EdgeSelector{
       const id = parseInt(raw_id);
       const edge = this.store.getEdgeById(id);
       if(edge){
-        this.store.emit(EVENTS.EDGE_SELECTED, { edge });
+        this.store.emit(EVENTS.EDGE_SELECTED, { edge, sourceEvent });
       }
     }
   }

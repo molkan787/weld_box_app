@@ -1,7 +1,7 @@
 import { Edge } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
-import { ATTR, EVENTS, CLASSES } from "../constants";
+import { ATTR, EVENTS, CLASSES, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { isPointInsideBBox, Side, TouchesWall } from "../helpers/geometry";
 import { distSqrd } from "../helpers/geometry";
@@ -10,8 +10,9 @@ import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramOptions } from "../interfaces/DiagramOptions";
 import { EdgeInstanceCreator } from "../interfaces/EdgeInstanceCreator";
 import { Position } from "../interfaces/Position";
+import { DiagramModule } from "../module";
 
-export class EdgeDrawer{
+export class EdgeDrawer extends DiagramModule{
 
   private currentEdge: Edge | null = null;
 
@@ -20,7 +21,8 @@ export class EdgeDrawer{
 
   private edgeFactory: EdgeInstanceCreator;
 
-  constructor(readonly store: DiagramStore, options: DiagramOptions){
+  constructor(store: DiagramStore, options: DiagramOptions){
+    super(store, MODULES.EDGE_DRAWER);
     this.edgeFactory = options.edgeFactory
                       || ((s: EdgeConnection, t: EdgeConnection) => new Edge(s, t));
 
@@ -36,7 +38,7 @@ export class EdgeDrawer{
 //#region Edge drawing logic
 
   onNodeDragStart(event: DiagramEvent){
-    if(this.store.nodeDraggingTool) return;
+    if(this.isInactive) return;
 
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
     const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
@@ -97,7 +99,7 @@ export class EdgeDrawer{
   }
 
   onNodeDragged(event: DiagramEvent){
-    if(this.store.nodeDraggingTool) return;
+    if(this.isInactive) return;
 
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
@@ -127,7 +129,7 @@ export class EdgeDrawer{
   }
 
   onNodeDropped(event: DiagramEvent){
-    if(this.store.nodeDraggingTool) return;
+    if(this.isInactive) return;
 
     const node = this.nodeInSubject;
     const edge = this.currentEdge;
@@ -155,16 +157,14 @@ export class EdgeDrawer{
     }
     this.currentEdge = null;
 
-    // TODO: move logic below to the store itself ( store.activateNodeDragging(); )
-    this.store.nodeDraggingTool = true;
-    this.store.emit(EVENTS.DIAGRAM_NODE_DRAGGING_ENABLED, {});
+    this.deactivate();
   }
 //#endregion
 
 //#region Attach object finding logic
 
   onMouseMove(event: MouseEvent){
-    if(this.store.nodeDraggingTool) return;
+    if(this.isInactive) return;
 
     const point = {
       x: event.clientX,

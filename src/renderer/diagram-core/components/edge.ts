@@ -1,5 +1,6 @@
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
+import { Position } from "../interfaces/Position";
 import { Component, ComponentType } from "./component";
 import { EdgeConnection } from "./edge-connection";
 
@@ -8,6 +9,8 @@ export class Edge extends Component{
   public store?: DiagramStore;
 
   private _highlighted: boolean = false;
+
+  public readonly shapePoints: Position[] = [];
 
   constructor(
     public source: EdgeConnection,

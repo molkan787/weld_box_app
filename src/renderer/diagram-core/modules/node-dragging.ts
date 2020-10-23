@@ -1,17 +1,18 @@
-import { select } from 'd3';
+import { active, select } from 'd3';
 import { Node } from '../components/node';
-import { ATTR, EVENTS, CLASSES } from '../constants';
+import { ATTR, EVENTS, CLASSES, MODULES } from '../constants';
 import { DiagramStore } from '../diagram-store';
 import { Corner, Side } from '../helpers/geometry';
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { Position } from '../interfaces/Position';
 import { Size } from '../interfaces/Size';
+import { DiagramModule } from '../module';
 import { cloneObject } from '../utils';
 
 /**
  * Module thats handles Node Dragging (Moving) and Resizing
  */
-export class NodeDragging{
+export class NodeDragging extends DiagramModule{
 
   // Indicate if the current dragging is used to resize the Node
   private resizing: boolean = false;
@@ -23,7 +24,8 @@ export class NodeDragging{
   private startingPosition: Position = { x: 0, y: 0 };
   private startingAbsolutePosition: Position = { x: 0, y: 0 };
 
-  constructor(readonly store: DiagramStore){
+  constructor(store: DiagramStore){
+    super(store, MODULES.NODE_DRAGGING);
     // store.on(EVENTS.NODE_ADDED, ({ node }: DiagramEvent) => this.apply(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
     store.on(EVENTS.NODE_DRAGSTART, e => this.dragstarted(e))
@@ -33,7 +35,7 @@ export class NodeDragging{
 
   /** Handler for on drag start event */
   private dragstarted(e: DiagramEvent) {
-    if(!this.store.nodeDraggingTool || e.simulated) return;
+    if(this.isInactive) return;
 
     const node = <Node>e.node;
     const event = e.sourceEvent;
@@ -60,7 +62,7 @@ export class NodeDragging{
    * this function will either move the node in the canvas or just resize the node according to mouse movement
    */
   private dragged(e: DiagramEvent) {
-    if(!this.store.nodeDraggingTool || e.simulated) return;
+    if(this.isInactive || e.simulated) return;
 
     const node = <Node>e.node;
     const event = e.sourceEvent;
@@ -129,7 +131,7 @@ export class NodeDragging{
 
   /** handler for drag end event */
   private dragended(e: DiagramEvent) {
-    if(!this.store.nodeDraggingTool || e.simulated) return;
+    if(this.isInactive || e.simulated) return;
 
     const node = <Node>e.node;
     const d3Node = this.store.getD3Node(node.id);
