@@ -8,6 +8,10 @@ export class DiagramModule{
     readonly name: string
   ){}
 
+  public get stateSnaper(){
+    return this.store.stateSnaper;
+  }
+
   public get isActive(){
     return this.store.activeModule === this;
   }
@@ -16,10 +20,16 @@ export class DiagramModule{
     return this.store.activeModule !== this;
   }
 
+  /**
+   * Sets the calling module as the currently active module, Giving him the priority in handling events
+   */
   protected activate(){
     this.store.activateModule(this);
   }
 
+  /**
+   * Unsets the calling module as the currently active module, Taking him the priority in handling events
+   */
   protected deactivate(){
     this.store.deactiveModule(this);
   }

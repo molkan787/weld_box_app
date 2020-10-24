@@ -12,6 +12,7 @@ import { Edge } from "./components/edge";
 import { Component } from "./components/component";
 import { DiagramModule } from "./module";
 import { ActionsArchiver } from "./modules/actions-archiver";
+import { StateSnaper } from "./modules/sub-modules/state-snaper";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -25,6 +26,8 @@ export class DiagramStore extends EventEmitter{
   public selectedComponent: Component | null = null;
 
   public readonly actionsArchiver: ActionsArchiver = new ActionsArchiver(this);
+
+  public readonly stateSnaper: StateSnaper = new StateSnaper();
 
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */

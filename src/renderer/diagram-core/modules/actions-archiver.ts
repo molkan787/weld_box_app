@@ -1,15 +1,21 @@
+import { MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { Action, ActionTask } from "../interfaces/Action";
+import { DiagramModule } from "../module";
 
-export class ActionsArchiver{
+export class ActionsArchiver extends DiagramModule{
 
   private readonly stack: Action[] = [];
   private pointer: number = -1;
 
   constructor(readonly store: DiagramStore){
+    super(store, MODULES.ACTIONS_ARCHIVER);
     console.log(this)
   }
 
+  /**
+   * Push an action to the stack
+   */
   public push(action: Action){
     if(this.pointer < this.stack.length - 1){
       this.stack.splice(this.pointer + 1);
@@ -34,6 +40,7 @@ export class ActionsArchiver{
   }
 
   public undo(){
+    this.activate();
     const action = this.current();
     if(action){
       const tasks = action.undo;
@@ -41,9 +48,11 @@ export class ActionsArchiver{
         this.doTask(t);
       }
     }
+    this.deactivate();
   }
 
   public redo(){
+    this.activate();
     const action = this.next();
     if(action){
       const tasks = action.redo;
@@ -51,6 +60,7 @@ export class ActionsArchiver{
         this.doTask(t);
       }
     }
+    this.deactivate();
   }
 
   private doTask(task: ActionTask){

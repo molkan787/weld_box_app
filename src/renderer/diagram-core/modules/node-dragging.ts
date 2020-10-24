@@ -23,6 +23,7 @@ export class NodeDragging extends DiagramModule{
   private startingSize: Size = { width: 0, height: 0, radius: 0 };
   private startingPosition: Position = { x: 0, y: 0 };
   private startingAbsolutePosition: Position = { x: 0, y: 0 };
+  private stateRestorer: Function = () => 0;
 
   constructor(store: DiagramStore){
     super(store, MODULES.NODE_DRAGGING);
@@ -44,6 +45,7 @@ export class NodeDragging extends DiagramModule{
     this.startingAbsolutePosition = cloneObject(node.getAbsolutePosition());
     this.startingPosition = cloneObject(node.position);
     this.startingSize = cloneObject(node.size);
+    this.stateRestorer = this.stateSnaper.snapNodeAsRestorer(node);
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -138,29 +140,19 @@ export class NodeDragging extends DiagramModule{
 
     d3Node.style('cursor', 'default');
 
-    const old_size = cloneObject(this.startingSize);
-    const old_position = cloneObject(this.startingPosition);
-    const new_size = cloneObject(node.size);
-    const new_position = cloneObject(node.position);
     this.pushAction({
       undo: [
         {
-          do(){
-            node.size = old_size;
-            node.position = old_position;
-          },
+          do: this.stateRestorer,
           events: [EVENTS.NODE_BBOX_CHANGED],
-          eventsPayload: { node }
+          eventsPayload: { node, sourceEvent: e.sourceEvent }
         }
       ],
       redo: [
         {
-          do(){
-            node.size = new_size;
-            node.position = new_position;
-          },
-          events: [EVENTS.NODE_BBOX_CHANGED],
-          eventsPayload: { node }
+          do: this.stateSnaper.snapNodeAsRestorer(node),
+          events: [EVENTS.NODE_DRAGGED, EVENTS.NODE_BBOX_CHANGED],
+          eventsPayload: { node, sourceEvent: e.sourceEvent }
         }
       ]
     })

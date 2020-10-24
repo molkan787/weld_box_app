@@ -2,6 +2,7 @@ export const MODULES = Object.freeze({
   NODE_DRAGGING: 'node-dragging',
   EDGE_DRAWER: 'edge-drawer',
   EDGE_RESHAPER: 'edge-reshaper',
+  ACTIONS_ARCHIVER: 'actions-archiver',
 });
 
 export const ATTR = Object.freeze({
@@ -76,5 +77,6 @@ export const CLASSES = Object.freeze({
   SOURCE_ATTACH_BOX: 'source-attach-box',
   TARGET_ATTACH_BOX: 'target-attach-box',
   SVG_CLICKABLE: 'svg-clickable',
+  EDGES_LAYER_CLICKABLE: 'edges-layer-clickable',
   HIGHLIGHTED: 'highlighted',
 })
