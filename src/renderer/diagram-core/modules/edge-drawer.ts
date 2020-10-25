@@ -157,8 +157,30 @@ export class EdgeDrawer extends DiagramModule{
     }
     this.currentEdge = null;
 
+    edge && this.pushSpawnAction(edge);
+
     this.deactivate();
   }
+
+  pushSpawnAction(edge: Edge){
+    this.pushAction({
+      undo: [
+        {
+          events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+          eventsPayload: { data: edge },
+          do: () => 0
+        }
+      ],
+      redo: [
+        {
+          events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+          eventsPayload: { data: edge },
+          do: this.stateSnaper.snapEdgeAsRestorer(edge)
+        }
+      ]
+    })
+  }
+
 //#endregion
 
 //#region Attach object finding logic

@@ -18,6 +18,7 @@ import { InitialNodeDragging } from './modules/initial-node-dragging';
 import { EdgeSelector } from './modules/edge-selector';
 import { ComponentDeleter } from './modules/component-deleter';
 import { EdgeReshaper } from './modules/edge-reshaper';
+import { Component, ComponentType } from './components/component';
 
 /**
  * `Diagram`
@@ -54,6 +55,7 @@ export class Diagram{
     this.modules.nodeDragging.activate();
 
     this.store.on(EVENTS.EDGE_CREATED, ({edge}: DiagramEvent) => this.addEdge(<Edge>edge));
+    this.store.on(EVENTS.DIAGRAM_RESTORE_COMPONENT, (e: DiagramEvent) => this.addComponent(<Component>e.data, true));
     this.store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
     this.store.on(EVENTS.DIAGRAM_SET_ZOOM, e => this.setZoom(e));
 
@@ -153,21 +155,29 @@ export class Diagram{
     this.store.emit(EVENTS.DIAGRAM_JUMP_TO_NODE, { node });
   }
 
+  public addComponent(component: Component, isRestore?: boolean){
+    if(component.type == ComponentType.Node){
+      this.addNode(<Node>component, isRestore);
+    }else if(component.type == ComponentType.Edge){
+      this.addEdge(<Edge>component, isRestore);
+    }
+  }
+
   /**
    * Add node to the Diagram, This method need to be called for each New Node in order to be part of the Diagram
    * regardless if the node is child of another node
    * @param node Node instance to add
    */
-  public addNode(node: Node){
+  public addNode(node: Node, isRestore?: boolean){
     node.store = this.store;
     this.store.addNode(node);
-    this.store.emit(EVENTS.NODE_ADDED, { node })
+    this.store.emit(EVENTS.NODE_ADDED, { node, isRestore })
   }
 
-  public addEdge(edge: Edge){
+  public addEdge(edge: Edge, isRestore?: boolean){
     edge.store = this.store;
     this.store.addEdge(edge);
-    this.store.emit(EVENTS.EDGE_ADDED, { edge })
+    this.store.emit(EVENTS.EDGE_ADDED, { edge, isRestore })
   }
 
   public activateEdgeDrawer(){

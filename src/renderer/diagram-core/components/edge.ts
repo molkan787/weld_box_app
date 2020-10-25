@@ -10,7 +10,7 @@ export class Edge extends Component{
 
   private _highlighted: boolean = false;
 
-  public readonly shapePoints: Position[] = [];
+  public shapePoints: Position[] = [];
 
   constructor(
     public source: EdgeConnection,

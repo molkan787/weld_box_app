@@ -70,6 +70,16 @@ export class Node extends Component{
     }
   }
 
+  /**
+   * Return the parent node, no matter if the calling node is open or not
+   */
+  public getParent(){
+    return this._parent;
+  }
+
+  /**
+   * Return the parent node only when the calling node is not open
+   */
   public get parent(){
     return this.props.isOpen ? null : this._parent;
   }
@@ -136,6 +146,14 @@ export class Node extends Component{
     connection.node = this;
     this.edges.push(connection);
     return connection;
+  }
+
+  addEdgeConnection(connection: EdgeConnection){
+    const index = this.edges.indexOf(connection);
+    if(index == -1){
+      this.edges.push(connection);
+    }
+    connection.node = this;
   }
 
   /**

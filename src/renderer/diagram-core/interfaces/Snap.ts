@@ -8,22 +8,25 @@ import { Size } from "./Size";
 export type NodeSnap = NodeSnapState[];
 
 export interface NodeSnapState{
-  node: Node,
-  size: Size,
-  position: Position,
-  edges: EdgeSnap[]
+  node: Node;
+  parent: Node | null;
+  size: Size;
+  position: Position;
+  edges: EdgeSnap[];
 }
 
 export interface EdgeSnap{
   edge: Edge;
+  shapePoints: Position[];
   source: EdgeConnectionSnap;
   target: EdgeConnectionSnap;
 }
 
 export interface EdgeConnectionSnap{
-  edgeConnection: EdgeConnection,
-  position?: Position,
-  offset?: Position,
-  attachType: AttachType,
-  nodeWall: Side
+  edgeConnection: EdgeConnection;
+  position?: Position;
+  offset?: Position;
+  attachType: AttachType;
+  nodeWall: Side;
+  node: Node | null;
 }

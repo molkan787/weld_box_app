@@ -2,7 +2,7 @@ import { Edge } from "../../components/edge";
 import { EdgeConnection } from "../../components/edge-connection";
 import { Node } from "../../components/node";
 import { EdgeConnectionSnap, EdgeSnap, NodeSnap, NodeSnapState } from "../../interfaces/Snap";
-import { cloneObject } from "../../utils";
+import { cloneArray, cloneObject } from "../../utils";
 
 export class StateSnaper{
 
@@ -20,6 +20,7 @@ export class StateSnaper{
       const n = nodes[i];
       const state: NodeSnapState = {
         node: n,
+        parent: n.getParent(),
         size: cloneObject(n.size),
         position: cloneObject(n.position),
         edges: this.snapEdges(node.edges.map(ec => <Edge>ec.edge))
@@ -31,7 +32,12 @@ export class StateSnaper{
 
   public restoreNode(snap: NodeSnap){
     for(let i = 0; i < snap.length; i++){
-      const { node, size, position, edges } = snap[i];
+      const { node, parent, size, position, edges } = snap[i];
+      const currentParent = node.getParent();
+      if(currentParent !== parent){
+        if(currentParent) currentParent.removeChild(node);
+        if(parent) parent.addChild(node);
+      }
       node.size = cloneObject(size);
       node.position = cloneObject(position);
       this.restoreEdges(edges);
@@ -40,6 +46,11 @@ export class StateSnaper{
 
 
   // ----------------------- Edge ------------------------
+
+  public snapEdgeAsRestorer(edge: Edge): Function{
+    const snap = this.snapEdge(edge);
+    return () => this.restoreEdge(snap);
+  }
 
   public snapEdges(edges: Edge[]): EdgeSnap[]{
     const snaps: EdgeSnap[] = [];
@@ -63,13 +74,15 @@ export class StateSnaper{
     const { source, target } = edge;
     return {
       edge,
+      shapePoints: cloneArray(edge.shapePoints),
       source: this.snapEdgeConnection(source),
       target: this.snapEdgeConnection(target)
     }
   }
 
   public restoreEdge(snap: EdgeSnap){
-    const { source, target } = snap;
+    const { edge, shapePoints, source, target } = snap;
+    edge.shapePoints = cloneArray(shapePoints);
     this.restoreEdgeConnection(source);
     this.restoreEdgeConnection(target);
   }
@@ -83,7 +96,8 @@ export class StateSnaper{
       position: cloneObject(ec.position),
       offset: cloneObject(ec.offset),
       attachType: ec.attachType,
-      nodeWall: ec.nodeWall
+      nodeWall: ec.nodeWall,
+      node: ec.node
     }
     return state;
   }
@@ -91,12 +105,18 @@ export class StateSnaper{
   public restoreEdgeConnection(state: EdgeConnectionSnap){
     const {
       edgeConnection: ec, position,
-      offset, attachType, nodeWall
+      offset, attachType, nodeWall,
+      node
     } = state;
     ec.position = cloneObject(position);
     ec.offset = cloneObject(offset);
     ec.attachType = attachType;
     ec.nodeWall = nodeWall;
+    if(node){
+      node.addEdgeConnection(ec);
+    }else{
+      ec.node = null;
+    }
   }
 
 }

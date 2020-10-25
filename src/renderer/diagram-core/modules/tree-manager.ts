@@ -3,12 +3,14 @@ import { Node } from "../components/node";
 import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { DiagramModule } from "../module";
 
-export class TreeManager{
+export class TreeManager extends DiagramModule{
 
   private dropTarget: Node | null = null;
 
   constructor(readonly store: DiagramStore){
+    super(store, MODULES.TREE_MANAGER);
     store.on(EVENTS.NODE_DRAGGED, e => this.onNodeDragged(e));
     store.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
     store.on(EVENTS.NODE_DRAGGED_OUT_OF_PARENT, e => this.onNodeDraggedOutOfParent(e));
@@ -16,10 +18,32 @@ export class TreeManager{
 
   private onNodeDropped(event: DiagramEvent){
     const target = this.dropTarget;
+    const node = <Node>event.node;
     this.setDropTarget(null);
-    if(target){
+    if(target && target !== node.getParent()){
       target.highlighted = false;
-      this.changeNodeParent(<Node>event.node, target);
+      // const prevSnapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
+      this.changeNodeParent(node, target);
+      // const currSnapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
+
+      // this.enableActionGrouping();
+      // this.pushAction({
+      //   undo: [
+      //     {
+      //       events: [EVENTS.NODE_PARENT_CHANGED],
+      //       eventsPayload: { node },
+      //       do: prevSnapRestorer
+      //     }
+      //   ],
+      //   redo: [
+      //     {
+      //       events: [EVENTS.NODE_PARENT_CHANGED],
+      //       eventsPayload: { node },
+      //       do: currSnapRestorer
+      //     }
+      //   ]
+      // })
+      // this.disableActionGrouping();
     }
   }
 

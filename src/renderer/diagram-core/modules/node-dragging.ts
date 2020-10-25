@@ -6,6 +6,7 @@ import { Corner, Side } from '../helpers/geometry';
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { Position } from '../interfaces/Position';
 import { Size } from '../interfaces/Size';
+import { NodeSnap } from '../interfaces/Snap';
 import { DiagramModule } from '../module';
 import { cloneObject } from '../utils';
 
@@ -20,10 +21,13 @@ export class NodeDragging extends DiagramModule{
   // Indicate which corner the user used to resize the Node
   private resizeCorner: Corner = Corner.TopLeft;
 
+  // Indicate if node's size or position was changed between dragstart & dragend events
+  private changed: boolean = false;
+
   private startingSize: Size = { width: 0, height: 0, radius: 0 };
   private startingPosition: Position = { x: 0, y: 0 };
   private startingAbsolutePosition: Position = { x: 0, y: 0 };
-  private stateRestorer: Function = () => 0;
+  private nodeSnapshot: NodeSnap = [];
 
   constructor(store: DiagramStore){
     super(store, MODULES.NODE_DRAGGING);
@@ -45,7 +49,7 @@ export class NodeDragging extends DiagramModule{
     this.startingAbsolutePosition = cloneObject(node.getAbsolutePosition());
     this.startingPosition = cloneObject(node.position);
     this.startingSize = cloneObject(node.size);
-    this.stateRestorer = this.stateSnaper.snapNodeAsRestorer(node);
+    this.nodeSnapshot = this.stateSnaper.snapNode(node);
 
     // if the event comes from resize handle than activate resizing mode otherwise deactivate it
     this.resizing = this.isResizeHandleEvent(event);
@@ -57,6 +61,8 @@ export class NodeDragging extends DiagramModule{
 
     // bring the dragged node to the front and change his cursor
     d3Node.raise().style('cursor', this.resizing ? 'default' : 'move');
+
+    this.changed = false;
   }
 
   /**
@@ -129,6 +135,7 @@ export class NodeDragging extends DiagramModule{
       }
     }
 
+    this.changed = true;
   }
 
   /** handler for drag end event */
@@ -140,22 +147,38 @@ export class NodeDragging extends DiagramModule{
 
     d3Node.style('cursor', 'default');
 
-    this.pushAction({
-      undo: [
-        {
-          do: this.stateRestorer,
-          events: [EVENTS.NODE_BBOX_CHANGED],
-          eventsPayload: { node, sourceEvent: e.sourceEvent }
+    if(this.changed){
+      const snapShot = this.nodeSnapshot;
+
+      // Scheduling a task, because after dropping the node, his parent might be changed
+      // and that will occur on the next event handler (at TreeManager)
+      // so if the node is snapped before changing the parent, the snap will be outdated
+      setTimeout(() => {
+        const events = [EVENTS.NODE_BBOX_CHANGED];
+        if(snapShot[0].parent !== node.parent){
+          events.push(EVENTS.NODE_PARENT_CHANGED);
         }
-      ],
-      redo: [
-        {
-          do: this.stateSnaper.snapNodeAsRestorer(node),
-          events: [EVENTS.NODE_DRAGGED, EVENTS.NODE_BBOX_CHANGED],
-          eventsPayload: { node, sourceEvent: e.sourceEvent }
-        }
-      ]
-    })
+
+        this.pushAction({
+          undo: [
+            {
+              do: () => this.stateSnaper.restoreNode(snapShot),
+              events,
+              eventsPayload: { node, sourceEvent: e.sourceEvent }
+            }
+          ],
+          redo: [
+            {
+              do: this.stateSnaper.snapNodeAsRestorer(node),
+              events,
+              eventsPayload: { node, sourceEvent: e.sourceEvent }
+            }
+          ]
+        });
+      }, 0);
+    }
+
+    this.changed = false;
   }
 
   private nodeDraggedOutOfParent(node: Node){

@@ -38,4 +38,12 @@ export class DiagramModule{
     this.store.actionsArchiver.push(action);
   }
 
+  protected enableActionGrouping(){
+    this.store.actionsArchiver.enableGrouping();
+  }
+
+  protected disableActionGrouping(){
+    this.store.actionsArchiver.disableGrouping();
+  }
+
 }

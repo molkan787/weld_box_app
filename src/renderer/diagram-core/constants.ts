@@ -1,8 +1,11 @@
 export const MODULES = Object.freeze({
   NODE_DRAGGING: 'node-dragging',
+  INITIAL_NODE_DRAGGING: 'initial-node-dragging',
   EDGE_DRAWER: 'edge-drawer',
   EDGE_RESHAPER: 'edge-reshaper',
   ACTIONS_ARCHIVER: 'actions-archiver',
+  COMPONENT_DELETER: 'component-deleted',
+  TREE_MANAGER: 'tree-manager',
 });
 
 export const ATTR = Object.freeze({
@@ -55,6 +58,7 @@ export const EVENTS = Object.freeze({
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
   DIAGRAM_DELETE_COMPONENT: 'diagram-delete-component',
   DIAGRAM_ACTIVE_MODULE_CHANGED: 'diagram-active-module-changed',
+  DIAGRAM_RESTORE_COMPONENT: 'diagram-restore-component',
 
 
   CANVAS_MOUSEMOVE: 'canvas-mousemove',

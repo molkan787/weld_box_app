@@ -4,11 +4,14 @@ import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
+import { cloneArray } from "../utils";
 
 export class EdgeReshaper extends DiagramModule{
 
   private subject: Edge | null = null;
   private basePoint: Position = { x: 0, y: 0 };
+  private previousShape: Position[] = [];
+  private changed: boolean = false;
 
   constructor(store: DiagramStore){
     super(store, MODULES.EDGE_RESHAPER);
@@ -22,6 +25,8 @@ export class EdgeReshaper extends DiagramModule{
     this.activate();
     this.subject = edge;
     this.basePoint = edge.source.getCoordinates();
+    this.previousShape = cloneArray(edge.shapePoints);
+    this.changed = false;
   }
 
 
@@ -37,10 +42,37 @@ export class EdgeReshaper extends DiagramModule{
       y: cy - y
     }
     this.store.emit(EVENTS.EDGE_RESHAPED, { edge, sourceEvent: e });
+    this.changed = true;
   }
 
 
   private onCanvasMouseUp(e: any): void {
+    const edge = this.subject;
+    if(this.isActive && this.changed && edge){
+      const previousShape = this.previousShape;
+      const currentShape = cloneArray(edge.shapePoints);
+      this.pushAction({
+        undo: [
+          {
+            events: [EVENTS.EDGE_RESHAPED],
+            eventsPayload: { edge: edge, sourceEvent: e },
+            do(){
+              edge.shapePoints = previousShape;
+            }
+          }
+        ],
+        redo: [
+          {
+            events: [EVENTS.EDGE_RESHAPED],
+            eventsPayload: { edge: edge, sourceEvent: e },
+            do(){
+              edge.shapePoints = currentShape;
+            }
+          }
+        ]
+      })
+    }
+    this.changed = false;
     this.deactivate();
   }
 

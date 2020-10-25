@@ -1,13 +1,15 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge } from "../components/edge";
 import { Node } from "../components/node";
-import { EVENTS } from "../constants";
+import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { DiagramModule } from "../module";
 
-export class ComponentDeleter{
+export class ComponentDeleter extends DiagramModule{
 
   constructor(readonly store: DiagramStore){
+    super(store, MODULES.COMPONENT_DELETER);
     store.on(EVENTS.DIAGRAM_DELETE_COMPONENT, e => this.onDeleteComponent(e));
   }
 
@@ -20,8 +22,13 @@ export class ComponentDeleter{
     }
   }
 
-  deleteNode(node: Node, sourceEvent: any): void {
+  deleteNode(node: Node, sourceEvent: DiagramEvent): void {
     if(node.props.isOpen) return;
+
+    let snapRestorer: Function | null = null;
+    if(!sourceEvent.isRestore){
+      snapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
+    }
 
     const nodes = node.getAllDescendentsNodes();
     const edges: Edge[] = [];
@@ -36,14 +43,41 @@ export class ComponentDeleter{
       node.parent.removeChild(node);
     }
 
+    if(!sourceEvent.isRestore && snapRestorer){
+      this.pushAction({
+        undo: [
+          {
+            events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+            eventsPayload: { data: node },
+            do: snapRestorer
+          }
+        ],
+        redo: [
+          {
+            events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+            eventsPayload: { data: node },
+            do: () => 0
+          }
+        ]
+      })
+    }
+
+    this.enableActionGrouping();
+
     // Delete all edges associated with deleted nodes
     for(let i = 0; i < edges.length; i++){
       this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
     }
+    this.disableActionGrouping();
 
   }
 
-  deleteEdge(edge: Edge, sourceEvent: any): void {
+  deleteEdge(edge: Edge, sourceEvent: DiagramEvent): void {
+    let snapRestorer: Function | null = null;
+    if(!sourceEvent.isRestore){
+      snapRestorer = this.stateSnaper.snapEdgeAsRestorer(edge);
+    }
+
     const { source, target } = edge;
     if(source.isAttachedToNode()){
       source.node?.removeEdgeConnection(source);
@@ -52,6 +86,25 @@ export class ComponentDeleter{
       target.node?.removeEdgeConnection(target);
     }
     this.store.emit(EVENTS.EDGE_DELETED, { edge, sourceEvent });
+
+    if(!sourceEvent.isRestore && snapRestorer){
+      this.pushAction({
+        undo: [
+          {
+            events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+            eventsPayload: { data: edge },
+            do: snapRestorer
+          }
+        ],
+        redo: [
+          {
+            events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+            eventsPayload: { data: edge },
+            do: () => 0
+          }
+        ]
+      })
+    }
   }
 
 }

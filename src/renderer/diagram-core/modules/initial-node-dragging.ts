@@ -1,15 +1,17 @@
 import { Size } from "electron/main";
 import { Node } from "../components/node";
-import { EVENTS } from "../constants";
+import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
+import { DiagramModule } from "../module";
 
-export class InitialNodeDragging{
+export class InitialNodeDragging extends DiagramModule{
 
   private subject: Node | null = null;
 
   constructor(readonly store: DiagramStore){
+    super(store, MODULES.INITIAL_NODE_DRAGGING);
     store.on(EVENTS.CANVAS_MOUSEMOVE, (e: DiagramEvent) => this.onMouseMove(e.sourceEvent));
     store.on(EVENTS.CANVAS_MOUSEUP, (e: DiagramEvent) => this.onMouseUp(e.sourceEvent));
     store.on(EVENTS.DIAGRAM_START_NODE_DRAGGING, (e: DiagramEvent) => this.onStartNodeDragging(e));
@@ -30,6 +32,22 @@ export class InitialNodeDragging{
       this.subject = null;
       this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent, simulated: true });
       this.store.emit(EVENTS.NODE_INITIAL_DROP, { node, sourceEvent, simulated: true });
+      this.pushAction({
+        undo: [
+          {
+            events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+            eventsPayload: { data: node },
+            do: () => 0
+          }
+        ],
+        redo: [
+          {
+            events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+            eventsPayload: { data: node },
+            do: this.stateSnaper.snapNodeAsRestorer(node)
+          }
+        ]
+      })
     }
   }
 
