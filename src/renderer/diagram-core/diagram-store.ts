@@ -133,7 +133,11 @@ export class DiagramStore extends EventEmitter{
   }
 
   public addEdge(edge: Edge){
+    if(this.edgesMap.get(edge.id) instanceof Edge)
+      return false;
+
     this.edgesMap.set(edge.id, edge);
+    return true;
   }
 
   public getEdgeById(id: number){
@@ -153,9 +157,11 @@ export class DiagramStore extends EventEmitter{
    * Add a Node to diagram's indices store.
    * @param node A Node to be stored
    */
-  public addNode(node: Node): void{
+  public addNode(node: Node): boolean{
+    if(this.nodes.indexOf(node) >= 0) return false;
     this.nodes.push(node);
     this.nodesSpatialMap.insert(node);
+    return true;
   }
 
   /**

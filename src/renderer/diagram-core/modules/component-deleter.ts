@@ -5,6 +5,7 @@ import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramModule } from "../module";
+import { cloneArray } from "../utils";
 
 export class ComponentDeleter extends DiagramModule{
 
@@ -30,19 +31,11 @@ export class ComponentDeleter extends DiagramModule{
       snapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
     }
 
-    const nodes = node.getAllDescendentsNodes();
-    const edges: Edge[] = [];
-    for(let i = 0; i < nodes.length; i++){
-      const n = nodes[i];
-      this.store.removeNode(n);
-      this.store.emit(EVENTS.NODE_DELETED, { node, sourceEvent });
-      const localEdges = n.edges.map(ec => <Edge>ec.edge);
-      edges.push(...localEdges);
-    }
     if(node.parent){
       node.parent.removeChild(node);
     }
 
+    this.enableActionGrouping();
     if(!sourceEvent.isRestore && snapRestorer){
       this.pushAction({
         undo: [
@@ -62,13 +55,62 @@ export class ComponentDeleter extends DiagramModule{
       })
     }
 
-    this.enableActionGrouping();
-
-    // Delete all edges associated with deleted nodes
+    const edges = node.edges.map(ec => <Edge>ec.edge);
+    // Delete all edges associated with deleted node
     for(let i = 0; i < edges.length; i++){
       this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
     }
+
+    const childs = node.children;
+    for(let i = childs.length - 1; i >= 0; i--){
+      this.enableActionGrouping();
+      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: childs[i] });
+    }
+
+    this.store.emit(EVENTS.NODE_DELETED, { node, sourceEvent });
+    this.store.removeNode(node);
+
     this.disableActionGrouping();
+
+    // const nodes = node.getAllDescendentsNodes();
+    // const edges: Edge[] = [];
+    // for(let i = 0; i < nodes.length; i++){
+    //   const n = nodes[i];
+    //   this.store.removeNode(n);
+    //   this.store.emit(EVENTS.NODE_DELETED, { node: n, sourceEvent });
+    //   const localEdges = n.edges.map(ec => <Edge>ec.edge);
+    //   edges.push(...localEdges);
+    // }
+    // if(node.parent){
+    //   node.parent.removeChild(node);
+    // }
+
+    // if(!sourceEvent.isRestore && snapRestorer){
+    //   this.pushAction({
+    //     undo: [
+    //       {
+    //         events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+    //         eventsPayload: { data: node },
+    //         do: snapRestorer
+    //       }
+    //     ],
+    //     redo: [
+    //       {
+    //         events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+    //         eventsPayload: { data: node },
+    //         do: () => 0
+    //       }
+    //     ]
+    //   })
+    // }
+
+    // this.enableActionGrouping();
+
+    // // Delete all edges associated with deleted nodes
+    // for(let i = 0; i < edges.length; i++){
+    //   this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
+    // }
+    // this.disableActionGrouping();
 
   }
 
@@ -85,6 +127,7 @@ export class ComponentDeleter extends DiagramModule{
     if(target.isAttachedToNode()){
       target.node?.removeEdgeConnection(target);
     }
+    this.store.edgesMap.delete(edge.id);
     this.store.emit(EVENTS.EDGE_DELETED, { edge, sourceEvent });
 
     if(!sourceEvent.isRestore && snapRestorer){

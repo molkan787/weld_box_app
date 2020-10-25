@@ -165,18 +165,21 @@ export class Diagram{
 
   /**
    * Add node to the Diagram, This method need to be called for each New Node in order to be part of the Diagram
-   * regardless if the node is child of another node
+   * if node has children when adding it, adding childs nodes can be skiped
    * @param node Node instance to add
    */
   public addNode(node: Node, isRestore?: boolean){
     node.store = this.store;
-    this.store.addNode(node);
+    if(!this.store.addNode(node)) return;
     this.store.emit(EVENTS.NODE_ADDED, { node, isRestore })
+    for(let child of node.children){
+      this.addNode(child, isRestore);
+    }
   }
 
   public addEdge(edge: Edge, isRestore?: boolean){
     edge.store = this.store;
-    this.store.addEdge(edge);
+    if(!this.store.addEdge(edge)) return;
     this.store.emit(EVENTS.EDGE_ADDED, { edge, isRestore })
   }
 
