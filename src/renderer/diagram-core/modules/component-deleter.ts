@@ -5,7 +5,6 @@ import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramModule } from "../module";
-import { cloneArray } from "../utils";
 
 export class ComponentDeleter extends DiagramModule{
 
@@ -71,46 +70,6 @@ export class ComponentDeleter extends DiagramModule{
     this.store.removeNode(node);
 
     this.disableActionGrouping();
-
-    // const nodes = node.getAllDescendentsNodes();
-    // const edges: Edge[] = [];
-    // for(let i = 0; i < nodes.length; i++){
-    //   const n = nodes[i];
-    //   this.store.removeNode(n);
-    //   this.store.emit(EVENTS.NODE_DELETED, { node: n, sourceEvent });
-    //   const localEdges = n.edges.map(ec => <Edge>ec.edge);
-    //   edges.push(...localEdges);
-    // }
-    // if(node.parent){
-    //   node.parent.removeChild(node);
-    // }
-
-    // if(!sourceEvent.isRestore && snapRestorer){
-    //   this.pushAction({
-    //     undo: [
-    //       {
-    //         events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
-    //         eventsPayload: { data: node },
-    //         do: snapRestorer
-    //       }
-    //     ],
-    //     redo: [
-    //       {
-    //         events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
-    //         eventsPayload: { data: node },
-    //         do: () => 0
-    //       }
-    //     ]
-    //   })
-    // }
-
-    // this.enableActionGrouping();
-
-    // // Delete all edges associated with deleted nodes
-    // for(let i = 0; i < edges.length; i++){
-    //   this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
-    // }
-    // this.disableActionGrouping();
 
   }
 

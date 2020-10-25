@@ -1,6 +1,5 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge } from "../components/edge";
-import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";

@@ -29,6 +29,14 @@ export class DiagramStore extends EventEmitter{
 
   public readonly stateSnaper: StateSnaper = new StateSnaper();
 
+  private _currentlyOpenNode: Node | null = null;
+  public get currentlyOpenNode(){
+    return this._currentlyOpenNode;
+  }
+  public setCurrentlyOpenNode(node: Node | null){
+    this._currentlyOpenNode = node;
+  }
+
   /** A map to store Actual DOM/SVG elements by Node's id,
    * where `Node` is a class holding diagram node properties */
   public readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();

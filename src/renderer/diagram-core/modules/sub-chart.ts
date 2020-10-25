@@ -12,11 +12,18 @@ export class SubChart{
   private readonly zoomTransforms: Map<number, ZoomTransform> = new Map();
   private readonly stack: ChartItem[] = [];
 
-  public currentNode: Node | null = null;
+  private _currentNode: Node | null = null;
+  public get currentNode(){
+    return this._currentNode;
+  }
+  public set currentNode(node: Node | null){
+    this._currentNode = node;
+    this.store.setCurrentlyOpenNode(node);
+  }
 
   constructor(public store: DiagramStore){
     store.on(EVENTS.DIAGRAM_OPEN_NODE, ({node}: DiagramEvent) => this.open(<Node>node));
-    store.on(EVENTS.DIAGRAM_JUMP_TO_NODE, ({node}: DiagramEvent) => this.jumpTo(<Node>node));
+    store.on(EVENTS.DIAGRAM_JUMP_TO_NODE, ({node}: DiagramEvent) => this.jumpTo(<Node | null>node));
     store.on(EVENTS.DIAGRAM_BACK, () => this.back());
     store.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.onZoomChanged());
     store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onNodeContentGotShown(e));
@@ -41,9 +48,17 @@ export class SubChart{
     }
   }
 
-  public jumpTo(node: Node){
-    while(this.stack.length && this.currentNode !== node){
-      this.back();
+  public jumpTo(node: Node | null){
+    if(node === this.currentNode) return;
+    const path = this.findPath(node);
+    if(path){
+      for(const n of path){
+        this.open(n);
+      }
+    }else{
+      while(this.stack.length && this.currentNode !== node){
+        this.back();
+      }
     }
   }
 
@@ -196,6 +211,27 @@ export class SubChart{
       this.store.nodesSpatialMap.remove(allDesendents[i]);
     }
 
+  }
+
+  private findPath(target: Node | null): Node[] | null{
+    if(target === null || target === this.currentNode) return null;
+    const index1 = this.stack.findIndex((ci) => ci.node === target);
+    if(index1 >= 0) return null;
+
+    const path: Node[] = [];
+    const hierarchy = target.getHierarchyPath();
+    const index2 = this.currentNode ? hierarchy.indexOf(this.currentNode) : -1;
+    const start = index2 >= 0 ? index2 : 0;
+
+    for(let i = start; i < hierarchy.length; i++){
+      const n = hierarchy[i];
+      if(!n.showContent){
+        path.push(n);
+      }
+    }
+    path.push(target);
+
+    return path;
   }
 
   private emitChangeEvent(){

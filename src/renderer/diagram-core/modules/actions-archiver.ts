@@ -1,4 +1,4 @@
-import { MODULES } from "../constants";
+import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { Action, ActionTask } from "../interfaces/Action";
 import { DiagramModule } from "../module";
@@ -26,6 +26,7 @@ export class ActionsArchiver extends DiagramModule{
    */
   public push(action: Action){
     console.log(action)
+    this.fillMetaProps(action);
     if(this.grouping){
       const current = this.stack[this.pointer];
       if(current){
@@ -81,9 +82,18 @@ export class ActionsArchiver extends DiagramModule{
   }
 
   private doTask(task: ActionTask){
+    this.store.emit(EVENTS.DIAGRAM_JUMP_TO_NODE, { node: task.openNode });
     task.do();
     for(let event of task.events){
       this.store.emit(event, { ...task.eventsPayload, isRestore: true });
+    }
+  }
+
+  private fillMetaProps(action: Action){
+    const openNode = this.store.currentlyOpenNode;
+    const tasks = action.undo.concat(action.redo);
+    for(let i = 0; i < tasks.length; i++){
+      tasks[i].openNode = openNode;
     }
   }
 

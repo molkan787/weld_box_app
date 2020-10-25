@@ -1,3 +1,4 @@
+import { Node } from "../components/node";
 import { DiagramEvent } from "./DiagramEvent";
 
 /**

@@ -6,8 +6,8 @@ export interface DiagramEvent{
   readonly isRestore?: boolean;
   readonly sender?: any;
   readonly sourceEvent?: any;
-  readonly node?: Node;
-  readonly edge?: Edge;
+  readonly node?: Node | null;
+  readonly edge?: Edge | null;
   readonly data?: any;
   readonly simulated?: boolean;
 }

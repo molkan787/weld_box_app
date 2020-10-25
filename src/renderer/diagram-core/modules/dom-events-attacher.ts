@@ -1,6 +1,6 @@
 import { drag, DragBehavior } from "d3";
 import { Node } from "../components/node";
-import { CLASSES, EVENTS } from "../constants";
+import { CLASSES, EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 
@@ -29,7 +29,7 @@ export class DomEventsAttacher{
           e.stopPropagation();
           return false;
         }
-        if(!this.store.nodeDraggingTool) return true;
+        if(this.store.activeModule?.name !== MODULES.NODE_DRAGGING) return true;
         if(node.props.isOpen){
           return this.isResizeHandleEvent(e);
         }else{
