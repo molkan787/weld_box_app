@@ -34,7 +34,6 @@ export class ComponentDeleter extends DiagramModule{
       node.parent.removeChild(node);
     }
 
-    this.enableActionGrouping();
     if(!sourceEvent.isRestore && snapRestorer){
       this.pushAction({
         undo: [
@@ -54,6 +53,7 @@ export class ComponentDeleter extends DiagramModule{
       })
     }
 
+    this.enableActionGrouping();
     const edges = node.edges.map(ec => <Edge>ec.edge);
     // Delete all edges associated with deleted node
     for(let i = 0; i < edges.length; i++){

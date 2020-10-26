@@ -2,7 +2,7 @@
   <div class="main-page">
     <TopBar />
     <div class="middle">
-      <SideBar ref="sideBar" :diagram="diagram" @activate-tool="activateTool" @deactivate-tool="deactivateTool" />
+      <SideBar ref="sideBar" :diagram="diagram" />
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
@@ -29,6 +29,7 @@ import { Component } from '../diagram-core/components/component';
 import { Node } from '../diagram-core';
 import { State } from '../my-diagram/state';
 import { MyEdge } from '../my-diagram/my-edge';
+import { Menu } from '../modules/menu';
 interface MyData {
   diagram: MyDiagram | null,
   selectedObject: Component & ObjectProps | null,
@@ -51,19 +52,6 @@ export default Vue.extend({
   methods: {
     breadcrumbItemClick(node: Node){
       this.diagram?.jumpToNode(node);
-    },
-    backClick(){
-      this.diagram?.back();
-    },
-    activateTool(name: string){
-      if(name == 'transition'){
-        this.diagram?.activateEdgeDrawer()
-      }
-    },
-    deactivateTool(name: string){
-      if(name == 'transition'){
-        this.diagram?.deactivateEdgeDrawer()
-      }
     },
     handleObjectSelected(e: DiagramEvent){
       if(e.type == EVENTS.NODE_SELECTED){
@@ -105,18 +93,17 @@ export default Vue.extend({
       }
     });
 
-    window.addEventListener('keydown', (e: KeyboardEvent) => {
-      if(e.key == 'Delete'){
-        this.diagram?.deleteSelectedComponent();
-      }else if(e.key == 'z' && e.ctrlKey){
-        e.preventDefault();
-        this.diagram?.undo();
-        this.afterUndoOrRedo();
-      }else if(e.key == 'y' && e.ctrlKey){
-        e.preventDefault();
-        this.diagram?.redo();
-        this.afterUndoOrRedo();
-      }
+    Menu
+    .on('delete', () => {
+      this.diagram?.deleteSelectedComponent();
+    })
+    .on('undo', () => {
+      this.diagram?.undo();
+      this.afterUndoOrRedo();
+    })
+    .on('redo', () => {
+      this.diagram?.redo();
+      this.afterUndoOrRedo();
     });
 
   }

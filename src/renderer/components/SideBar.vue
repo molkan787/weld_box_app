@@ -3,7 +3,7 @@
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
-    <div title="Transition (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="iconClick('transition')">
+    <div title="Transition (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="transitionClick('transition')">
       <TransitionIcon />
     </div>
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'message')">
@@ -40,8 +40,11 @@ export default {
   },
   computed: {
     isEdgeDrawerActive(){
+      return this.activeTool == MODULES.EDGE_DRAWER;
+    },
+    activeTool(){
       const s = this.diagram && this.diagram.store;
-      return s && s.activeModule && s.activeModule.name == MODULES.EDGE_DRAWER;
+      return s && s.activeModule && s.activeModule.name;
     }
   },
   methods: {
@@ -49,14 +52,17 @@ export default {
       this.diagram.simulateCanvasMouseMove(event);
     },
     onMouseDown(event, objectType){
+      if(this.activeTool == MODULES.EDGE_DRAWER){
+        this.diagram.deactivateEdgeDrawer();
+      }
       const { clientX: x, clientY: y } = event;
       this.diagram.spawnNodeAt({ x, y }, this.createObjectInstance(objectType))
     },
-    iconClick(name){
-      if(this.activeTool == name){
-        this.$emit('deactivate-tool', name);
+    transitionClick(name){
+      if(this.activeTool == MODULES.EDGE_DRAWER){
+        this.diagram.deactivateEdgeDrawer();
       }else{
-        this.$emit('activate-tool', name);
+        this.diagram.activateEdgeDrawer();
       }
     },
     createObjectInstance(_objectType){

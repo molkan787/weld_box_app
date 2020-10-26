@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 import EventEmitter from "eventemitter3";
 
-export class Menu extends EventEmitter{
+class MenuClass extends EventEmitter{
 
   constructor(){
     super();
@@ -18,8 +18,11 @@ export class Menu extends EventEmitter{
     if(event.ctrlKey){
       const action = this.getAction(event.key);
       if(action){
+        event.preventDefault();
         this.onMenuClick(action);
       }
+    }else if(event.key === 'Delete'){
+      this.onMenuClick('delete');
     }
   }
 
@@ -45,3 +48,8 @@ export class Menu extends EventEmitter{
   }
 
 }
+
+/**
+ * Emits application menu click (or shortcuts press) events
+ */
+export const Menu = new MenuClass();
