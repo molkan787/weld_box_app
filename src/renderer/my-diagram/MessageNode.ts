@@ -1,11 +1,15 @@
 import { NodeOptions } from "../diagram-core";
 import { Position } from "../diagram-core/interfaces/Position";
+import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 import { BasicNode } from "./basic-node";
 import { MessageDataItem } from "./interfaces/MessageDataItem";
 import { ObjectProps } from "./interfaces/object-props";
 import { ObjectType } from "./interfaces/object-type";
 
 export class MessageNode extends BasicNode implements ObjectProps{
+
+  // internal props
+  protected propsArchiver: PropsChangeArchiver;
 
   // Business props
   public readonly what: ObjectType = ObjectType.Message;
@@ -19,6 +23,14 @@ export class MessageNode extends BasicNode implements ObjectProps{
 
   constructor(position: Position, options?: NodeOptions){
     super(position, options);
+    this.propsArchiver = new PropsChangeArchiver({
+      instance: this,
+      props: ['name', 'properties', 'body'],
+      debounce: {
+        name: 1000,
+        body: 500
+      }
+    });
     this.addDataItem();
   }
 
@@ -30,9 +42,9 @@ export class MessageNode extends BasicNode implements ObjectProps{
     });
   }
 
-  public removeDataItem(item: MessageDataItem){
-    const idx = this.body.indexOf(item);
-    idx >= 0 && this.body.splice(idx, 1);
+  public removeDataItem(index: number){
+    // const idx = this.body.indexOf(item);
+    index >= 0 && this.body.splice(index, 1);
   }
 
 }

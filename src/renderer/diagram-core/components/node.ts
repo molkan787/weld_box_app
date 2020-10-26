@@ -61,12 +61,16 @@ export class Node extends Component{
   }
 
   public set showContent(value: boolean){
+    this.setShowContent(value);
+  }
+
+  public setShowContent(value: boolean, simulated?: boolean){
     const previous = this._showContent;
     this._showContent = value;
-    this.store?.emit(EVENTS.NODE_ATTRS_CHANGED, { node: this });
     if(previous !== value){
+      this.store?.emit(EVENTS.NODE_ATTRS_CHANGED, { node: this, data: previous, simulated });
       const eventName = value ? EVENTS.NODE_CONTENT_GOT_SHOWN : EVENTS.NODE_CONTENT_GOT_HIDDEN;
-      this.store?.emit(eventName, { node: this });
+      this.store?.emit(eventName, { node: this, simulated });
     }
   }
 

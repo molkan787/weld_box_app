@@ -7,11 +7,13 @@ import { ObjectType } from "./interfaces/object-type";
 import { ObjectProps } from "./interfaces/object-props";
 import { Position } from "../diagram-core/interfaces/Position";
 import { Size } from "../diagram-core/interfaces/Size";
+import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 
 export class State extends Node implements ObjectProps{
 
   // Internal props
   private vm?: Vue;
+  private propsArchiver: PropsChangeArchiver;
 
   // Business props
   public what: ObjectType = ObjectType.State;
@@ -28,6 +30,14 @@ export class State extends Node implements ObjectProps{
   ){
     super(position, size, options);
     this.name = 'State ' + this.id;
+    this.propsArchiver = new PropsChangeArchiver({
+      instance: this,
+      props: ['name', 'properties', 'statementBlocks'],
+      debounce: {
+        name: 1000,
+        statementBlocks: 500
+      }
+    });
   }
 
   public get isSubTask(){
@@ -51,6 +61,7 @@ export class State extends Node implements ObjectProps{
     });
 
     this.vm.$mount(<HTMLElement>content.node());
+    this.propsArchiver.unlock();
   }
 
 }

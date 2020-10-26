@@ -3,11 +3,13 @@ import { D3Node } from "../diagram-core/types/aliases";
 import BasicNodeComponent from '../components/diagram/BasicNode.vue';
 import Vue from 'vue';
 import { Position } from "../diagram-core/interfaces/Position";
+import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 
-export class BasicNode extends Node{
+export abstract class BasicNode extends Node{
 
   // Internal props
   private vm?: Vue;
+  protected abstract propsArchiver: PropsChangeArchiver;
 
   constructor(position: Position, options?: NodeOptions){
     super(position, { width: 40, height: 40, radius: 0 }, {
@@ -27,6 +29,7 @@ export class BasicNode extends Node{
     });
 
     this.vm.$mount(<HTMLElement>content.node());
+    this.propsArchiver.unlock();
   }
 
 }

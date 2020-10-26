@@ -22,28 +22,7 @@ export class TreeManager extends DiagramModule{
     this.setDropTarget(null);
     if(target && target !== node.getParent()){
       target.highlighted = false;
-      // const prevSnapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
       this.changeNodeParent(node, target);
-      // const currSnapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
-
-      // this.enableActionGrouping();
-      // this.pushAction({
-      //   undo: [
-      //     {
-      //       events: [EVENTS.NODE_PARENT_CHANGED],
-      //       eventsPayload: { node },
-      //       do: prevSnapRestorer
-      //     }
-      //   ],
-      //   redo: [
-      //     {
-      //       events: [EVENTS.NODE_PARENT_CHANGED],
-      //       eventsPayload: { node },
-      //       do: currSnapRestorer
-      //     }
-      //   ]
-      // })
-      // this.disableActionGrouping();
     }
   }
 

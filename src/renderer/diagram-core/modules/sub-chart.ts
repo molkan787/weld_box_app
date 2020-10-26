@@ -86,7 +86,7 @@ export class SubChart{
     nodesLayer.appendChild(d3node.node());
 
     this.store.nodesSpatialMap = new MyRBush();
-    node.showContent = true;
+    node.setShowContent(true, true);
     this.store.nodesSpatialMap.insert(node);
 
     this.buildNodeBodyEdges(node);
@@ -108,7 +108,7 @@ export class SubChart{
     currentD3Node.remove();
 
     this.switchNodeState(currentNode, false);
-    currentNode.showContent = false;
+    currentNode.setShowContent(false, true);
 
     this.store.nodesSpatialMap = chartItem.spatialMap;
 

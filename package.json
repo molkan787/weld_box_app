@@ -8,9 +8,14 @@
         "dist": "yarn compile && electron-builder"
     },
     "dependencies": {
+        "@types/debounce": "^1.2.0",
+        "@types/set-value": "^2.0.0",
         "d3": "^6.1.1",
+        "debounce": "^1.2.0",
         "eventemitter3": "^4.0.7",
+        "on-change": "^2.1.4",
         "rbush": "^3.0.1",
+        "set-value": "^3.0.2",
         "source-map-support": "^0.5.19",
         "vue-context-menu": "^2.0.6"
     },

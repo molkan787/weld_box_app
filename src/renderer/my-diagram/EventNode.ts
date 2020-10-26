@@ -1,8 +1,14 @@
+import { NodeOptions } from "../diagram-core";
+import { Position } from "../diagram-core/interfaces/Position";
+import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 import { BasicNode } from "./basic-node";
 import { ObjectProps } from "./interfaces/object-props";
 import { ObjectType } from "./interfaces/object-type";
 
 export class EventNode extends BasicNode implements ObjectProps{
+
+  // internal props
+  protected propsArchiver: PropsChangeArchiver;
 
   // Business props
   public readonly what: ObjectType = ObjectType.Event;
@@ -10,6 +16,17 @@ export class EventNode extends BasicNode implements ObjectProps{
     clear: EventClear.MANUAL,
     type: EventType.SINGLE_THREAD,
   };
+
+  constructor(position: Position, options?: NodeOptions){
+    super(position, options);
+    this.propsArchiver = new PropsChangeArchiver({
+      instance: this,
+      props: ['name', 'properties'],
+      debounce: {
+        name: 1000
+      }
+    });
+  }
 
 }
 

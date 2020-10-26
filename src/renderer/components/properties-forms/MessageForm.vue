@@ -13,7 +13,7 @@
       <div class="data-items">
 
         <div v-for="(data, index) in object.body" :key="index" class="item">
-          <MessageDataForm @remove-click="object.removeDataItem(data)" :data="data" />
+          <MessageDataForm @remove-click="object.removeDataItem(index)" :data="data" />
         </div>
 
         <div @click="object.addDataItem()" class="item">

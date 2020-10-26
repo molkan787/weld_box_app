@@ -25,7 +25,7 @@ export class ActionsArchiver extends DiagramModule{
    * Push an action to the stack
    */
   public push(action: Action){
-    console.log(action)
+    // console.log(action)
     this.fillMetaProps(action);
     if(this.grouping){
       const current = this.stack[this.pointer];

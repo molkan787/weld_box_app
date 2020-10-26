@@ -184,6 +184,21 @@ export class Renderer{
 
   onNodeAttrsChanged(event: DiagramEvent){
     const node = <Node>event.node;
+    if(!event.simulated){
+      const wasContentVisible: boolean = event.data;
+      const isContentVisible: boolean = node.showContent;
+      this.store.actionsArchiver.push({
+        undo: [{
+          events: [],
+          do: () => node.setShowContent(wasContentVisible, true)
+        }],
+        redo: [{
+          events: [],
+          do: () => node.setShowContent(isContentVisible, true)
+        }]
+      })
+      console.log(this.store.actionsArchiver)
+    }
     if(node.showContent){
       this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
     }

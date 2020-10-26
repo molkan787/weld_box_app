@@ -27,9 +27,11 @@ import { ObjectProps } from '../my-diagram/interfaces/object-props';
 import { ObjectType } from '../my-diagram/interfaces/object-type';
 import { Component } from '../diagram-core/components/component';
 import { Node } from '../diagram-core';
+import { State } from '../my-diagram/state';
+import { MyEdge } from '../my-diagram/my-edge';
 interface MyData {
   diagram: MyDiagram | null,
-  selectedObject: Component | null,
+  selectedObject: Component & ObjectProps | null,
   chartsPathNodes: (Node | null)[]
 }
 export default Vue.extend({
@@ -65,13 +67,23 @@ export default Vue.extend({
     },
     handleObjectSelected(e: DiagramEvent){
       if(e.type == EVENTS.NODE_SELECTED){
-        this.selectedObject = e.node || null;
+        this.selectedObject = <State>e.node || null;
       }else{
-        this.selectedObject = e.edge || null;
+        this.selectedObject = <MyEdge>e.edge || null;
       }
       // if(this.selectedObject && !e.simulated){
       //   (<any>this.$refs.propsPanel).show();
       // }
+    },
+    afterUndoOrRedo(){
+      // need to fix reactivity on `MyEdge` instances (Temporary solution)
+      if(this.selectedObject?.what == ObjectType.Edge){
+        console.log('reactivity')
+        const object = this.selectedObject;
+        // @ts-ignore
+        this.selectedObject = {};
+        this.$nextTick(() => this.selectedObject = object);
+      }
     }
   },
   mounted(){
@@ -98,9 +110,13 @@ export default Vue.extend({
       if(e.key == 'Delete'){
         this.diagram?.deleteSelectedComponent();
       }else if(e.key == 'z' && e.ctrlKey){
+        e.preventDefault();
         this.diagram?.undo();
+        this.afterUndoOrRedo();
       }else if(e.key == 'y' && e.ctrlKey){
+        e.preventDefault();
         this.diagram?.redo();
+        this.afterUndoOrRedo();
       }
     });
 
