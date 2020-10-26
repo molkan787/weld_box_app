@@ -1,4 +1,4 @@
-import { App, BrowserWindow, Menu } from 'electron';
+import { App, BrowserWindow, Menu, MenuItem } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { TopBarMenu } from './topbar-menu';
@@ -52,6 +52,7 @@ export default class Main {
       }
     });
     const topbarMenu = new TopBarMenu();
+    topbarMenu.handleItemClick = (item) => this.onMenuItemClick(item);
     Menu.setApplicationMenu(topbarMenu.buildMenu());
     window.maximize();
 
@@ -162,6 +163,11 @@ export default class Main {
       Main.application.quit();
     }
 
+  }
+
+  private static onMenuItemClick(item: MenuItem){
+    const action = item.label.toLowerCase().replace(/\s/g, '_');
+    this.window?.webContents.send('menu-click', action);
   }
 
 }

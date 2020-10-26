@@ -78,7 +78,6 @@ export default Vue.extend({
     afterUndoOrRedo(){
       // need to fix reactivity on `MyEdge` instances (Temporary solution)
       if(this.selectedObject?.what == ObjectType.Edge){
-        console.log('reactivity')
         const object = this.selectedObject;
         // @ts-ignore
         this.selectedObject = {};
