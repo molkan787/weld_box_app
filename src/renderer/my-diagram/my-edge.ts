@@ -1,19 +1,18 @@
-import Vue from "vue";
 import { Edge, EdgeConnection } from "../diagram-core";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
-import { ObjectProps } from "./interfaces/object-props";
-import { ObjectType } from "./interfaces/object-type";
+import { ObjectProps } from "../interfaces/ObjectProps";
+import { ObjectType } from "../interfaces/ObjectType";
 
 export class MyEdge extends Edge implements ObjectProps{
 
   // Internal props
-  private vm?: Vue;
-  private propsArchiver: PropsChangeArchiver;
+  // private vm?: Vue;
+  public readonly propsArchiver: PropsChangeArchiver;
 
   // Business props
   public readonly what: ObjectType = ObjectType.Edge;
   public name: string = '';
-  public readonly properties = {
+  public properties = {
     priority: 0,
     condition: '',
     type: EdgeType.REGULAR

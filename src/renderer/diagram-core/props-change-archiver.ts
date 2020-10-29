@@ -7,7 +7,7 @@ import { clone, patchObject } from "./utils";
 
 export class PropsChangeArchiver{
 
-  private data;
+  private data: any;
   private actions: any  = {};
   private debouncers: any = {};
   private instance: any;
@@ -116,7 +116,7 @@ export class PropsChangeArchiver{
   }
 
   private pushAction(action: Action){
-    this.store.actionsArchiver.push(action);
+    this.store?.actionsArchiver.push(action);
   }
 
   private get store(): DiagramStore{

@@ -17,7 +17,6 @@
 
 <script>
 import { BasicNode } from '../my-diagram/basic-node';
-import { ObjectType } from '../my-diagram/interfaces/object-type';
 import { State } from '../my-diagram/state';
 import StateIcon from './icons/State';
 import TransitionIcon from './icons/Transition';
@@ -26,6 +25,7 @@ import EventIcon from './icons/Event';
 import { MessageNode } from '../my-diagram/MessageNode';
 import { EventNode } from '../my-diagram/EventNode';
 import { MODULES } from '../diagram-core';
+import { ObjectType } from '../interfaces/ObjectType';
 export default {
   components: {
     StateIcon,

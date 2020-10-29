@@ -3,8 +3,8 @@ import { D3Node } from "../diagram-core/types/aliases";
 import StateComponent from '../components/diagram/State.vue';
 import Vue from 'vue';
 import { StatementBlock } from "./statement-block";
-import { ObjectType } from "./interfaces/object-type";
-import { ObjectProps } from "./interfaces/object-props";
+import { ObjectType } from "../interfaces/ObjectType";
+import { ObjectProps } from "../interfaces/ObjectProps";
 import { Position } from "../diagram-core/interfaces/Position";
 import { Size } from "../diagram-core/interfaces/Size";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
@@ -22,6 +22,7 @@ export class State extends Node implements ObjectProps{
     priority: 0,
     decomposition: StateDecomposition.Serial
   };
+  public statementBlocks: StatementBlock[] = [];
 
   constructor(
     position: Position = { x: 0, y: 0 },
@@ -48,8 +49,6 @@ export class State extends Node implements ObjectProps{
     if(this.props.isOpen) return;
     this.showContent = !value;
   }
-
-  public readonly statementBlocks: StatementBlock[] = [];
 
   DOMElementBuilt(node: D3Node){
     const content = node.append('div');

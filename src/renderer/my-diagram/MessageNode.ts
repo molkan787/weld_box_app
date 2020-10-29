@@ -2,9 +2,9 @@ import { NodeOptions } from "../diagram-core";
 import { Position } from "../diagram-core/interfaces/Position";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 import { BasicNode } from "./basic-node";
-import { MessageDataItem } from "./interfaces/MessageDataItem";
-import { ObjectProps } from "./interfaces/object-props";
-import { ObjectType } from "./interfaces/object-type";
+import { MessageDataItem } from "../interfaces/MessageDataItem";
+import { ObjectProps } from "../interfaces/ObjectProps";
+import { ObjectType } from "../interfaces/ObjectType";
 
 export class MessageNode extends BasicNode implements ObjectProps{
 
@@ -14,12 +14,12 @@ export class MessageNode extends BasicNode implements ObjectProps{
   // Business props
   public readonly what: ObjectType = ObjectType.Message;
 
-  public readonly properties = {
+  public properties = {
     queue_length: 1,
     type: MessageType.SINGLE_THREAD
   };
 
-  public readonly body: MessageDataItem[] = [];
+  public body: MessageDataItem[] = [];
 
   constructor(position: Position, options?: NodeOptions){
     super(position, options);

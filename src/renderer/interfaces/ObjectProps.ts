@@ -1,4 +1,4 @@
-import { ObjectType } from "./object-type";
+import { ObjectType } from "./ObjectType";
 
 export interface ObjectProps{
   id: number;

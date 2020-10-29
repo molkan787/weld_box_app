@@ -23,8 +23,8 @@ import Vue from 'vue';
 import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
-import { ObjectProps } from '../my-diagram/interfaces/object-props';
-import { ObjectType } from '../my-diagram/interfaces/object-type';
+import { ObjectProps } from '../interfaces/ObjectProps';
+import { ObjectType } from '../interfaces/ObjectType';
 import { Component } from '../diagram-core/components/component';
 import { Node } from '../diagram-core';
 import { State } from '../my-diagram/state';
@@ -104,7 +104,15 @@ export default Vue.extend({
     .on('redo', () => {
       this.diagram?.redo();
       this.afterUndoOrRedo();
-    });
+    })
+    .on('copy', () => {
+      this.diagram?.copySelected();
+    })
+    .on('paste', () => {
+      this.diagram?.pasteClipboard();
+    }).on('cut', () => {
+      this.diagram?.cutSelected();
+    })
 
   }
 })

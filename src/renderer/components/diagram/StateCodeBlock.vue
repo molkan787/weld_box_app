@@ -12,7 +12,7 @@
         <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
           <div class="sb-header">
             <input v-model="sb.name" type="text">
-            <button @click="removeBlock(sb)" title="Remove">
+            <button @click="removeBlock(index)" title="Remove">
               <CloseIcon :size="9" />
             </button>
           </div>
@@ -61,10 +61,8 @@ export default {
     }
   },
   methods: {
-    removeBlock(sb){
-      const arr = this.state.statementBlocks;
-      const index = arr.indexOf(sb);
-      index >= 0 && arr.splice(index, 1);
+    removeBlock(index){
+      index >= 0 && this.state.statementBlocks.splice(index, 1);
     },
     addBlockClick(){
       const arr = this.state.statementBlocks;

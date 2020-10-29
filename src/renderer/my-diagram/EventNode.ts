@@ -2,8 +2,8 @@ import { NodeOptions } from "../diagram-core";
 import { Position } from "../diagram-core/interfaces/Position";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 import { BasicNode } from "./basic-node";
-import { ObjectProps } from "./interfaces/object-props";
-import { ObjectType } from "./interfaces/object-type";
+import { ObjectProps } from "../interfaces/ObjectProps";
+import { ObjectType } from "../interfaces/ObjectType";
 
 export class EventNode extends BasicNode implements ObjectProps{
 
@@ -12,7 +12,7 @@ export class EventNode extends BasicNode implements ObjectProps{
 
   // Business props
   public readonly what: ObjectType = ObjectType.Event;
-  public readonly properties = {
+  public properties = {
     clear: EventClear.MANUAL,
     type: EventType.SINGLE_THREAD,
   };

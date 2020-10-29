@@ -199,6 +199,25 @@ export class Diagram{
     })
   }
 
+  public pushNodeAddedAction(node: Node){
+    this.store.actionsArchiver.push({
+      undo: [
+        {
+          events: [EVENTS.DIAGRAM_DELETE_COMPONENT],
+          eventsPayload: { data: node },
+          do: () => 0
+        }
+      ],
+      redo: [
+        {
+          events: [EVENTS.DIAGRAM_RESTORE_COMPONENT],
+          eventsPayload: { data: node },
+          do: this.store.stateSnaper.snapNodeAsRestorer(node)
+        }
+      ]
+    })
+  }
+
   public simulateCanvasMouseMove(event: MouseEvent){
     this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: event });
   }
