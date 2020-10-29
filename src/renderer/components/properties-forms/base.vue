@@ -2,7 +2,7 @@
   <Form>
 
     <FormField label="Object" disabled>
-      <input class="capitalize" type="text" :value="object.what">
+      <input class="capitalize" type="text" :value="what">
     </FormField>
 
     <FormField label="Name">
@@ -26,6 +26,15 @@ export default {
     object: {
       type: Object,
       required: true,
+    }
+  },
+  computed: {
+    what(){
+      if(this.object.isThread){
+        return 'Thread';
+      }else{
+        return this.object.what;
+      }
     }
   }
 }
