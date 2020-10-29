@@ -2,7 +2,7 @@
   <Panel text="Properties" ref="panel">
     <div class="properties-panel">
       <template v-if="object">
-        <StateForm v-if="object.what == 'state'" :object="object" />
+        <StateForm v-if="object.what == 'state' || object.what == 'thread'" :object="object" />
         <MessageForm v-else-if="object.what == 'message'" :object="object" />
         <EventForm v-else-if="object.what == 'event'" :object="object" />
         <EdgeForm v-else-if="object.what == 'edge'" :object="object" />

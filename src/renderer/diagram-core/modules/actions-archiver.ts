@@ -42,11 +42,16 @@ export class ActionsArchiver extends DiagramModule{
     this.pointer++;
   }
 
-  private current(): Action | null{
+  private current(removeAction?: boolean): Action | null{
     if(this.pointer == -1){
       return null;
     }
-    return this.stack[this.pointer--];
+    const action = this.stack[this.pointer];
+    if(removeAction){
+      this.stack.splice(this.pointer, 1);
+    }
+    this.pointer--;
+    return action;
   }
 
   private next(): Action | null{
@@ -57,9 +62,9 @@ export class ActionsArchiver extends DiagramModule{
     return this.stack[this.pointer];
   }
 
-  public undo(){
+  public undo(removeAction?: boolean){
     this.activate();
-    const action = this.current();
+    const action = this.current(removeAction);
     if(action){
       const tasks = action.undo;
       for(const t of tasks){

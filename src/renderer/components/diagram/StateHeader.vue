@@ -2,7 +2,9 @@
   <div class="state-header" @click="onClick()">
     <span class="title">
       {{ state.name }}
-      <div v-if="state.isSubTask" class="label">SUBTASK</div>
+      <div v-if="state.isSubTask" class="label">
+        {{ state.isThread ? 'THREAD' : 'SUBTASK' }}
+      </div>
     </span>
     <StateIndicators :state="state" />
   </div>

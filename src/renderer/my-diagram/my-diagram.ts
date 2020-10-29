@@ -1,4 +1,4 @@
-import { Diagram, Node } from "../diagram-core";
+import { Diagram, EVENTS, Node } from "../diagram-core";
 import { MyEdge } from "./my-edge";
 import { State } from "./state";
 import { Side } from "../diagram-core/helpers/geometry";
@@ -6,7 +6,9 @@ import { ObjectCopier } from "../modules/object-copier";
 import { MyObject } from "../interfaces/MyObject";
 import { ObjectCrafter } from "../modules/object-crafter";
 import { ObjectCopyResult } from "../interfaces/ObjectCopyResult";
-import { ComponentType } from "../diagram-core/components/component";
+import { Component, ComponentType } from "../diagram-core/components/component";
+import { DiagramEvent } from "../diagram-core/interfaces/DiagramEvent";
+import { ObjectType } from "../interfaces/ObjectType";
 
 export class MyDiagram extends Diagram{
 
@@ -22,6 +24,7 @@ export class MyDiagram extends Diagram{
       nodeHeaderHeight: 30,
       edgeFactory: (s, t) => new MyEdge(s, t)
     });
+    this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
   }
 
   buildTestDiagram(){
@@ -35,6 +38,8 @@ export class MyDiagram extends Diagram{
 
     const edge1 = new MyEdge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
     this.addEdge(edge1);
+
+    node1.convertToThread();
 
   }
 
@@ -81,6 +86,34 @@ export class MyDiagram extends Diagram{
 
   private copyComponent(component: MyObject){
     return this.objectCopier.copy(component);
+  }
+
+
+  // ----------------------------------------------
+
+  private onNodeDropped(e: DiagramEvent) {
+    const node = <Node>e.node;
+    const parent = node.parent;
+
+    // if the node was dropped on the canvas we need to perform changes
+    if(node != this.currentNode && !parent){
+
+      const object = <MyObject><Component>node;
+      if(!this.currentNode && (object.what == ObjectType.State || object.what == ObjectType.Thread)){
+        // if there isn't an open node (we are viewing the root diagram)
+        // and the dropped object is a State, we convert it to a Thread
+        const state = <State>object;
+        if(state.isThread) return; // if already is a Thread stop here
+        state.convertToThread();
+        state.size = { width: 400, height: 300, radius: 0 };
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: e })
+      }else{
+        // in all other case just cancel the performed action
+        setTimeout(() => this.undo(true), 50);
+        setTimeout(() => this.deselectAll(), 10);
+      }
+
+    }
   }
 
 }

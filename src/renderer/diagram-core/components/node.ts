@@ -64,6 +64,11 @@ export class Node extends Component{
     this.setShowContent(value);
   }
 
+  /**
+   * Shows or hides Node's content by passing a boolean value
+   * @param {boolean} value `true` to show the content, `false` to hide it
+   * @param {boolean} simulated set to `true` to bypass Undo/Redo system
+   */
   public setShowContent(value: boolean, simulated?: boolean){
     const previous = this._showContent;
     this._showContent = value;

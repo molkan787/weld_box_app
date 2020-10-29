@@ -115,7 +115,7 @@ export class Diagram{
     this.zoomController.transform(this.chart, zoom || zoomIdentity);
   }
 
-  public get currentNode(): Node{
+  public get currentNode(): Node | null{
     return this.modules?.subChart?.currentNode;
   }
 
@@ -135,8 +135,8 @@ export class Diagram{
     }
   }
 
-  public undo(){
-    this.store.actionsArchiver.undo();
+  public undo(removeAction?: boolean){
+    this.store.actionsArchiver.undo(removeAction);
   }
 
   public redo(){

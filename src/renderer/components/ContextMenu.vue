@@ -1,19 +1,21 @@
 <template>
   <ContextMenu ref="menu">
+    <template v-if="!node.isThread">
       <li @click.prevent="node.isSubTask = !node.isSubTask" :disabled="isOpen">
           Sub-task <CheckedIcon class="checked-icon" v-if="node.isSubTask" />
       </li>
       <li class="separator"></li>
-      <li @click="props.decomposition = StDe.Parallel">
-        Parallel <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Parallel" />
-      </li>
-      <li @click="props.decomposition = StDe.Serial">
-        Serial <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Serial" />
-      </li>
-      <li class="separator"></li>
-      <li @click="props.historic = !props.historic">
-        Historic <CheckedIcon class="checked-icon" v-if="props.historic" />
-      </li>
+    </template>
+    <li @click="props.decomposition = StDe.Parallel">
+      Parallel <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Parallel" />
+    </li>
+    <li @click="props.decomposition = StDe.Serial">
+      Serial <CheckedIcon class="checked-icon" v-if="props.decomposition === StDe.Serial" />
+    </li>
+    <li class="separator"></li>
+    <li @click="props.historic = !props.historic">
+      Historic <CheckedIcon class="checked-icon" v-if="props.historic" />
+    </li>
   </ContextMenu>
 </template>
 
@@ -21,6 +23,7 @@
 import ContextMenu from 'vue-context-menu'
 import CheckedIcon from './icons/Checked.vue';
 import { StateDecomposition } from '../my-diagram/state';
+import { ObjectType } from '../interfaces/ObjectType';
 export default {
   components: {
     CheckedIcon,
@@ -39,9 +42,11 @@ export default {
     }
   },
   methods: {
-    handle(e){
-      this.node = e.node;
-      this.$refs.menu.open(e.sourceEvent);
+    handle({ node, sourceEvent }){
+      if(node.what == ObjectType.State || node.what == ObjectType.Thread){
+        this.node = node;
+        this.$refs.menu.open(sourceEvent);
+      }
     },
     onClick(){
 

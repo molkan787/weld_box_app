@@ -197,7 +197,6 @@ export class Renderer{
           do: () => node.setShowContent(isContentVisible, true)
         }]
       })
-      console.log(this.store.actionsArchiver)
     }
     if(node.showContent){
       this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });

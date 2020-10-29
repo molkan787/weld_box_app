@@ -23,6 +23,7 @@ export class State extends Node implements ObjectProps{
     decomposition: StateDecomposition.Serial
   };
   public statementBlocks: StatementBlock[] = [];
+  private _isThread: boolean = false;
 
   constructor(
     position: Position = { x: 0, y: 0 },
@@ -48,6 +49,23 @@ export class State extends Node implements ObjectProps{
   public set isSubTask(value: boolean){
     if(this.props.isOpen) return;
     this.showContent = !value;
+  }
+
+  public get isThread(){
+    return this._isThread;
+  }
+
+  /**
+   * Converts this State instance to a Thread.
+   * Basicly it hide State's content and sets `isThread` flag to `true`
+   */
+  public convertToThread(){
+    this._isThread = true;
+    this.setShowContent(false, true);
+    this.what = ObjectType.Thread;
+    this.propsArchiver.lock();
+    this.name = 'Thread ' + this.id;
+    this.propsArchiver.unlock();
   }
 
   DOMElementBuilt(node: D3Node){

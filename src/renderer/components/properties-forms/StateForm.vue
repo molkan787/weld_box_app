@@ -1,7 +1,7 @@
 <template>
   <BaseForm :object="object">
 
-    <FormField label="Priority">
+    <FormField v-if="needsPriority" label="Priority">
       <input type="number" v-model="props.priority">
     </FormField>
 
@@ -20,6 +20,7 @@
 import BaseForm from './base';
 import FormField from '../skeletons/FormField';
 import RadioButtonGroup from '../skeletons/RadioButtonGroup';
+import { StateDecomposition } from '../../my-diagram/state';
 export default {
   components: {
     BaseForm,
