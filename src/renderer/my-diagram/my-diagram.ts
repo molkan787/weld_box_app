@@ -47,7 +47,7 @@ export class MyDiagram extends Diagram{
     const selected = this.getSelectedComponent();
     if(!selected) return;
     this.clipboard = this.copyComponent(<MyObject>selected);
-    this.deselectAll();
+    setTimeout(() => this.deselectAll(), 1);
     console.log(this.clipboard);
   }
 
