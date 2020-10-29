@@ -63,21 +63,37 @@ export class MyDiagram extends Diagram{
     const { nodes, edges } = this.objectCrafter.craft(this.clipboard);
     const node = nodes[0];
     node.position = this.store.transformPoint({ x: 50, y: 50 });
-    this.putNode(node);
-    if(edges){
-      for(let edge of edges){
-        this.addEdge(edge);
+    if(this.putNode(node)){
+      if(edges){
+        for(let edge of edges){
+          this.addEdge(edge);
+        }
       }
     }
   }
 
   private putNode(node: Node){
-    const selected = this.getSelectedComponent();
-    if(selected && selected.type === ComponentType.Node){
-      (<Node>selected).addChild(node);
+    const selected = <MyObject>this.getSelectedComponent();
+    if(selected && selected.what == ObjectType.State){
+      const state = <State>selected;
+      if(state.showContent){
+        state.addChild(node);
+      }
     }
+    if(node.parent == null){
+      if(this.currentNode){
+        this.currentNode.addChild(node);
+      }else if(!((<State>node).isThread)){
+        return false;
+      }
+    }
+    if(node.parent){
+      node.position = { x: 50, y: 50 };
+    }
+
     this.addNode(node);
     this.pushNodeAddedAction(node);
+    return true;
   }
 
   private getSelectedComponent(){

@@ -1,7 +1,7 @@
 <template>
   <div class="state">
     <StateHeader :state="state" />
-    <StateCodeBlock :state="state" />
+    <StateCodeBlock v-if="showCodeBlocks" :state="state" />
   </div>
 </template>
 
@@ -17,6 +17,16 @@ export default {
     state: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    showCodeBlocks(){
+      const s = this.state;
+      if(s.isSubTask){
+        return s.props.isOpen;
+      }else{
+        return true;
+      }
     }
   },
   methods: {
