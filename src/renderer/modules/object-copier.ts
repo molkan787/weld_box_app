@@ -31,9 +31,9 @@ export class ObjectCopier{
   }
 
   public copyObject(object: MyObject, edgesBucket: EdgesBucket): ObjectCloneData{
-    if(object.what === ObjectType.State){
+    if(object.what === ObjectType.State || object.what === ObjectType.Thread){
       return {
-        what: ObjectType.State,
+        what: object.what,
         data: this.copyState(<State>object, edgesBucket),
       };
     }else if(object.what === ObjectType.Event){
@@ -54,10 +54,6 @@ export class ObjectCopier{
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
     const { id, parent, name, properties, statementBlocks, position, size, showContent, edges } = state;
 
-    // const children = <ObjectCloneData[]>state.children
-    //                     .map( child => this.copy(<MyObject><unknown>child, edgesBucket) )
-    //                     .filter( cd => !!cd );
-
     const data: StateCloneData = {
       ref: id,
       parentRef: parent?.id,
@@ -66,7 +62,6 @@ export class ObjectCopier{
       statementBlocks: cloneArray(statementBlocks),
       position: cloneObject(position),
       size: cloneObject(size),
-      // children: children,
       showContent: showContent
     }
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge))

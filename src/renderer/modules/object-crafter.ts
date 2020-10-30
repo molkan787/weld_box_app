@@ -39,8 +39,8 @@ export class ObjectCrafter{
   public craftNode(cloneData: ObjectCloneData): NodeCraftResult{
     const { what, data } = cloneData;
     let node: Node;
-    if(what == ObjectType.State){
-      node = this.craftState(<StateCloneData>data);
+    if(what == ObjectType.State || what == ObjectType.Thread){
+      node = this.craftState(<StateCloneData>data, what);
     }else if(cloneData.what == ObjectType.Event){
       node = this.craftEventNode(<EventCloneData>data);
     }else if(cloneData.what == ObjectType.Message){
@@ -54,13 +54,16 @@ export class ObjectCrafter{
     };
   }
 
-  public craftState(data: StateCloneData): State{
-    const { name, properties, statementBlocks, position, size} = data;
+  public craftState(data: StateCloneData, what: ObjectType): State{
+    const { name, properties, statementBlocks, position, size, showContent } = data;
     const state = new State(cloneObject(position), cloneObject(size));
-    state.name = name;
     state.properties = cloneObject(properties);
     state.statementBlocks = cloneArray(statementBlocks);
-    state.showContent = true;
+    state.setShowContent(showContent, true);
+    if(what == ObjectType.Thread){
+      state.convertToThread();
+    }
+    state.name = name;
     return state;
   }
 

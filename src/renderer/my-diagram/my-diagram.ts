@@ -6,9 +6,10 @@ import { ObjectCopier } from "../modules/object-copier";
 import { MyObject } from "../interfaces/MyObject";
 import { ObjectCrafter } from "../modules/object-crafter";
 import { ObjectCopyResult } from "../interfaces/ObjectCopyResult";
-import { Component, ComponentType } from "../diagram-core/components/component";
+import { Component } from "../diagram-core/components/component";
 import { DiagramEvent } from "../diagram-core/interfaces/DiagramEvent";
 import { ObjectType } from "../interfaces/ObjectType";
+import { DiagramProject } from "../modules/diagram-project";
 
 export class MyDiagram extends Diagram{
 
@@ -43,6 +44,11 @@ export class MyDiagram extends Diagram{
 
   }
 
+  public export(){
+    const dp = new DiagramProject();
+    console.log(dp.export(this));
+  }
+
   public copySelected(){
     const selected = this.getSelectedComponent();
     if(!selected) return;
@@ -70,25 +76,40 @@ export class MyDiagram extends Diagram{
         }
       }
     }
+    const len = nodes.length;
+    for(let i = len - 1; i >= 0; i--){
+      const n = nodes[i];
+      if(!n.showContent){
+        this.store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node: n })
+      }
+    }
   }
 
   private putNode(node: Node){
     const selected = <MyObject>this.getSelectedComponent();
-    if(selected && selected.what == ObjectType.State){
-      const state = <State>selected;
-      if(state.showContent){
-        state.addChild(node);
-      }
-    }
-    if(node.parent == null){
+    const object = <MyObject><any>node;
+
+    if(object.what == ObjectType.Thread){
       if(this.currentNode){
-        this.currentNode.addChild(node);
-      }else if(!((<State>node).isThread)){
-        return false;
+        return;
       }
-    }
-    if(node.parent){
-      node.position = { x: 50, y: 50 };
+    }else{
+      if(selected && selected.what == ObjectType.State){
+        const state = <State>selected;
+        if(state.showContent){
+          state.addChild(node);
+        }
+      }
+      if(node.parent == null){
+        if(this.currentNode){
+          this.currentNode.addChild(node);
+        }else if(!((<State>node).isThread)){
+          return false;
+        }
+      }
+      if(node.parent){
+        node.position = { x: 50, y: 50 };
+      }
     }
 
     this.addNode(node);
