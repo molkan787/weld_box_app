@@ -16,6 +16,58 @@ html, body{
   backdrop-filter: blur(33px);
 }
 
+.btn{
+  @bg: #3B3D44;
+  @bg-primary: #23BB72;
+  border: none;
+  border-radius: 6px;
+  background-color: @bg;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.1s;
+  &:focus{
+    outline: 1px solid #23BB72;
+  }
+  &:hover{
+    background-color: lighten(@bg, 10%);
+  }
+  &:active{
+    opacity: 0.6;
+  }
+  &.primary{
+    background-color: @bg-primary;
+    &:hover{
+      background-color: lighten(@bg-primary, 10%);
+    }
+  }
+}
+
+.vm--overlay{
+  backdrop-filter: blur(8px);
+}
+.vm--modal{
+  background-color: #2C2D33 !important;
+  border-radius: 12px !important;
+  color: white !important;
+  box-shadow: none !important;
+  @pad: 18px;
+  & > .header{
+    font-size: 17px;
+    padding: @pad;
+    border-bottom: 1px solid #141519;
+  }
+  & > .body{
+    padding: @pad;
+    font-size: 16px;
+  }
+  & > .buttons{
+    padding: @pad;
+    text-align: right;
+  }
+}
+
 ::-webkit-scrollbar { width: 8px; height: 3px; }
 ::-webkit-scrollbar-button { background-color: #666; display: none; }
 ::-webkit-scrollbar-track {  background-color: #646464; border-radius: 4px; }

@@ -22,7 +22,7 @@ import { Component, ComponentType } from './components/component';
 
 /**
  * `Diagram`
- * The main tasks it do is initiating modules and injecting them a `Store` instance for a shared state and events stream
+ * Entry class that wraps and control all sub-modules of the Diagram
  */
 export class Diagram{
 
@@ -239,6 +239,10 @@ export class Diagram{
   public on(eventType: string, handler: (e: DiagramEvent) => void){
     this.store.on(eventType, handler);
     return this;
+  }
+
+  public getModule(name: string): any{
+    return this.modules[name];
   }
 
 }

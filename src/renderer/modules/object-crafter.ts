@@ -6,19 +6,17 @@ import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
-import { NodeCraftResult, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
-
-declare type NodesRef = Map<number, Node>;
+import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
 
 export class ObjectCrafter{
 
-  public craft(copyResult: ObjectCopyResult): ObjectCraftResult{
+  public craft(copyResult: ObjectCopyResult, useRefsAsIds?: boolean): ObjectCraftResult{
     const { objects, edges } = copyResult;
-    const refs: NodesRef = new Map();
+    const refs: NodesRefs = new Map();
     const nodes: Node[] = [];
     for(let object of objects){
       const data = <NodeCloneData>object.data;
-      const { node, ref } = this.craftNode(object);
+      const { node, ref } = this.craftNode(object, useRefsAsIds);
       nodes.push(node);
       if(typeof ref == 'number'){
         refs.set(ref, node);
@@ -32,11 +30,12 @@ export class ObjectCrafter{
     }
     return {
       nodes,
-      edges: this.craftEdges(edges, refs)
+      nodesRefs: refs,
+      edges: this.craftEdges(edges, refs, useRefsAsIds)
     }
   }
 
-  public craftNode(cloneData: ObjectCloneData): NodeCraftResult{
+  public craftNode(cloneData: ObjectCloneData, useRefsAsIds?: boolean): NodeCraftResult{
     const { what, data } = cloneData;
     let node: Node;
     if(what == ObjectType.State || what == ObjectType.Thread){
@@ -47,6 +46,9 @@ export class ObjectCrafter{
       node = this.craftMessageNode(<MessageCloneData>data);
     }else{
       throw new Error('Unsupported object type, (to craft an edge, call craftEdge() directly)');
+    }
+    if(useRefsAsIds){
+      node._setId(data.ref);
     }
     return {
       node,
@@ -87,20 +89,23 @@ export class ObjectCrafter{
     return node;
   }
 
-  public craftEdges(edges: EdgeCloneData[], nodesRef: NodesRef): MyEdge[]{
-    return <MyEdge[]>edges.map(e => this.craftEdge(e, nodesRef)).filter(e => !!e);
+  public craftEdges(edges: EdgeCloneData[], nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge[]{
+    return <MyEdge[]>edges.map(e => this.craftEdge(e, nodesRef, useRefsAsIds)).filter(e => !!e);
   }
 
-  public craftEdge(data: EdgeCloneData, nodesRef: NodesRef): MyEdge | null{
-    const { name, properties, shapePoints, source, target } = data;
-    const sourceEC = this.craftEdgeConnection(source);
-    const targetEC = this.craftEdgeConnection(target);
+  public craftEdge(data: EdgeCloneData, nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge | null{
+    const { ref, name, properties, shapePoints, source, target } = data;
+    const sourceEC = this.craftEdgeConnection(source, useRefsAsIds);
+    const targetEC = this.craftEdgeConnection(target, useRefsAsIds);
     const sourceNode = nodesRef.get(source.nodeRef);
     const targetNode = nodesRef.get(target.nodeRef);
     if((source.nodeRef && !sourceNode) || target.nodeRef && !targetNode) return null;
     sourceNode?.addEdgeConnection(sourceEC);
     targetNode?.addEdgeConnection(targetEC);
     const edge =  new MyEdge(sourceEC, targetEC);
+    if(useRefsAsIds){
+      edge._setId(ref);
+    }
     edge.propsArchiver.lock();
     edge.name = name;
     edge.properties = cloneObject(properties);
@@ -109,11 +114,14 @@ export class ObjectCrafter{
     return edge;
   }
 
-  private craftEdgeConnection(data: EdgeConnectionCloneData): EdgeConnection{
-    const { position, offset, attachType, nodeWall } = data;
+  private craftEdgeConnection(data: EdgeConnectionCloneData, useRefsAsIds?: boolean): EdgeConnection{
+    const { ref, position, offset, attachType, nodeWall } = data;
     const ec = new EdgeConnection(attachType, nodeWall);
     ec.position = cloneObject(position);
     ec.offset = cloneObject(offset);
+    if(useRefsAsIds){
+      ec._setId(ref);
+    }
     return ec;
   }
 

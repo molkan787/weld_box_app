@@ -1,7 +1,6 @@
 import { Diagram, EVENTS, Node } from "../diagram-core";
 import { MyEdge } from "./my-edge";
 import { State } from "./state";
-import { Side } from "../diagram-core/helpers/geometry";
 import { ObjectCopier } from "../modules/object-copier";
 import { MyObject } from "../interfaces/MyObject";
 import { ObjectCrafter } from "../modules/object-crafter";
@@ -9,7 +8,6 @@ import { ObjectCopyResult } from "../interfaces/ObjectCopyResult";
 import { Component } from "../diagram-core/components/component";
 import { DiagramEvent } from "../diagram-core/interfaces/DiagramEvent";
 import { ObjectType } from "../interfaces/ObjectType";
-import { DiagramProject } from "../modules/diagram-project";
 
 export class MyDiagram extends Diagram{
 
@@ -28,25 +26,13 @@ export class MyDiagram extends Diagram{
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
   }
 
-  buildTestDiagram(){
-    const node1 = new State({ x: 140, y: 60 }, { width:750, height: 480, radius: 0 }, { name: 'State 1', showContent: true });
-    const node2 = new State({ x: 20, y: 150 }, { width:200, height: 150, radius: 0 }, { name: 'Child 1' });
-    const node3 = new State({ x: 450, y: 180 }, { width:200, height: 150, radius: 0 }, { name: 'Child 2' });
-    node1.addChild(node2);
-    node1.addChild(node3);
+  buildInitialDiagram(){
+    const state = new State({ x: 140, y: 60 }, { width:750, height: 480, radius: 0 }, { name: 'Thread 1' });
 
-    this.addNode(node1);
+    this.addNode(state);
 
-    const edge1 = new MyEdge(node2.createEdgeConnection(Side.Right), node3.createEdgeConnection(Side.Left));
-    this.addEdge(edge1);
+    state.convertToThread();
 
-    node1.convertToThread();
-
-  }
-
-  public export(){
-    const dp = new DiagramProject();
-    console.log(dp.export(this));
   }
 
   public copySelected(){

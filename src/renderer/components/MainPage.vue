@@ -1,13 +1,13 @@
 <template>
   <div class="main-page">
     <TopBar />
-    <div class="middle">
+    <div :class="{ hidden: !diagram }" class="middle">
       <SideBar ref="sideBar" :diagram="diagram" />
       <div ref="canvas" id="canvas"></div>
     </div>
     <StatusBar />
-    <Breadcrumb @item-click="breadcrumbItemClick" :nodes="chartsPathNodes" />
-    <PropertiesPanel ref="propsPanel" :object="selectedObject" />
+    <Breadcrumb v-if="diagram" @item-click="breadcrumbItemClick" :nodes="chartsPathNodes" />
+    <PropertiesPanel v-if="diagram" ref="propsPanel" :object="selectedObject" />
     <ContextMenu ref="menu" />
   </div>
 </template>
@@ -20,7 +20,6 @@ import ContextMenu from './ContextMenu.vue';
 import PropertiesPanel from './PropertiesPanel.vue';
 import Breadcrumb from './Breadcrumb.vue';
 import Vue from 'vue';
-import { MyDiagram } from '../my-diagram/my-diagram';
 import { EVENTS } from '../diagram-core/constants';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
 import { ObjectProps } from '../interfaces/ObjectProps';
@@ -30,10 +29,11 @@ import { Node } from '../diagram-core';
 import { State } from '../my-diagram/state';
 import { MyEdge } from '../my-diagram/my-edge';
 import { Menu } from '../modules/menu';
+import { mapState } from 'vuex';
 interface MyData {
-  diagram: MyDiagram | null,
   selectedObject: Component & ObjectProps | null,
-  chartsPathNodes: (Node | null)[]
+  chartsPathNodes: (Node | null)[],
+  project: any,
 }
 export default Vue.extend({
   components: {
@@ -44,10 +44,16 @@ export default Vue.extend({
     PropertiesPanel,
     Breadcrumb
   },
+  computed: mapState(['diagram']),
+  watch: {
+    diagram(val){
+      val && this.attachEventsHandlers();
+    }
+  },
   data: (): MyData => ({
-    diagram: null,
     selectedObject: null,
     chartsPathNodes: [null],
+    project: null,
   }),
   methods: {
     breadcrumbItemClick(node: Node){
@@ -59,9 +65,6 @@ export default Vue.extend({
       }else{
         this.selectedObject = <MyEdge>e.edge || null;
       }
-      // if(this.selectedObject && !e.simulated){
-      //   (<any>this.$refs.propsPanel).show();
-      // }
     },
     afterUndoOrRedo(){
       // need to fix reactivity on `MyEdge` instances (Temporary solution)
@@ -71,27 +74,26 @@ export default Vue.extend({
         this.selectedObject = {};
         this.$nextTick(() => this.selectedObject = object);
       }
+    },
+    attachEventsHandlers(){
+      // @ts-ignore
+      this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
+
+      this.diagram.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
+      this.diagram.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
+
+      this.diagram.on(EVENTS.DIAGRAM_CHARTS_PATH_CHANGED, (e: DiagramEvent) => this.chartsPathNodes = e.data);
+
+      this.diagram.on(EVENTS.NODE_INITIAL_DROP, (e: DiagramEvent) => {
+        const object = <ObjectProps><unknown>e.node;
+        if(object.what == ObjectType.Message || object.what == ObjectType.Event){
+          e.node?.select();
+          (<any>this.$refs.propsPanel).show();
+        }
+      });
     }
   },
   mounted(){
-    this.diagram = new MyDiagram('#canvas');
-    this.diagram.buildTestDiagram();
-
-    // @ts-ignore
-    this.diagram.on(EVENTS.NODE_CONTEXT_MENU, (e: DiagramEvent) => this.$refs.menu.handle(e))
-
-    this.diagram.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
-    this.diagram.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => this.handleObjectSelected(e));
-
-    this.diagram.on(EVENTS.DIAGRAM_CHARTS_PATH_CHANGED, (e: DiagramEvent) => this.chartsPathNodes = e.data);
-
-    this.diagram.on(EVENTS.NODE_INITIAL_DROP, (e: DiagramEvent) => {
-      const object = <ObjectProps><unknown>e.node;
-      if(object.what == ObjectType.Message || object.what == ObjectType.Event){
-        e.node?.select();
-        (<any>this.$refs.propsPanel).show();
-      }
-    });
 
     Menu
     .on('delete', () => {
@@ -110,7 +112,8 @@ export default Vue.extend({
     })
     .on('paste', () => {
       this.diagram?.pasteClipboard();
-    }).on('cut', () => {
+    })
+    .on('cut', () => {
       this.diagram?.cutSelected();
     })
 
@@ -124,12 +127,17 @@ export default Vue.extend({
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: #18191D;
 
   .middle{
     flex: 1;
     display: flex;
     flex-direction: row;
     height: calc(100vh - 70px);
+    &.hidden{
+      pointer-events: none;
+      opacity: 0;
+    }
   }
 
   #canvas{

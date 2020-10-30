@@ -52,11 +52,14 @@ export class ObjectCopier{
   }
 
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
-    const { id, parent, name, properties, statementBlocks, position, size, showContent, edges } = state;
+    const { id, parent, props, name, properties, statementBlocks, position, size, showContent, edges } = state;
 
+    const _props = cloneObject(props);
+    _props.isOpen = false;
     const data: StateCloneData = {
       ref: id,
       parentRef: parent?.id,
+      props: _props,
       name: name,
       properties: cloneObject(properties),
       statementBlocks: cloneArray(statementBlocks),
@@ -98,6 +101,7 @@ export class ObjectCopier{
   public copyEdge(edge: MyEdge): EdgeCloneData{
     const { id, shapePoints, name, properties, source, target } = edge;
     const data: EdgeCloneData = {
+      ref: id,
       originId: id,
       name,
       shapePoints: cloneArray(shapePoints),
@@ -110,8 +114,9 @@ export class ObjectCopier{
 
   private copyEdgeConnection(ec: EdgeConnection): EdgeConnectionCloneData{
     const node = <Node>ec.node;
-    const { position, offset, attachType, nodeWall } = ec;
+    const { id, position, offset, attachType, nodeWall } = ec;
     return {
+      ref: id,
       nodeRef: node.id,
       position: cloneObject(position),
       offset: cloneObject(offset),

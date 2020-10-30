@@ -48,7 +48,8 @@ export default class Main {
 
     const window = new BrowserWindow({
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        enableRemoteModule: true,
       }
     });
     const topbarMenu = new TopBarMenu();

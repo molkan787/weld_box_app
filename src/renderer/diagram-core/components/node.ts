@@ -27,7 +27,7 @@ export class Node extends Component{
 
   public name: string;
 
-  public readonly props: {
+  public props: {
     isOpen: boolean,
     openState: {
       size?: Size,

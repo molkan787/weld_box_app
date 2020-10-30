@@ -17,18 +17,20 @@ export interface ObjectCloneData{
 }
 
 interface CommonCloneDataProps{
+  /** A refference number, in most cases it should be the id of the original object */
+  ref: number;
   name: string;
   properties: any;
 }
 
 export interface NodeCloneData extends CommonCloneDataProps{
-  ref: number;
   position: Position;
   size: Size;
   parentRef?: number;
 }
 
 export interface StateCloneData extends NodeCloneData{
+  props: any;
   statementBlocks: StatementBlock[];
   showContent: boolean;
 }
@@ -47,6 +49,8 @@ export interface EdgeCloneData extends CommonCloneDataProps{
 }
 
 export interface EdgeConnectionCloneData{
+  /** A refference number, in most cases it should be the id of the original object */
+  ref: number;
   position?: Position,
   offset?: Position,
   attachType: AttachType,

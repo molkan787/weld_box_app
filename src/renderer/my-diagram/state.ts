@@ -62,6 +62,7 @@ export class State extends Node implements ObjectProps{
   public convertToThread(){
     this._isThread = true;
     this.setShowContent(false, true);
+    this.what = ObjectType.Thread;
     this.propsArchiver.lock();
     this.name = 'Thread ' + this.id;
     this.propsArchiver.unlock();

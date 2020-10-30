@@ -9,7 +9,7 @@ import { cloneObject } from "../utils";
 
 export class SubChart{
 
-  private readonly zoomTransforms: Map<number, ZoomTransform> = new Map();
+  public readonly zoomTransforms: Map<number, ZoomTransform> = new Map();
   private readonly stack: ChartItem[] = [];
 
   private _currentNode: Node | null = null;

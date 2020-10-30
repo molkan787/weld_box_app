@@ -3,24 +3,35 @@
     <div class="logo">
       <LogoIcon />
     </div>
-    <div class="icon">
+    <div @click="clicked('new')" class="icon">
       <NewProjectIcon />
     </div>
-    <div class="icon">
+    <div @click="clicked('open')" class="icon">
       <OpenProjectIcon />
+    </div>
+    <div @click="clicked('save')" class="icon">
+      <SaveIcon />
     </div>
   </div>
 </template>
 
 <script>
+import { Menu } from '../modules/menu';
 import LogoIcon from './icons/Logo';
 import NewProjectIcon from './icons/NewProject.vue';
 import OpenProjectIcon from './icons/OpenProject.vue';
+import SaveIcon from './icons/Save.vue';
 export default {
   components: {
     LogoIcon,
     NewProjectIcon,
     OpenProjectIcon,
+    SaveIcon
+  },
+  methods: {
+    clicked(name){
+      Menu.emit(name);
+    }
   }
 }
 </script>
