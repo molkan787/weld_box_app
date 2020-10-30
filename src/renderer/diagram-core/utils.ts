@@ -15,6 +15,27 @@ export function cloneObject<T>(obj: T): T{
   return <T>Object.assign({}, obj);
 }
 
+export function cloneNestedObject<T>(obj: T): T{
+  if(typeof obj === 'undefined') return <T><unknown>undefined;
+  const _obj = <any>obj;
+  const clone: any = {};
+  for(let p in _obj){
+    if(_obj.hasOwnProperty(p)){
+      const val = _obj[p];
+      if(typeof val == 'object'){
+        if(val instanceof Array){
+          clone[p] = cloneArray(val);
+        }else{
+          clone[p] = cloneNestedObject(val);
+        }
+      }else{
+        clone[p] = val;
+      }
+    }
+  }
+  return <T>clone;
+}
+
 export function cloneArray<T>(arr: T[]): T[]{
   const narr: T[] = [];
   if(typeof arr[0] == 'object'){

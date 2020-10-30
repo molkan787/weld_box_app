@@ -1,5 +1,5 @@
 import { EdgeConnection, Node } from "../diagram-core";
-import { cloneArray, cloneObject } from "../diagram-core/utils";
+import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
 import { EdgeCloneData, EdgeConnectionCloneData, EventCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
@@ -55,8 +55,9 @@ export class ObjectCrafter{
   }
 
   public craftState(data: StateCloneData, what: ObjectType): State{
-    const { name, properties, statementBlocks, position, size, showContent } = data;
+    const { props, name, properties, statementBlocks, position, size, showContent } = data;
     const state = new State(cloneObject(position), cloneObject(size));
+    state.props = cloneNestedObject(props);
     state.properties = cloneObject(properties);
     state.statementBlocks = cloneArray(statementBlocks);
     state.setShowContent(showContent, true);
