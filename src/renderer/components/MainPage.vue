@@ -1,9 +1,10 @@
 <template>
   <div class="main-page">
     <TopBar />
-    <div :class="{ hidden: !diagram }" class="middle">
-      <SideBar ref="sideBar" :diagram="diagram" />
-      <div ref="canvas" id="canvas"></div>
+    <div class="middle">
+      <SideBar v-show="diagram" ref="sideBar" :diagram="diagram" />
+      <div :class="{ hidden: !diagram }" ref="canvas" id="canvas"></div>
+      <Welcome v-if="!diagram" />
     </div>
     <StatusBar />
     <Breadcrumb v-if="diagram" @item-click="breadcrumbItemClick" :nodes="chartsPathNodes" />
@@ -19,6 +20,7 @@ import StatusBar from './StatusBar.vue';
 import ContextMenu from './ContextMenu.vue';
 import PropertiesPanel from './PropertiesPanel.vue';
 import Breadcrumb from './Breadcrumb.vue';
+import Welcome from './Welcome.vue';
 import Vue from 'vue';
 import { EVENTS } from '../diagram-core/constants';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
@@ -42,7 +44,8 @@ export default Vue.extend({
     StatusBar,
     ContextMenu,
     PropertiesPanel,
-    Breadcrumb
+    Breadcrumb,
+    Welcome
   },
   computed: mapState(['diagram']),
   watch: {
@@ -134,7 +137,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     height: calc(100vh - 70px);
-    &.hidden{
+    .hidden{
       pointer-events: none;
       opacity: 0;
     }

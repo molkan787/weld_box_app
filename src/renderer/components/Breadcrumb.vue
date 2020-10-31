@@ -2,7 +2,7 @@
   <div class="breadcrumb">
     <template v-for="(node, idx) in nodes">
       <div @click="$emit('item-click', node)" :key="'btn-' + ((node && node.id) || 'root')" class="item blured-bg" :class="{ locked: idx == nodes.length - 1 }">
-        {{ node ? node.name : 'Diagram' }}
+        {{ node ? node.name : projectSetting.name }}
       </div>
       <ArrowRightIcon v-if="idx < nodes.length - 1" :key="'arrow' + ((node && node.id) || 'root')" :width="7.5" :height="12" />
     </template>
@@ -11,6 +11,7 @@
 
 <script>
 import ArrowRightIcon from './icons/ArrowRight';
+import { mapState } from 'vuex';
 export default {
   components: {
     ArrowRightIcon
@@ -21,6 +22,7 @@ export default {
       required: true
     }
   },
+  computed: mapState(['projectSetting']),
   data: () => ({
     items: [
       {
