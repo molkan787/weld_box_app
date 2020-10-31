@@ -19,6 +19,7 @@ import { EdgeSelector } from './modules/edge-selector';
 import { ComponentDeleter } from './modules/component-deleter';
 import { EdgeReshaper } from './modules/edge-reshaper';
 import { Component, ComponentType } from './components/component';
+import { ActionsArchiver } from './modules/actions-archiver';
 
 /**
  * `Diagram`
@@ -240,6 +241,11 @@ export class Diagram{
     this.store.on(eventType, handler);
     return this;
   }
+
+  public clearActionsArchiver(){
+    this.store.actionsArchiver.clear();
+  }
+
 
   public getModule(name: string): any{
     return this.modules[name];

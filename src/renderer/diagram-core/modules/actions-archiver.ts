@@ -5,12 +5,19 @@ import { DiagramModule } from "../module";
 
 export class ActionsArchiver extends DiagramModule{
 
-  private readonly stack: Action[] = [];
+  private stack: Action[] = [];
   private pointer: number = -1;
   private grouping: boolean = false;
 
   constructor(readonly store: DiagramStore){
     super(store, MODULES.ACTIONS_ARCHIVER);
+  }
+
+  public clear(){
+    console.log(this.stack);
+    this.pointer = -1;
+    this.stack = [];
+    console.log(this.stack);
   }
 
   public enableGrouping(){
@@ -25,7 +32,6 @@ export class ActionsArchiver extends DiagramModule{
    * Push an action to the stack
    */
   public push(action: Action){
-    // console.log(action)
     this.fillMetaProps(action);
     if(this.grouping){
       const current = this.stack[this.pointer];
@@ -65,6 +71,7 @@ export class ActionsArchiver extends DiagramModule{
   public undo(removeAction?: boolean){
     this.activate();
     const action = this.current(removeAction);
+    console.log(action)
     if(action){
       const tasks = action.undo;
       for(const t of tasks){

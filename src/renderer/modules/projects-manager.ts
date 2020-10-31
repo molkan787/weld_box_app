@@ -55,8 +55,12 @@ class ProjectsManager{
     const { setting, data } = project;
     store.state.projectSetting = setting;
     store.state.diagram = diagram;
-    setTimeout(() => { // required for vue components to react correctly
+
+    setTimeout(() => { // required for vue components to react correctly (temporary solution)
       this.diagramProject.import(diagram, data);
+      setTimeout(() => {
+        diagram.clearActionsArchiver();
+      }, 1000)
     }, 1);
   }
 
