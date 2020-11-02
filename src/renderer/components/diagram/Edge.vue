@@ -13,7 +13,8 @@
     </template>
     <g :transform="`translate(${centerPoint.x}, ${centerPoint.y})`">
       <transition name="fade">
-        <text ref="conditionText" v-if="showConditionText" :data-component-id="edge.id" data-emit-data="condition-text" class="condition">
+        <text ref="conditionText" v-if="showConditionText" :class="{ hidden: !!inputElement }"
+          :data-component-id="edge.id" data-emit-data="condition-text" class="condition">
           {{ condition }}
         </text>
       </transition>
@@ -37,7 +38,7 @@ export default {
   }),
   computed: {
     showConditionText(){
-      return (this.edgeProps.condition || this.edge.showCondition) && !this.inputElement;
+      return this.edgeProps.condition || this.edge.showCondition || this.inputElement;
     },
     edgeProps(){
       return this.edge.properties;
@@ -52,24 +53,35 @@ export default {
       return this.edge.centerPoint;
     }
   },
+  watch: {
+    'edge.store.zoomTransform'(){
+      if(this.inputElement){
+        this.positionInput();
+      }
+    }
+  },
   methods: {
-    showConditionInput(sourceEvent){
-      this.destroyConditionInput();
-      const condition = this.condition;;
-      const { clientX } = sourceEvent;
+    positionInput(){
       const { top, left, width, height } = this.$refs.conditionText.getClientRects()[0];
       const horizontalCenter = left + width / 2;
       const verticalCenter = top + height / 2;
       const zt = this.edge.store.zoomTransform;
       const scale = (zt && zt.k) || 1;
+      this.inputElement.setAttribute('style', `transform:translate(-50%, -50%) scale(${scale});top:${verticalCenter}px;left:${horizontalCenter}px;height:${height}px`);
+    },
+    showConditionInput(sourceEvent){
+      this.destroyConditionInput();
+      const condition = this.condition;;
+      const { clientX } = sourceEvent;
+      const { left, width } = this.$refs.conditionText.getClientRects()[0];
       const input = document.createElement('div');
       input.classList.add('condition-input');
-      input.setAttribute('style', `transform:translate(-50%, -50%) scale(${scale});top:${verticalCenter}px;left:${horizontalCenter}px;height:${height}px`);
       input.setAttribute('auto-focus', true);
       input.setAttribute('contenteditable', true);
       input.innerText = condition;
       document.body.appendChild(input);
       this.inputElement = input;
+      this.positionInput();
       input.onblur = () => this.hideConditionInput();
       const cursorPos = Math.round(((clientX - left) / width) * condition.length);
       setTimeout(() => {
@@ -128,6 +140,9 @@ export default {
     stroke-width: 0;
     fill: white;
     font-size: 14px;
+    &.hidden{
+      opacity: 0;
+    }
   }
 }
 .fade-enter-active, .fade-leave-active {
