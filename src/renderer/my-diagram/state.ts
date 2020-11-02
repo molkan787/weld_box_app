@@ -70,6 +70,7 @@ export class State extends Node implements ObjectProps{
 
   DOMElementBuilt(node: D3Node){
     const content = node.append('div');
+    this.vm?.$destroy();
 
     this.vm = new Vue({
       data: { state: this },

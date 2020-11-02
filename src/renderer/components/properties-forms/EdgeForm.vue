@@ -2,7 +2,7 @@
   <BaseForm :object="object">
 
     <FormField label="Priority">
-      <input v-model="object.properties.priority" type="number">
+      <input v-model="object.properties.priority" type="number" min="0" max="99">
     </FormField>
 
     <FormField label="Condition">

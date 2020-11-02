@@ -1,4 +1,3 @@
-import { ZoomTransform } from "d3";
 import { ObjectCopyResult } from "./ObjectCopyResult";
 
 export interface DiagramExportData{

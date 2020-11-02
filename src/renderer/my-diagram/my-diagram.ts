@@ -1,5 +1,5 @@
 import { Diagram, EVENTS, Node } from "../diagram-core";
-import { MyEdge } from "./my-edge";
+import { EdgeType, MyEdge } from "./my-edge";
 import { State } from "./state";
 import { ObjectCopier } from "../modules/object-copier";
 import { MyObject } from "../interfaces/MyObject";
@@ -21,7 +21,17 @@ export class MyDiagram extends Diagram{
       height: window.innerHeight - 70,
       nodeBorderWidth: 3,
       nodeHeaderHeight: 30,
-      edgeFactory: (s, t) => new MyEdge(s, t)
+      edgeFactory: (s, t) => {
+        const edge = new MyEdge(s, t);
+        edge.propsArchiver.lock();
+        edge.properties = {
+          priority: 0,
+          condition: '',
+          type: EdgeType.REGULAR
+        };
+        edge.propsArchiver.unlock();
+        return new MyEdge(s, t);
+      }
     });
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
   }

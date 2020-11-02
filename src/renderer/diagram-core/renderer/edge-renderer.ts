@@ -55,7 +55,7 @@ export class EdgeRenderer{
       .append('path')
       .attr('d', 'M5.97046 1.89949L10.2131 6.14213L5.97046 10.3848')
       .attr('fill', 'none')
-      .attr('stroke', highlighted ? '#06ff87' : 'white')
+      .attr('stroke', highlighted ? '#06ff87' : '#919294')
       .attr('stroke-width', '1')
       .attr('stroke-linecap', 'round')
       .attr('stroke-linejoin', 'round')
@@ -87,7 +87,8 @@ export class EdgeRenderer{
 
     g.append('path')
       .attr('id', htmlId + '-path')
-      .attr('marker-end', 'url(#arrow)');
+      .attr('marker-end', 'url(#arrow)')
+      .attr('marker-start', `url(#edge-${edge.id}-priority)`);
 
     g.append('use')
     .attr('xlink:href', `#${htmlId}-path`)
@@ -96,6 +97,8 @@ export class EdgeRenderer{
 
     this.store.setD3Node(edge.id, g);
     this.update(edge);
+
+    edge.DOMElementBuilt(g);
   }
 
   update(edge: Edge){
@@ -115,13 +118,23 @@ export class EdgeRenderer{
     const { x: x1, y: y1 } = source.getCoordinates();
     const { x: x2, y: y2 } = target.getCoordinates();
 
+    const targetNodeWall = target.isAttachedToNode() ? target.nodeWall : null;
+
     const pathData = this.generatorCurvePath(
       source.nodeWall || Side.Top, x1, y1, sourceOffset,
-      target.nodeWall || Side.Top, x2, y2, targetOffset,
+      targetNodeWall, x2, y2, targetOffset,
       edge.shapePoints
     );
-    d3Node.select('path')
-            .attr('d', pathData);
+
+    const pathEl = d3Node.select('path');
+    pathEl.attr('d', pathData);
+
+    const el = <SVGPathElement>pathEl.node();
+    const length = el.getTotalLength();
+    const startPoint = el.getPointAtLength(20);
+    const centerPoint = el.getPointAtLength(length / 2);
+    edge.offsettedStartPoint = startPoint;
+    edge.centerPoint = centerPoint;
 
     if(sourceANB){
       d3Node.select(cs(CLASSES.SOURCE_ATTACH_BOX))
@@ -139,7 +152,7 @@ export class EdgeRenderer{
 
   generatorCurvePath(
     side1: Side, x1: number, y1: number, offset1: number,
-    side2: Side, x2: number, y2: number, offset2: number,
+    side2: Side | null, x2: number, y2: number, offset2: number,
     shapePoints: Position[]
   ): string{
     const points: [number, number][] = [];
@@ -150,7 +163,9 @@ export class EdgeRenderer{
       points.push([ p.x + x1, p.y + y1 ]);
     }
 
-    points.push(movePoint(x2, y2, side2, offset2));
+    if(side2){
+      points.push(movePoint(x2, y2, side2, offset2));
+    }
     points.push([x2, y2]);
 
     const pathData = <string>this.lineGenerator(points);
@@ -167,7 +182,9 @@ export class EdgeRenderer{
   }
 
   destroyElement(edge: Edge){
-    select(`#edge-${edge.id}`).remove();
+    const d3Node = select(`#edge-${edge.id}`);
+    edge.BeforeDOMElementDestroy(d3Node);
+    d3Node.remove();
   }
 
 }

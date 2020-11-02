@@ -1,13 +1,17 @@
 import { Edge, EdgeConnection } from "../diagram-core";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
+import { D3Node } from "../diagram-core/types/aliases";
 import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
+import Vue from 'vue';
+import EdgeComponent from '../components/diagram/Edge.vue';
 
 export class MyEdge extends Edge implements ObjectProps{
 
   // Internal props
-  // private vm?: Vue;
+  private vm?: Vue;
   public readonly propsArchiver: PropsChangeArchiver;
+  private showCondition: boolean = false;
 
   // Business props
   public readonly what: ObjectType = ObjectType.Edge;
@@ -29,6 +33,32 @@ export class MyEdge extends Edge implements ObjectProps{
       }
     });
     this.propsArchiver.unlock();
+  }
+
+  BeforeDOMElementDestroy(){
+    this.vm?.$destroy();
+  }
+
+  DOMElementBuilt(d3node: D3Node){
+    const content = d3node.append('div');
+
+    this.vm = new Vue({
+      data: { edge: this },
+      components: { EdgeComponent },
+      template: '<EdgeComponent ref="comp" :edge="edge"/>'
+    });
+
+    this.vm.$mount(<HTMLElement>content.node());
+  }
+
+  onDOMInteraction(eventType: string, data: string, sourceEvent: Event){
+    if(eventType == 'mouseenter'){
+      this.showCondition = true;
+    }else if(eventType == 'mouseleave'){
+      this.showCondition = false;
+    }else if(eventType == 'mousedown' && data == 'condition-text'){
+      (<any>this.vm).$refs.comp.showConditionInput(sourceEvent);
+    }
   }
 
 }

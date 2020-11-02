@@ -1,5 +1,6 @@
 <template>
-  <div class="code-block">
+  <div class="code-block" :style="`width:${rootWidth}px`">
+    <div @mousedown="mousedown" class="cb-resize-handle" preventDrag="true" ></div>
     <div class="header">
       Statements <span class="counts">{{ statementBlocks.length }}</span>
       <div class="toggle" :class="{ collapsed: !expanded }" @click="expanded = !expanded">
@@ -22,7 +23,7 @@
               <div :class="{checked: sb.execution.du}" @click="sb.execution.du = !sb.execution.du" class="item">DU</div>
               <div :class="{checked: sb.execution.ex}" @click="sb.execution.ex = !sb.execution.ex" class="item">EX</div>
             </div>
-            <textarea v-model="sb.statements" cols="30" rows="10"></textarea>
+            <textarea ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import { textareaFitContentHeight } from '../../helpers/ui';
 import ArrowTopIcon from '../icons/ArrowTop';
 import CloseIcon from '../icons/Close';
 import PlusSignIcon from '../icons/PlusSign';
@@ -54,13 +56,62 @@ export default {
   },
   data:() => ({
     expanded: false,
+    startX: 0,
+    startWidth: 0,
+    resizing: false,
+    rootWidth: 180,
   }),
   computed: {
     statementBlocks(){
       return this.state.statementBlocks;
     }
   },
+  watch: {
+    statementBlocks: {
+      deep: false,
+      handler(){
+        if(this.expanded){
+          this.$nextTick(() => this.prepareTextareas());
+        }
+      }
+    },
+    expanded(val){
+      if(val){
+        this.$nextTick(() => this.prepareTextareas());
+      }
+    }
+  },
   methods: {
+    mousedown(e){
+      this.startWidth = this.rootWidth;
+      this.startX = e.clientX;
+      this.resizing = true;
+      const mousemoveHandler = event => this.mousemove(event);
+      const mouseupHandler = () => {
+        this.resizing = false;
+        window.removeEventListener('mousemove', mousemoveHandler);
+        window.removeEventListener('mouseup', mouseupHandler);
+      };
+      window.addEventListener('mousemove', mousemoveHandler);
+      window.addEventListener('mouseup', mouseupHandler);
+    },
+    mousemove(e){
+      if(this.resizing){
+        const deltaX = e.clientX - this.startX;
+        let width = this.startWidth + deltaX;
+        if(width < 180) width = 180;
+        this.rootWidth = width;
+        this.prepareTextareas();
+      }
+    },
+    prepareTextareas(){
+      const els = this.$refs.itemsTextAreas;
+      if(els){
+        for(let i = 0; i < els.length; i++){
+          textareaFitContentHeight(els[i]);
+        }
+      }
+    },
     removeBlock(index){
       index >= 0 && this.state.statementBlocks.splice(index, 1);
     },
@@ -77,9 +128,6 @@ export default {
       }
       arr.push(block);
     }
-  },
-  mounted(){
-    // this.addBlockClick();
   }
 }
 </script>
@@ -87,9 +135,18 @@ export default {
 <style lang="less" scoped>
 .code-block{
   background-color: #2B2D32;
-  width: 180px;
   overflow: hidden;
   height: fit-content;
+
+  .cb-resize-handle{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: -8px;
+    width: 8px;
+    height: 100%;
+    cursor: ew-resize;
+  }
 
   div{
     position: unset;
@@ -141,9 +198,11 @@ export default {
           background: none;
           color: rgb(185, 185, 185);
           padding: 3px 3px 3px 6px;
-          outline-color: #23BB72;
           min-width: 0;
           flex: 1;
+          &:focus{
+            outline: 1px solid #23BB72;
+          }
         }
         button{
           width: 24px;
@@ -159,13 +218,16 @@ export default {
         padding: 5px;
 
         textarea{
-          min-width: 96%;
-          max-width: 96%;
+          width: 96%;
           height: 50px;
           background: none;
           border: none;
           color: white;
           font-size: 15px;
+          resize: none;
+          &:focus{
+            outline: 1px solid #23BB72;
+          }
         }
 
         .execution{

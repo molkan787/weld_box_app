@@ -14,10 +14,8 @@ export class ActionsArchiver extends DiagramModule{
   }
 
   public clear(){
-    console.log(this.stack);
     this.pointer = -1;
     this.stack = [];
-    console.log(this.stack);
   }
 
   public enableGrouping(){

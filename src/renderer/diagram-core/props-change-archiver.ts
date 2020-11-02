@@ -32,7 +32,6 @@ export class PropsChangeArchiver{
 
   private onChange(path: string, value: any, prevValue: any, name: string){
     if(this.locked) return;
-    // console.log(path, prevValue, value, name);
     const action = this.craftAction(path, value, prevValue);
 
     const rootProp = path.split('.')[0];

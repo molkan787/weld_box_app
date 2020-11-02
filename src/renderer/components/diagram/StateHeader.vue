@@ -51,7 +51,7 @@ export default {
     font-style: normal;
     font-weight: bold;
     line-height: 12px;
-    padding: 4px;
+    padding: 4px 6px;
     background: #18191D;
     border-radius: 29px;
     color: #FFFFFF7F;

@@ -5,7 +5,7 @@
 
   &.svg-clickable{
     svg:not(.edges-layer){
-      pointer-events: all !important;
+      pointer-events: visiblePainted !important;
     }
   }
 
@@ -143,6 +143,7 @@
   .edge{
     stroke-width: 2px;
     fill: none;
+    pointer-events: auto;
     &.highlighted{
       & > path{
         stroke: @selectedEdgeColor;

@@ -12,6 +12,7 @@ export const ATTR = Object.freeze({
   CORNER: 'data-corner',
   WALL_SIDE: 'data-wall-side',
   COMPONENT_ID: 'data-component-id',
+  EMIT_DATA: 'data-emit-data',
 });
 
 export const EVENTS = Object.freeze({

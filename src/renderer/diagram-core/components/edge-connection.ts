@@ -13,6 +13,10 @@ export class EdgeConnection extends Component{
   public offset?: Position;
   public bridgeTo: EdgeConnection | null = null;
 
+  /** Cached result of getCoordinates() method */
+  public coordinates: Position = { x: 0, y: 0 };
+  private lastSpacingOffset: number = 0;
+
   constructor(
     public attachType: AttachType = AttachType.Position,
     public nodeWall: Side = Side.Top
@@ -41,6 +45,10 @@ export class EdgeConnection extends Component{
     return this.isAttachedToNode() && this.node;
   }
 
+  public getType(){
+    return this.edge?.source === this ? EdgeConnectionType.Source : EdgeConnectionType.Target;
+  }
+
   public getCoordinates(skipOffset: boolean = false): Position{
     let result = this.getOrigin();
     if(!skipOffset && this.offset){
@@ -56,10 +64,10 @@ export class EdgeConnection extends Component{
         const isVertical = this.nodeWall === Side.Top || this.nodeWall === Side.Bottom;
         isVertical ? y2 *= -1 : x2 *= -1;
       }
-
-      if(this.attachType == AttachType.NodeWall && node != null){
-        const hw = node.size.width / 2;
-        const hh = node.size.height / 2;
+      const needCapping = this.isAttachedToNode() && node != null;
+      const hw = (node?.size.width || 1) / 2;
+      const hh = (node?.size.height || 1) / 2;
+      if(needCapping){
         x2 = capNumber(x2, -hw, hw);
         y2 = capNumber(y2, -hh, hh);
       }
@@ -68,10 +76,32 @@ export class EdgeConnection extends Component{
         x: x1 + x2,
         y: y1 + y2
       }
+
+      // applying previous spacing or calculating a new one,
+      // this is needed to avoid edges overlapping
+      const axis = this.getVariableAxis();
+      result[axis] += this.lastSpacingOffset;
+
+      const spacing = this.needSpacingOffset(result);
+      if(needCapping && node != null && spacing){
+        const value = result[axis];
+        const isX = axis == 'x';
+        let dir = spacing < 0 ? -1 : 1;
+        const radius = isX ? hw : hh;
+        let change = 0;
+        if(radius - Math.abs(value) < 6){
+          change = 11 * dir * -1;
+        }else{
+          change = 6 * dir;
+        }
+        this.lastSpacingOffset = change;
+        result[axis] += change;
+      }
+
     }
 
 
-
+    this.coordinates = result;
     return result;
   }
 
@@ -93,6 +123,33 @@ export class EdgeConnection extends Component{
     return {x: 0, y: 0};
   }
 
+  private needSpacingOffset(position: Position){
+    const others = this.getSameSideSources();
+    if(others.length == 0){
+      this.lastSpacingOffset = 0;
+      return 0;
+    }
+    const axis = this.getVariableAxis();
+    const mypos = position[axis];
+    for(let i = 0; i < others.length; i++){
+      const pos = others[i].coordinates[axis];
+      const diff = mypos - pos;
+      if(Math.abs(diff) < 5) return diff;
+    }
+    return 0;
+  }
+
+  private getSameSideSources(): EdgeConnection[]{
+    const node = <Node>this.node
+    return node.edges.filter(ec => (
+      ec.nodeWall == this.nodeWall && ec !== this
+    ));
+  }
+
+  private getVariableAxis(){
+    return this.nodeWall == Side.Top || this.nodeWall == Side.Bottom ? 'x' : 'y';
+  }
+
 }
 
 export enum AttachType{
@@ -100,4 +157,9 @@ export enum AttachType{
   NodeBody = 'node-body',
   NodeWall = 'node-wall',
   Node = 'node',
+}
+
+export enum EdgeConnectionType{
+  Source,
+  Target
 }

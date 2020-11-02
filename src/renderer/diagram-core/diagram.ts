@@ -19,7 +19,6 @@ import { EdgeSelector } from './modules/edge-selector';
 import { ComponentDeleter } from './modules/component-deleter';
 import { EdgeReshaper } from './modules/edge-reshaper';
 import { Component, ComponentType } from './components/component';
-import { ActionsArchiver } from './modules/actions-archiver';
 
 /**
  * `Diagram`
