@@ -2,7 +2,7 @@
   <BaseForm :object="object">
 
     <FormField label="Queue length">
-      <input v-model="object.properties.queue_length" type="number" min="1" max="1024">
+      <input v-model.number="object.properties.queue_length" type="number" min="1" max="1024">
     </FormField>
 
     <FormField label="Type">

@@ -3,5 +3,6 @@ export enum ObjectType{
   Thread = 'thread',
   Edge = 'edge',
   Message = 'message',
-  Event = 'event'
+  Event = 'event',
+  StatementBlock = 'statement-block',
 }

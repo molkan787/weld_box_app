@@ -40,7 +40,7 @@ export function cloneArray<T>(arr: T[]): T[]{
   const narr: T[] = [];
   if(typeof arr[0] == 'object'){
     for(let i = 0; i < arr.length; i++){
-      narr.push(cloneObject(arr[i]));
+      narr.push(cloneNestedObject(arr[i]));
     }
   }else{
     narr.push(...arr);

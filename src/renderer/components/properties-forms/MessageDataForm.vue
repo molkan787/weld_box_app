@@ -7,7 +7,7 @@
       <input v-model="data.data_name" type="text">
     </FormField>
     <FormField label="Data size">
-      <input v-model="data.data_length" type="number" min="1">
+      <input v-model.number="data.data_length" type="number" min="1">
     </FormField>
     <FormField label="Data type">
       <select v-model="data.data_type">

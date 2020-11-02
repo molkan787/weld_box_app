@@ -1,6 +1,9 @@
 export class Component{
 
   static idPointer: number = 1;
+  static genId(){
+    return this.idPointer++;
+  }
 
   private _id: number;
   public get id(){
@@ -8,7 +11,7 @@ export class Component{
   }
 
   constructor(readonly type: ComponentType){
-    this._id = Component.idPointer++;
+    this._id = Component.genId();
   }
 
   /**

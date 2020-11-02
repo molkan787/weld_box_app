@@ -94,7 +94,7 @@ export class Node extends Component{
   }
 
   /**
-   * Return the first Node in the hirechy going upward starting the current node
+   * Return the first Node in the hirechy going upward starting from this node
    * @param fallback This parameter can be ignored, it is used for internal functionality
    */
   public getTopParent(fallback: Node | null = null): Node | null{

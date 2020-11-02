@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { Component } from '../../diagram-core/components/component';
 import { textareaFitContentHeight } from '../../helpers/ui';
 import ArrowTopIcon from '../icons/ArrowTop';
 import CloseIcon from '../icons/Close';
@@ -118,6 +119,7 @@ export default {
     addBlockClick(){
       const arr = this.state.statementBlocks;
       const block = {
+        id: Component.genId(),
         name: `Statement Block ${arr.length + 1}`,
         statements: 'Statement#1;',
         execution: {

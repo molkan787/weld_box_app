@@ -21,7 +21,7 @@ export class DiagramProject{
    * @param diagram `Diagram` instance to export from
    */
   public export(diagram: Diagram): DiagramExportData{
-    const topLevelobjects = this.getTopLevelObjects(diagram);
+    const topLevelobjects = DiagramProject.getTopLevelObjects(diagram);
     const objects = topLevelobjects.map(o => this.objectCopier.copy(o));
     return {
       idPointer: Component.idPointer,
@@ -32,7 +32,7 @@ export class DiagramProject{
   }
 
 
-  private getTopLevelObjects(diagram: Diagram){
+  public static getTopLevelObjects(diagram: Diagram){
     const result: MyObject[] = [];
     const objects = <MyObject[]><Component[]>diagram.store.nodes;
     const len = objects.length;

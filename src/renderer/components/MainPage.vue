@@ -31,6 +31,7 @@ import { Node } from '../diagram-core';
 import { State } from '../my-diagram/state';
 import { MyEdge } from '../my-diagram/my-edge';
 import { Menu } from '../modules/menu';
+import { DataExporter } from '../modules/data-exporter';
 import { mapState } from 'vuex';
 interface MyData {
   selectedObject: Component & ObjectProps | null,
@@ -119,6 +120,10 @@ export default Vue.extend({
     .on('cut', () => {
       this.diagram?.cutSelected();
     })
+    .on('generate_code', () => {
+      const dataExporter = new DataExporter();
+      dataExporter.exportData(this.diagram);
+    });
 
   }
 })
