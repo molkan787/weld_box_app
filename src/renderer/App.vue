@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <MainPage />
-    <NewProjectModal ref="newProjectModal" />
+    <ProjectSettingModal ref="ProjectSettingModal" />
   </div>
 </template>
 
 <script type="ts">
 import Vue from "vue";
 import MainPage from "@/components/MainPage.vue";
-import NewProjectModal from "@/components/NewProjectModal.vue";
+import ProjectSettingModal from "@/components/ProjectSettingModal.vue";
 import { Menu } from "./modules/menu";
 import { promptFile } from "./helpers/fs";
 import { projectsManager } from "./modules/projects-manager";
@@ -16,7 +16,7 @@ import { projectsManager } from "./modules/projects-manager";
 export default Vue.extend({
   components: {
     MainPage,
-    NewProjectModal,
+    ProjectSettingModal,
   },
   methods: {
     async openProject(){
@@ -44,7 +44,8 @@ export default Vue.extend({
   },
   created(){
     Menu
-    .on('new', () => this.$refs.newProjectModal.open())
+    .on('new', () => this.$refs.ProjectSettingModal.open())
+    .on('setting', () => this.$refs.ProjectSettingModal.open(true)) // passing `true` to set editing mode rather than new project mdoe
     .on('open', () => this.openProject())
     .on('save', () => this.saveProject())
     .on('close', () => this.closeProject())

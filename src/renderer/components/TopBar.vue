@@ -19,6 +19,14 @@
     <div @click="clicked('redo')" class="icon" :disabled="!diagram">
       <RedoIcon />
     </div>
+    <div class="separator"></div>
+    <div @click="clicked('setting')" class="icon" :disabled="!diagram">
+      <SettingIcon />
+    </div>
+    <div class="separator"></div>
+    <div @click="clicked('generate_code')" class="icon" :disabled="!diagram">
+      <PlayIcon />
+    </div>
   </div>
 </template>
 
@@ -30,6 +38,8 @@ import OpenProjectIcon from './icons/OpenProject.vue';
 import SaveIcon from './icons/Save.vue';
 import UndoIcon from './icons/Undo.vue';
 import RedoIcon from './icons/Redo.vue';
+import SettingIcon from './icons/Setting.vue';
+import PlayIcon from './icons/Play.vue';
 import { mapState } from 'vuex';
 export default {
   components: {
@@ -38,7 +48,9 @@ export default {
     OpenProjectIcon,
     SaveIcon,
     UndoIcon,
-    RedoIcon
+    RedoIcon,
+    SettingIcon,
+    PlayIcon
   },
   computed: mapState(['diagram']),
   methods: {
