@@ -3,5 +3,5 @@ import { Menu } from "./modules/menu"
 import { projectsManager } from "./modules/projects-manager";
 
 export function test(){
-  projectsManager.load("C:\\Users\\Dahmane\\Documents\\BoxTree\\foobar.json");
+  // projectsManager.load("C:\\Users\\Dahmane\\Documents\\BoxTree\\foobar.json");
 }
