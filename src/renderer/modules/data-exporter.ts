@@ -1,4 +1,4 @@
-import { Diagram, Node } from "../diagram-core";
+import { Diagram, EdgeConnectionType, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
@@ -41,6 +41,8 @@ export class DataExporter{
           families.set(parentId, family);
         }
         family.push(data);
+        const edgesData = this.getNodeEdgesData(node);
+        family.push(...edgesData);
       }
       index.set(node.id, data);
     }
@@ -52,6 +54,14 @@ export class DataExporter{
     }
     const rootData = <ObjectExportData>index.get(rootNode.id);
     return rootData;
+  }
+
+  private getNodeEdgesData(node: Node): EdgeExportData[]{
+    const edges = node.edges
+                      .filter(ec => ec.getType() == EdgeConnectionType.Source)
+                      .map(ec => <MyEdge>ec.edge);
+    const data = edges.map(e => this.getEdgeData(e));
+    return data;
   }
 
   /**
