@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    projectSetting: <ProjectSetting>{},
+    projectSetting: <ProjectSetting | null>{},
     diagram: <MyDiagram | null>null,
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-button-group">
+  <div class="radio-button-group" :class="{ 'show-separators': showSeparators }">
     <div v-for="(item, index) in items" :key="index" @click="$emit('input', item.value)"
       class="item" :class="item.value === value ? 'selected' : ''">
       {{ item.text }}
@@ -16,6 +16,10 @@ export default {
     },
     value: {
       type: String,
+    },
+    showSeparators: {
+      type: Boolean,
+      default: false,
     }
   }
 }
@@ -42,6 +46,11 @@ export default {
     user-select: none;
     &.selected{
       background-color: #3B3D44;
+    }
+  }
+  &.show-separators{
+    .item:not(:last-child){
+      border-right: 1px solid #2C2D33;
     }
   }
 }

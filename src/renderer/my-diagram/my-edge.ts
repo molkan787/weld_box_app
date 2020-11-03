@@ -11,6 +11,7 @@ export class MyEdge extends Edge implements ObjectProps{
   // Internal props
   private vm?: Vue;
   public readonly propsArchiver: PropsChangeArchiver;
+  // @ts-ignore
   private showCondition: boolean = false;
 
   // Business props

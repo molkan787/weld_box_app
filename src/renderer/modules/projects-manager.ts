@@ -12,6 +12,11 @@ class ProjectsManager{
 
   private diagramProject = new DiagramProject();
 
+  public async setSetting(setting: ProjectSetting){
+    store.state.projectSetting = setting;
+    await this.save();
+  }
+
   public create(setting: ProjectSetting){
     this.close();
     Component.idPointer = 1;
@@ -22,7 +27,7 @@ class ProjectsManager{
   }
 
   public close(){
-    store.state.projectSetting = { location: '', name: '' };
+    store.state.projectSetting = null;
     store.state.diagram = null;
     const canvas = <HTMLElement>document.getElementById('canvas');
     canvas.innerHTML = '';
@@ -30,7 +35,7 @@ class ProjectsManager{
 
   public async save(){
     const { projectSetting, diagram } = store.state;
-    if(!diagram) return;
+    if(!diagram || !projectSetting) return;
 
     const data = this.diagramProject.export(diagram);
     const project: ProjectFileData = {

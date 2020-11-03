@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { promptFile, promptSaveFile } from '../../helpers/fs';
+import { promptDirectory, promptFile, promptSaveFile } from '../../helpers/fs';
 export default {
   props: {
     value: {
@@ -28,7 +28,14 @@ export default {
   },
   methods: {
     async browseClick(){
-      const filename = this.type == 'open' ? await promptFile() : await promptSaveFile();
+      let filename;
+      if(this.type == 'open'){
+        filename = await promptFile();
+      }else if(this.type == 'save'){
+        filename = await promptSaveFile();
+      }else if(this.type == 'directory'){
+        filename = await promptDirectory();
+      }
       if(filename){
         this.$emit('input', filename);
       }
