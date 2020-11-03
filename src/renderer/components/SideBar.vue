@@ -12,6 +12,10 @@
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'event')">
       <EventIcon />
     </div>
+    <div class="separator"></div>
+    <div title="Junction" class="icon" @mousedown="onMouseDown($event, 'junction')">
+      <JunctionIcon />
+    </div>
   </div>
 </template>
 
@@ -22,6 +26,7 @@ import StateIcon from './icons/State';
 import TransitionIcon from './icons/Transition';
 import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
+import JunctionIcon from './icons/Junction';
 import { MessageNode } from '../my-diagram/MessageNode';
 import { EventNode } from '../my-diagram/EventNode';
 import { MODULES } from '../diagram-core';
@@ -31,7 +36,8 @@ export default {
     StateIcon,
     TransitionIcon,
     MessageIcon,
-    EventIcon
+    EventIcon,
+    JunctionIcon
   },
   props: {
     diagram: {
@@ -91,6 +97,7 @@ export default {
   box-sizing: border-box;
   padding: 4px;
   border-radius: 10px;
+  line-height: 0;
 
   .icon{
     @iw: @w - 8px;
@@ -113,6 +120,13 @@ export default {
       transform: scale(1.5);
     }
 
+  }
+  .separator{
+    display: inline-block;
+    background-color: #18191d7d;
+    width: calc(100% + 8px);
+    height: 1px;
+    margin: 4px -4px;
   }
 }
 </style>

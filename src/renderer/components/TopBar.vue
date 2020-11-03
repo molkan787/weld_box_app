@@ -3,28 +3,28 @@
     <div class="logo">
       <LogoIcon />
     </div>
-    <div @click="clicked('new')" class="icon">
+    <div @click="clicked('new')" class="icon" title="Create new project">
       <NewProjectIcon />
     </div>
-    <div @click="clicked('open')" class="icon">
+    <div @click="clicked('open')" class="icon" title="Open a project">
       <OpenProjectIcon />
     </div>
-    <div @click="clicked('save')" class="icon" :disabled="!diagram">
+    <div @click="clicked('save')" class="icon" :disabled="!diagram" title="Save">
       <SaveIcon />
     </div>
     <div class="separator"></div>
-    <div @click="clicked('undo')" class="icon" :disabled="!diagram">
+    <div @click="clicked('undo')" class="icon" :disabled="!diagram" title="Undo">
       <UndoIcon />
     </div>
-    <div @click="clicked('redo')" class="icon" :disabled="!diagram">
+    <div @click="clicked('redo')" class="icon" :disabled="!diagram" title="Redo">
       <RedoIcon />
     </div>
     <div class="separator"></div>
-    <div @click="clicked('setting')" class="icon" :disabled="!diagram">
+    <div @click="clicked('setting')" class="icon" :disabled="!diagram" title="Open project settings">
       <SettingIcon />
     </div>
     <div class="separator"></div>
-    <div @click="clicked('generate_code')" class="icon" :disabled="!diagram">
+    <div @click="clicked('generate_code')" class="icon" :disabled="!diagram" title="Generate Code">
       <PlayIcon />
     </div>
   </div>
