@@ -3,6 +3,7 @@ import { Node } from "../components/node";
 import { CLASSES, EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { throttle } from 'throttle-debounce';
 
 export class DomEventsAttacher{
 
@@ -12,6 +13,9 @@ export class DomEventsAttacher{
   };
 
   private readonly dragController: DragBehavior<Element, unknown, unknown>;
+
+  private readonly mousemoveThrottler: throttle<(e: DiagramEvent) => void>;
+  private readonly draggedThrottler: throttle<(e: DiagramEvent) => void>;
 
   constructor(private readonly store: DiagramStore){
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
@@ -36,11 +40,19 @@ export class DomEventsAttacher{
           return true;
         }
       });
+
+    this.mousemoveThrottler = throttle(20, false, (e: DiagramEvent) => {
+      this.store.emit(EVENTS.CANVAS_MOUSEMOVE, e);
+    });
+    this.draggedThrottler = throttle(20, false, (e: DiagramEvent) => {
+      this.store.emit(EVENTS.NODE_DRAGGED, e);
+    });
   }
 
   onCanvasCreated(de: DiagramEvent): void {
     this.store.rootElement.on('mousemove', (e: any) => {
-      this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e });
+      // this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e });
+      this.mousemoveThrottler({ sourceEvent: e });
     });
     this.store.rootElement.on('mouseup', (e: any) => {
       this.store.emit(EVENTS.CANVAS_MOUSEUP, { sourceEvent: e });
@@ -74,8 +86,10 @@ export class DomEventsAttacher{
     this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: e });
   }
   onDragged(e: any, node: Node) {
-    this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: e });
-    this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e.sourceEvent });
+    // this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: e });
+    // this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e.sourceEvent });
+    this.draggedThrottler({ node, sourceEvent: e });
+    this.mousemoveThrottler({ sourceEvent: e.sourceEvent });
   }
   onDragEnd(e: any, node: Node) {
     this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent: e });

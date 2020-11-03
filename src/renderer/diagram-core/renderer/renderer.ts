@@ -156,9 +156,16 @@ export class Renderer{
     // If node's content (childs) are hidden we don't need to update them
     if(!node.showContent) return;
 
-    for(let child of node.children){
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+    const childs = node.children;
+    for(let i = 0; i < childs.length; i++){
+      setTimeout(() => {
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event });
+      }, 1);
     }
+
+    // for(let child of node.children){
+    //   this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+    // }
 
   }
 
