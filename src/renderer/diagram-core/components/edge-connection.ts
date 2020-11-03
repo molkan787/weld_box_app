@@ -49,6 +49,10 @@ export class EdgeConnection extends Component{
     return this.edge?.source === this ? EdgeConnectionType.Source : EdgeConnectionType.Target;
   }
 
+  public isSource(){
+    return this.edge?.source === this
+  }
+
   public getCoordinates(skipOffset: boolean = false): Position{
     let result = this.getOrigin();
     if(!skipOffset && this.offset){
