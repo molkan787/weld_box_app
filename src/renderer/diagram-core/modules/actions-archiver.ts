@@ -8,6 +8,7 @@ export class ActionsArchiver extends DiagramModule{
   private stack: Action[] = [];
   private pointer: number = -1;
   private grouping: boolean = false;
+  private locked: boolean = false;
 
   constructor(readonly store: DiagramStore){
     super(store, MODULES.ACTIONS_ARCHIVER);
@@ -27,9 +28,31 @@ export class ActionsArchiver extends DiagramModule{
   }
 
   /**
+   * Returns `true` if it is locked otherwise `false`
+   */
+  public isLocked(){
+    return this.locked;
+  }
+
+  /**
+   * Locks actions adding
+   */
+  public lock(){
+    this.locked = true;
+  }
+
+  /**
+   * Unlocks actions adding
+   */
+  public unlock(){
+    this.locked = false;
+  }
+
+  /**
    * Push an action to the stack
    */
   public push(action: Action){
+    if(this.locked) return;
     this.fillMetaProps(action);
     if(this.grouping){
       const current = this.stack[this.pointer];

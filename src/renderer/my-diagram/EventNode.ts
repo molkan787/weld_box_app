@@ -24,7 +24,8 @@ export class EventNode extends BasicNode implements ObjectProps{
       props: ['name', 'properties'],
       debounce: {
         name: 1000
-      }
+      },
+      filter: path => !(path.includes('__ob__') || path.includes('__proto__'))
     });
   }
 

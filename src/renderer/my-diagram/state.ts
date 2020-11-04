@@ -38,7 +38,8 @@ export class State extends Node implements ObjectProps{
       debounce: {
         name: 1000,
         statementBlocks: 500
-      }
+      },
+      filter: path => !(path.includes('__ob__') || path.includes('__proto__'))
     });
   }
 

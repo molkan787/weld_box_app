@@ -31,9 +31,9 @@ export class MyEdge extends Edge implements ObjectProps{
       debounce: {
         name: 1000,
         properties: 500
-      }
+      },
+      filter: path => !(path.includes('__ob__') || path.includes('__proto__'))
     });
-    this.propsArchiver.unlock();
   }
 
   BeforeDOMElementDestroy(){
@@ -41,6 +41,7 @@ export class MyEdge extends Edge implements ObjectProps{
   }
 
   DOMElementBuilt(d3node: D3Node){
+    this.propsArchiver.lock();
     const content = d3node.append('div');
 
     this.vm = new Vue({
@@ -50,6 +51,7 @@ export class MyEdge extends Edge implements ObjectProps{
     });
 
     this.vm.$mount(<HTMLElement>content.node());
+    this.propsArchiver.unlock();
   }
 
   onDOMInteraction(eventType: string, data: string, sourceEvent: Event){

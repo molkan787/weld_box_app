@@ -19,6 +19,7 @@ export class Node extends Component{
   readonly children: Node[] = [];
   readonly edges: EdgeConnection[] = [];
   readonly isBasic: boolean = false;
+  readonly isCircle: boolean = false;
 
   private _showContent: boolean = true;
 
@@ -50,6 +51,7 @@ export class Node extends Component{
     const sc = options?.showContent;
     this._showContent = typeof sc == 'boolean' ? sc : true;
     if(options?.basic) this.isBasic = true;
+    if(options?.circle) this.isCircle = true;
   }
 
   public open(){
@@ -219,4 +221,5 @@ export interface NodeOptions{
   name?: string;
   showContent?: boolean;
   basic?: boolean;
+  circle?: boolean;
 }

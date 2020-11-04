@@ -29,7 +29,8 @@ export class MessageNode extends BasicNode implements ObjectProps{
       debounce: {
         name: 1000,
         body: 500
-      }
+      },
+      filter: path => !(path.includes('__ob__') || path.includes('__proto__'))
     });
     this.addDataItem();
   }

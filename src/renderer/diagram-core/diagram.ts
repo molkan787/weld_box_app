@@ -245,6 +245,14 @@ export class Diagram{
     this.store.actionsArchiver.clear();
   }
 
+  public lockActionsArchiver(){
+    this.store.actionsArchiver.lock();
+  }
+
+  public unlockActionsArchiver(){
+    this.store.actionsArchiver.unlock();
+  }
+
 
   public getModule(name: string): any{
     return this.modules[name];

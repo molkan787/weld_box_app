@@ -10,12 +10,14 @@ export class PropsChangeArchiver{
   private data: any;
   private actions: any  = {};
   private debouncers: any = {};
+  private filter: ( (path: string, value: any) => boolean ) | null;
   private instance: any;
-  private locked: boolean = true;
+  private _locked: boolean = true;
 
   constructor(options: PropsChangeArchiverOptions){
-    const { instance, props, debounce } = options;
+    const { instance, props, debounce, filter } = options;
     this.instance = instance;
+    this.filter = filter;
     let data = patchObject({}, instance, props);
     data = onChange(data, (...args) => this.onChange(...args));
     this.data = data;
@@ -30,8 +32,14 @@ export class PropsChangeArchiver{
 
   }
 
+  private isLocked(){
+    return this._locked || this.store?.actionsArchiver.isLocked();
+  }
+
   private onChange(path: string, value: any, prevValue: any, name: string){
-    if(this.locked) return;
+    if(this.isLocked() || (this.filter && !this.filter(path, value))) return;
+    // console.log(path, value);
+
     const action = this.craftAction(path, value, prevValue);
 
     const rootProp = path.split('.')[0];
@@ -123,11 +131,11 @@ export class PropsChangeArchiver{
   }
 
   public lock(){
-    this.locked = true;
+    this._locked = true;
   }
 
   public unlock(){
-    this.locked = false;
+    this._locked = false;
   }
 
 }
@@ -135,5 +143,6 @@ export class PropsChangeArchiver{
 export interface PropsChangeArchiverOptions{
   instance: any;
   props: string[];
-  debounce: any,
+  debounce: any;
+  filter: ( (path: string, value: any) => boolean ) | null;
 }
