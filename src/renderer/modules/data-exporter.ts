@@ -1,4 +1,4 @@
-import { Diagram, EdgeConnectionType, Node } from "../diagram-core";
+import { Diagram, EdgeConnection, EdgeConnectionType, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
@@ -152,6 +152,11 @@ export class DataExporter{
 
   private getEdgeData(edge: MyEdge): EdgeExportData{
     const { id, name, properties, source, target } = edge;
+    const src = source.getInstance();
+    let trg = target;
+    if(target.bridgeFrom){
+      trg = <EdgeConnection>target.bridgeFrom.edge?.target;
+    }
     return {
       attributes: {
         id,
@@ -159,8 +164,8 @@ export class DataExporter{
         what: ObjectType.Edge,
       },
       properties: {
-        origin: source.node?.id || 0,
-        destination: target.node?.id || 0,
+        origin: src.node?.id || 0,
+        destination: trg.node?.id || 0,
         priority: properties.priority,
         type: properties.type,
         condition: properties.condition

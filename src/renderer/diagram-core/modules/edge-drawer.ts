@@ -74,6 +74,7 @@ export class EdgeDrawer extends DiagramModule{
     const target = new EdgeConnection(AttachType.Position);
     target.position = targetPoint;
     const source = node.createEdgeConnection();
+    attachBox.bridgeFrom = source;
     source.bridgeTo = attachBox;
     const edge = this.edgeFactory(source, target);
     this.currentEdge = edge;

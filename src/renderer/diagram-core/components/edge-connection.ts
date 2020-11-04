@@ -12,6 +12,7 @@ export class EdgeConnection extends Component{
   public position?: Position;
   public offset?: Position;
   public bridgeTo: EdgeConnection | null = null;
+  public bridgeFrom: EdgeConnection | null = null;
 
   /** Cached result of getCoordinates() method */
   public coordinates: Position = { x: 0, y: 0 };
