@@ -4,5 +4,6 @@ export enum ObjectType{
   Edge = 'edge',
   Message = 'message',
   Event = 'event',
+  Junction = 'junction',
   StatementBlock = 'statement-block',
 }

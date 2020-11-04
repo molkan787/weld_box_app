@@ -2,9 +2,10 @@ import { Diagram, EdgeConnectionType, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
-import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData } from "../interfaces/ObjectExportData";
+import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData } from "../interfaces/ObjectExportData";
 import { ObjectType } from "../interfaces/ObjectType";
 import { EventNode } from "../my-diagram/EventNode";
+import { Junction } from "../my-diagram/junction";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
@@ -78,6 +79,8 @@ export class DataExporter{
         return this.getMessageData(<MessageNode>object);
       case ObjectType.Event:
         return this.getEventData(<EventNode>object);
+      case ObjectType.Junction:
+        return this.getJunctionData(<Junction>object);
       case ObjectType.Thread:
         return this.getThreadData(<State>object);
 
@@ -116,6 +119,15 @@ export class DataExporter{
         historic: properties.historic ? 1 : 0
       },
       body: statementBlocks.map(sb => this.getStatementBlockData(sb))
+    }
+  }
+
+  private getJunctionData(junction: Junction): JunctionExportData{
+    return {
+      attributes: {
+        id: junction.id,
+        what: ObjectType.Junction
+      }
     }
   }
 

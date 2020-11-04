@@ -45,6 +45,7 @@ export class NodeRenderer{
 
       this.addResizeHandles(root, node.id);
     }
+    root.classed('circle', node.isCircle);
 
     this.store.setD3Node(node.id, root);
     this.update(node);
@@ -157,6 +158,7 @@ export class NodeRenderer{
 
   /** Destorys attach box of all edges of the specified node */
   destoryEdgesAttachBoxes(node: Node){
+    if(node.isCircle) return;
     const container = this.getD3Node(node);
     const selector = `.node-${node.id}-` + CLASSES.ATTACH_BOX;
     container.selectAll(selector).remove();
@@ -164,6 +166,7 @@ export class NodeRenderer{
 
   /** Build edge target box */
   buildEdgesAttachBoxes(node: Node){
+    if(node.isCircle) return;
     const container = this.getD3Node(node);
     for(const edge of node.edges){
       if(edge.attachType === AttachType.NodeBody && !edge.isBridge){

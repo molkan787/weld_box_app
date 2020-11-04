@@ -28,6 +28,7 @@ import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
 import JunctionIcon from './icons/Junction';
 import { MessageNode } from '../my-diagram/MessageNode';
+import { Junction } from '../my-diagram/junction';
 import { EventNode } from '../my-diagram/EventNode';
 import { MODULES } from '../diagram-core';
 import { ObjectType } from '../interfaces/ObjectType';
@@ -79,6 +80,8 @@ export default {
           return new MessageNode({ x: 0, y: 0 });
         case ObjectType.Event:
           return new EventNode({ x: 0, y: 0 });
+        case ObjectType.Junction:
+          return new Junction({ x: 0, y: 0 });
       }
     }
   }

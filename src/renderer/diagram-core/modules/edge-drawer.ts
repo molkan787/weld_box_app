@@ -194,27 +194,29 @@ export class EdgeDrawer extends DiagramModule{
     };
     const transformedPoint = this.store.transformClientPoint(point, true);
     let nodes = this.store.getNodesFromPoint(transformedPoint, 6);
-    nodes = nodes.filter(n => !!n.parent && !n.isBasic);
+    nodes = nodes.filter(n => !!n.parent && (!n.isBasic || n.isCircle));
 
     let subject: Node | null = null;
     let touchedWall: Side | null = null;
 
     // Find a node that one of his walls was touched (overlapped) with mouse pointer
     for(const node of nodes){
-      const { size } = node;
-      const position = node.getAbsolutePosition();
-      const bbox = new DOMRect(position.x, position.y, size.width, size.height);
-      const wall = TouchesWall(bbox, transformedPoint, 10);
-      if(wall != null){
-        subject = node;
-        touchedWall = wall;
-        break;
+      if(!node.isCircle){
+        const { size } = node;
+        const position = node.getAbsolutePosition();
+        const bbox = new DOMRect(position.x, position.y, size.width, size.height);
+        const wall = TouchesWall(bbox, transformedPoint, 10);
+        if(wall != null){
+          subject = node;
+          touchedWall = wall;
+          break;
+        }
       }
     }
 
     if(subject === null){
       for(const node of nodes){
-        if(node.showContent === false){
+        if(node.showContent === false || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);

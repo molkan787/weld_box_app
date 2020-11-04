@@ -10,11 +10,12 @@ export class PropsChangeArchiver{
   private data: any;
   private actions: any  = {};
   private debouncers: any = {};
-  private filter: ( (path: string, value: any) => boolean ) | null;
+  private filter: ( (path: string, value: any) => boolean ) | null = null;
   private instance: any;
   private _locked: boolean = true;
 
-  constructor(options: PropsChangeArchiverOptions){
+  constructor(options: PropsChangeArchiverOptions | null){
+    if(!options) return;
     const { instance, props, debounce, filter } = options;
     this.instance = instance;
     this.filter = filter;

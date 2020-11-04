@@ -9,7 +9,7 @@ export interface ObjectExportData{
   attributes: {
     id: number;
     what: ObjectType;
-    name: string;
+    name?: string;
   };
   body?: any[];
 }
@@ -62,3 +62,5 @@ export interface EventExportData extends ObjectExportData{
     type: EventType;
   }
 }
+
+export interface JunctionExportData extends ObjectExportData{}

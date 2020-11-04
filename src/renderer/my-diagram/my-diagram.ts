@@ -46,7 +46,6 @@ export class MyDiagram extends Diagram{
     const node = thisSource.node;
     if(node && node.edges.length > 1){
       this.lockActionsArchiver();
-      console.log('lockActionsArchiver');
       const sources = node.edges.filter(ec => ec.isSource() && ec !== thisSource);
       const sourceEdges = <MyEdge[]>sources.map(ec => ec.edge).filter(e => !!e);
       if(sourceEdges.length == 1){
@@ -57,7 +56,6 @@ export class MyDiagram extends Diagram{
       const highestPriority = Math.max(...priorities);
       edge.properties.priority = highestPriority + 1;
       this.unlockActionsArchiver();
-      console.log('unlockActionsArchiver');
     }
   }
 

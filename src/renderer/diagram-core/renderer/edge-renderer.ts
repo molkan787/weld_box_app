@@ -73,13 +73,13 @@ export class EdgeRenderer{
       .attr('id', htmlId);
 
     const { source, target } = edge;
-    if(source.getInstance().attachType === AttachType.NodeBody){
+    if(source.getInstance().attachType === AttachType.NodeBody && !source.node?.isCircle){
       g.append('rect')
         .classed(CLASSES.ATTACH_BOX, true)
         .classed(CLASSES.SOURCE_ATTACH_BOX, true);
     }
 
-    if(target.getInstance().attachType === AttachType.NodeBody){
+    if(target.getInstance().attachType === AttachType.NodeBody && !target.node?.isCircle){
       g.append('rect')
         .classed(CLASSES.ATTACH_BOX, true)
         .classed(CLASSES.TARGET_ATTACH_BOX, true);
