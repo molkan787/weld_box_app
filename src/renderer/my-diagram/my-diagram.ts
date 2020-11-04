@@ -1,4 +1,4 @@
-import { Diagram, Edge, EVENTS, Node } from "../diagram-core";
+import { Diagram, EVENTS, Node } from "../diagram-core";
 import { EdgeType, MyEdge } from "./my-edge";
 import { State } from "./state";
 import { ObjectCopier } from "../modules/object-copier";
@@ -35,6 +35,15 @@ export class MyDiagram extends Diagram{
     });
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
     this.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(<MyEdge>e.edge));
+  }
+
+  buildInitialDiagram(){
+    const state = new State({ x: 140, y: 60 }, { width:750, height: 480, radius: 0 }, { name: 'Thread 1' });
+
+    this.addNode(state);
+
+    state.convertToThread();
+
   }
 
   /**
