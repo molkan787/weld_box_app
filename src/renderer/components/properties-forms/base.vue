@@ -2,10 +2,10 @@
   <Form>
 
     <FormField label="Object" disabled>
-      <input class="capitalize" type="text" :value="what">
+      <input class="capitalize" type="text" :value="object.what">
     </FormField>
 
-    <FormField label="Name">
+    <FormField v-if="showNameField" label="Name">
       <input type="text" v-model="object.name">
     </FormField>
 
@@ -26,15 +26,10 @@ export default {
     object: {
       type: Object,
       required: true,
-    }
-  },
-  computed: {
-    what(){
-      if(this.object.isThread){
-        return 'Thread';
-      }else{
-        return this.object.what;
-      }
+    },
+    showNameField: {
+      type: Boolean,
+      default: true,
     }
   }
 }

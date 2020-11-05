@@ -6,6 +6,7 @@
         <MessageForm v-else-if="object.what == 'message'" :object="object" />
         <EventForm v-else-if="object.what == 'event'" :object="object" />
         <EdgeForm v-else-if="object.what == 'edge'" :object="object" />
+        <JunctionForm v-else-if="object.what == 'junction'" :object="object" />
       </template>
       <template v-else>
         <div class="placeholder">
@@ -23,13 +24,15 @@ import StateForm from './properties-forms/StateForm';
 import MessageForm from './properties-forms/MessageForm';
 import EventForm from './properties-forms/EventForm';
 import EdgeForm from './properties-forms/EdgeForm';
+import JunctionForm from './properties-forms/JunctionForm';
 export default {
   components: {
     Panel,
     StateForm,
     MessageForm,
     EventForm,
-    EdgeForm
+    EdgeForm,
+    JunctionForm
   },
   props: {
     object: {
