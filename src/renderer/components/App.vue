@@ -24,6 +24,8 @@ export default Vue.extend({
   },
   methods: {
     async openProject(){
+      const canLeave = await projectsManager.canLeaveCurrentProject();
+      if(!canLeave) return;
       const filename = await promptFile();
       if(filename){
         try {
@@ -42,13 +44,20 @@ export default Vue.extend({
         Dialog.error('An error occured when saving the project.');
       }
     },
-    closeProject(){
-      projectsManager.close();
+    async newProject(){
+      if(await projectsManager.canLeaveCurrentProject()){
+        this.$refs.ProjectSettingModal.open();
+      }
+    },
+    async closeProject(){
+      if(await projectsManager.canLeaveCurrentProject()){
+        projectsManager.close();
+      }
     }
   },
   created(){
     Menu
-    .on('new', () => this.$refs.ProjectSettingModal.open())
+    .on('new', () => this.newProject())
     .on('setting', () => this.$refs.ProjectSettingModal.open(true)) // passing `true` to set editing mode rather than new project mdoe
     .on('open', () => this.openProject())
     .on('save', () => this.saveProject())

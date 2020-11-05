@@ -32,6 +32,8 @@ export default class Main {
 
     ipcMain.on('set-menu-item-enable', (e, id, ena) => this.setMenuItemEnable(id, ena));
 
+    ipcMain.on('exit-now', () => app.exit(0));
+
   }
 
   /** The electron application, */
@@ -63,6 +65,11 @@ export default class Main {
     topbarMenu.handleItemClick = (item) => this.onMenuItemClick(item);
     Menu.setApplicationMenu(topbarMenu.buildMenu());
     window.maximize();
+
+    window.on('close', e => {
+      e.preventDefault();
+      window.webContents.send('close');
+    })
 
     // Load target url.
     const target: string = isDevelopment

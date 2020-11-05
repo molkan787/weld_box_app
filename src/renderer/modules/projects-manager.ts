@@ -1,4 +1,5 @@
 import { Component } from "../diagram-core/components/component";
+import { Dialog } from "../dialog";
 import { readFile, writeFile } from "../helpers/fs";
 import { ProjectFileData } from "../interfaces/ProjectFileData";
 import { ProjectSetting } from "../interfaces/ProjectSetting";
@@ -19,7 +20,7 @@ class ProjectsManager{
     await this.save();
   }
 
-  public create(setting: ProjectSetting){
+  public async create(setting: ProjectSetting){
     this.close();
     StatusController.setStatusText('Creating new project...');
     Component.idPointer = 1;
@@ -31,7 +32,7 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
-  public close(){
+  public async close(){
     StatusController.setStatusText('Closing project...');
     store.state.projectSetting = null;
     store.state.diagram = null;
@@ -78,8 +79,36 @@ class ProjectsManager{
       StatusController.setStatusText(null);
       setTimeout(() => {
         diagram.clearActionsArchiver();
+        setTimeout(() => store.state.projectState.saved = true, 10)
       }, 1000)
     }, 1);
+  }
+
+  /**
+   * Ask the user via Dialog window, to save or discard project changes before closing it, or to cancel the closing
+   * @returns {boolean} Returns true if the user choosed to cancel
+   */
+  public async canLeaveCurrentProject(): Promise<boolean>{
+    const s = store.state;
+    // if there is no active project or it is already saved, immidiatly return , immidiatly return false
+    if(!s.diagram || s.projectState.saved) return true
+
+    const response = await Dialog.ask(
+      'You have unsaved changes in the current project, Do you want to save them?',
+      {
+        title: 'Unsaved Project',
+        buttons: [
+          { text: 'Cancel', value: 'cancel' },
+          { text: 'Discard', value: 'discard' },
+          { text: 'Save', value: 'save', primary: true },
+        ]
+      }
+    );
+    if(response == 'cancel') return false;
+    if(response == 'save'){
+      await this.save();
+    }
+    return true;
   }
 
 }

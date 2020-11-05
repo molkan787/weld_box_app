@@ -9,7 +9,7 @@
     <div @click="clicked('open')" class="icon" title="Open a project">
       <OpenProjectIcon />
     </div>
-    <div @click="clicked('save')" class="icon" :disabled="saved" title="Save">
+    <div @click="clicked('save')" class="icon" :disabled="projectState.saved" title="Save">
       <SaveIcon />
     </div>
     <div class="separator"></div>
@@ -52,11 +52,8 @@ export default {
     SettingIcon,
     PlayIcon
   },
-  data: () => ({
-    saved: true,
-  }),
   computed: {
-    ...mapState(['diagram']),
+    ...mapState(['diagram', 'projectState']),
     actionsArchiver(){
       return this.diagram && this.diagram.actionsArchiver;
     },
@@ -72,11 +69,11 @@ export default {
     diagram: {
       deep: false,
       handler(){
-        this.saved = true;
+        this.projectState.saved = true;
       }
     },
     'actionsArchiver.pointer'(){
-      this.saved = false;
+      this.projectState.saved = false;
     },
     canUndo: {
       immediate: true,
@@ -90,7 +87,7 @@ export default {
         Menu.setItemEnable('redo', val);
       }
     },
-    saved: {
+    'projectState.saved': {
       immediate: true,
       handler(val){
         Menu.setItemEnable('save', !val);
@@ -103,7 +100,7 @@ export default {
     },
   },
   mounted(){
-    Menu.on('save', () => this.saved = true);
+    Menu.on('save', () => this.projectState.saved = true);
   }
 }
 </script>
