@@ -31,8 +31,11 @@ import { Node } from '../diagram-core';
 import { State } from '../my-diagram/state';
 import { MyEdge } from '../my-diagram/my-edge';
 import { Menu } from '../modules/menu';
-import { DataExporter } from '../modules/data-exporter';
 import { mapState } from 'vuex';
+import { CodeGenerator } from '../modules/code-generator';
+import { StatusController } from '../status-controller';
+import { Dialog } from '../dialog';
+const codeGenerator = new CodeGenerator();
 interface MyData {
   selectedObject: Component & ObjectProps | null,
   chartsPathNodes: (Node | null)[],
@@ -48,7 +51,7 @@ export default Vue.extend({
     Breadcrumb,
     Welcome
   },
-  computed: mapState(['diagram']),
+  computed: mapState(['diagram', 'projectSetting']),
   watch: {
     diagram(val){
       val && this.attachEventsHandlers();
@@ -95,6 +98,20 @@ export default Vue.extend({
           (<any>this.$refs.propsPanel).show();
         }
       });
+    },
+    async generateCode(){
+      StatusController.setStatusText('Generating code...');
+      try {
+        const message = await codeGenerator.generate(this.diagram, this.projectSetting);
+        StatusController.setStatusText('Generating code... Success');
+        setTimeout(() => StatusController.setStatusText(null), 1000);
+        Dialog.info(message)
+      } catch (error) {
+        console.error(error);
+        StatusController.setStatusText('Generating code... Error');
+        setTimeout(() => StatusController.setStatusText(null), 1000);
+        Dialog.error(error.message);
+      }
     }
   },
   mounted(){
@@ -120,9 +137,12 @@ export default Vue.extend({
     .on('cut', () => {
       this.diagram?.cutSelected();
     })
-    .on('generate_code', () => {
-      const dataExporter = new DataExporter();
-      dataExporter.exportData(this.diagram);
+    .on('generate_code',  () => {
+      if(this.diagram && this.projectSetting){
+        this.generateCode();
+      }else{
+        Dialog.error('Cannot generate code\nError Code: diagram_not_found');
+      }
     });
 
   }

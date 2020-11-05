@@ -4,6 +4,8 @@ import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
 import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData } from "../interfaces/ObjectExportData";
 import { ObjectType } from "../interfaces/ObjectType";
+import { ProjectExportData } from "../interfaces/ProjectExportData";
+import { ProjectSetting } from "../interfaces/ProjectSetting";
 import { EventNode } from "../my-diagram/EventNode";
 import { Junction } from "../my-diagram/junction";
 import { MessageNode } from "../my-diagram/MessageNode";
@@ -14,10 +16,17 @@ import { DiagramProject } from "./diagram-project";
 
 export class DataExporter{
 
-  public exportData(diagram: Diagram){
+  public exportData(diagram: Diagram, setting: ProjectSetting): ProjectExportData{
     const objects = DiagramProject.getTopLevelObjects(diagram);
-    for(let i = 0; i < objects.length; i++){
-      console.log(this.getFullHierarchyObjectsData(objects[i]));
+    const threadsData = objects.map(ob => this.getFullHierarchyObjectsData(ob));
+    const { name, architecture, build_priority } = setting;
+    return {
+      attributes: {
+        name,
+        architecture,
+        build_priority
+      },
+      body: <ThreadExportData[]>threadsData
     }
   }
 

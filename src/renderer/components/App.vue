@@ -2,6 +2,7 @@
   <div id="app">
     <MainPage />
     <ProjectSettingModal ref="ProjectSettingModal" />
+    <DialogComponent />
   </div>
 </template>
 
@@ -9,14 +10,17 @@
 import Vue from "vue";
 import MainPage from "@/components/MainPage.vue";
 import ProjectSettingModal from "@/components/ProjectSettingModal.vue";
-import { Menu } from "./modules/menu";
-import { promptFile } from "./helpers/fs";
-import { projectsManager } from "./modules/projects-manager";
+import DialogComponent from './Dialog';
+import { Menu } from "../modules/menu";
+import { promptFile } from "../helpers/fs";
+import { projectsManager } from "../modules/projects-manager";
+import { Dialog } from "../dialog";
 
 export default Vue.extend({
   components: {
     MainPage,
     ProjectSettingModal,
+    DialogComponent
   },
   methods: {
     async openProject(){
@@ -26,7 +30,7 @@ export default Vue.extend({
           projectsManager.load(filename);
         } catch (error) {
           console.error(error);
-          alert('An error occured when loading the project.');
+          Dialog.error('An error occured when loading the project.');
         }
       }
     },
@@ -35,7 +39,7 @@ export default Vue.extend({
         projectsManager.save();
       } catch (error) {
         console.error(error);
-        alert('An error occured when saving the project.');
+        Dialog.error('An error occured when saving the project.');
       }
     },
     closeProject(){

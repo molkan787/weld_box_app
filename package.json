@@ -11,6 +11,7 @@
         "@types/debounce": "^1.2.0",
         "@types/set-value": "^2.0.0",
         "@types/throttle-debounce": "^2.1.0",
+        "axios": "^0.21.0",
         "d3": "^6.1.1",
         "debounce": "^1.2.0",
         "eventemitter3": "^4.0.7",

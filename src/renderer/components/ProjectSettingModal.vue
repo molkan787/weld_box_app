@@ -18,6 +18,7 @@ import { cloneObject } from '../diagram-core/utils';
 import { projectsManager } from '../modules/projects-manager';
 import ProjectSettingForm from './forms/ProjectSettingForm';
 import { mapState } from 'vuex';
+import { Dialog } from '../dialog';
 export default {
   components: {
     ProjectSettingForm
@@ -54,20 +55,20 @@ export default {
           this.close();
         } catch (error) {
           console.error(error);
-          alert('An error occured, Please try again')
+          Dialog.error('An error occured, Please try again')
         }
       }
     },
     validateForm(){
       const f = this.setting;
       if(f.name.length < 2){
-        alert('Please enter a valid Project Name.');
+        Dialog.error('Please enter a valid Project Name.');
       }else if(f.location.length < 2){
-        alert('Please specify Project Location');
+        Dialog.error('Please specify Project Location');
       }else if(f.sourcesDir.length < 2){
-        alert('Please specify Source File Location');
+        Dialog.error('Please specify Source File Location');
       }else if(f.headersDir.length < 2){
-        alert('Please specify Header File Location');
+        Dialog.error('Please specify Header File Location');
       }else{
         return true;
       }

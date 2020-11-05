@@ -1,9 +1,11 @@
-import { App, BrowserWindow, Menu, MenuItem } from 'electron';
+import { App, BrowserWindow, Menu, MenuItem, app } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { TopBarMenu } from './topbar-menu';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
 /**
  * Application entry point.
@@ -50,6 +52,7 @@ export default class Main {
       webPreferences: {
         nodeIntegration: true,
         enableRemoteModule: true,
+        webSecurity: false
       }
     });
     const topbarMenu = new TopBarMenu();
