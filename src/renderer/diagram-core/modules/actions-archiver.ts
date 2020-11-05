@@ -5,8 +5,8 @@ import { DiagramModule } from "../module";
 
 export class ActionsArchiver extends DiagramModule{
 
-  private stack: Action[] = [];
-  private pointer: number = -1;
+  public stack: Action[] = [];
+  public pointer: number = -1;
   private grouping: boolean = false;
   private locked: boolean = false;
 

@@ -253,6 +253,10 @@ export class Diagram{
     this.store.actionsArchiver.unlock();
   }
 
+  public get actionsArchiver(){
+    return this.store.actionsArchiver;
+  }
+
 
   public getModule(name: string): any{
     return this.modules[name];

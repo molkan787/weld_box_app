@@ -9,14 +9,14 @@
     <div @click="clicked('open')" class="icon" title="Open a project">
       <OpenProjectIcon />
     </div>
-    <div @click="clicked('save')" class="icon" :disabled="!diagram" title="Save">
+    <div @click="clicked('save')" class="icon" :disabled="saved" title="Save">
       <SaveIcon />
     </div>
     <div class="separator"></div>
-    <div @click="clicked('undo')" class="icon" :disabled="!diagram" title="Undo">
+    <div @click="clicked('undo')" class="icon" :disabled="!canUndo" title="Undo">
       <UndoIcon />
     </div>
-    <div @click="clicked('redo')" class="icon" :disabled="!diagram" title="Redo">
+    <div @click="clicked('redo')" class="icon" :disabled="!canRedo" title="Redo">
       <RedoIcon />
     </div>
     <div class="separator"></div>
@@ -52,11 +52,58 @@ export default {
     SettingIcon,
     PlayIcon
   },
-  computed: mapState(['diagram']),
+  data: () => ({
+    saved: true,
+  }),
+  computed: {
+    ...mapState(['diagram']),
+    actionsArchiver(){
+      return this.diagram && this.diagram.actionsArchiver;
+    },
+    canUndo(){
+      return this.actionsArchiver && this.actionsArchiver.pointer >= 0;
+    },
+    canRedo(){
+      const aa = this.actionsArchiver
+      return aa && aa.pointer < aa.stack.length - 1;
+    }
+  },
+  watch: {
+    diagram: {
+      deep: false,
+      handler(){
+        this.saved = true;
+      }
+    },
+    'actionsArchiver.pointer'(){
+      this.saved = false;
+    },
+    canUndo: {
+      immediate: true,
+      handler(val){
+        Menu.setItemEnable('undo', val);
+      }
+    },
+    canRedo: {
+      immediate: true,
+      handler(val){
+        Menu.setItemEnable('redo', val);
+      }
+    },
+    saved: {
+      immediate: true,
+      handler(val){
+        Menu.setItemEnable('save', !val);
+      }
+    }
+  },
   methods: {
     clicked(name){
       Menu.emit(name);
-    }
+    },
+  },
+  mounted(){
+    Menu.on('save', () => this.saved = true);
   }
 }
 </script>

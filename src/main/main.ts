@@ -1,4 +1,4 @@
-import { App, BrowserWindow, Menu, MenuItem, app } from 'electron';
+import { App, BrowserWindow, Menu, MenuItem, app, ipcMain } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { TopBarMenu } from './topbar-menu';
@@ -30,10 +30,14 @@ export default class Main {
     Main.application.on('ready', Main.onReady);
     Main.application.on('window-all-closed', Main.onWindowAllClosed);
 
+    ipcMain.on('set-menu-item-enable', (e, id, ena) => this.setMenuItemEnable(id, ena));
+
   }
 
   /** The electron application, */
   private static application: App;
+
+  private static appMenu: TopBarMenu;
 
   /** The main window, */
   private static window: BrowserWindow | null;
@@ -55,7 +59,7 @@ export default class Main {
         webSecurity: false
       }
     });
-    const topbarMenu = new TopBarMenu();
+    const topbarMenu = this.appMenu = new TopBarMenu();
     topbarMenu.handleItemClick = (item) => this.onMenuItemClick(item);
     Menu.setApplicationMenu(topbarMenu.buildMenu());
     window.maximize();
@@ -167,6 +171,10 @@ export default class Main {
       Main.application.quit();
     }
 
+  }
+
+  private static setMenuItemEnable(itemId: string, enabled: boolean){
+    this.appMenu.setItemEnable(itemId, enabled);
   }
 
   private static onMenuItemClick(item: MenuItem){

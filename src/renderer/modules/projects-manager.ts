@@ -6,6 +6,7 @@ import { MyDiagram } from "../my-diagram/my-diagram";
 import { StatusController } from "../status-controller";
 import { store } from "../store";
 import { DiagramProject } from "./diagram-project";
+import { Menu } from "./menu";
 
 const FORMAT_CHECK_VALUE = 31102020;
 
@@ -26,6 +27,7 @@ class ProjectsManager{
     diagram.buildInitialDiagram();
     store.state.projectSetting = setting;
     store.state.diagram = diagram;
+    Menu.enableProjectItems(true);
     StatusController.setStatusText(null);
   }
 
@@ -35,6 +37,7 @@ class ProjectsManager{
     store.state.diagram = null;
     const canvas = <HTMLElement>document.getElementById('canvas');
     canvas.innerHTML = '';
+    Menu.disableProjectItems();
     StatusController.setStatusText(null);
   }
 
@@ -71,6 +74,7 @@ class ProjectsManager{
 
     setTimeout(() => { // required for vue components to react correctly (temporary solution)
       this.diagramProject.import(diagram, data);
+      Menu.enableProjectItems(true);
       StatusController.setStatusText(null);
       setTimeout(() => {
         diagram.clearActionsArchiver();
