@@ -22,7 +22,7 @@ export class CodeGenerator{
   }
 
   private async request(data: ProjectExportData): Promise<GenerateCodeResponse>{
-    const response = await Axios.get(config.GENERATE_CODE_URL, { data });
+    const response = await Axios.post(config.GENERATE_CODE_URL, data);
     return response.data;
   }
 
