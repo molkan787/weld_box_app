@@ -2,13 +2,14 @@ import { EdgesBucket } from "../classes/edges-bucket";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
 import { MyObject } from "../interfaces/MyObject";
-import { EdgeCloneData, ObjectCloneData, StateCloneData, EventCloneData, MessageCloneData, EdgeConnectionCloneData, ObjectCopyResult } from "../interfaces/ObjectCopyResult";
+import { EdgeCloneData, ObjectCloneData, StateCloneData, JunctionCloneData, EventCloneData, MessageCloneData, EdgeConnectionCloneData, ObjectCopyResult } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { EdgeConnection, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
+import { Junction } from "../my-diagram/junction";
 
 /**
  * Helper class that convert Diagram's object to json data (export like)
@@ -45,6 +46,11 @@ export class ObjectCopier{
       return {
         what: ObjectType.Message,
         data: this.copyMessageNode(<MessageNode>object)
+      };
+    }else if(object.what === ObjectType.Junction){
+      return {
+        what: ObjectType.Junction,
+        data: this.copyJunction(<Junction>object, edgesBucket)
       };
     }else{
       throw new Error(`Object '${object.what}' isn't supported`);
@@ -122,6 +128,19 @@ export class ObjectCopier{
       size: cloneObject(size)
     };
     return data;
+  }
+
+  public copyJunction(junction: Junction, edgesBucket: EdgesBucket): JunctionCloneData{
+    const { id, parent, position, size, edges } = junction;
+    edgesBucket.add(edges.map(ec => <MyEdge>ec.edge));
+    return {
+      ref: id,
+      parentRef: parent?.id,
+      position: cloneObject(position),
+      size: cloneObject(size),
+      name: '',
+      properties: undefined
+    }
   }
 
   public copyEdge(edge: MyEdge): EdgeCloneData{

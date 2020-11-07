@@ -1,12 +1,13 @@
 import { EdgeConnection, Node } from "../diagram-core";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
-import { EdgeCloneData, EdgeConnectionCloneData, EventCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
+import { EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
+import { Junction } from "../my-diagram/junction";
 
 export class ObjectCrafter{
 
@@ -44,8 +45,10 @@ export class ObjectCrafter{
       node = this.craftEventNode(<EventCloneData>data);
     }else if(cloneData.what == ObjectType.Message){
       node = this.craftMessageNode(<MessageCloneData>data);
+    }else if(cloneData.what == ObjectType.Junction){
+      node = this.craftJunction(<JunctionCloneData>data);
     }else{
-      throw new Error('Unsupported object type, (to craft an edge, call craftEdge() directly)');
+      throw new Error(`Unsupported object type '${what}'`);
     }
     if(useRefsAsIds){
       node._setId(data.ref);
@@ -86,6 +89,13 @@ export class ObjectCrafter{
     node.name = name;
     node.properties = cloneObject(properties);
     node.body = cloneArray(body);
+    return node;
+  }
+
+  public craftJunction(data: JunctionCloneData): Junction{
+    const { position, size } = data;
+    const node = new Junction(position);
+    node.size = cloneObject(size);
     return node;
   }
 

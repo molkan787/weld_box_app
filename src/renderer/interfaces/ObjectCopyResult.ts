@@ -41,6 +41,8 @@ export interface MessageCloneData extends NodeCloneData{
   body: MessageDataItem[];
 }
 
+export interface JunctionCloneData extends NodeCloneData{}
+
 export interface EdgeCloneData extends CommonCloneDataProps{
   originId: number;
   shapePoints: Position[];
