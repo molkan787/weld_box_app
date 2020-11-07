@@ -40,6 +40,7 @@ export class EdgeDrawer extends DiagramModule{
   onNodeDragStart(event: DiagramEvent){
     if(this.isInactive) return;
 
+                                    // the first sourceEvent is the D3.Drag event, the second is the native MouseEvent
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
     const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
     // const wall: Side = parseInt(srcElement.getAttribute(ATTR.WALL_SIDE) || '0');
