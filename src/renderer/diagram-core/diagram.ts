@@ -171,6 +171,7 @@ export class Diagram{
   public addNode(node: Node, isRestore?: boolean){
     node.store = this.store;
     if(!this.store.addNode(node)) return;
+    console.log(node.id)
     this.store.emit(EVENTS.NODE_ADDED, { node, isRestore })
     for(let child of node.children){
       this.addNode(child, isRestore);

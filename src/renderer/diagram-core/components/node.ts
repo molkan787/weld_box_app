@@ -1,6 +1,7 @@
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { addPoints, Side } from "../helpers/geometry";
+import { ZeroMargin } from "../interfaces/Margin";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
 import { D3Node } from "../types/aliases";
@@ -189,7 +190,7 @@ export class Node extends Component{
    */
   public getAbsolutePosition(useCachedPosition: boolean = false): Position{
     if(useCachedPosition && this.props.absolutePosition) return this.props.absolutePosition;
-    const pad = (<DiagramStore>this.store).nodePadding;
+    const pad = this.store?.nodePadding || ZeroMargin;
     let result = null;
     if(this.parent != null){
       const pp = this.parent.getAbsolutePosition();

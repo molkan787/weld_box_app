@@ -1,5 +1,5 @@
 import { EdgesBucket } from "../classes/edges-bucket";
-import { cloneArray, cloneObject } from "../diagram-core/utils";
+import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
 import { MyObject } from "../interfaces/MyObject";
 import { EdgeCloneData, ObjectCloneData, StateCloneData, EventCloneData, MessageCloneData, EdgeConnectionCloneData, ObjectCopyResult } from "../interfaces/ObjectCopyResult";
@@ -52,23 +52,49 @@ export class ObjectCopier{
   }
 
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
-    const { id, parent, props, name, properties, statementBlocks, position, size, showContent, edges } = state;
+    const { id, name, properties, statementBlocks, showContent, edges } = state;
 
-    const _props = cloneObject(props);
-    _props.isOpen = false;
+    const parent = state.getParent();
+    const { props, position, size } = this.getStatePropsAndBBox(state);
     const data: StateCloneData = {
       ref: id,
       parentRef: parent?.id,
-      props: _props,
+      props: props,
       name: name,
       properties: cloneObject(properties),
       statementBlocks: cloneArray(statementBlocks),
-      position: cloneObject(position),
-      size: cloneObject(size),
+      position: position,
+      size: size,
       showContent: showContent
     }
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge))
     return data;
+  }
+
+  private getStatePropsAndBBox(state: State){
+    const { props, position, size } = state;
+    const _props = cloneNestedObject(props);
+    let _position = cloneObject(position);
+    let _size= cloneObject(size);
+    // If the State is open during coping,
+    // we need to switch from OpenState Size & Position to NormalState Size & Position
+    if(_props.isOpen){
+      _props.openState = {
+        position: _position,
+        size: _size
+      }
+      const { position: ns_position, size: ns_size } = _props.normalState;
+      if(ns_position && ns_size){
+        _position = ns_position;
+        _size = ns_size;
+      }
+      _props.isOpen = false;
+    }
+    return {
+      props: _props,
+      position: _position,
+      size: _size
+    }
   }
 
   public copyEventNode(event: EventNode): EventCloneData{

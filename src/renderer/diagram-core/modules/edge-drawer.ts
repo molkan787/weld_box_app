@@ -132,6 +132,7 @@ export class EdgeDrawer extends DiagramModule{
 
   onNodeDropped(event: DiagramEvent){
     if(this.isInactive) return;
+    console.log(event.sourceEvent.sourceEvent)
 
     const node = this.nodeInSubject;
     const edge = this.currentEdge;

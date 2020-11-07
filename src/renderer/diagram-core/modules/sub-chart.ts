@@ -123,9 +123,15 @@ export class SubChart{
 
     this.addDomNodeToOriginalParent(currentNode);
 
-    this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode });
-
     this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: currentNode });
+
+    // `this.currentNode` is the new current node
+    // `currentNode` is the previous current node
+    if(this.currentNode){
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: this.currentNode });
+    }else{
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode });
+    }
 
     this.emitChangeEvent();
   }
