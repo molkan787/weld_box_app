@@ -138,10 +138,7 @@ export class Renderer{
     const srcAllow = !source.isBridge || source.node?.props.isOpen;
     const trgAllow = !target.isBridge || target.node?.props.isOpen;
     if(srcAllow && trgAllow){
-      console.log('edge isn\'t bridged:', edge);
       this.build(null, <Edge>event.edge);
-    }else{
-      console.log('edge is bridged:', edge);
     }
   }
 
@@ -232,7 +229,6 @@ export class Renderer{
   }
 
   onBuildEdges(event: DiagramEvent){
-    console.log('onBuildEdges', event)
     const edges = <Edge[]>event.data;
     for(const edge of edges){
       this.build(null, edge);

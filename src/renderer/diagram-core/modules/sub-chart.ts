@@ -137,13 +137,11 @@ export class SubChart{
   }
 
   private destroyNodeBridgedEdges(node: Node){
-    console.log('destroyNodeBridgedEdges() node.edges', node.edges)
     const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
     this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges })
   }
 
   private buildNodeBridgedEdges(node: Node){
-    console.log('buildNodeBridgedEdges() node.edges', node.edges)
     const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
     this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges })
   }

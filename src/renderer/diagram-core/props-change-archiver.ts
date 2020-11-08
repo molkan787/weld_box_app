@@ -38,6 +38,9 @@ export class PropsChangeArchiver{
   }
 
   private onChange(path: string, value: any, prevValue: any, name: string){
+    if(path == 'properties.priority' && value == -Infinity){
+      throw new Error('got value ' + value)
+    }
     if(this.isLocked() || (this.filter && !this.filter(path, value))) return;
     // console.log(path, value);
 

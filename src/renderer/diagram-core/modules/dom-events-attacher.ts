@@ -33,6 +33,7 @@ export class DomEventsAttacher{
           e.stopPropagation();
           return false;
         }
+        console.log(this.store.activeModule?.name)
         if(this.store.activeModule?.name !== MODULES.NODE_DRAGGING) return true;
         if(node.props.isOpen){
           return this.isResizeHandleEvent(e);

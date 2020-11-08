@@ -201,7 +201,6 @@ export class EdgeConnection extends Component{
    * Returns all EdgeConnections that are attached to the same wall of the same Node as this one
    */
   private getSameSideSources(): EdgeConnection[]{
-    console.log(this);
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.nodeWall == this.nodeWall && ec !== this

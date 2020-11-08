@@ -24,7 +24,7 @@ export class EdgeReshaper extends DiagramModule{
     if(!edge) return;
     this.activate();
     this.subject = edge;
-    this.basePoint = edge.source.getCoordinates();
+    this.basePoint = edge.source.getInstance().getCoordinates();
     this.previousShape = cloneArray(edge.shapePoints);
     this.changed = false;
   }

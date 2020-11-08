@@ -17,7 +17,7 @@ export class EdgeSelector{
     const { clientX, clientY } = sourceEvent;
     const data = this.getDataFromClientPoint(clientX, clientY);
     if(data){
-      sourceEvent.stopPropagation();
+      sourceEvent.stopImmediatePropagation();
       sourceEvent.preventDefault();
       const edge = this.store.getEdgeById(data.id);
       this.store.emit(EVENTS.EDGE_SELECTED, { edge, sourceEvent });

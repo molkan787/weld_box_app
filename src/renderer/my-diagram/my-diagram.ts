@@ -62,7 +62,7 @@ export class MyDiagram extends Diagram{
         props.priority == 0 && (props.priority = 1); // if the priority is 0 set it to 1
       }
       const priorities = sourceEdges.map(e => e.properties.priority);
-      const highestPriority = Math.max(...priorities);
+      const highestPriority = Math.max(0, ...priorities);
       edge.properties.priority = highestPriority + 1;
       this.unlockActionsArchiver();
     }
