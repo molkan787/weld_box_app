@@ -73,7 +73,9 @@ export class EdgeReshaper extends DiagramModule{
       })
     }
     this.changed = false;
-    this.deactivate();
+    setTimeout(() => {
+      this.deactivate();
+    }, 30)
   }
 
 }

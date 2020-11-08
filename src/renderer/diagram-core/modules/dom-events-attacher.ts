@@ -87,8 +87,6 @@ export class DomEventsAttacher{
     this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: e });
   }
   onDragged(e: any, node: Node) {
-    // this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent: e });
-    // this.store.emit(EVENTS.CANVAS_MOUSEMOVE, { sourceEvent: e.sourceEvent });
     this.draggedThrottler({ node, sourceEvent: e });
     this.mousemoveThrottler({ sourceEvent: e.sourceEvent });
   }
