@@ -13,6 +13,8 @@ import { Component } from "./components/component";
 import { DiagramModule } from "./module";
 import { ActionsArchiver } from "./modules/actions-archiver";
 import { StateSnaper } from "./modules/sub-modules/state-snaper";
+import { EdgeConnection } from "./components/edge-connection";
+import { EdgeInstanceCreator } from "./interfaces/EdgeInstanceCreator";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -60,8 +62,15 @@ export class DiagramStore extends EventEmitter{
 
   public readonly nodePadding: Margin;
 
+  private _edgeFactory: EdgeInstanceCreator;
+  public get edgeFactory(){
+    return this._edgeFactory;
+  }
+
   constructor(public readonly diagramOptions: DiagramOptions){
     super();
+    this._edgeFactory = diagramOptions.edgeFactory
+                      || ((s: EdgeConnection, t: EdgeConnection) => new Edge(s, t));
 
     const { nodeBorderWidth, nodeHeaderHeight } = diagramOptions;
 

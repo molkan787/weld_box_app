@@ -8,11 +8,24 @@ import { Node } from "./node";
 export class EdgeConnection extends Component{
 
   public edge: Edge | null = null;
-  public node: Node | null = null;
   public position?: Position;
   public offset?: Position;
   public bridgeTo: EdgeConnection | null = null;
   public bridgeFrom: EdgeConnection | null = null;
+  private _node: Node | null = null;
+
+  public get node(): Node | null{
+    return this._node;
+  }
+
+  public set node(node: Node | null){
+    this._node = node;
+    // if(this._node !== node){
+    //   if(this._node) this._node.removeEdgeConnection(this, true);
+    //   node?.addEdgeConnection(this, true);
+    //   this._node = node;
+    // }
+  }
 
   /** Cached result of getCoordinates() method */
   public coordinates: Position = { x: 0, y: 0 };
@@ -188,6 +201,7 @@ export class EdgeConnection extends Component{
    * Returns all EdgeConnections that are attached to the same wall of the same Node as this one
    */
   private getSameSideSources(): EdgeConnection[]{
+    console.log(this);
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.nodeWall == this.nodeWall && ec !== this

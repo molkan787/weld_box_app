@@ -62,6 +62,7 @@ export class ObjectCopier{
 
     const parent = state.getParent();
     const { props, position, size } = this.getStatePropsAndBBox(state);
+    const _showContent = state.props.isOpen ? false : showContent;
     const data: StateCloneData = {
       ref: id,
       parentRef: parent?.id,
@@ -71,7 +72,7 @@ export class ObjectCopier{
       statementBlocks: cloneArray(statementBlocks),
       position: position,
       size: size,
-      showContent: showContent
+      showContent: _showContent
     }
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge))
     return data;
@@ -159,10 +160,12 @@ export class ObjectCopier{
 
   private copyEdgeConnection(ec: EdgeConnection): EdgeConnectionCloneData{
     const node = <Node>ec.node;
-    const { id, position, offset, attachType, nodeWall } = ec;
+    const { id, position, offset, attachType, nodeWall, bridgeTo, bridgeFrom } = ec;
     return {
       ref: id,
       nodeRef: node.id,
+      bridgeToRef: bridgeTo?.id,
+      bridgeFromRef: bridgeFrom?.id,
       position: cloneObject(position),
       offset: cloneObject(offset),
       attachType,

@@ -99,8 +99,36 @@ export class ObjectCrafter{
     return node;
   }
 
-  public craftEdges(edges: EdgeCloneData[], nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge[]{
-    return <MyEdge[]>edges.map(e => this.craftEdge(e, nodesRef, useRefsAsIds)).filter(e => !!e);
+  public craftEdges(edgesData: EdgeCloneData[], nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge[]{
+    const edges: MyEdge[] = [];
+    const ecRefs = new Map<number, EdgeConnection>();
+    const ecsData: EdgeConnectionCloneData[] = [];
+    for(let i = 0; i < edgesData.length; i++){
+      const edgeData = edgesData[i];
+      const edge = this.craftEdge(edgeData, nodesRef, useRefsAsIds);
+      if(edge){
+        edges.push(edge);
+        if(useRefsAsIds){
+          const { source: sourceData, target: targetData } = edgeData;
+          const { source, target } = edge;
+          ecsData.push(sourceData, targetData);
+          ecRefs.set(source.id, source);
+          ecRefs.set(target.id, target);
+        }
+      }
+    }
+    if(useRefsAsIds){
+      for(let i = 0; i < ecsData.length; i++){
+        const ecData = ecsData[i];
+        const { ref, bridgeToRef, bridgeFromRef } = ecData;
+        const ec = ecRefs.get(ref);
+        if(ec){
+          if(bridgeToRef) ec.bridgeTo = ecRefs.get(bridgeToRef) || null;
+          if(bridgeFromRef) ec.bridgeFrom = ecRefs.get(bridgeFromRef) || null;
+        }
+      }
+    }
+    return edges;
   }
 
   public craftEdge(data: EdgeCloneData, nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge | null{

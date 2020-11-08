@@ -1,6 +1,6 @@
 import { zoomIdentity, ZoomTransform } from "d3";
 import { Node } from "../components/node";
-import { CLASSES, EVENTS } from "../constants";
+import { CLASSES, DATA_COMMANDS, EVENTS } from "../constants";
 import { DiagramStore, MyRBush } from "../diagram-store";
 import { D3Node } from "../types/aliases";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
@@ -89,7 +89,7 @@ export class SubChart{
     node.setShowContent(true, true);
     this.store.nodesSpatialMap.insert(node);
 
-    this.buildNodeBodyEdges(node);
+    this.buildNodeBridgedEdges(node);
 
     this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
     this.emitChangeEvent();
@@ -107,8 +107,8 @@ export class SubChart{
     const currentD3Node = this.store.getD3Node(currentNode.id);
     currentD3Node.remove();
 
-    this.switchNodeState(currentNode, false);
     currentNode.setShowContent(false, true);
+    this.switchNodeState(currentNode, false);
 
     this.store.nodesSpatialMap = chartItem.spatialMap;
 
@@ -117,7 +117,7 @@ export class SubChart{
     const zoom = this.zoomTransforms.get(chartItem.node?.id || 0);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
 
-    this.destroyNodeBodyEdges(currentNode);
+    this.destroyNodeBridgedEdges(currentNode);
 
     this.addD3NodesToDocument(chartItem.d3Nodes);
 
@@ -136,12 +136,14 @@ export class SubChart{
     this.emitChangeEvent();
   }
 
-  private destroyNodeBodyEdges(node: Node){
+  private destroyNodeBridgedEdges(node: Node){
+    console.log('destroyNodeBridgedEdges() node.edges', node.edges)
     const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
     this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges })
   }
 
-  private buildNodeBodyEdges(node: Node){
+  private buildNodeBridgedEdges(node: Node){
+    console.log('buildNodeBridgedEdges() node.edges', node.edges)
     const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
     this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges })
   }
@@ -215,6 +217,10 @@ export class SubChart{
     const len = allDesendents.length;
     for(let i = 0; i < len; i++){
       this.store.nodesSpatialMap.remove(allDesendents[i]);
+    }
+
+    if(event.data == DATA_COMMANDS.DESTROY_BRIDGED_EDGES){
+      this.destroyNodeBridgedEdges(node);
     }
 
   }

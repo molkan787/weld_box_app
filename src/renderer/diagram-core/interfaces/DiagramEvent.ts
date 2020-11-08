@@ -10,4 +10,5 @@ export interface DiagramEvent{
   readonly edge?: Edge | null;
   readonly data?: any;
   readonly simulated?: boolean;
+  readonly skipMutation?: boolean;
 }

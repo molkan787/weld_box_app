@@ -3,14 +3,8 @@
   position: relative;
   overflow: hidden;
 
-  &.svg-clickable{
-    svg:not(.edges-layer){
-      pointer-events: visiblePainted !important;
-    }
-  }
-
-  &.edges-layer-clickable .edges-layer{
-    pointer-events: all !important;
+  &.edges-not-clickable .edge{
+    pointer-events: none !important;
   }
 
   *:not(input){

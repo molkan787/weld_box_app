@@ -19,6 +19,7 @@ import { EdgeSelector } from './modules/edge-selector';
 import { ComponentDeleter } from './modules/component-deleter';
 import { EdgeReshaper } from './modules/edge-reshaper';
 import { Component, ComponentType } from './components/component';
+import { EdgesMutator } from './modules/edges-mutator';
 
 /**
  * `Diagram`
@@ -44,7 +45,8 @@ export class Diagram{
       edgeSelector: new EdgeSelector(this.store),
       nodeDragging: new NodeDragging(this.store),
       treeManager: new TreeManager(this.store),
-      edgeDrawer: new EdgeDrawer(this.store, options),
+      edgeDrawer: new EdgeDrawer(this.store),
+      edgesMutator: new EdgesMutator(this.store),
       subChart: new SubChart(this.store),
       initialNodeDragging: new InitialNodeDragging(this.store),
       componentDeleter: new ComponentDeleter(this.store),

@@ -8,7 +8,6 @@ import { distSqrd } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramOptions } from "../interfaces/DiagramOptions";
-import { EdgeInstanceCreator } from "../interfaces/EdgeInstanceCreator";
 import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
 
@@ -19,12 +18,12 @@ export class EdgeDrawer extends DiagramModule{
   /** Can be the Source node or target candidate */
   private nodeInSubject: Node | null = null;
 
-  private edgeFactory: EdgeInstanceCreator;
+  public get edgeFactory(){
+    return this.store.edgeFactory;
+  }
 
-  constructor(store: DiagramStore, options: DiagramOptions){
+  constructor(store: DiagramStore){
     super(store, MODULES.EDGE_DRAWER);
-    this.edgeFactory = options.edgeFactory
-                      || ((s: EdgeConnection, t: EdgeConnection) => new Edge(s, t));
 
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
@@ -132,7 +131,6 @@ export class EdgeDrawer extends DiagramModule{
 
   onNodeDropped(event: DiagramEvent){
     if(this.isInactive) return;
-    console.log(event.sourceEvent.sourceEvent)
 
     const node = this.nodeInSubject;
     const edge = this.currentEdge;
@@ -145,17 +143,25 @@ export class EdgeDrawer extends DiagramModule{
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }else if(edge && edge.source.node){
-      const srcNode = edge.source.node;
-      const srcPos = srcNode.getAbsolutePosition();
       const trgPos = <Position>edge.target.position;
-      const offset: Position = {
-        x: trgPos.x - srcPos.x,
-        y: trgPos.y - srcPos.y
+      const ab = this.getAttachBoxAtDropPosition(event.sourceEvent.sourceEvent);
+      if(ab && ab.node){
+        const target = ab.node.createEdgeConnection();
+        target.setBridge(ab);
+        target.edge = edge;
+        edge.target = target;
+      }else{
+        const srcNode = edge.source.node;
+        const srcPos = srcNode.getAbsolutePosition();
+        const offset: Position = {
+          x: trgPos.x - srcPos.x,
+          y: trgPos.y - srcPos.y
+        }
+        const target = new EdgeConnection(AttachType.Node);
+        target.offset = offset;
+        target.node = srcNode;
+        edge.target = target;
       }
-      const target = new EdgeConnection(AttachType.Node);
-      target.offset = offset;
-      target.node = srcNode;
-      edge.target = target;
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge, sourceEvent: event });
     }
     this.currentEdge = null;
@@ -163,6 +169,22 @@ export class EdgeDrawer extends DiagramModule{
     edge && this.pushSpawnAction(edge);
 
     this.deactivate();
+  }
+
+  private getAttachBoxAtDropPosition(event: MouseEvent): EdgeConnection | null{
+    const node = this.store.currentlyOpenNode;
+    if(!node) return null;
+    const { clientX, clientY } = event;
+    const rootEl = this.store.rootElement;
+    rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, true); // prevents picking edges elements by document.elementFromPoint()
+    const el = document.elementFromPoint(clientX, clientY);
+    rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, false);
+    if(el && el.classList.contains(CLASSES.ATTACH_BOX)){
+      const edgeId = parseInt(el.getAttribute(ATTR.COMPONENT_ID) || '0');
+      const edgeConnection = this.getNodeEdgeConnection(node, edgeId);
+      return edgeConnection;
+    }
+    return null;
   }
 
   pushSpawnAction(edge: Edge){

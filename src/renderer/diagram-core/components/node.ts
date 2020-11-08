@@ -18,6 +18,7 @@ export class Node extends Component{
 
   private _parent: Node | null = null;
   readonly children: Node[] = [];
+  /** Edge Connections that are attached to this node */
   readonly edges: EdgeConnection[] = [];
   readonly isBasic: boolean = false;
   readonly isCircle: boolean = false;
@@ -160,23 +161,23 @@ export class Node extends Component{
     return connection;
   }
 
-  addEdgeConnection(connection: EdgeConnection){
+  addEdgeConnection(connection: EdgeConnection, skipNodeSetting?: boolean){
     const index = this.edges.indexOf(connection);
     if(index == -1){
       this.edges.push(connection);
     }
-    connection.node = this;
+    !skipNodeSetting && (connection.node = this);
   }
 
   /**
    * Unlink an edge connection and remove it from the node instance
    * @param connection EdgeConnection instance that need to be removed
    */
-  removeEdgeConnection(connection: EdgeConnection): boolean{
+  removeEdgeConnection(connection: EdgeConnection, skipNodeSetting?: boolean): boolean{
     if(connection.node !== this){
       throw new Error(`Requested removal of Edge Connection from an incorrect Node`);
     }
-    connection.node = null;
+    !skipNodeSetting && (connection.node = null);
     const index = this.edges.indexOf(connection);
     if(index >= 0){
       this.edges.splice(index, 1);

@@ -1,5 +1,5 @@
 import { zoomIdentity } from "d3";
-import { Diagram, EVENTS, Node } from "../diagram-core";
+import { DATA_COMMANDS, Diagram, EVENTS, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { SubChart } from "../diagram-core/modules/sub-chart";
 import { DiagramExportData, ZoomTransformData } from "../interfaces/DiagramExportData";
@@ -97,7 +97,7 @@ export class DiagramProject{
     for(let i = nodes.length - 1; i >= 0; i--){
       const node = nodes[i];
       if(!node.showContent){
-        store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node });
+        store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node, skipMutation: true });
       }
     }
   }

@@ -82,6 +82,10 @@ export const CLASSES = Object.freeze({
   SOURCE_ATTACH_BOX: 'source-attach-box',
   TARGET_ATTACH_BOX: 'target-attach-box',
   SVG_CLICKABLE: 'svg-clickable',
-  EDGES_LAYER_CLICKABLE: 'edges-layer-clickable',
+  EDGES_NOT_CLICKABLE: 'edges-not-clickable',
   HIGHLIGHTED: 'highlighted',
 })
+
+export const DATA_COMMANDS = Object.freeze({
+  DESTROY_BRIDGED_EDGES: 'destroy-bridged-edges',
+});

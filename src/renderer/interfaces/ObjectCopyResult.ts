@@ -58,4 +58,6 @@ export interface EdgeConnectionCloneData{
   attachType: AttachType,
   nodeWall: Side,
   nodeRef: number,
+  bridgeToRef: number | undefined,
+  bridgeFromRef: number | undefined,
 }

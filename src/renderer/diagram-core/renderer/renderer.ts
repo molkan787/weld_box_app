@@ -133,7 +133,16 @@ export class Renderer{
   }
 
   onEdgeAdded(event: DiagramEvent){
-    this.build(null, <Edge>event.edge);
+    const edge = <Edge>event.edge;
+    const { source, target } = edge;
+    const srcAllow = !source.isBridge || source.node?.props.isOpen;
+    const trgAllow = !target.isBridge || target.node?.props.isOpen;
+    if(srcAllow && trgAllow){
+      console.log('edge isn\'t bridged:', edge);
+      this.build(null, <Edge>event.edge);
+    }else{
+      console.log('edge is bridged:', edge);
+    }
   }
 
   /**
@@ -143,10 +152,15 @@ export class Renderer{
     const node = <Node>event.node;
     this.nodeRenderer.update(node);
 
-    // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
-    const edges = <Edge[]>(node.edges.map(ec => ec.edge).filter(e => !!e));
-
     if(!node.props.isOpen){
+      // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
+      const edges = <Edge[]>(
+        node.edges
+        .filter(ec => !ec.isBridge)
+        .map(ec => ec.edge)
+        .filter(e => !!e)
+      );
+
       // Updating positions of all edges that are connected to the Node currently being moved
       for(let edge of edges){
         this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
@@ -218,6 +232,7 @@ export class Renderer{
   }
 
   onBuildEdges(event: DiagramEvent){
+    console.log('onBuildEdges', event)
     const edges = <Edge[]>event.data;
     for(const edge of edges){
       this.build(null, edge);
