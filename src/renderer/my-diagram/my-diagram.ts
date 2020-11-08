@@ -53,7 +53,7 @@ export class MyDiagram extends Diagram{
   private onEdgeAdded(edge: MyEdge){
     const thisSource = edge.source;
     const node = thisSource.node;
-    if(node && node.edges.length > 1){
+    if(edge.properties.priority == 0 && node && node.edges.length > 1){
       this.lockActionsArchiver();
       const sources = node.edges.filter(ec => ec.isSource() && ec !== thisSource);
       const sourceEdges = <MyEdge[]>sources.map(ec => ec.edge).filter(e => !!e);
