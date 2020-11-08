@@ -40,7 +40,9 @@ export class TreeManager extends DiagramModule{
       maxY: pos.y + size.height - padd,
     }
     let overlapingNodes = this.store.getNodesFromBBox(bbox);
-    overlapingNodes = overlapingNodes.filter(n => n !== node && n.showContent && !n.isBasic)
+    overlapingNodes = overlapingNodes.filter(n => (
+      n !== node && n.showContent && !this.isNodeHidden(n) && !n.isBasic
+    ));
     const excludes = [...node.children];
     const candidates = this.sortNodesByDistance(bbox, overlapingNodes, excludes);
     for(let candidate of candidates){
@@ -49,6 +51,16 @@ export class TreeManager extends DiagramModule{
       return;
     }
     this.setDropTarget(null);
+  }
+
+  private isNodeHidden(node: Node){
+    let n: Node | null = node;
+    while(n = n.parent){
+      if(n.showContent == false){
+        return true;
+      }
+    }
+    return false;
   }
 
   private sortNodesByDistance(bbox: BBox, nodes: Node[], excludes: Node[]): Node[]{
