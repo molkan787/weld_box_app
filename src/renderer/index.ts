@@ -1,3 +1,4 @@
+import './dev';
 import './modules/app-close-handler';
 import App from '@/components/App.vue';
 import Vue from 'vue';

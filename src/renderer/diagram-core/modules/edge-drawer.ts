@@ -7,7 +7,6 @@ import { isPointInsideBBox, Side, TouchesWall } from "../helpers/geometry";
 import { distSqrd } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
-import { DiagramOptions } from "../interfaces/DiagramOptions";
 import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
 

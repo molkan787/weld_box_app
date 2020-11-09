@@ -1,5 +1,5 @@
 import { zoomIdentity } from "d3";
-import { DATA_COMMANDS, Diagram, EVENTS, Node } from "../diagram-core";
+import { Diagram, EVENTS, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { SubChart } from "../diagram-core/modules/sub-chart";
 import { DiagramExportData, ZoomTransformData } from "../interfaces/DiagramExportData";
