@@ -20,11 +20,6 @@ export class EdgeConnection extends Component{
 
   public set node(node: Node | null){
     this._node = node;
-    // if(this._node !== node){
-    //   if(this._node) this._node.removeEdgeConnection(this, true);
-    //   node?.addEdgeConnection(this, true);
-    //   this._node = node;
-    // }
   }
 
   /** Cached result of getCoordinates() method */
@@ -201,6 +196,7 @@ export class EdgeConnection extends Component{
    * Returns all EdgeConnections that are attached to the same wall of the same Node as this one
    */
   private getSameSideSources(): EdgeConnection[]{
+    console.log(this);
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.nodeWall == this.nodeWall && ec !== this
@@ -228,6 +224,6 @@ export enum AttachType{
 }
 
 export enum EdgeConnectionType{
-  Source,
-  Target
+  Source = 'source',
+  Target = 'target',
 }

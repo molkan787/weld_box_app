@@ -1,7 +1,9 @@
 import { Edge } from "../components/edge";
 import { ATTR, EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
+import { distSqrd } from "../helpers/geometry";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { Position } from "../interfaces/Position";
 
 export class EdgeSelector{
 
@@ -20,9 +22,12 @@ export class EdgeSelector{
       sourceEvent.stopImmediatePropagation();
       sourceEvent.preventDefault();
       const edge = this.store.getEdgeById(data.id);
-      this.store.emit(EVENTS.EDGE_SELECTED, { edge, sourceEvent });
+      if(edge && this.isPointOnEdgeEnds(edge, { x: clientX, y: clientY })){
+        this.store.emit(EVENTS.EDGE_MOUSEDOWN_ON_ENDS, { edge, sourceEvent });
+      }else{
+        this.store.emit(EVENTS.EDGE_SELECTED, { edge, sourceEvent });
+      }
       edge?.onDOMInteraction('mousedown', data.emitData, sourceEvent);
-      return;
     }
   }
 
@@ -69,6 +74,13 @@ export class EdgeSelector{
       }
     }
     return null;
+  }
+
+  isPointOnEdgeEnds(edge: Edge, point: Position){
+    const { x: x1, y: y1 } = this.store.transformClientPoint(point);
+    const { x: x2, y: y2} = edge.target.coordinates;
+    const distance = distSqrd(x1, y1, x2, y2);
+    return distance <= 225;
   }
 
 }

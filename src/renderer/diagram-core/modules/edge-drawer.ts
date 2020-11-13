@@ -1,5 +1,5 @@
 import { Edge } from "../components/edge";
-import { AttachType, EdgeConnection } from "../components/edge-connection";
+import { AttachType, EdgeConnection, EdgeConnectionType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -9,13 +9,21 @@ import { capNumber } from "../helpers/math";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
+import { cloneObject } from "../utils";
 
 export class EdgeDrawer extends DiagramModule{
 
+  /** Holds reffernce to the edge that is current being drawn */
   private currentEdge: Edge | null = null;
 
   /** Can be the Source node or target candidate */
   private nodeInSubject: Node | null = null;
+
+  private redrawing: boolean = false;
+  private cache = {
+    previousTarget: <EdgeConnection | null>null,
+    previousTargetNode: <Node | null>null,
+  };
 
   public get edgeFactory(){
     return this.store.edgeFactory;
@@ -29,15 +37,40 @@ export class EdgeDrawer extends DiagramModule{
     store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, (e) => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, (e) => this.onEdgeConnectionsChanged(e));
-    store.on(EVENTS.CANVAS_MOUSEMOVE, (e: DiagramEvent) => this.onMouseMove(e.sourceEvent))
+    store.on(EVENTS.CANVAS_MOUSEMOVE, (e) => this.onMouseMove(e.sourceEvent));
+    store.on(EVENTS.EDGE_MOUSEDOWN_ON_ENDS, (e) => this.onEdgeMouseDownOnEnds(e));
+  }
+
+  private onEdgeMouseDownOnEnds(event: DiagramEvent){
+    const edge = <Edge>event.edge;
+    this.raiseEdgeEnd(edge, EdgeConnectionType.Target);
+  }
+
+  private raiseEdgeEnd(edge: Edge, end: EdgeConnectionType){
+    console.log('raiseEdgeEnd');
+    this.currentEdge = edge;
+    if(end == EdgeConnectionType.Target){
+      const { target } = edge;
+      this.cache.previousTarget = target;
+      this.cache.previousTargetNode = target.node;
+      target.node?.removeEdgeConnection(target);
+      const newTarget = new EdgeConnection(AttachType.Position);
+      newTarget.position = cloneObject(edge.target.coordinates);
+      edge.setTarget(newTarget);
+    }else{
+      throw new Error(`Edge end '${end}' isn't supported`);
+    }
+    this.redrawing = true;
+    this.activate();
+    this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
   }
 
 
 //#region Edge drawing logic
 
   onNodeDragStart(event: DiagramEvent){
-    if(this.isInactive) return;
-
+    if(this.isInactive || this.redrawing) return;
+    console.log('onNodeDragStart');
                                     // the first sourceEvent is the D3.Drag event, the second is the native MouseEvent
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
     const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
@@ -165,9 +198,16 @@ export class EdgeDrawer extends DiagramModule{
     }
     this.currentEdge = null;
 
-    edge && this.pushSpawnAction(edge);
+    if(edge){
+      if(this.redrawing){
+        this.pushReDrawnAction(edge);
+      }else{
+        this.pushSpawnAction(edge);
+      }
+    }
 
     this.deactivate();
+    this.redrawing = false;
   }
 
   private getAttachBoxAtDropPosition(event: MouseEvent): EdgeConnection | null{
@@ -184,6 +224,41 @@ export class EdgeDrawer extends DiagramModule{
       return edgeConnection;
     }
     return null;
+  }
+
+  pushReDrawnAction(edge: Edge){
+    const oldTarget = <EdgeConnection>this.cache.previousTarget;
+    const newTarget = edge.target;
+    const oldNode = this.cache.previousTargetNode;
+    const newNode = newTarget.node;
+    console.log('oldTarget', oldTarget);
+    console.log('newTarget', newTarget);
+    this.pushAction({
+      undo: [
+        {
+          events: [EVENTS.EDGE_CONNECTIONS_CHANGED],
+          eventsPayload: { edge },
+          do(){
+            newNode?.removeEdgeConnection(newTarget);
+            newTarget.edge = null;
+            edge.setTarget(oldTarget);
+            oldNode?.addEdgeConnection(oldTarget);
+          }
+        }
+      ],
+      redo: [
+        {
+          events: [EVENTS.EDGE_CONNECTIONS_CHANGED],
+          eventsPayload: { edge },
+          do(){
+            oldNode?.removeEdgeConnection(oldTarget);
+            oldTarget.edge = null;
+            edge.setTarget(newTarget);
+            newNode?.addEdgeConnection(newTarget);
+          }
+        }
+      ]
+    });
   }
 
   pushSpawnAction(edge: Edge){

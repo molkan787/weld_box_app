@@ -1,3 +1,6 @@
+/**
+ * Diagram's modules names
+ */
 export const MODULES = Object.freeze({
   NODE_DRAGGING: 'node-dragging',
   INITIAL_NODE_DRAGGING: 'initial-node-dragging',
@@ -8,6 +11,9 @@ export const MODULES = Object.freeze({
   TREE_MANAGER: 'tree-manager',
 });
 
+/**
+ * HTML attributes names used for the Diagram systems
+ */
 export const ATTR = Object.freeze({
   CORNER: 'data-corner',
   WALL_SIDE: 'data-wall-side',
@@ -15,6 +21,9 @@ export const ATTR = Object.freeze({
   EMIT_DATA: 'data-emit-data',
 });
 
+/**
+ * Events names for Diagram's systems
+ */
 export const EVENTS = Object.freeze({
   NODE_BBOX_CHANGED: 'node-bbox-changed',
   NODE_DRAGSTART: 'node-dragstart',
@@ -44,6 +53,7 @@ export const EVENTS = Object.freeze({
   EDGE_RESHAPED: 'edge-reshaped',
   EDGE_SELECTED: 'edge-selected',
   EDGE_DELETED: 'edge-deleted',
+  EDGE_MOUSEDOWN_ON_ENDS: 'edge-mousedown-on-ends',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
@@ -70,6 +80,9 @@ export const EVENTS = Object.freeze({
   INIT_CANVAS_CREATED: 'init-canvas-created'
 });
 
+/**
+ * HTML/CSS classes used on the diagram
+ */
 export const CLASSES = Object.freeze({
   ROOT_ELEMENT: 'root-element',
   RESIZE_HANDLE: 'resize-handle',
