@@ -34,7 +34,7 @@ export class MyDiagram extends Diagram{
       }
     });
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
-    this.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(<MyEdge>e.edge));
+    this.on(EVENTS.EDGE_CREATED, e => this.onEdgeAdded(<MyEdge>e.edge));
   }
 
   buildInitialDiagram(){

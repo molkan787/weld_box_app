@@ -34,10 +34,10 @@ export class EdgeDrawer extends DiagramModule{
 
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
-    store.on(EVENTS.NODE_DROPPED, (e) => this.onNodeDropped(e));
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, (e) => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, (e) => this.onEdgeConnectionsChanged(e));
-    store.on(EVENTS.CANVAS_MOUSEMOVE, (e) => this.onMouseMove(e.sourceEvent));
+    store.on(EVENTS.CANVAS_MOUSEMOVE, (e) => this.onCanvasMouseMove(e.sourceEvent));
+    store.on(EVENTS.CANVAS_MOUSEUP, (e) => this.onCanvasMouseUp(e.sourceEvent));
     store.on(EVENTS.EDGE_MOUSEDOWN_ON_ENDS, (e) => this.onEdgeMouseDownOnEnds(e));
   }
 
@@ -47,7 +47,6 @@ export class EdgeDrawer extends DiagramModule{
   }
 
   private raiseEdgeEnd(edge: Edge, end: EdgeConnectionType){
-    console.log('raiseEdgeEnd');
     this.currentEdge = edge;
     if(end == EdgeConnectionType.Target){
       const { target } = edge;
@@ -70,7 +69,6 @@ export class EdgeDrawer extends DiagramModule{
 
   onNodeDragStart(event: DiagramEvent){
     if(this.isInactive || this.redrawing) return;
-    console.log('onNodeDragStart');
                                     // the first sourceEvent is the D3.Drag event, the second is the native MouseEvent
     const srcElement: HTMLElement = event.sourceEvent?.sourceEvent?.srcElement;
     const isAB = srcElement && srcElement.classList.contains(CLASSES.ATTACH_BOX);
@@ -133,18 +131,23 @@ export class EdgeDrawer extends DiagramModule{
 
   onNodeDragged(event: DiagramEvent){
     if(this.isInactive) return;
+    const mouseevent = event.sourceEvent.sourceEvent;
+    this.onCanvasMouseMove(mouseevent);
+  }
 
+  onCanvasMouseUp(event: MouseEvent){
+    this.endEdgeDrawing(event);
+  }
+
+  followCursor(event: MouseEvent){
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
-    const { x, y } = event.sourceEvent.sourceEvent;
+    const { x, y } = event;
     const point = this.store.transformClientPoint({ x, y });
     const targetConnection = new EdgeConnection(AttachType.Position);
     targetConnection.position = point;
     edge.setTarget(targetConnection);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
-
-    const mouseevent = event.sourceEvent.sourceEvent;
-    this.onMouseMove(mouseevent);
   }
 
   getEdgeConnectionOffset(node: Node, wall: Side, sourceEvent: any): Position{
@@ -161,7 +164,7 @@ export class EdgeDrawer extends DiagramModule{
     return offset;
   }
 
-  onNodeDropped(event: DiagramEvent){
+  endEdgeDrawing(event: MouseEvent){
     if(this.isInactive) return;
 
     const node = this.nodeInSubject;
@@ -176,7 +179,7 @@ export class EdgeDrawer extends DiagramModule{
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }else if(edge && edge.source.node){
       const trgPos = <Position>edge.target.position;
-      const ab = this.getAttachBoxAtDropPosition(event.sourceEvent.sourceEvent);
+      const ab = this.getAttachBoxAtDropPosition(event);
       if(ab && ab.node){
         const target = ab.node.createEdgeConnection();
         target.setBridge(ab);
@@ -206,7 +209,14 @@ export class EdgeDrawer extends DiagramModule{
       }
     }
 
-    this.deactivate();
+    setTimeout(() => {
+      this.deactivate();
+      if(node){
+        node.highlightedWall = null;
+        node.highlighted = false;
+        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
+      }
+    }, 30)
     this.redrawing = false;
   }
 
@@ -231,8 +241,6 @@ export class EdgeDrawer extends DiagramModule{
     const newTarget = edge.target;
     const oldNode = this.cache.previousTargetNode;
     const newNode = newTarget.node;
-    console.log('oldTarget', oldTarget);
-    console.log('newTarget', newTarget);
     this.pushAction({
       undo: [
         {
@@ -284,8 +292,9 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Attach object finding logic
 
-  onMouseMove(event: MouseEvent){
+  onCanvasMouseMove(event: MouseEvent){
     if(this.isInactive) return;
+    this.followCursor(event);
 
     const point = {
       x: event.clientX,

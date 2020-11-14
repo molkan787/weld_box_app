@@ -90,7 +90,9 @@ export class DiagramProject{
 
     const eLen = edges.length;
     for(let i = 0; i < eLen; i++){
-      diagram.addEdge(edges[i]);
+      const edge = edges[i];
+      diagram.addEdge(edge);
+      diagram.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
     }
 
     const store = diagram.store;

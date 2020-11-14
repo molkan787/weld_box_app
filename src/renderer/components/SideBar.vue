@@ -3,16 +3,19 @@
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
-    <div title="Transition (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="transitionClick('transition')">
+    <div title="Edge (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="edgeClick()">
       <TransitionIcon />
     </div>
+    <div title="Start edge" class="icon" @mousedown="onMouseDown($event, 'start-edge')">
+      <StartTransitionIcon />
+    </div>
+    <div class="separator"></div>
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'message')">
       <MessageIcon />
     </div>
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'event')">
       <EventIcon />
     </div>
-    <div class="separator"></div>
     <div title="Junction" class="icon" @mousedown="onMouseDown($event, 'junction')">
       <JunctionIcon />
     </div>
@@ -24,21 +27,24 @@ import { BasicNode } from '../my-diagram/basic-node';
 import { State } from '../my-diagram/state';
 import StateIcon from './icons/State';
 import TransitionIcon from './icons/Transition';
+import StartTransitionIcon from './icons/StartTransition';
 import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
 import JunctionIcon from './icons/Junction';
 import { MessageNode } from '../my-diagram/MessageNode';
 import { Junction } from '../my-diagram/junction';
 import { EventNode } from '../my-diagram/EventNode';
-import { MODULES } from '../diagram-core';
+import { AttachType, EdgeConnection, MODULES } from '../diagram-core';
 import { ObjectType } from '../interfaces/ObjectType';
+import { EdgeType, MyEdge } from '../my-diagram/my-edge';
 export default {
   components: {
     StateIcon,
     TransitionIcon,
     MessageIcon,
     EventIcon,
-    JunctionIcon
+    JunctionIcon,
+    StartTransitionIcon
   },
   props: {
     diagram: {
@@ -63,9 +69,13 @@ export default {
         this.diagram.deactivateEdgeDrawer();
       }
       const { clientX: x, clientY: y } = event;
-      this.diagram.spawnNodeAt({ x, y }, this.createObjectInstance(objectType))
+      if(objectType == 'start-edge'){
+        this.diagram.spawnEdgeAt({ x, y }, this.createStartEdge());
+      }else{
+        this.diagram.spawnNodeAt({ x, y }, this.createObjectInstance(objectType));
+      }
     },
-    transitionClick(name){
+    edgeClick(){
       if(this.activeTool == MODULES.EDGE_DRAWER){
         this.diagram.deactivateEdgeDrawer();
       }else{
@@ -82,7 +92,18 @@ export default {
           return new EventNode({ x: 0, y: 0 });
         case ObjectType.Junction:
           return new Junction({ x: 0, y: 0 });
+        default:
+          throw new Error(`Unsupported object type '${_objectType}'`);
       }
+    },
+    createStartEdge(){
+      const source = new EdgeConnection(AttachType.Position);
+      const target = new EdgeConnection(AttachType.Position);
+      source.position = { x: 0, y: 0 };
+      target.position = { x: 50, y: 0 };
+      const edge = new MyEdge(source, target);
+      edge.properties.type = EdgeType.START;
+      return edge;
     }
   }
 }

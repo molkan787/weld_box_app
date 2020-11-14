@@ -61,10 +61,10 @@ export class EdgeConnection extends Component{
   /**
    * Returns `true` if this EdgeConnection is attached to or relative to a Node, otherwise `false`
    */
-  public isAttachedToNode(){
+  public isAttachedToNode(ignoreRelativeToNode?: boolean){
     return this.attachType === AttachType.NodeBody ||
            this.attachType === AttachType.NodeWall ||
-           this.attachType === AttachType.Node
+           (this.attachType === AttachType.Node && !ignoreRelativeToNode)
   }
 
   /**
@@ -196,7 +196,6 @@ export class EdgeConnection extends Component{
    * Returns all EdgeConnections that are attached to the same wall of the same Node as this one
    */
   private getSameSideSources(): EdgeConnection[]{
-    console.log(this);
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.nodeWall == this.nodeWall && ec !== this

@@ -9,6 +9,7 @@ export const MODULES = Object.freeze({
   ACTIONS_ARCHIVER: 'actions-archiver',
   COMPONENT_DELETER: 'component-deleted',
   TREE_MANAGER: 'tree-manager',
+  INITIAL_EDGE_DRAGGING: 'initial-edge-dragging',
 });
 
 /**
@@ -67,6 +68,7 @@ export const EVENTS = Object.freeze({
   DIAGRAM_CHARTS_PATH_CHANGED: 'diagram-charts-path-changed',
 
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
+  DIAGRAM_START_EDGE_DRAGGING: 'diagram-start-edge-dragging',
   DIAGRAM_DELETE_COMPONENT: 'diagram-delete-component',
   DIAGRAM_ACTIVE_MODULE_CHANGED: 'diagram-active-module-changed',
   DIAGRAM_RESTORE_COMPONENT: 'diagram-restore-component',

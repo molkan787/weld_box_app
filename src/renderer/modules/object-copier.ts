@@ -163,7 +163,7 @@ export class ObjectCopier{
     const { id, position, offset, attachType, nodeWall, bridgeTo, bridgeFrom } = ec;
     return {
       ref: id,
-      nodeRef: node.id,
+      nodeRef: node?.id,
       bridgeToRef: bridgeTo?.id,
       bridgeFromRef: bridgeFrom?.id,
       position: cloneObject(position),

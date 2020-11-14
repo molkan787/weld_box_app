@@ -1,5 +1,6 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge } from "../components/edge";
+import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -93,13 +94,14 @@ export class Renderer{
     const { source, target } = edge;
     const node1 = source.isAttachedToNode() ? source.node : null;
     const node2 = target.isAttachedToNode() ? target.node : null;
-    const commonParent = this.findNearestCommonParent(node1, node2);
+    const stickToSource = source.attachType == AttachType.Node && source.node?.isSubChart;
+    const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2);
 
-    if(commonParent === null){
+    if(parent === null){
       return <D3Node>this.edgesLayer;
     }else{
-      const selector = this.nodeRenderer.getSVGGroupSelector(commonParent);
-      return this.store.getD3Node(commonParent.id).select(selector);
+      const selector = this.nodeRenderer.getSVGGroupSelector(parent);
+      return this.store.getD3Node(parent.id).select(selector);
     }
   }
 

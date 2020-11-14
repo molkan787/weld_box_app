@@ -68,6 +68,10 @@ export class Node extends Component{
     this.setShowContent(value);
   }
 
+  public get isSubChart(){
+    return !this._showContent || this.props.isOpen;
+  }
+
   /**
    * Shows or hides Node's content by passing a boolean value
    * @param {boolean} value `true` to show the content, `false` to hide it

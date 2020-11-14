@@ -1,6 +1,9 @@
 import { DiagramStore } from "./diagram-store";
 import { Action } from "./interfaces/Action";
 
+/**
+ * Base class for Diagram Modules, also contains wrappers around central systems
+ */
 export class DiagramModule{
 
   constructor(

@@ -5,6 +5,9 @@ export class TopBarMenu extends EventEmitter{
 
   public menu: Menu | null = null;
 
+  /**
+   * Build the menu
+   */
   buildMenu(){
     const menu = this.menu = new Menu();
     const click = (mi: MenuItem) => this.handleItemClick(mi);
@@ -54,6 +57,11 @@ export class TopBarMenu extends EventEmitter{
     return menu;
   }
 
+  /**
+   * Enable or Disable a Menu item
+   * @param itemId Item id
+   * @param enabled `true` to enable the item, and `false` to disable the item
+   */
   setItemEnable(itemId: string, enabled: boolean){
     const item = this.menu?.getMenuItemById(itemId);
     if(item){
@@ -61,6 +69,10 @@ export class TopBarMenu extends EventEmitter{
     }
   }
 
+  /**
+   * Menu item click handler, This property should be re-assigned to use custom handler
+   * @param menuItem The menu item that was clicked
+   */
   handleItemClick(menuItem: MenuItem){
     console.log(`"${menuItem.label}" clicked!`)
   }

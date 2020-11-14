@@ -2,7 +2,7 @@
   <Form>
 
     <FormField label="Object" disabled>
-      <input class="capitalize" type="text" :value="object.what">
+      <input class="capitalize" type="text" :value="objectType || object.what">
     </FormField>
 
     <FormField v-if="showNameField" label="Name">
@@ -26,6 +26,10 @@ export default {
     object: {
       type: Object,
       required: true,
+    },
+    objectType: {
+      type: String,
+      default: '',
     },
     showNameField: {
       type: Boolean,

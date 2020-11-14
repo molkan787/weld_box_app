@@ -21,17 +21,35 @@ import { EdgeInstanceCreator } from "./interfaces/EdgeInstanceCreator";
  */
 export class DiagramStore extends EventEmitter{
 
+  /**
+   * List of all nodes added to the Diagram
+   */
   public readonly nodes: Node[] = [];
 
+  /**
+   * A map of all edges added to the diagram, stores as edge.id => edge
+   */
   public readonly edgesMap: Map<number, Edge> = new Map();
 
+  /**
+   * Holds the currently selected Diagram Component
+   */
   public selectedComponent: Component | null = null;
 
+  /**
+   * Actions Archiver instance of the diagram
+   */
   public readonly actionsArchiver: ActionsArchiver = new ActionsArchiver(this);
 
+  /**
+   * State Snaper instance
+   */
   public readonly stateSnaper: StateSnaper = new StateSnaper();
 
   private _currentlyOpenNode: Node | null = null;
+  /**
+   * Access the Node that is currently open as a sub-chart
+   */
   public get currentlyOpenNode(){
     return this._currentlyOpenNode;
   }
@@ -39,14 +57,22 @@ export class DiagramStore extends EventEmitter{
     this._currentlyOpenNode = node;
   }
 
-  /** A map to store Actual DOM/SVG elements by Node's id,
-   * where `Node` is a class holding diagram node properties */
+  /**
+   * A map to store Actual DOM/SVG elements by Node's id,
+   */
   public readonly d3NodesMap: D3NodesMap = new Map<number, D3Node>();
 
-  /** A map to store Nodes in spacial grid to facilitate Node finding by a 2D point in the canvas */
+  /** A map to store Nodes in spacial grid to facilitate finding nodes by a 2D point in the canvas */
   public nodesSpatialMap: MyRBush = new MyRBush();
 
+  /**
+   * Stack container diagram modules activation history
+   */
   public modulesStack: DiagramModule[] = [];
+
+  /**
+   * Holds the current active diagram module
+   */
   public activeModule: DiagramModule | null = null;
 
   /** Holds canvas zoom & drag transform */
@@ -58,10 +84,21 @@ export class DiagramStore extends EventEmitter{
   */
   private _canvasOffset: Position = { x: 0, y: 0 };
 
+  /**
+   * Holds the root element (d3 selection of dom element)
+   */
   private _rootElement: D3Node | null = null;
 
+  /**
+   * Node padding values used for calculate aboslute position of an object,
+   * The values should have same values as in css, its also should count the borders width,
+   * ex: if in css there is a `border-width: 3px` this padding should be { top: 3, right: 0, bottom: 0, left: 0 }
+   */
   public readonly nodePadding: Margin;
 
+  /**
+   * The EdgeFactory passed in the options when constructing the Diagram class instance
+   */
   private _edgeFactory: EdgeInstanceCreator;
   public get edgeFactory(){
     return this._edgeFactory;
@@ -108,12 +145,16 @@ export class DiagramStore extends EventEmitter{
 
   public setRootElement(element: D3Node){
     if(this._rootElement != null){
-      throw new Error('setRootElement() can be called only one time at initialization')
+      throw new Error('setRootElement() can be called only once and at initialization')
     }
     this._rootElement = element;
     this.emit(EVENTS.INIT_CANVAS_CREATED, {});
   }
 
+  /**
+   * Pushes the currently active module to the stack and sets the passed module as the active one
+   * @param module The module to be activated
+   */
   public activateModule(module: DiagramModule){
     if(module === this.activeModule) return;
     if(this.activeModule){
@@ -123,6 +164,10 @@ export class DiagramStore extends EventEmitter{
     this.emitActiveModuleChanged();
   }
 
+  /**
+   * Unsets the passed module as the active module, than pop another from the stack and sets it as the active one
+   * @param module The module to be deactivated
+   */
   public deactiveModule(module: DiagramModule){
     if(module !== this.activeModule) return;
     if(this.modulesStack.length > 0){
@@ -133,12 +178,15 @@ export class DiagramStore extends EventEmitter{
     this.emitActiveModuleChanged();
   }
 
+  /**
+   * Emits and event whenever a module requests activation or deactivation of its self
+   */
   private emitActiveModuleChanged(){
     this.emit(EVENTS.DIAGRAM_ACTIVE_MODULE_CHANGED, { data: this.activeModule });
   }
 
   /**
-   * Gets D3Node from hash table by Id
+   * Gets D3Node from hash-table/map by Id
    * @param id Id of the Node
    */
   public getD3Node(id: number){
@@ -149,6 +197,10 @@ export class DiagramStore extends EventEmitter{
     return <D3Node>n;
   }
 
+  /**
+   * Adds the passed Edge instance to the indecies
+   * @param edge The Edge instance to be added
+   */
   public addEdge(edge: Edge){
     if(this.edgesMap.get(edge.id) instanceof Edge)
       return false;
@@ -157,6 +209,10 @@ export class DiagramStore extends EventEmitter{
     return true;
   }
 
+  /**
+   * Gets the Edge instance from hash-table/map by Id
+   * @param id The id of the Edge
+   */
   public getEdgeById(id: number){
     return this.edgesMap.get(id) || null;
   }
@@ -172,7 +228,7 @@ export class DiagramStore extends EventEmitter{
 
   /**
    * Add a Node to diagram's indices store.
-   * @param node A Node to be stored
+   * @param node The Node to be stored
    */
   public addNode(node: Node): boolean{
     if(this.nodes.indexOf(node) >= 0) return false;
@@ -246,7 +302,7 @@ export class DiagramStore extends EventEmitter{
   }
 
   /**
-   * Maps point (relative to top left corner of canvas wrapper element) to the canvas point.
+   * Maps point (relative to top left corner of diagram's root element) to the canvas point.
    * Basically adds offset and scales the point accoding to the canvas zoom level and drag position
    * @param point Point to be mapped
    * @param roundNumbers if `true` the returned x, y will be rounded to the nearest integers

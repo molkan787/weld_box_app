@@ -2,11 +2,11 @@
   <Panel text="Properties" ref="panel">
     <div class="properties-panel">
       <template v-if="object">
-        <StateForm v-if="object.what == 'state' || object.what == 'thread'" :object="object" />
-        <MessageForm v-else-if="object.what == 'message'" :object="object" />
-        <EventForm v-else-if="object.what == 'event'" :object="object" />
-        <EdgeForm v-else-if="object.what == 'edge'" :object="object" />
-        <JunctionForm v-else-if="object.what == 'junction'" :object="object" />
+        <StateForm v-if="what == 'state' || what == 'thread'" :object="object" />
+        <MessageForm v-else-if="what == 'message'" :object="object" />
+        <EventForm v-else-if="what == 'event'" :object="object" />
+        <EdgeForm v-else-if="what == 'edge'" :object="object" />
+        <BaseForm v-else :object="object" :showNameField="false" />
       </template>
       <template v-else>
         <div class="placeholder">
@@ -24,7 +24,9 @@ import StateForm from './properties-forms/StateForm';
 import MessageForm from './properties-forms/MessageForm';
 import EventForm from './properties-forms/EventForm';
 import EdgeForm from './properties-forms/EdgeForm';
-import JunctionForm from './properties-forms/JunctionForm';
+import BaseForm from './properties-forms/base';
+import { ObjectType } from '../interfaces/ObjectType';
+import { EdgeType } from '../my-diagram/my-edge';
 export default {
   components: {
     Panel,
@@ -32,12 +34,17 @@ export default {
     MessageForm,
     EventForm,
     EdgeForm,
-    JunctionForm
+    BaseForm
   },
   props: {
     object: {
       type: Object,
       default: null
+    }
+  },
+  computed: {
+    what(){
+      return this.object.what;
     }
   },
   watch: {

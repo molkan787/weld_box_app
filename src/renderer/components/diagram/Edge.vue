@@ -19,12 +19,17 @@
         </text>
       </transition>
     </g>
+    <circle v-if="isStartEdge"
+      :cx="startPoint.x" :cy="startPoint.y" r="4" stroke-width="0"
+      :fill="edge.highlighted ? '#06FF87' : '#919294'"
+    ></circle>
   </g>
 </template>
 
 <script>
 import Vue from 'vue';
 import { Edge } from '../../diagram-core'
+import { EdgeType } from '../../my-diagram/my-edge';
 const conditionPlaceHolder = '@()if(){}{}';
 export default {
   props: {
@@ -37,8 +42,11 @@ export default {
     inputElement: null,
   }),
   computed: {
+    isStartEdge(){
+      return this.edgeProps.type == EdgeType.START;
+    },
     showConditionText(){
-      return this.edgeProps.condition || this.edge.showCondition || this.inputElement;
+      return this.edgeProps.type == EdgeType.REGULAR && (this.edgeProps.condition || this.edge.showCondition || this.inputElement);
     },
     edgeProps(){
       return this.edge.properties;
@@ -51,6 +59,9 @@ export default {
     },
     centerPoint(){
       return this.edge.centerPoint;
+    },
+    startPoint(){
+      return this.edge.source.coordinates;
     }
   },
   watch: {

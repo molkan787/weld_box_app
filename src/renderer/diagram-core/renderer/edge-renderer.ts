@@ -97,6 +97,7 @@ export class EdgeRenderer{
 
     this.store.setD3Node(edge.id, g);
     this.update(edge);
+    this.updateDecoration(edge);
 
     edge.DOMElementBuilt(g);
   }
@@ -118,10 +119,11 @@ export class EdgeRenderer{
     const { x: x1, y: y1 } = source.getCoordinates();
     const { x: x2, y: y2 } = target.getCoordinates();
 
+    const sourceNodeWall = source.isAttachedToNode(true) ? source.nodeWall : null;
     const targetNodeWall = target.isAttachedToNode() ? target.nodeWall : null;
 
     const pathData = this.generatorCurvePath(
-      source.nodeWall || Side.Top, x1, y1, sourceOffset,
+      sourceNodeWall, x1, y1, sourceOffset,
       targetNodeWall, x2, y2, targetOffset,
       edge.shapePoints
     );
@@ -151,13 +153,16 @@ export class EdgeRenderer{
   }
 
   generatorCurvePath(
-    side1: Side, x1: number, y1: number, offset1: number,
+    side1: Side | null, x1: number, y1: number, offset1: number,
     side2: Side | null, x2: number, y2: number, offset2: number,
     shapePoints: Position[]
   ): string{
     const points: [number, number][] = [];
     points.push([x1, y1]);
-    points.push(movePoint(x1, y1, side1, offset1));
+
+    if(side1){
+      points.push(movePoint(x1, y1, side1, offset1));
+    }
 
     for(let p of shapePoints){
       points.push([ p.x + x1, p.y + y1 ]);

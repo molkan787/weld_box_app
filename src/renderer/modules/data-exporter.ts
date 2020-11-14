@@ -9,7 +9,7 @@ import { ProjectSetting } from "../interfaces/ProjectSetting";
 import { EventNode } from "../my-diagram/EventNode";
 import { Junction } from "../my-diagram/junction";
 import { MessageNode } from "../my-diagram/MessageNode";
-import { MyEdge } from "../my-diagram/my-edge";
+import { EdgeType, MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { StatementBlock } from "../my-diagram/statement-block";
 import { DiagramProject } from "./diagram-project";
@@ -44,6 +44,7 @@ export class DataExporter{
       const node = nodes[i];
       const parentId = node.getParent()?.id;
       const data = this.getObjectData(<any>node);
+      const edgesData = this.getNodeEdgesData(node);
       if(parentId){
         let family = families.get(parentId);
         if(!family){
@@ -51,8 +52,16 @@ export class DataExporter{
           families.set(parentId, family);
         }
         family.push(data);
-        const edgesData = this.getNodeEdgesData(node);
-        family.push(...edgesData);
+        family.push(...edgesData.filter(exd => exd.properties.type == EdgeType.REGULAR));
+      }
+      const startEdges = edgesData.filter(exd => exd.properties.type == EdgeType.START);
+      if(startEdges.length > 0){
+        let itsFamily = families.get(node.id);
+        if(!itsFamily){
+          itsFamily = [];
+          families.set(node.id, itsFamily);
+        }
+        itsFamily.push(...startEdges);
       }
       index.set(node.id, data);
     }
@@ -68,7 +77,7 @@ export class DataExporter{
 
   private getNodeEdgesData(node: Node): EdgeExportData[]{
     const edges = node.edges
-                      .filter(ec => ec.getType() == EdgeConnectionType.Source)
+                      .filter(ec => ec.isSource())
                       .map(ec => <MyEdge>ec.edge);
     const data = edges.map(e => this.getEdgeData(e));
     return data;
@@ -161,6 +170,7 @@ export class DataExporter{
 
   private getEdgeData(edge: MyEdge): EdgeExportData{
     const { id, name, properties, source, target } = edge;
+    const isStart = properties.type == EdgeType.START;
     const src = source.getInstance();
     let trg = target;
     if(target.bridgeFrom){
@@ -173,7 +183,7 @@ export class DataExporter{
         what: ObjectType.Edge,
       },
       properties: {
-        origin: src.node?.id || 0,
+        origin: (isStart ? 0 : src.node?.id) || 0,
         destination: trg.node?.id || 0,
         priority: properties.priority,
         type: properties.type,

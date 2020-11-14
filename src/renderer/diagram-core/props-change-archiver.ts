@@ -5,6 +5,9 @@ import { DiagramStore } from "./diagram-store";
 import { Action, ActionTask } from "./interfaces/Action";
 import { clone, patchObject } from "./utils";
 
+/**
+ * A Helper class that detects changes in Diagram's component properties and add changes history to the Actions Archiver
+ */
 export class PropsChangeArchiver{
 
   private data: any;

@@ -12,6 +12,7 @@ export class CodeGenerator{
 
   public async generate(diagram: Diagram, setting: ProjectSetting){
     const data = new DataExporter().exportData(diagram, setting);
+    console.log(data);
     const response = await this.request(data);
     if(response.status == 'success' && !response.error){
       await this.saveFiles(setting, response.data.files);
@@ -22,7 +23,7 @@ export class CodeGenerator{
   }
 
   private async request(data: ProjectExportData): Promise<GenerateCodeResponse>{
-    const response = await Axios.post(config.GENERATE_CODE_URL, data);
+    const response = await Axios.post(config.BT_GENERATE_CODE_URL, data);
     return response.data;
   }
 
