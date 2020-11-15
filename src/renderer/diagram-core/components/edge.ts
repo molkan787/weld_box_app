@@ -46,6 +46,21 @@ export class Edge extends Component{
     }
   }
 
+  /**
+   * Gets the actual edge instance,
+   * if this edge is a continuation of another edge returns that another edge,
+   * otherwise returns itself
+   * @returns {Edge}
+   */
+  public getInstance(){
+    if(this.source.isBridge){
+      const bt = this.source.bridgeTo;
+      return (bt && bt.edge) || this;
+    }else{
+      return this;
+    }
+  }
+
   public select(){
     this.highlighted = true;
   }

@@ -1,6 +1,6 @@
 <template>
   <g class="edge-component">
-    <template v-if="edgeProps.priority > 0">
+    <template v-if="shouldShowProps && edgeProps.priority > 0">
       <circle
         :cx="priorityPos.x" :cy="priorityPos.y" r="7"
         stroke-width="0"
@@ -11,7 +11,7 @@
         {{ edgeProps.priority }}
       </text>
     </template>
-    <g :transform="`translate(${centerPoint.x}, ${centerPoint.y})`">
+    <g v-if="shouldShowProps" :transform="`translate(${centerPoint.x}, ${centerPoint.y})`">
       <transition name="fade">
         <text ref="conditionText" v-if="showConditionText" :class="{ hidden: !!inputElement }"
           :data-component-id="edge.id" data-emit-data="condition-text" class="condition">
@@ -42,6 +42,10 @@ export default {
     inputElement: null,
   }),
   computed: {
+    shouldShowProps(){
+      const source = this.edge.source;
+      return !source.isBridge;
+    },
     isStartEdge(){
       return this.edgeProps.type == EdgeType.START;
     },
