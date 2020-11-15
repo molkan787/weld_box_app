@@ -109,6 +109,7 @@ export class TreeManager extends DiagramModule{
 
   private changeNodeParent(node: Node, newParent: Node){
     if(node.parent === newParent) return;
+    if(node.containsNode(newParent)) return;
     const { top, left } = this.store.nodePadding;
     const pp = newParent.getAbsolutePosition();
     const cp = node.getAbsolutePosition();

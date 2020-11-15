@@ -109,6 +109,9 @@ export class Node extends Component{
     return this._parent?.getTopParent(this._parent) || fallback;
   }
 
+  /**
+   * Returns full hierarchical path from the top level parent down to this node
+   */
   public getHierarchyPath(): Node[]{
     const path: Node[] = [this];
     let n: Node | null = this;
@@ -134,6 +137,21 @@ export class Node extends Component{
       }
     }
     return allNodes;
+  }
+
+  /**
+   * Checks for given node's presence in childs hierarchy of this Node.
+   * Returns `true` if found, otherwise returns `false`
+   * @param node Node to check for its presence
+   */
+  public containsNode(node: Node): boolean{
+    const hirearchy = node.getHierarchyPath();
+    for(let i = 0; i < hirearchy.length; i++){
+      if(hirearchy[i] === this){
+        return true;
+      }
+    }
+    return false;
   }
 
   addChild(child: Node){
