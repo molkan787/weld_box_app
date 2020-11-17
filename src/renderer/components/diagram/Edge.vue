@@ -15,7 +15,7 @@
       <transition name="fade">
         <text ref="conditionText" v-if="showConditionText" :class="{ hidden: !!inputElement }"
           :data-component-id="edge.id" data-emit-data="condition-text" class="condition">
-          {{ condition }}
+          {{ conditionOrDefault }}
         </text>
       </transition>
     </g>
@@ -58,7 +58,10 @@ export default {
     condition(){
       const edge = this.edge.getInstance();
       const props = edge.properties;
-      return props.condition || conditionPlaceHolder;
+      return props.condition;
+    },
+    conditionOrDefault(){
+      return this.condition || conditionPlaceHolder;
     },
     priorityPos(){
       return this.edge.offsettedStartPoint;
@@ -88,7 +91,7 @@ export default {
     },
     showConditionInput(sourceEvent){
       this.destroyConditionInput();
-      const condition = this.condition;;
+      const condition = this.conditionOrDefault;
       const { clientX } = sourceEvent;
       const { left, width } = this.$refs.conditionText.getClientRects()[0];
       const input = document.createElement('div');
