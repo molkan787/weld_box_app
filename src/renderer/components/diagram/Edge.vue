@@ -1,6 +1,6 @@
 <template>
   <g class="edge-component">
-    <template v-if="shouldShowProps && edgeProps.priority > 0">
+    <template v-if="!isBridge && edgeProps.priority > 0">
       <circle
         :cx="priorityPos.x" :cy="priorityPos.y" r="7"
         stroke-width="0"
@@ -11,7 +11,7 @@
         {{ edgeProps.priority }}
       </text>
     </template>
-    <g v-if="shouldShowProps" :transform="`translate(${centerPoint.x}, ${centerPoint.y})`">
+    <g :transform="`translate(${centerPoint.x}, ${centerPoint.y})`">
       <transition name="fade">
         <text ref="conditionText" v-if="showConditionText" :class="{ hidden: !!inputElement }"
           :data-component-id="edge.id" data-emit-data="condition-text" class="condition">
@@ -42,21 +42,23 @@ export default {
     inputElement: null,
   }),
   computed: {
-    shouldShowProps(){
+    isBridge(){
       const source = this.edge.source;
-      return !source.isBridge;
+      return source.isBridge;
     },
     isStartEdge(){
       return this.edgeProps.type == EdgeType.START;
     },
     showConditionText(){
-      return this.edgeProps.type == EdgeType.REGULAR && (this.edgeProps.condition || this.edge.showCondition || this.inputElement);
+      return this.edgeProps.type == EdgeType.REGULAR && (this.condition || this.edge.showCondition || this.inputElement);
     },
     edgeProps(){
       return this.edge.properties;
     },
     condition(){
-      return this.edgeProps.condition || conditionPlaceHolder;
+      const edge = this.edge.getInstance();
+      const props = edge.properties;
+      return props.condition || conditionPlaceHolder;
     },
     priorityPos(){
       return this.edge.offsettedStartPoint;
@@ -113,8 +115,10 @@ export default {
       sel.addRange(range)
     },
     hideConditionInput(){
+      const edge = this.edge.getInstance();
+      const props = edge.properties;
       const value = this.inputElement.innerText;
-      this.edgeProps.condition = value == conditionPlaceHolder ? '' : value;
+      props.condition = value == conditionPlaceHolder ? '' : value;
       this.destroyConditionInput();
     },
     destroyConditionInput(){

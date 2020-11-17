@@ -16,21 +16,29 @@ export class Edge extends Component{
   public centerPoint: Position = { x: 0, y: 0 };
 
   constructor(
-    public source: EdgeConnection,
-    public target: EdgeConnection
+    private _source: EdgeConnection,
+    private _target: EdgeConnection
   ){
     super(ComponentType.Edge);
-    source.edge = this;
-    target.edge = this;
+    _source.edge = this;
+    _target.edge = this;
+  }
+
+  public get source(): EdgeConnection{
+    return this._source;
+  }
+
+  public get target(): EdgeConnection{
+    return this._target;
   }
 
   public setSource(source: EdgeConnection){
-    this.source = source;
+    this._source = source;
     source.edge = this;
   }
 
   public setTarget(target: EdgeConnection){
-    this.target = target;
+    this._target = target;
     target.edge = this;
   }
 
