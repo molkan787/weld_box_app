@@ -1,4 +1,4 @@
-import { Edge } from "../components/edge";
+import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { AttachType, EdgeConnection, EdgeConnectionType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES, MODULES } from "../constants";
@@ -80,6 +80,7 @@ export class EdgeDrawer extends DiagramModule{
       const edgeConnection = this.getNodeEdgeConnection(node, edgeId)
       if(edgeConnection){
         this.spawnNewEdgeFromAttachBox(node, edgeConnection, event);
+        return;
       }
     }
 
@@ -106,7 +107,8 @@ export class EdgeDrawer extends DiagramModule{
     const source = node.createEdgeConnection();
     attachBox.bridgeFrom = source;
     source.bridgeTo = attachBox;
-    const edge = this.edgeFactory(source, target);
+    const multipartLocation = attachBox.node?.props.isOpen ? MultipartEdgeLocation.Inner : MultipartEdgeLocation.Outer;
+    const edge = this.edgeFactory(source, target, true, multipartLocation, MultipartEdgeType.Ending);
     this.currentEdge = edge;
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
   }
@@ -167,36 +169,34 @@ export class EdgeDrawer extends DiagramModule{
   endEdgeDrawing(event: MouseEvent){
     if(this.isInactive) return;
 
-    const node = this.nodeInSubject;
+    const subject = this.nodeInSubject;
     const edge = this.currentEdge;
-    if(node && edge){
-      const targetConnection = node.createEdgeConnection(node.highlightedWall || undefined);
+    if(subject && edge){
+      const targetConnection = subject.createEdgeConnection(subject.highlightedWall || undefined);
       edge.setTarget(targetConnection);
-      node.highlightedWall = null;
-      node.highlighted = false;
+      if(!subject.highlightedWall && !edge.isMultipart){
+        // if there isn't any highlighted wall, the attach type will be NodeBody,
+        // so the the drawn edge should be converted to a multipart edge
+        edge.convertToMultipart(MultipartEdgeLocation.Outer, MultipartEdgeType.Starting);
+      }
+      subject.highlightedWall = null;
+      subject.highlighted = false;
       this.currentEdge = null;
-      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
+      this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }else if(edge && edge.source.node){
       const trgPos = <Position>edge.target.position;
-      const ab = this.getAttachBoxAtDropPosition(event);
-      if(ab && ab.node){
-        const target = ab.node.createEdgeConnection();
-        target.setBridge(ab);
-        target.edge = edge;
-        edge.target = target;
-      }else{
-        const srcNode = edge.source.node;
-        const srcPos = srcNode.getAbsolutePosition();
-        const offset: Position = {
-          x: trgPos.x - srcPos.x,
-          y: trgPos.y - srcPos.y
-        }
-        const target = new EdgeConnection(AttachType.Node);
-        target.offset = offset;
-        target.node = srcNode;
-        edge.target = target;
+      const srcNode = edge.source.node;
+      const srcPos = srcNode.getAbsolutePosition();
+      const offset: Position = {
+        x: trgPos.x - srcPos.x,
+        y: trgPos.y - srcPos.y
       }
+      const target = new EdgeConnection(AttachType.Node);
+      target.offset = offset;
+      target.node = srcNode;
+      edge.setTarget(target);
+      this.postDraw(edge, true);
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge, sourceEvent: event });
     }
     this.currentEdge = null;
@@ -208,35 +208,65 @@ export class EdgeDrawer extends DiagramModule{
         this.pushSpawnAction(edge);
       }
     }
-
+    console.log(edge)
     setTimeout(() => {
       this.deactivate();
-      if(node){
-        node.highlightedWall = null;
-        node.highlighted = false;
-        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node });
+      if(subject){
+        subject.highlightedWall = null;
+        subject.highlighted = false;
+        this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject });
       }
     }, 30)
     this.redrawing = false;
   }
 
-  private getAttachBoxAtDropPosition(event: MouseEvent): EdgeConnection | null{
-    const node = this.store.currentlyOpenNode;
-    if(!node) return null;
-    const { clientX, clientY } = event;
-    const rootEl = this.store.rootElement;
-    rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, true); // prevents picking edges elements by document.elementFromPoint()
-    const el = document.elementFromPoint(clientX, clientY);
-    rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, false);
-    if(el && el.classList.contains(CLASSES.ATTACH_BOX)){
-      const edgeId = parseInt(el.getAttribute(ATTR.COMPONENT_ID) || '0');
-      const edgeConnection = this.getNodeEdgeConnection(node, edgeId);
-      return edgeConnection;
+  // private getAttachBoxAtDropPosition(event: MouseEvent): EdgeConnection | null{
+  //   const node = this.store.currentlyOpenNode;
+  //   if(!node) return null;
+  //   const { clientX, clientY } = event;
+  //   const rootEl = this.store.rootElement;
+  //   rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, true); // prevents picking edges elements by document.elementFromPoint()
+  //   const el = document.elementFromPoint(clientX, clientY);
+  //   rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, false);
+  //   if(el && el.classList.contains(CLASSES.ATTACH_BOX)){
+  //     const edgeId = parseInt(el.getAttribute(ATTR.COMPONENT_ID) || '0');
+  //     const edgeConnection = this.getNodeEdgeConnection(node, edgeId);
+  //     return edgeConnection;
+  //   }
+  //   return null;
+  // }
+
+  /**
+   * Called after edge drawing/redrawing ended, apply modification if needed
+   */
+  private postDraw(edge: Edge, canBecomeMultipart: boolean){
+    const { target } = edge;
+    const chartNode = this.store.currentlyOpenNode;
+    if(chartNode && canBecomeMultipart){
+      const { position: pos, size } = chartNode;
+      const top = pos.y,
+            left = pos.x,
+            bottom = top + size.height,
+            right = left + size.width;
+
+      const { x, y } = target.getCoordinates();
+      const xOutside = (left - x) > 0 || (x - right) > 0;
+      const yOutside = (top - y) > 0 || (y - bottom) > 0;
+      if(xOutside || yOutside){
+        this.convertEdgeToInnerMultipart(chartNode, edge);
+      }
     }
-    return null;
   }
 
-  pushReDrawnAction(edge: Edge){
+  private convertEdgeToInnerMultipart(chartNode: Node, edge: Edge){
+    const newTarget = chartNode.createEdgeConnection();
+    edge.setTarget(newTarget);
+    edge.convertToMultipart(MultipartEdgeLocation.Inner, MultipartEdgeType.Starting);
+    this.repositionEdgeConnection(newTarget, edge.source, true);
+    this.store.emit(EVENTS.EDGE_CONVERTED_TO_MULTIPART, { edge });
+  }
+
+  private pushReDrawnAction(edge: Edge){
     const oldTarget = <EdgeConnection>this.cache.previousTarget;
     const newTarget = edge.target;
     const oldNode = this.cache.previousTargetNode;
@@ -267,9 +297,17 @@ export class EdgeDrawer extends DiagramModule{
         }
       ]
     });
+
+    const continuationEdge = oldTarget.bridgeFrom?.edge;
+    if(continuationEdge){
+      this.enableActionGrouping();
+      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: continuationEdge });
+      this.disableActionGrouping();
+    }
+
   }
 
-  pushSpawnAction(edge: Edge){
+  private pushSpawnAction(edge: Edge){
     this.pushAction({
       undo: [
         {
@@ -292,7 +330,7 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Attach object finding logic
 
-  onCanvasMouseMove(event: MouseEvent){
+  private onCanvasMouseMove(event: MouseEvent){
     if(this.isInactive) return;
     this.followCursor(event);
 
@@ -324,7 +362,7 @@ export class EdgeDrawer extends DiagramModule{
 
     if(subject === null){
       for(const node of nodes){
-        if(node.showContent === false || node.isCircle){
+        if((node.showContent === false && this.currentEdge) || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);
@@ -395,9 +433,9 @@ export class EdgeDrawer extends DiagramModule{
     this.repositionEdgeConnection(target, source);
   }
 
-  private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection){
+  private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection, force: boolean = false){
     const eligibleAttach = subject.attachType == AttachType.NodeBody || subject.attachType == AttachType.NodeWall;
-    if(!subject.isBridge && eligibleAttach && subject.node && !subject.node.props.isOpen){
+    if(subject.node && (force || (!subject.isBridge && eligibleAttach && !subject.node.props.isOpen))){
       const _pointsTo = pointsTo.getInstance();
       const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);

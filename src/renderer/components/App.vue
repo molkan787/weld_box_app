@@ -29,10 +29,10 @@ export default Vue.extend({
       const filename = await promptFile();
       if(filename){
         try {
-          projectsManager.load(filename);
+          await projectsManager.load(filename);
         } catch (error) {
+          Dialog.error('An error occured when loading the project.\n' + error.message);
           console.error(error);
-          Dialog.error('An error occured when loading the project.');
         }
       }
     },

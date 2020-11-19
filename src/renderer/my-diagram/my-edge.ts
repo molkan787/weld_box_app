@@ -1,4 +1,4 @@
-import { Edge, EdgeConnection } from "../diagram-core";
+import { Edge, EdgeConnection, MultipartEdgeLocation, MultipartEdgeType } from "../diagram-core";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 import { D3Node } from "../diagram-core/types/aliases";
 import { ObjectProps } from "../interfaces/ObjectProps";
@@ -23,8 +23,14 @@ export class MyEdge extends Edge implements ObjectProps{
     type: EdgeType.REGULAR
   };
 
-  constructor(s: EdgeConnection, t: EdgeConnection){
-    super(s, t);
+  constructor(
+    source: EdgeConnection,
+    target: EdgeConnection,
+    isMultipart?: boolean,
+    multipartLocation?: MultipartEdgeLocation,
+    multipartType?: MultipartEdgeType
+  ){
+    super(source, target, isMultipart, multipartLocation, multipartType);
     this.propsArchiver = new PropsChangeArchiver({
       instance: this,
       props: ['name', 'properties'],

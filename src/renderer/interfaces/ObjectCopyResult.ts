@@ -1,4 +1,4 @@
-import { AttachType } from "../diagram-core";
+import { AttachType, MultipartEdgeLocation, MultipartEdgeType } from "../diagram-core";
 import { Side } from "../diagram-core/helpers/geometry";
 import { Position } from "../diagram-core/interfaces/Position";
 import { Size } from "../diagram-core/interfaces/Size";
@@ -48,6 +48,9 @@ export interface EdgeCloneData extends CommonCloneDataProps{
   shapePoints: Position[];
   source: EdgeConnectionCloneData;
   target: EdgeConnectionCloneData;
+  isMultipart: boolean;
+  multipartLocation: MultipartEdgeLocation;
+  multipartType: MultipartEdgeType;
 }
 
 export interface EdgeConnectionCloneData{

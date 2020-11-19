@@ -45,7 +45,7 @@ export class EdgesMutator{
     innerEdgeSecondEC.setBridge(outerEdgeLocalEC);
     const innerEdge = foreignECisSource ? EF(innerEdgeSecondEC, localEC) : EF(localEC, innerEdgeSecondEC);
     outerEdgeLocalEC.edge = edge;
-    foreignECisSource ? (edge.target = outerEdgeLocalEC) : (edge.source = outerEdgeLocalEC);
+    foreignECisSource ? (edge.setTarget(outerEdgeLocalEC)) : (edge.setSource(outerEdgeLocalEC));
     this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge: edge });
     this.store.emit(EVENTS.EDGE_CREATED, { edge: innerEdge });
   }
@@ -58,9 +58,9 @@ export class EdgesMutator{
     const outerEdge = outerLocalEC?.edge;
     const outerSecondEC = outerLocalEC && this.getSecondSideEdgeConnection(outerLocalEC);
     if(!localSecondEC || !outerEdge || !outerSecondEC) return;
-    outerSecondEC.isSource() ? (outerEdge.target = localSecondEC) : outerEdge.source = localSecondEC;
+    outerSecondEC.isSource() ? outerEdge.setTarget(localSecondEC) : outerEdge.setSource(localSecondEC);
     localSecondEC.edge = outerEdge;
-    localSecondEC.isSource() ? (localEdge.source = new EdgeConnection()) : (localEdge.target = new EdgeConnection())
+    localSecondEC.isSource() ? localEdge.setSource(new EdgeConnection()) : localEdge.setTarget(new EdgeConnection())
     outerLocalEC?.node?.removeEdgeConnection(outerLocalEC);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge: outerEdge });
     this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: localEdge, isRestore: true }); // isRestore = true will prevent adding this action to Undo/Redo system

@@ -21,7 +21,7 @@ export class MyDiagram extends Diagram{
       height: window.innerHeight - 70,
       nodeBorderWidth: 3,
       nodeHeaderHeight: 30,
-      edgeFactory: (s, t) => {
+      edgeFactory: (s, t, im, ml, mt) => {
         const edge = new MyEdge(s, t);
         edge.propsArchiver.lock();
         edge.properties = {
@@ -30,7 +30,7 @@ export class MyDiagram extends Diagram{
           type: EdgeType.REGULAR
         };
         edge.propsArchiver.unlock();
-        return new MyEdge(s, t);
+        return new MyEdge(s, t, im, ml, mt);
       }
     });
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));

@@ -1,4 +1,4 @@
-import { Diagram, EdgeConnection, EdgeConnectionType, Node } from "../diagram-core";
+import { Diagram, EdgeConnection, MultipartEdgeType, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
@@ -77,8 +77,15 @@ export class DataExporter{
 
   private getNodeEdgesData(node: Node): EdgeExportData[]{
     const edges = node.edges
-                      .filter(ec => ec.isSource())
+                      .filter(ec => (
+                        ec.isSource() &&
+                        (
+                          !ec.edge?.isMultipart ||
+                          (ec.edge?.isMultipart && ec.edge?.multipartType == MultipartEdgeType.Starting)
+                        )
+                      ))
                       .map(ec => <MyEdge>ec.edge);
+    console.log(node.edges)
     const data = edges.map(e => this.getEdgeData(e));
     return data;
   }

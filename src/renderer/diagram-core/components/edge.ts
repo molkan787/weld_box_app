@@ -15,13 +15,54 @@ export class Edge extends Component{
   public offsettedStartPoint: Position = { x: 0, y: 0 };
   public centerPoint: Position = { x: 0, y: 0 };
 
+  private _isMultipart: boolean;
+  /**
+   * Indicates whether the edge is a multipart edge.
+   * (ex: inter-chart edge is combined of two separate edge the outer and the inner edges)
+   * @readonly
+   */
+  public get isMultipart(): boolean{
+    return this._isMultipart;
+  }
+
+  private _multipartLocation: MultipartEdgeLocation;
+  /**
+   * Indicates the part location of a multipart edge, can be either Outer or Inner.
+   * (ex: the `Inner` part is inside the sub-chart's body, and the `Outer` part is on the sub-chart's parent body)
+   * @readonly
+   */
+  public get multipartLocation(): MultipartEdgeLocation{
+    return this._multipartLocation;
+  }
+
+  private _multipartType: MultipartEdgeType;
+  /**
+   * Indicates the part type of a multipart edge.
+   * (ex: a multipart-edge with a `MultipartEdgeType.Starting` type, is an edge part that was drawn from a Node to sub-chart body (or attach box, or bridge) )
+   */
+  public get multipartType(): MultipartEdgeType{
+    return this._multipartType;
+  }
+
   constructor(
     private _source: EdgeConnection,
-    private _target: EdgeConnection
+    private _target: EdgeConnection,
+    isMultipart: boolean = false,
+    multipartLocation: MultipartEdgeLocation = MultipartEdgeLocation.Outer,
+    multipartType: MultipartEdgeType = MultipartEdgeType.Starting
   ){
     super(ComponentType.Edge);
     _source.edge = this;
     _target.edge = this;
+    this._isMultipart = isMultipart;
+    this._multipartLocation = multipartLocation;
+    this._multipartType = multipartType;
+  }
+
+  public convertToMultipart(location: MultipartEdgeLocation, type: MultipartEdgeType){
+    this._isMultipart = true;
+    this._multipartLocation = location;
+    this._multipartType = type;
   }
 
   public get source(): EdgeConnection{
@@ -96,4 +137,23 @@ export class Edge extends Component{
    */
   public onDOMInteraction(eventType: string, data: any, sourceEvent: Event | null){}
 
+}
+
+/**
+ * Types of multipart-edge parts, each part can have its own type
+ */
+export enum MultipartEdgeLocation{
+  /**
+   * Indicates that the part of the multipart edge is on the outer side, meaning on the sub-chart's parent body
+   */
+  Outer = 'outer',
+  /**
+   * Indicates that the part of the multipart edge is on the outer side, meaning on the sub-chart's body
+   */
+  Inner = 'inner',
+}
+
+export enum MultipartEdgeType{
+  Starting = 'starting-edge-part',
+  Ending = 'ending-edge-part'
 }

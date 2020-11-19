@@ -126,7 +126,10 @@ export default {
     },
     destroyConditionInput(){
       if(this.inputElement){
-        this.inputElement.remove();
+        try {
+          this.inputElement.remove();
+        } catch (error) {
+        }
         this.inputElement = null;
       }
     },

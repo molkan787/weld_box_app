@@ -132,7 +132,10 @@ export class ObjectCrafter{
   }
 
   public craftEdge(data: EdgeCloneData, nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge | null{
-    const { ref, name, properties, shapePoints, source, target } = data;
+    const {
+      ref, name, properties, shapePoints, source, target,
+      isMultipart, multipartLocation, multipartType
+    } = data;
     const sourceEC = this.craftEdgeConnection(source, useRefsAsIds);
     const targetEC = this.craftEdgeConnection(target, useRefsAsIds);
     const sourceNode = nodesRef.get(source.nodeRef);
@@ -140,7 +143,7 @@ export class ObjectCrafter{
     if((source.nodeRef && !sourceNode) || target.nodeRef && !targetNode) return null;
     sourceNode?.addEdgeConnection(sourceEC);
     targetNode?.addEdgeConnection(targetEC);
-    const edge =  new MyEdge(sourceEC, targetEC);
+    const edge =  new MyEdge(sourceEC, targetEC, isMultipart, multipartLocation, multipartType);
     if(useRefsAsIds){
       edge._setId(ref);
     }

@@ -145,7 +145,10 @@ export class ObjectCopier{
   }
 
   public copyEdge(edge: MyEdge): EdgeCloneData{
-    const { id, shapePoints, name, properties, source, target } = edge;
+    const {
+      id, shapePoints, name, properties, source, target,
+      isMultipart, multipartLocation, multipartType
+    } = edge;
     const data: EdgeCloneData = {
       ref: id,
       originId: id,
@@ -154,6 +157,9 @@ export class ObjectCopier{
       properties: cloneObject(properties),
       source: this.copyEdgeConnection(source),
       target: this.copyEdgeConnection(target),
+      isMultipart,
+      multipartLocation,
+      multipartType
     }
     return data;
   }

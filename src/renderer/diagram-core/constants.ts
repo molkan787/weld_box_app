@@ -55,6 +55,7 @@ export const EVENTS = Object.freeze({
   EDGE_SELECTED: 'edge-selected',
   EDGE_DELETED: 'edge-deleted',
   EDGE_MOUSEDOWN_ON_ENDS: 'edge-mousedown-on-ends',
+  EDGE_CONVERTED_TO_MULTIPART: 'edge-converted-to-multipart',
 
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
@@ -102,5 +103,5 @@ export const CLASSES = Object.freeze({
 })
 
 export const DATA_COMMANDS = Object.freeze({
-  DESTROY_BRIDGED_EDGES: 'destroy-bridged-edges',
+  DESTROY_MULTIPART_INNER_EDGES: 'destroy-bridged-edges',
 });

@@ -1,5 +1,5 @@
 import { Component, ComponentType } from "../components/component";
-import { Edge } from "../components/edge";
+import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
@@ -136,11 +136,11 @@ export class Renderer{
 
   onEdgeAdded(event: DiagramEvent){
     const edge = <Edge>event.edge;
-    const { source, target } = edge;
-    const srcAllow = !source.isBridge || source.node?.props.isOpen;
-    const trgAllow = !target.isBridge || target.node?.props.isOpen;
-    if(srcAllow && trgAllow){
-      this.build(null, <Edge>event.edge);
+    const { isMultipart, multipartLocation, multipartType, source, target } = edge;
+    const owningNode = multipartType == MultipartEdgeType.Starting ? target.node : source.node;
+    const skipRendering = isMultipart && multipartLocation == MultipartEdgeLocation.Inner && !owningNode?.props.isOpen;
+    if(!skipRendering){
+      this.build(null, edge);
     }
   }
 
@@ -152,12 +152,14 @@ export class Renderer{
     this.nodeRenderer.update(node);
 
     if(!node.props.isOpen){
-      // Casting from (Edge | undefined)[] to Edge[] because undefined cases are already filtered out
       const edges = <Edge[]>(
         node.edges
-        .filter(ec => !ec.isBridge)
+        .filter(ec => (
+          ec.edge && !(
+            ec.edge.isMultipart && ec.edge.multipartLocation == MultipartEdgeLocation.Inner && ec.attachType == AttachType.NodeBody
+          )
+        ))
         .map(ec => ec.edge)
-        .filter(e => !!e)
       );
 
       // Updating positions of all edges that are connected to the Node currently being moved

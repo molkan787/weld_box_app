@@ -6,6 +6,7 @@ import { D3Node } from "../types/aliases";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "../renderer/utils";
 import { cloneObject } from "../utils";
+import { MultipartEdgeLocation } from "../components/edge";
 
 export class SubChart{
 
@@ -89,7 +90,7 @@ export class SubChart{
     node.setShowContent(true, true);
     this.store.nodesSpatialMap.insert(node);
 
-    this.buildNodeBridgedEdges(node);
+    this.buildNodeInnerEdges(node);
 
     this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
     this.emitChangeEvent();
@@ -117,7 +118,7 @@ export class SubChart{
     const zoom = this.zoomTransforms.get(chartItem.node?.id || 0);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
 
-    this.destroyNodeBridgedEdges(currentNode);
+    this.destroyNodeInnerEdges(currentNode);
 
     this.addD3NodesToDocument(chartItem.d3Nodes);
 
@@ -136,14 +137,18 @@ export class SubChart{
     this.emitChangeEvent();
   }
 
-  private destroyNodeBridgedEdges(node: Node){
-    const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
-    this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges })
+  private destroyNodeInnerEdges(node: Node){
+    const edges = node.edges
+    .map(ec => ec.edge)
+    .filter(e => e?.isMultipart && e.multipartLocation == MultipartEdgeLocation.Inner);
+    this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges });
   }
 
-  private buildNodeBridgedEdges(node: Node){
-    const edges = node.edges.filter(e => e.isBridge).map(ec => ec.edge);
-    this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges })
+  private buildNodeInnerEdges(node: Node){
+    const edges = node.edges
+    .map(ec => ec.edge)
+    .filter(e => e?.isMultipart && e.multipartLocation == MultipartEdgeLocation.Inner);
+    this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges });
   }
 
   private addDomNodeToOriginalParent(node: Node){
@@ -217,8 +222,8 @@ export class SubChart{
       this.store.nodesSpatialMap.remove(allDesendents[i]);
     }
 
-    if(event.data == DATA_COMMANDS.DESTROY_BRIDGED_EDGES){
-      this.destroyNodeBridgedEdges(node);
+    if(event.data == DATA_COMMANDS.DESTROY_MULTIPART_INNER_EDGES){
+      this.destroyNodeInnerEdges(node);
     }
 
   }

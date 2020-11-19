@@ -1,4 +1,5 @@
-import { AttachType, EdgeConnection } from "../components/edge-connection";
+import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
+import { EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -21,6 +22,7 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
     store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
+    store.on(EVENTS.EDGE_CONVERTED_TO_MULTIPART, e => this.onEdgeConvertedToMultipart(e));
   }
 
   public setLayer(layer: D3Node){
@@ -156,11 +158,26 @@ export class NodeRenderer{
       .style('cursor', cursor);
   }
 
+  onEdgeConvertedToMultipart(e: DiagramEvent){
+    const edge = <Edge>e.edge;
+    if(
+      edge.multipartType == MultipartEdgeType.Starting &&
+      edge.multipartLocation == MultipartEdgeLocation.Inner
+    ){
+      const target = edge.target;
+      const node = target.node;
+      if(node?.props.isOpen){
+        const container = this.getD3Node(node);
+        this.buildEdgeAttachBox(node, container, target, true);
+      }
+    }
+  }
+
   /** Destorys attach box of all edges of the specified node */
   destoryEdgesAttachBoxes(node: Node){
     if(node.isCircle) return;
     const container = this.getD3Node(node);
-    const selector = `.node-${node.id}-` + CLASSES.ATTACH_BOX;
+    const selector = `.node-${node.id}-${CLASSES.ATTACH_BOX}:not(.inner)`;
     container.selectAll(selector).remove();
   }
 
@@ -168,18 +185,21 @@ export class NodeRenderer{
   buildEdgesAttachBoxes(node: Node){
     if(node.isCircle) return;
     const container = this.getD3Node(node);
-    for(const edge of node.edges){
-      if(edge.attachType === AttachType.NodeBody && !edge.isBridge){
-        this.buildEdgeAttachBox(node, container, edge);
+    for(const ec of node.edges){
+      const edge = <Edge>ec.edge;
+      const eligible = edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting;
+      if(eligible){
+        this.buildEdgeAttachBox(node, container, ec);
       }
     }
   }
 
-  buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection){
+  buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection, isInner: boolean = false){
     const wall = edge.nodeWall;
     const eab = container.append('span');
     eab.classed(CLASSES.ATTACH_BOX, true)
         .classed(`node-${node.id}-` + CLASSES.ATTACH_BOX, true)
+        .classed('inner', isInner)
         .attr(ATTR.WALL_SIDE, wall)
         .attr(ATTR.COMPONENT_ID, edge.id);
 

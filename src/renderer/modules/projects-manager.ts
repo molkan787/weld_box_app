@@ -9,7 +9,7 @@ import { store } from "../store";
 import { DiagramProject } from "./diagram-project";
 import { Menu } from "./menu";
 
-const FORMAT_CHECK_VALUE = 31102020;
+const FORMAT_CHECK_VALUE = 19112020;
 
 class ProjectsManager{
 
@@ -66,7 +66,7 @@ class ProjectsManager{
     const raw = await readFile(filename);
     const project = <ProjectFileData>JSON.parse(raw);
     if(project?.formatCheck !== FORMAT_CHECK_VALUE){
-      throw new Error('Invalid data format');
+      throw new Error('Invalid project file format');
     }
     const diagram = new MyDiagram('#canvas');
     const { setting, data } = project;
