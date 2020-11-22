@@ -102,11 +102,9 @@ export class EdgeConnection extends Component{
       const node = this.node;
 
       if(node?.props.isOpen && this.attachType === AttachType.NodeBody){
-        // if the attach type is NodeBody and its node is open,
-        // we need to invert the secondary axis's offset
-        // because the attachement box of the edge should be outside node's rectangle if it the node is open (open as a sub-chart)
+        // Increasing the spacing offset when the node is open
         const isVertical = this.nodeWall === Side.Top || this.nodeWall === Side.Bottom;
-        isVertical ? y2 *= -1 : x2 *= -1;
+        isVertical ? y2 *= 1.3 : x2 *= 1.3;
       }
       const needCapping = this.isAttachedToNode() && this.attachType != AttachType.Node && node != null;
       const hw = (node?.size.width || 1) / 2;

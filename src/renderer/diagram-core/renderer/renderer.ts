@@ -142,6 +142,7 @@ export class Renderer{
     const skipRendering = isMultipart && multipartLocation == MultipartEdgeLocation.Inner && !owningNode?.props.isOpen;
     if(!skipRendering){
       this.build(null, edge);
+      this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: edge });
     }
   }
 

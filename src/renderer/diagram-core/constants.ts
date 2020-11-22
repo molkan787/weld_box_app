@@ -57,6 +57,9 @@ export const EVENTS = Object.freeze({
   EDGE_MOUSEDOWN_ON_ENDS: 'edge-mousedown-on-ends',
   EDGE_CONVERTED_TO_MULTIPART: 'edge-converted-to-multipart',
 
+  EDGECONNECTION_DESTROYED: 'edge-connection-destroyed',
+  EDGECONNECTION_RESTORED: 'edge-connection-restored',
+
   DIAGRAM_EDGE_DRAWER_DISABLED: 'diagram-edge-drawer-disabled',
   DIAGRAM_NODE_DRAGGING_ENABLED: 'diagram-node-dragging-enabled',
   DIAGRAM_OPEN_NODE: 'diagram-open-node',

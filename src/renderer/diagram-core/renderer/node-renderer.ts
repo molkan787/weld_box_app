@@ -1,3 +1,4 @@
+import { select } from "d3";
 import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
@@ -22,7 +23,11 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
     store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
+    store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
     store.on(EVENTS.EDGE_CONVERTED_TO_MULTIPART, e => this.onEdgeConvertedToMultipart(e));
+    store.on(EVENTS.EDGE_DELETED, e => this.onEdgeDeleted(e));
+    store.on(EVENTS.EDGECONNECTION_DESTROYED, e => this.onEdgeConnectionDestroyed(e));
+    store.on(EVENTS.EDGECONNECTION_RESTORED, e => this.onEdgeConnectionRestored(e));
   }
 
   public setLayer(layer: D3Node){
@@ -158,8 +163,31 @@ export class NodeRenderer{
       .style('cursor', cursor);
   }
 
+  onEdgeAdded(e: DiagramEvent){
+    const edge = <Edge>e.edge;
+    this.buildPotentialAttachBox(edge);
+  }
+
   onEdgeConvertedToMultipart(e: DiagramEvent){
     const edge = <Edge>e.edge;
+    this.buildPotentialAttachBox(edge);
+  }
+
+  onEdgeDeleted(e: DiagramEvent){
+    const edge = <Edge>e.edge;
+    this.destroyPotantialAttachBox(edge.source);
+    this.destroyPotantialAttachBox(edge.target);
+  }
+
+  onEdgeConnectionDestroyed(e: DiagramEvent){
+    this.destroyPotantialAttachBox(e.data);
+  }
+
+  onEdgeConnectionRestored(e: DiagramEvent){
+    this.buildPotentialAttachBox(e.data.edge);
+  }
+
+  buildPotentialAttachBox(edge: Edge){
     if(
       edge.multipartType == MultipartEdgeType.Starting &&
       edge.multipartLocation == MultipartEdgeLocation.Inner
@@ -171,6 +199,15 @@ export class NodeRenderer{
         this.buildEdgeAttachBox(node, container, target, true);
       }
     }
+  }
+
+  destroyPotantialAttachBox(ec: EdgeConnection){
+    const selector = this.getAttachSelector(ec);
+    select(selector).remove();
+  }
+
+  getAttachSelector(attachbox: EdgeConnection){
+    return `.${CLASSES.ATTACH_BOX}[${ATTR.COMPONENT_ID}="${attachbox.id}"]`;
   }
 
   /** Destorys attach box of all edges of the specified node */
@@ -196,7 +233,10 @@ export class NodeRenderer{
 
   buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection, isInner: boolean = false){
     const wall = edge.nodeWall;
-    const eab = container.append('span');
+    let eab: D3Node = select(this.getAttachSelector(edge));
+    if(eab.size() == 0){
+      eab = container.append('span');
+    }
     eab.classed(CLASSES.ATTACH_BOX, true)
         .classed(`node-${node.id}-` + CLASSES.ATTACH_BOX, true)
         .classed('inner', isInner)
@@ -207,9 +247,9 @@ export class NodeRenderer{
       const pos = cloneObject(edge.offset);
       const isVertical = wall == Side.Top || wall == Side.Bottom;
       if(isVertical){
-        pos.y *= -1
+        pos.y *= 1.3;
       }else{
-        pos.x *= -1;
+        pos.x *= 1.3;
       }
       eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
     }

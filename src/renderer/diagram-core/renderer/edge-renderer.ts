@@ -96,7 +96,7 @@ export class EdgeRenderer{
     .attr(ATTR.COMPONENT_ID, edge.id);
 
     this.store.setD3Node(edge.id, g);
-    this.update(edge);
+    // this.update(edge);
     this.updateDecoration(edge);
 
     edge.DOMElementBuilt(g);

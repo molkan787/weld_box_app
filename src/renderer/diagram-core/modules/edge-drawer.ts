@@ -56,6 +56,7 @@ export class EdgeDrawer extends DiagramModule{
       const newTarget = new EdgeConnection(AttachType.Position);
       newTarget.position = cloneObject(edge.target.coordinates);
       edge.setTarget(newTarget);
+      this.store.emit(EVENTS.EDGECONNECTION_DESTROYED, { data: target });
     }else{
       throw new Error(`Edge end '${end}' isn't supported`);
     }
@@ -220,22 +221,6 @@ export class EdgeDrawer extends DiagramModule{
     this.redrawing = false;
   }
 
-  // private getAttachBoxAtDropPosition(event: MouseEvent): EdgeConnection | null{
-  //   const node = this.store.currentlyOpenNode;
-  //   if(!node) return null;
-  //   const { clientX, clientY } = event;
-  //   const rootEl = this.store.rootElement;
-  //   rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, true); // prevents picking edges elements by document.elementFromPoint()
-  //   const el = document.elementFromPoint(clientX, clientY);
-  //   rootEl.classed(CLASSES.EDGES_NOT_CLICKABLE, false);
-  //   if(el && el.classList.contains(CLASSES.ATTACH_BOX)){
-  //     const edgeId = parseInt(el.getAttribute(ATTR.COMPONENT_ID) || '0');
-  //     const edgeConnection = this.getNodeEdgeConnection(node, edgeId);
-  //     return edgeConnection;
-  //   }
-  //   return null;
-  // }
-
   /**
    * Called after edge drawing/redrawing ended, apply modification if needed
    */
@@ -276,11 +261,13 @@ export class EdgeDrawer extends DiagramModule{
         {
           events: [EVENTS.EDGE_CONNECTIONS_CHANGED],
           eventsPayload: { edge },
-          do(){
+          do: () => {
             newNode?.removeEdgeConnection(newTarget);
             newTarget.edge = null;
             edge.setTarget(oldTarget);
             oldNode?.addEdgeConnection(oldTarget);
+            this.store.emit(EVENTS.EDGECONNECTION_DESTROYED, { data: newTarget });
+            this.store.emit(EVENTS.EDGECONNECTION_RESTORED, { data: oldTarget });
           }
         }
       ],
@@ -288,11 +275,13 @@ export class EdgeDrawer extends DiagramModule{
         {
           events: [EVENTS.EDGE_CONNECTIONS_CHANGED],
           eventsPayload: { edge },
-          do(){
+          do: () => {
             oldNode?.removeEdgeConnection(oldTarget);
             oldTarget.edge = null;
             edge.setTarget(newTarget);
             newNode?.addEdgeConnection(newTarget);
+            this.store.emit(EVENTS.EDGECONNECTION_DESTROYED, { data: oldTarget });
+            this.store.emit(EVENTS.EDGECONNECTION_RESTORED, { data: newTarget });
           }
         }
       ]
@@ -437,7 +426,7 @@ export class EdgeDrawer extends DiagramModule{
     const eligibleAttach = subject.attachType == AttachType.NodeBody || subject.attachType == AttachType.NodeWall;
     if(subject.node && (force || (!subject.isBridge && eligibleAttach && !subject.node.props.isOpen))){
       const _pointsTo = pointsTo.getInstance();
-      const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
+      const sao = subject.attachType === AttachType.NodeBody ? -10 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);
       subject.offset = offset;
       subject.nodeWall = wall;
