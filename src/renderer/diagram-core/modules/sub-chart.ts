@@ -7,6 +7,7 @@ import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cs } from "../renderer/utils";
 import { cloneObject } from "../utils";
 import { MultipartEdgeLocation } from "../components/edge";
+import { AttachType } from "../components/edge-connection";
 
 export class SubChart{
 
@@ -66,6 +67,12 @@ export class SubChart{
   public open(node: Node){
     if(node === this.currentNode) return;
 
+    const oldCurrentNode = this.currentNode;
+
+    if(oldCurrentNode){
+      this.destroyNodeInnerEdges(oldCurrentNode);
+    }
+
     const d3node = this.store.getD3Node(node.id);
     d3node.remove();
     const removedContent = this.removeContentFromCanvas();
@@ -99,39 +106,44 @@ export class SubChart{
   public back(){
     if(this.currentNode === null) return;
 
-    const currentNode = this.currentNode;
+    const oldCurrentNode = this.currentNode;
 
-    this.store.emit(EVENTS.NODE_CLOSING, { node: currentNode });
+    this.store.emit(EVENTS.NODE_CLOSING, { node: oldCurrentNode });
 
     const chartItem = <ChartItem>this.stack.pop();
 
-    const currentD3Node = this.store.getD3Node(currentNode.id);
+    const currentD3Node = this.store.getD3Node(oldCurrentNode.id);
     currentD3Node.remove();
 
-    currentNode.setShowContent(false, true);
-    this.switchNodeState(currentNode, false);
+    oldCurrentNode.setShowContent(false, true);
+    this.switchNodeState(oldCurrentNode, false);
 
     this.store.nodesSpatialMap = chartItem.spatialMap;
 
-    this.currentNode = chartItem.node;
+    const newCurrentNode = chartItem.node;
+    this.currentNode = newCurrentNode;
 
     const zoom = this.zoomTransforms.get(chartItem.node?.id || 0);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
 
-    this.destroyNodeInnerEdges(currentNode);
+    this.destroyNodeInnerEdges(oldCurrentNode);
 
     this.addD3NodesToDocument(chartItem.d3Nodes);
 
-    this.addDomNodeToOriginalParent(currentNode);
+    this.addDomNodeToOriginalParent(oldCurrentNode);
 
-    this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: currentNode });
+    if(newCurrentNode){
+      this.buildNodeInnerEdges(newCurrentNode);
+    }
+
+    this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: oldCurrentNode });
 
     // `this.currentNode` is the new current node
     // `currentNode` is the previous current node
     if(this.currentNode){
       this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: this.currentNode });
     }else{
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode });
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: oldCurrentNode });
     }
 
     this.emitChangeEvent();
@@ -139,6 +151,7 @@ export class SubChart{
 
   private destroyNodeInnerEdges(node: Node){
     const edges = node.edges
+    .filter(ec => ec.attachType == AttachType.NodeBody)
     .map(ec => ec.edge)
     .filter(e => e?.isMultipart && e.multipartLocation == MultipartEdgeLocation.Inner);
     this.store.emit(EVENTS.DIAGRAM_DESTROY_EDGES, { data: edges });
@@ -146,6 +159,7 @@ export class SubChart{
 
   private buildNodeInnerEdges(node: Node){
     const edges = node.edges
+    .filter(ec => ec.attachType == AttachType.NodeBody)
     .map(ec => ec.edge)
     .filter(e => e?.isMultipart && e.multipartLocation == MultipartEdgeLocation.Inner);
     this.store.emit(EVENTS.DIAGRAM_BUILD_EDGES, { data: edges });

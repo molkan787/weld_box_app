@@ -41,6 +41,7 @@ export class Renderer{
     // if an edge got selected, diselect any selected node
     store.on(EVENTS.EDGE_SELECTED, (e: DiagramEvent) => {
       if(e.edge) store.emit(EVENTS.NODE_SELECTED, { simulated: true });
+      if(e.edge) console.log(e.edge)
       store.selectedComponent = e.edge || null;
     })
 

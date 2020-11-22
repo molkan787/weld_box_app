@@ -1,5 +1,5 @@
 import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
-import { EdgeConnection } from "../components/edge-connection";
+import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { ATTR, EVENTS, CLASSES } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -187,7 +187,7 @@ export class NodeRenderer{
     const container = this.getD3Node(node);
     for(const ec of node.edges){
       const edge = <Edge>ec.edge;
-      const eligible = edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting;
+      const eligible = ec.attachType == AttachType.NodeBody && edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting;
       if(eligible){
         this.buildEdgeAttachBox(node, container, ec);
       }
