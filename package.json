@@ -5,7 +5,7 @@
         "clean": "rimraf dist installer",
         "compile": "electron-webpack",
         "dev": "electron-webpack dev",
-        "dist": "yarn compile && electron-builder"
+        "build": "yarn compile && electron-builder"
     },
     "dependencies": {
         "@types/webpack-env": "^1.15.3",
