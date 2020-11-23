@@ -5,7 +5,9 @@
         "clean": "rimraf dist installer",
         "compile": "electron-webpack",
         "dev": "electron-webpack dev",
-        "build": "electron-webpack && electron-builder"
+        "build": "electron-webpack && electron-builder",
+        "build-win": "electron-builder --win",
+        "build-linux": "electron-builder --linux"
     },
     "dependencies": {
         "@types/webpack-env": "^1.15.3",
