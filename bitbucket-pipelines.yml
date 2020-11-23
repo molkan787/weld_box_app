@@ -1,12 +1,13 @@
-image: scottyhardy/docker-wine:latest
+image: node:12.13.0
 pipelines:
   custom: # Pipelines that can only be triggered manually
     manual: # The name that is displayed in the list in the Bitbucket Cloud GUI
       - step:
-          name: Dependencies installation (Node)
+          name: Dependencies installation (Wine)
           script:
-                - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-                - sudo apt-get install -y nodejs
+                - echo "deb http://httpredir.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
+                - dpkg --add-architecture i386
+                - apt-get update && apt-get install -y wine
       - step:
           name: Build
           caches:
