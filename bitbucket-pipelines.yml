@@ -1,0 +1,13 @@
+image: node:12.13.0
+pipelines:
+  custom: # Pipelines that can only be triggered manually
+    manual: # The name that is displayed in the list in the Bitbucket Cloud GUI
+      - step:
+          name: Build
+          caches:
+              - node
+          script:
+              - npm install
+              - npm run build
+          artifacts:
+              - installer/**
