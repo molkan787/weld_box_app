@@ -1,4 +1,4 @@
-image: electronuserland/electron-builder:latest
+image: electronuserland/builder:wine
 pipelines:
   custom: # Pipelines that can only be triggered manually
     manual: # The name that is displayed in the list in the Bitbucket Cloud GUI
