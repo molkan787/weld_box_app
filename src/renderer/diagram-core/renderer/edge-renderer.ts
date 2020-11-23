@@ -1,4 +1,4 @@
-import { curveBasis, Line, line, select } from "d3";
+import { curveBasis, Line, line } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
 import { ATTR, CLASSES, EVENTS } from "../constants";
@@ -187,8 +187,14 @@ export class EdgeRenderer{
   }
 
   destroyElement(edge: Edge){
-    const d3Node = select(`#edge-${edge.id}`);
+    const d3Node = this.store.getD3Node(edge.id);
     edge.BeforeDOMElementDestroy(d3Node);
+    const domNode = <HTMLElement | null>d3Node.node();
+    try {
+      if(domNode) domNode.outerHTML = '';
+    } catch (error) {
+
+    }
     d3Node.remove();
   }
 

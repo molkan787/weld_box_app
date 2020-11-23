@@ -426,7 +426,7 @@ export class EdgeDrawer extends DiagramModule{
     const eligibleAttach = subject.attachType == AttachType.NodeBody || subject.attachType == AttachType.NodeWall;
     if(subject.node && (force || (!subject.isBridge && eligibleAttach && !subject.node.props.isOpen))){
       const _pointsTo = pointsTo.getInstance();
-      const sao = subject.attachType === AttachType.NodeBody ? -10 : 0;
+      const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);
       subject.offset = offset;
       subject.nodeWall = wall;

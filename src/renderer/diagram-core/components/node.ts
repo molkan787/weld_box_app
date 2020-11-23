@@ -112,10 +112,10 @@ export class Node extends Component{
   /**
    * Returns full hierarchical path from the top level parent down to this node
    */
-  public getHierarchyPath(): Node[]{
+  public getHierarchyPath(usePublicGetter: boolean = false): Node[]{
     const path: Node[] = [this];
     let n: Node | null = this;
-    while(n = n.parent){
+    while(n = (usePublicGetter ? n.parent : n._parent)){
       path.push(n);
     }
     return path.reverse();

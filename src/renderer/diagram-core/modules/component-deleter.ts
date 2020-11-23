@@ -1,5 +1,5 @@
 import { Component, ComponentType } from "../components/component";
-import { Edge } from "../components/edge";
+import { Edge, MultipartEdgeType } from "../components/edge";
 import { Node } from "../components/node";
 import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -57,6 +57,7 @@ export class ComponentDeleter extends DiagramModule{
     const edges = node.edges.map(ec => <Edge>ec.edge);
     // Delete all edges associated with deleted node
     for(let i = 0; i < edges.length; i++){
+      this.enableActionGrouping();
       this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
     }
 
@@ -106,6 +107,15 @@ export class ComponentDeleter extends DiagramModule{
           }
         ]
       })
+    }
+
+    if(edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting && target.bridgeFrom){
+      const secondEdge = target.bridgeFrom.edge;
+      if(edge){
+        this.enableActionGrouping();
+        this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: secondEdge });
+        this.disableActionGrouping();
+      }
     }
   }
 

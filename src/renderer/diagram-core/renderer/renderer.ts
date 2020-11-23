@@ -95,8 +95,17 @@ export class Renderer{
     const { source, target } = edge;
     const node1 = source.isAttachedToNode() ? source.node : null;
     const node2 = target.isAttachedToNode() ? target.node : null;
+    const usePublicGetter = edge.isMultipart && edge.multipartLocation == MultipartEdgeLocation.Inner;
     const stickToSource = source.attachType == AttachType.Node && source.node?.isSubChart;
-    const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2);
+    const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2, usePublicGetter);
+
+    console.log('===============================')
+    console.log('edge', edge);
+    console.log('stickToSource', stickToSource);
+    console.log('parent', parent);
+    console.log('node1', node1);
+    console.log('node2', node2);
+    console.log('===============================')
 
     if(parent === null){
       return <D3Node>this.edgesLayer;
@@ -106,9 +115,9 @@ export class Renderer{
     }
   }
 
-  private findNearestCommonParent(node1: Node | null, node2: Node | null): Node | null{
-    const h1 = node1?.getHierarchyPath() || [];
-    const h2 = node2?.getHierarchyPath() || [];
+  private findNearestCommonParent(node1: Node | null, node2: Node | null, usePublicGetter: boolean): Node | null{
+    const h1 = node1?.getHierarchyPath(usePublicGetter) || [];
+    const h2 = node2?.getHierarchyPath(usePublicGetter) || [];
     h1.pop();
     h2.pop();
     let wereSame = false;

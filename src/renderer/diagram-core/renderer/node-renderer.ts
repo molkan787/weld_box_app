@@ -247,9 +247,9 @@ export class NodeRenderer{
       const pos = cloneObject(edge.offset);
       const isVertical = wall == Side.Top || wall == Side.Bottom;
       if(isVertical){
-        pos.y *= 1.3;
+        pos.y *= -1;
       }else{
-        pos.x *= 1.3;
+        pos.x *= -1;
       }
       eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
     }
