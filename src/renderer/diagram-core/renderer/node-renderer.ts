@@ -21,6 +21,7 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
     store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
     store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
+    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node, true));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
     store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
     store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
@@ -211,10 +212,13 @@ export class NodeRenderer{
   }
 
   /** Destorys attach box of all edges of the specified node */
-  destoryEdgesAttachBoxes(node: Node){
+  destoryEdgesAttachBoxes(node: Node, destroyAll: boolean = false){
     if(node.isCircle) return;
     const container = this.getD3Node(node);
-    const selector = `.node-${node.id}-${CLASSES.ATTACH_BOX}:not(.inner)`;
+    let selector = `.node-${node.id}-${CLASSES.ATTACH_BOX}`;
+    if(!destroyAll){
+      selector += ':not(.inner)';
+    }
     container.selectAll(selector).remove();
   }
 
