@@ -57,6 +57,7 @@ export const EVENTS = Object.freeze({
   EDGE_MOUSEDOWN_ON_ENDS: 'edge-mousedown-on-ends',
   EDGE_CONVERTED_TO_MULTIPART: 'edge-converted-to-multipart',
 
+  REPOSITION_EDGECONNECTION: 'reposition-edge-connection',
   EDGECONNECTION_DESTROYED: 'edge-connection-destroyed',
   EDGECONNECTION_RESTORED: 'edge-connection-restored',
 

@@ -96,6 +96,8 @@ export class DiagramStore extends EventEmitter{
    */
   public readonly nodePadding: Margin;
 
+  public forceSynchronousUpdates: boolean = false;
+
   /**
    * The EdgeFactory passed in the options when constructing the Diagram class instance
    */

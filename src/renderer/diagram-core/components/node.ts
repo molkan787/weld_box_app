@@ -111,6 +111,7 @@ export class Node extends Component{
 
   /**
    * Returns full hierarchical path from the top level parent down to this node
+   * @param usePublicGetter if `true` the method will use the public getter of its parent for its operations, the diffrence is when a node is open its public parent getter will return `null` (check Node.parent() getter/property)
    */
   public getHierarchyPath(usePublicGetter: boolean = false): Node[]{
     const path: Node[] = [this];

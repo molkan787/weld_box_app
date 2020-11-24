@@ -187,15 +187,19 @@ export class EdgeRenderer{
   }
 
   destroyElement(edge: Edge){
-    const d3Node = this.store.getD3Node(edge.id);
-    edge.BeforeDOMElementDestroy(d3Node);
-    const domNode = <HTMLElement | null>d3Node.node();
     try {
-      if(domNode) domNode.outerHTML = '';
+      const d3Node = this.store.getD3Node(edge.id);
+      edge.BeforeDOMElementDestroy(d3Node);
+      const domNode = <HTMLElement | null>d3Node.node();
+      try {
+        if(domNode) domNode.outerHTML = '';
+      } catch (error) {
+
+      }
+      d3Node.remove();
     } catch (error) {
 
     }
-    d3Node.remove();
   }
 
 }

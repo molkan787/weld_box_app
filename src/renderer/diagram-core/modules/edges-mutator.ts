@@ -1,9 +1,10 @@
-import { Edge } from "../components/edge";
+import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { RepositionRequest } from "../interfaces/RepositionRequest";
 
 /**
  * This modules Split or merge inter-chart edges when a node is converted to sub-chart or back to normal node
@@ -42,10 +43,24 @@ export class EdgesMutator{
     const foreignECisSource = foreignEC.isSource();
     const outerEdgeLocalEC = nodeInContext.createEdgeConnection();
     const innerEdgeSecondEC = nodeInContext.createEdgeConnection();
-    innerEdgeSecondEC.setBridge(outerEdgeLocalEC);
+    if(foreignECisSource){
+      innerEdgeSecondEC.setBridge(outerEdgeLocalEC);
+    }else{
+      outerEdgeLocalEC.setBridge(innerEdgeSecondEC);
+    }
+    edge.convertToMultipart(MultipartEdgeLocation.Outer, foreignECisSource ? MultipartEdgeType.Starting : MultipartEdgeType.Ending);
     const innerEdge = foreignECisSource ? EF(innerEdgeSecondEC, localEC) : EF(localEC, innerEdgeSecondEC);
+    innerEdge.convertToMultipart(MultipartEdgeLocation.Inner, foreignECisSource ? MultipartEdgeType.Ending : MultipartEdgeType.Starting);
     outerEdgeLocalEC.edge = edge;
     foreignECisSource ? (edge.setTarget(outerEdgeLocalEC)) : (edge.setSource(outerEdgeLocalEC));
+    if(!foreignECisSource){
+      this.store.emit(EVENTS.REPOSITION_EDGECONNECTION, {
+        data: <RepositionRequest>{
+          subject: innerEdgeSecondEC,
+          pointTo: foreignEC
+        }
+      });
+    }
     this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge: edge });
     this.store.emit(EVENTS.EDGE_CREATED, { edge: innerEdge });
   }
@@ -62,6 +77,7 @@ export class EdgesMutator{
     localSecondEC.edge = outerEdge;
     localSecondEC.isSource() ? localEdge.setSource(new EdgeConnection()) : localEdge.setTarget(new EdgeConnection())
     outerLocalEC?.node?.removeEdgeConnection(outerLocalEC);
+    outerEdge.convertToNormal();
     this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge: outerEdge });
     this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: localEdge, isRestore: true }); // isRestore = true will prevent adding this action to Undo/Redo system
     console.log('removed localEdge', localEdge)

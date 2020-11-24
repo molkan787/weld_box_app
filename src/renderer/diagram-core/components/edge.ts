@@ -65,6 +65,10 @@ export class Edge extends Component{
     this._multipartType = type;
   }
 
+  public convertToNormal(){
+    this._isMultipart = false;
+  }
+
   public get source(): EdgeConnection{
     return this._source;
   }

@@ -99,14 +99,6 @@ export class Renderer{
     const stickToSource = source.attachType == AttachType.Node && source.node?.isSubChart;
     const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2, usePublicGetter);
 
-    console.log('===============================')
-    console.log('edge', edge);
-    console.log('stickToSource', stickToSource);
-    console.log('parent', parent);
-    console.log('node1', node1);
-    console.log('node2', node2);
-    console.log('===============================')
-
     if(parent === null){
       return <D3Node>this.edgesLayer;
     }else{
@@ -182,25 +174,29 @@ export class Renderer{
     // If node's content (childs) are hidden we don't need to update them
     if(!node.showContent) return;
 
-    const childs = node.children;
-    for(let i = 0; i < childs.length; i++){
-      setTimeout(() => {
-        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event });
-      }, 1);
+    if(this.store.forceSynchronousUpdates){
+      for(let child of node.children){
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+      }
+    }else{
+      const childs = node.children;
+      for(let i = 0; i < childs.length; i++){
+        setTimeout(() => {
+          this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event });
+        }, 1);
+      }
     }
-
-    // for(let child of node.children){
-    //   this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
-    // }
 
   }
 
   onEdgeConnectionsUpdated(event: DiagramEvent){
+    if(event.skipRendering) return;
     const edge = <Edge>event.edge;
     this.edgeRenderer.update(edge);
   }
 
   onEdgeConnectionsChanged(event: DiagramEvent){
+    if(event.skipRendering) return;
     const edge = <Edge>event.edge;
     this.rebuildEdge(edge);
   }

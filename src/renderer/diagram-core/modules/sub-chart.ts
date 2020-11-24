@@ -59,15 +59,22 @@ export class SubChart{
       }
     }else{
       while(this.stack.length && this.currentNode !== node){
+        console.log(this.currentNode?.name);
         this.back();
       }
+      console.log(this.currentNode?.name);
     }
   }
 
   public open(node: Node){
     if(node === this.currentNode) return;
 
+    this.store.forceSynchronousUpdates = true;
+
     const oldCurrentNode = this.currentNode;
+    if(oldCurrentNode){
+      this.store.emit(EVENTS.NODE_CLOSING, { node: oldCurrentNode });
+    }
 
     if(oldCurrentNode){
       this.destroyNodeInnerEdges(oldCurrentNode);
@@ -93,18 +100,23 @@ export class SubChart{
     const nodesLayer = this._getNodesLayerDomElement();
     nodesLayer.appendChild(d3node.node());
 
+    this.buildNodeInnerEdges(node);
+
     this.store.nodesSpatialMap = new MyRBush();
     node.setShowContent(true, true);
     this.store.nodesSpatialMap.insert(node);
 
-    this.buildNodeInnerEdges(node);
-
+    this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: oldCurrentNode });
     this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
     this.emitChangeEvent();
+
+    this.store.forceSynchronousUpdates = false;
   }
 
   public back(){
     if(this.currentNode === null) return;
+
+    this.store.forceSynchronousUpdates = true;
 
     const oldCurrentNode = this.currentNode;
 
@@ -115,13 +127,17 @@ export class SubChart{
     const currentD3Node = this.store.getD3Node(oldCurrentNode.id);
     currentD3Node.remove();
 
+    const newCurrentNode = chartItem.node;
+    this.currentNode = newCurrentNode;
+
+    if(newCurrentNode){
+      this.buildNodeInnerEdges(newCurrentNode);
+    }
+
     oldCurrentNode.setShowContent(false, true);
     this.switchNodeState(oldCurrentNode, false);
 
     this.store.nodesSpatialMap = chartItem.spatialMap;
-
-    const newCurrentNode = chartItem.node;
-    this.currentNode = newCurrentNode;
 
     const zoom = this.zoomTransforms.get(chartItem.node?.id || 0);
     this.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
@@ -132,11 +148,8 @@ export class SubChart{
 
     this.addDomNodeToOriginalParent(oldCurrentNode);
 
-    if(newCurrentNode){
-      this.buildNodeInnerEdges(newCurrentNode);
-    }
-
     this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: oldCurrentNode });
+    this.store.emit(EVENTS.NODE_GOT_OPEN, { node: newCurrentNode });
 
     // `this.currentNode` is the new current node
     // `currentNode` is the previous current node
@@ -147,6 +160,8 @@ export class SubChart{
     }
 
     this.emitChangeEvent();
+
+    this.store.forceSynchronousUpdates = false;
   }
 
   private destroyNodeInnerEdges(node: Node){

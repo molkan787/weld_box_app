@@ -11,4 +11,5 @@ export interface DiagramEvent{
   readonly data?: any;
   readonly simulated?: boolean;
   readonly skipMutation?: boolean;
+  readonly skipRendering?: boolean;
 }

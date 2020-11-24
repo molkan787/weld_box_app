@@ -226,7 +226,8 @@ export class NodeRenderer{
       const edge = <Edge>ec.edge;
       const eligible = ec.attachType == AttachType.NodeBody && edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting;
       if(eligible){
-        this.buildEdgeAttachBox(node, container, ec);
+        const isInner = edge.multipartLocation == MultipartEdgeLocation.Inner;
+        this.buildEdgeAttachBox(node, container, ec, isInner);
       }
     }
   }
