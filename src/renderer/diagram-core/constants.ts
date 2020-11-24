@@ -104,6 +104,7 @@ export const CLASSES = Object.freeze({
   SVG_CLICKABLE: 'svg-clickable',
   EDGES_NOT_CLICKABLE: 'edges-not-clickable',
   HIGHLIGHTED: 'highlighted',
+  EDGE_DRAWER_ACTIVE: 'edge-drawer-active',
 })
 
 export const DATA_COMMANDS = Object.freeze({

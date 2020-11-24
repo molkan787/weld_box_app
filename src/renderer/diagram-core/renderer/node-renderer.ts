@@ -19,9 +19,10 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
     store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
-    store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.buildEdgesAttachBoxes(<Node>node));
-    store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node));
-    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, ({ node }: DiagramEvent) => this.destoryEdgesAttachBoxes(<Node>node, true));
+    // store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node));
+    // store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node, true));
+    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onContentHidded(e));
+    store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onContentShown(e));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
     store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
     store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
@@ -29,6 +30,11 @@ export class NodeRenderer{
     store.on(EVENTS.EDGE_DELETED, e => this.onEdgeDeleted(e));
     store.on(EVENTS.EDGECONNECTION_DESTROYED, e => this.onEdgeConnectionDestroyed(e));
     store.on(EVENTS.EDGECONNECTION_RESTORED, e => this.onEdgeConnectionRestored(e));
+
+    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
+    store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
+    store.on(EVENTS.NODE_GOT_OPEN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
+    store.on(EVENTS.NODE_CLOSING, (e: DiagramEvent) => console.log(e.type, e.node?.id));
   }
 
   public setLayer(layer: D3Node){
@@ -164,6 +170,16 @@ export class NodeRenderer{
       .style('cursor', cursor);
   }
 
+  onContentShown(e: DiagramEvent){
+    setTimeout(() => {
+      this.rebuildAttachBoxes(<Node>e.node, false);
+    }, 1);
+  }
+
+  onContentHidded(e: DiagramEvent){
+    this.rebuildAttachBoxes(<Node>e.node, true);
+  }
+
   onEdgeAdded(e: DiagramEvent){
     const edge = <Edge>e.edge;
     this.buildPotentialAttachBox(edge);
@@ -211,25 +227,28 @@ export class NodeRenderer{
     return `.${CLASSES.ATTACH_BOX}[${ATTR.COMPONENT_ID}="${attachbox.id}"]`;
   }
 
+  rebuildAttachBoxes(node: Node, innerEdgesOnly: boolean = false){
+    this.destoryEdgesAttachBoxes(node);
+    this.buildEdgesAttachBoxes(node, innerEdgesOnly);
+  }
+
   /** Destorys attach box of all edges of the specified node */
-  destoryEdgesAttachBoxes(node: Node, destroyAll: boolean = false){
+  destoryEdgesAttachBoxes(node: Node){
     if(node.isCircle) return;
     const container = this.getD3Node(node);
     let selector = `.node-${node.id}-${CLASSES.ATTACH_BOX}`;
-    if(!destroyAll){
-      selector += ':not(.inner)';
-    }
     container.selectAll(selector).remove();
   }
 
   /** Build edge target box */
-  buildEdgesAttachBoxes(node: Node){
+  buildEdgesAttachBoxes(node: Node, innerEdgesOnly: boolean = false){
     if(node.isCircle) return;
     const container = this.getD3Node(node);
     for(const ec of node.edges){
       const edge = <Edge>ec.edge;
-      const eligible = ec.attachType == AttachType.NodeBody && edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting;
-      if(eligible){
+      const { isMultipart, multipartLocation, multipartType } = edge;
+      const eligible = ec.attachType == AttachType.NodeBody && isMultipart && multipartType == MultipartEdgeType.Starting;
+      if(eligible && (!innerEdgesOnly || multipartLocation == MultipartEdgeLocation.Inner)){
         const isInner = edge.multipartLocation == MultipartEdgeLocation.Inner;
         this.buildEdgeAttachBox(node, container, ec, isInner);
       }
@@ -249,11 +268,14 @@ export class NodeRenderer{
         .attr(ATTR.COMPONENT_ID, edge.id);
 
     if(edge.offset){
+      const pad = this.store.diagramOptions.nodeBorderWidth;
       const pos = cloneObject(edge.offset);
       const isVertical = wall == Side.Top || wall == Side.Bottom;
       if(isVertical){
+        pos.y += pos.y < 0 ? -pad : pad;
         pos.y *= -1;
       }else{
+        pos.x += pos.x < 0 ? -pad : pad;
         pos.x *= -1;
       }
       eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);

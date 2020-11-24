@@ -3,7 +3,7 @@ import RBush, { BBox } from 'rbush';
 import EventEmitter from 'eventemitter3';
 import { Node } from "./components/node";
 import { Position } from "./interfaces/Position";
-import { EVENTS } from "./constants";
+import { CLASSES, EVENTS, MODULES } from "./constants";
 import { DiagramEvent } from "./interfaces/DiagramEvent";
 import { ZoomTransform } from "d3";
 import { DiagramOptions } from "./interfaces/DiagramOptions";
@@ -162,7 +162,7 @@ export class DiagramStore extends EventEmitter{
     if(this.activeModule){
       this.modulesStack.push(this.activeModule);
     }
-    this.activeModule = module;
+    this.setActiveModule(module);
     this.emitActiveModuleChanged();
   }
 
@@ -173,15 +173,21 @@ export class DiagramStore extends EventEmitter{
   public deactiveModule(module: DiagramModule){
     if(module !== this.activeModule) return;
     if(this.modulesStack.length > 0){
-      this.activeModule = <DiagramModule>this.modulesStack.pop();
+      this.setActiveModule(<DiagramModule>this.modulesStack.pop());
     }else{
-      this.activeModule = null;
+      this.setActiveModule(null);
     }
     this.emitActiveModuleChanged();
   }
 
+  private setActiveModule(module: DiagramModule | null){
+    this.activeModule = module;
+    const isEdgeDrawer = module?.name == MODULES.EDGE_DRAWER;
+    this.rootElement?.classed(CLASSES.EDGE_DRAWER_ACTIVE, isEdgeDrawer);
+  }
+
   /**
-   * Emits and event whenever a module requests activation or deactivation of its self
+   * Emits an event whenever a module requests activation or deactivation of its self
    */
   private emitActiveModuleChanged(){
     this.emit(EVENTS.DIAGRAM_ACTIVE_MODULE_CHANGED, { data: this.activeModule });

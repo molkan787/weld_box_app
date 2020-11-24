@@ -3,6 +3,9 @@
   position: relative;
   overflow: hidden;
 
+  @ab-width: 10px;
+  @ab-offset: -@ab-width / 2;
+
   &.edges-not-clickable .edge{
     pointer-events: none !important;
   }
@@ -29,6 +32,18 @@
     left: 0;
   }
 
+  &.edge-drawer-active{
+    span.attach-box{
+      cursor: grab;
+      &:hover{
+        outline-width: 3px;
+        outline-offset: 1px;
+        outline-color:  #1ED760;
+        outline-style: solid;
+      }
+    }
+  }
+
   .node{
     transition: opacity 0.3s;
 
@@ -37,10 +52,10 @@
         display: none;
       }
       span.attach-box{
-        &[data-wall-side="1"]{ margin-top: 22px; }
-        &[data-wall-side="2"]{ margin-left: 22px; }
-        &[data-wall-side="4"]{ margin-bottom: 22px; }
-        &[data-wall-side="8"]{ margin-right: 22px; }
+        &[data-wall-side="1"]{ margin-top: 24px; }
+        &[data-wall-side="2"]{ margin-left: 24px; }
+        &[data-wall-side="4"]{ margin-bottom: 24px; }
+        &[data-wall-side="8"]{ margin-right: 24px; }
       }
     }
 
@@ -48,8 +63,6 @@
       border-radius: 50%;
     }
 
-    @ab-width: 10px;
-    @ab-offset: -@ab-width / 2;
     span.attach-box{
       position: absolute;
       display: block;
@@ -60,21 +73,11 @@
       background-color: #595b61;
       border: none;
       border-radius: 2px;
-      cursor: grab;
       &[data-wall-side="1"]{ top: 0; left: 50%; }
       &[data-wall-side="2"]{ top: 50%; left: 0; }
       &[data-wall-side="4"]{ bottom: 0; left: 50%; }
       &[data-wall-side="8"]{ top: 50%; right: 0; }
-    }
 
-    rect.attach-box{
-      width: @ab-width;
-      height: @ab-width;
-      transform: translate(@ab-offset,  @ab-offset);
-      fill: #595b61;
-      stroke-width: 0;
-      rx: 2;
-      ry: 2;
     }
 
     .svg-layer{
@@ -160,6 +163,16 @@
       stroke: red;
       opacity: 0;
       // stroke-opacity: 0;
+    }
+    rect.attach-box{
+      width: @ab-width;
+      height: @ab-width;
+      transform: translate(@ab-offset,  @ab-offset);
+      fill: #595b61;
+      stroke-width: 4px;
+      stroke: transparent;
+      rx: 2;
+      ry: 2;
     }
   }
 

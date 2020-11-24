@@ -74,6 +74,7 @@ export class SubChart{
     const oldCurrentNode = this.currentNode;
     if(oldCurrentNode){
       this.store.emit(EVENTS.NODE_CLOSING, { node: oldCurrentNode });
+      oldCurrentNode.setShowContent(true, true);
     }
 
     if(oldCurrentNode){
@@ -106,7 +107,9 @@ export class SubChart{
     node.setShowContent(true, true);
     this.store.nodesSpatialMap.insert(node);
 
-    this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: oldCurrentNode });
+    if(oldCurrentNode){
+      this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: oldCurrentNode });
+    }
     this.store.emit(EVENTS.NODE_GOT_OPEN, { node });
     this.emitChangeEvent();
 
@@ -121,6 +124,7 @@ export class SubChart{
     const oldCurrentNode = this.currentNode;
 
     this.store.emit(EVENTS.NODE_CLOSING, { node: oldCurrentNode });
+    oldCurrentNode.setShowContent(true, true);
 
     const chartItem = <ChartItem>this.stack.pop();
 
