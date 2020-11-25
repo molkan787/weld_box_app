@@ -353,7 +353,7 @@ export class EdgeDrawer extends DiagramModule{
 
     if(subject === null){
       for(const node of nodes){
-        if((node.showContent === false && this.currentEdge) || node.isCircle){
+        if((node.isSubChart && !node.isOpen && this.currentEdge) || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);

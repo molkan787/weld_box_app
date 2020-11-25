@@ -44,12 +44,7 @@ export class State extends Node implements ObjectProps{
   }
 
   public get isSubTask(){
-    return !this.showContent || this.props.isOpen;
-  }
-
-  public set isSubTask(value: boolean){
-    if(this.props.isOpen) return;
-    this.showContent = !value;
+    return this.isSubChart;
   }
 
   public get isThread(){
@@ -62,7 +57,7 @@ export class State extends Node implements ObjectProps{
    */
   public convertToThread(){
     this._isThread = true;
-    this.setShowContent(false, true);
+    this.convertToSubChart(true);
     this.what = ObjectType.Thread;
     this.propsArchiver.lock();
     this.name = 'Thread ' + this.id;

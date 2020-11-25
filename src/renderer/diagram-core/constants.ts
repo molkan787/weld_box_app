@@ -34,6 +34,8 @@ export const EVENTS = Object.freeze({
   NODE_DECORATION_CHANGED: 'node-decoration-changed',
   NODE_PARENT_CHANGED: 'node-parent-changed',
   NODE_ATTRS_CHANGED: 'node-attrs-changed',
+  NODE_CONVERTED_TO_SUBCHART: 'node-converted-to-subchart',
+  NODE_CONVERTED_TO_NORMAL: 'node-converted-to-normal',
   NODE_CONTENT_GOT_SHOWN: 'node-content-got-shown',
   NODE_CONTENT_GOT_HIDDEN: 'node-content-got-hidden',
   NODE_GOT_OPEN: 'node-got-open',

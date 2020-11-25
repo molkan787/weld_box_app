@@ -60,12 +60,16 @@ export class ObjectCrafter{
   }
 
   public craftState(data: StateCloneData, what: ObjectType): State{
-    const { props, name, properties, statementBlocks, position, size, showContent } = data;
+    const { props, name, properties, statementBlocks, position, size, showContent, isSubChart } = data;
     const state = new State(cloneObject(position), cloneObject(size));
     state.props = cloneNestedObject(props);
     state.properties = cloneObject(properties);
     state.statementBlocks = cloneArray(statementBlocks);
+    if(isSubChart){
+      state.convertToSubChart(true);
+    }
     state.setShowContent(showContent, true);
+
     if(what == ObjectType.Thread){
       state.convertToThread();
     }

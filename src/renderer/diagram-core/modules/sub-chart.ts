@@ -37,7 +37,7 @@ export class SubChart{
     const node = <Node>e.node;
 
     // Open node if its content is hidden, and is not currently open
-    if(!node.showContent && !node.props.isOpen){
+    if(node.isSubChart && !node.isOpen){
       this.open(node);
     }
   }
@@ -273,7 +273,7 @@ export class SubChart{
 
     for(let i = start; i < hierarchy.length; i++){
       const n = hierarchy[i];
-      if(!n.showContent){
+      if(n.isSubChart){
         path.push(n);
       }
     }

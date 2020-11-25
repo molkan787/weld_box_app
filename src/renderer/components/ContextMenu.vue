@@ -1,7 +1,7 @@
 <template>
   <ContextMenu ref="menu">
     <template v-if="!node.isThread">
-      <li @click.prevent="node.isSubTask = !node.isSubTask" :disabled="isOpen">
+      <li @click.prevent="subtaskClick" :disabled="isOpen">
           Sub-task <CheckedIcon class="checked-icon" v-if="node.isSubTask" />
       </li>
       <li class="separator"></li>
@@ -35,13 +35,20 @@ export default {
   }),
   computed: {
     isOpen(){
-      return this.node.props && this.node.props.isOpen;
+      return this.node.isOpen;
     },
     props(){
       return this.node.properties || {};
     }
   },
   methods: {
+    subtaskClick(){
+      if(this.node.isSubChart){
+        this.node.convertToNormal();
+      }else{
+        this.node.convertToSubChart();
+      }
+    },
     handle({ node, sourceEvent }){
       if(node.what == ObjectType.State || node.what == ObjectType.Thread){
         this.node = node;

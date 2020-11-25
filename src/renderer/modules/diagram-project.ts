@@ -95,13 +95,13 @@ export class DiagramProject{
       // diagram.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
     }
 
-    const store = diagram.store;
-    for(let i = nodes.length - 1; i >= 0; i--){
-      const node = nodes[i];
-      if(!node.showContent){
-        store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node, skipMutation: true });
-      }
-    }
+    // const store = diagram.store;
+    // for(let i = nodes.length - 1; i >= 0; i--){
+    //   const node = nodes[i];
+    //   if(!node.showContent){
+    //     store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node, skipMutation: true });
+    //   }
+    // }
   }
 
   private putZoomTransforms(diagram: Diagram, items: ZoomTransformData[]){

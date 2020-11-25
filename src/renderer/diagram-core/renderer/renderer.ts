@@ -23,7 +23,9 @@ export class Renderer{
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
     store.on(EVENTS.NODE_PARENT_CHANGED, e => this.onNodeParentChanged(e))
-    store.on(EVENTS.NODE_ATTRS_CHANGED, e => this.onNodeAttrsChanged(e))
+    // store.on(EVENTS.NODE_ATTRS_CHANGED, e => this.onNodeAttrsChanged(e))
+    store.on(EVENTS.NODE_CONVERTED_TO_SUBCHART, e => this.onNodeConvertedToSubChart(e));
+    store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, e => this.onNodeConvertedToNormal(e));
 
     store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
     store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, e => this.onEdgeConnectionsUpdated(e));
@@ -211,25 +213,34 @@ export class Renderer{
     edges.forEach(ec => this.rebuildEdge(<Edge>ec.edge));
   }
 
-  onNodeAttrsChanged(event: DiagramEvent){
+  onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
     if(!event.simulated){
-      const wasContentVisible: boolean = event.data;
-      const isContentVisible: boolean = node.showContent;
-      this.store.actionsArchiver.push({
-        undo: [{
-          events: [],
-          do: () => node.setShowContent(wasContentVisible, true)
-        }],
-        redo: [{
-          events: [],
-          do: () => node.setShowContent(isContentVisible, true)
-        }]
-      })
+      this.pushNodeSubChartConvertionAction(node, true);
     }
-    if(node.showContent){
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+  }
+
+  onNodeConvertedToNormal(event: DiagramEvent){
+    const node = <Node>event.node;
+    if(!event.simulated){
+      this.pushNodeSubChartConvertionAction(node, false);
     }
+    // this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+  }
+
+  pushNodeSubChartConvertionAction(node: Node, isSubChart: boolean){
+    const toSubChart = () => node.convertToSubChart(true);
+    const toNormal = () => node.convertToNormal(true);
+    this.store.actionsArchiver.push({
+      undo: [{
+        events: [],
+        do: isSubChart ? toNormal : toSubChart
+      }],
+      redo: [{
+        events: [],
+        do: isSubChart ? toSubChart : toNormal
+      }]
+    })
   }
 
   onDestroyEdges(event: DiagramEvent){

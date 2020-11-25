@@ -58,11 +58,11 @@ export class ObjectCopier{
   }
 
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
-    const { id, name, properties, statementBlocks, showContent, edges } = state;
+    const { id, name, properties, statementBlocks, edges, isSubChart } = state;
 
     const parent = state.getParent();
     const { props, position, size } = this.getStatePropsAndBBox(state);
-    const _showContent = state.props.isOpen ? false : showContent;
+    const _showContent = !isSubChart;
     const data: StateCloneData = {
       ref: id,
       parentRef: parent?.id,
@@ -72,7 +72,8 @@ export class ObjectCopier{
       statementBlocks: cloneArray(statementBlocks),
       position: position,
       size: size,
-      showContent: _showContent
+      showContent: _showContent,
+      isSubChart: isSubChart
     }
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge))
     return data;

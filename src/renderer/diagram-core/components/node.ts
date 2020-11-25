@@ -25,6 +25,8 @@ export class Node extends Component{
 
   private _showContent: boolean = true;
 
+  private _isSubChart: boolean = false;
+
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
 
@@ -56,6 +58,13 @@ export class Node extends Component{
     if(options?.circle) this.isCircle = true;
   }
 
+  /**
+   * Indicate whether the Node is open or not
+   */
+  public get isOpen(){
+    return this.props.isOpen;
+  }
+
   public open(){
     this.store?.emit(EVENTS.DIAGRAM_OPEN_NODE, { node: this });
   }
@@ -66,10 +75,6 @@ export class Node extends Component{
 
   public set showContent(value: boolean){
     this.setShowContent(value);
-  }
-
-  public get isSubChart(){
-    return !this._showContent || this.props.isOpen;
   }
 
   /**
@@ -85,6 +90,35 @@ export class Node extends Component{
       const eventName = value ? EVENTS.NODE_CONTENT_GOT_SHOWN : EVENTS.NODE_CONTENT_GOT_HIDDEN;
       this.store?.emit(eventName, { node: this, simulated });
     }
+  }
+
+  /**
+   * Indicate whether the Node is a Sub Chart or not
+   */
+  public get isSubChart(){
+    return this._isSubChart;
+  }
+
+  /**
+   * Convert the Node to a Sub Chart Node
+   * @param {boolean} simulated set to `true` to bypass Undo/Redo system
+   */
+  public convertToSubChart(simulated?: boolean){
+    if(this._isSubChart) return;
+    this._isSubChart = true;
+    this.store?.emit(EVENTS.NODE_CONVERTED_TO_SUBCHART, { node: this, simulated });
+    this.setShowContent(false, simulated);
+  }
+
+  /**
+   * Convert the Sub Chart Node to a normal Node
+   * @param {boolean} simulated set to `true` to bypass Undo/Redo system
+   */
+  public convertToNormal(simulated?: boolean){
+    if(!this._isSubChart) return;
+    this._isSubChart = false;
+    this.store?.emit(EVENTS.NODE_CONVERTED_TO_NORMAL, { node: this, simulated });
+    this.setShowContent(true, simulated);
   }
 
   /**

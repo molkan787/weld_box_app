@@ -104,13 +104,13 @@ export class MyDiagram extends Diagram{
         }
       }
     }
-    const len = nodes.length;
-    for(let i = len - 1; i >= 0; i--){
-      const n = nodes[i];
-      if(!n.showContent){
-        this.store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node: n })
-      }
-    }
+    // const len = nodes.length;
+    // for(let i = len - 1; i >= 0; i--){
+    //   const n = nodes[i];
+    //   if(!n.showContent){
+    //     this.store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node: n })
+    //   }
+    // }
   }
 
   /**

@@ -33,6 +33,7 @@ export interface StateCloneData extends NodeCloneData{
   props: any;
   statementBlocks: StatementBlock[];
   showContent: boolean;
+  isSubChart: boolean;
 }
 
 export interface EventCloneData extends NodeCloneData{}
