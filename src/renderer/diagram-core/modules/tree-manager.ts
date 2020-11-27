@@ -20,6 +20,7 @@ export class TreeManager extends DiagramModule{
     const target = this.dropTarget;
     const node = <Node>event.node;
     this.setDropTarget(null);
+    setTimeout(() => this.setDropTarget(null), 50);
     if(target && target !== node.getParent()){
       target.highlighted = false;
       this.changeNodeParent(node, target);

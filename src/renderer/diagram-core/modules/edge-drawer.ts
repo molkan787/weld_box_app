@@ -11,6 +11,7 @@ import { Position } from "../interfaces/Position";
 import { RepositionRequest } from "../interfaces/RepositionRequest";
 import { DiagramModule } from "../module";
 import { cloneObject } from "../utils";
+import { Visibility } from "./sub-modules/visibility";
 
 export class EdgeDrawer extends DiagramModule{
 
@@ -35,8 +36,9 @@ export class EdgeDrawer extends DiagramModule{
 
     store.on(EVENTS.NODE_DRAGSTART, (e) => this.onNodeDragStart(e));
     store.on(EVENTS.NODE_DRAGGED, (e) => this.onNodeDragged(e));
-    store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, (e) => this.onEdgeConnectionsUpdated(e));
+    store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.EDGE_CONNECTIONS_CHANGED, (e) => this.onEdgeConnectionsChanged(e));
+    store.on(EVENTS.EDGE_CREATED, e => this.onEdgeCreated(e));
     store.on(EVENTS.REPOSITION_EDGECONNECTION, (e) => this.onRepositionEdgeConnection(e));
     store.on(EVENTS.CANVAS_MOUSEMOVE, (e) => this.onCanvasMouseMove(e.sourceEvent));
     store.on(EVENTS.CANVAS_MOUSEUP, (e) => this.onCanvasMouseUp(e.sourceEvent));
@@ -152,6 +154,7 @@ export class EdgeDrawer extends DiagramModule{
     const targetConnection = new EdgeConnection(AttachType.Position);
     targetConnection.position = point;
     edge.setTarget(targetConnection);
+    this.updateEdge(edge);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
   }
 
@@ -211,7 +214,7 @@ export class EdgeDrawer extends DiagramModule{
         this.pushSpawnAction(edge);
       }
     }
-    console.log(edge)
+
     setTimeout(() => {
       this.deactivate();
       if(subject){
@@ -368,7 +371,7 @@ export class EdgeDrawer extends DiagramModule{
 
     const prevSubject = this.nodeInSubject;
 
-    // if that was previously a subject node and its not the newly found one
+    // if there was previously a subject node and its not the newly found one
     // un-highlight the wall of that previous subject
     if(prevSubject !== null){
       if(subject !== prevSubject){
@@ -404,19 +407,42 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Edge Connections dynamic positioning logic
 
+  private onNodeBBoxChanged(event: DiagramEvent){
+    const node = <Node>event.node;
+    const allEdges = <Edge[]>node.edges.map(ec => ec.edge);
+    const toUpdate: Edge[] = [];
+    const len = allEdges.length;
+    for(let i = 0; i < len; i++){
+      const e = allEdges[i];
+      if(Visibility.isEdgeVisible(e)){
+        toUpdate.push(e);
+      }
+    }
+
+    for(let edge of toUpdate){
+      this.updateEdge(edge);
+      this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
+    }
+  }
+
   private onRepositionEdgeConnection(event: DiagramEvent){
     const request = <RepositionRequest>event.data;
     const { subject, pointTo }  = request;
     this.repositionEdgeConnection(subject, pointTo, true)
   }
 
-  private onEdgeConnectionsUpdated(event: DiagramEvent){
-    if(event.sender === this) return;
-    this.repositionEdge(<Edge>event.edge);
+  private onEdgeCreated(event: DiagramEvent){
+    const edge = <Edge>event.edge;
+    this.updateEdge(edge);
   }
 
+
   private onEdgeConnectionsChanged(event: DiagramEvent){
-    this.repositionEdge(<Edge>event.edge);
+    const edge = <Edge>event.edge;
+    const { source, target } = edge;
+    source.calculateCoordinates();
+    target.calculateCoordinates();
+    this.updateEdge(edge);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, {
       edge: event.edge,
       sender: this,
@@ -425,10 +451,17 @@ export class EdgeDrawer extends DiagramModule{
     });
   }
 
+  private updateEdge(edge: Edge){
+    const { source, target } = edge;
+    this.repositionEdge(edge);
+    source.calculateCoordinates();
+    target.calculateCoordinates();
+  }
+
   private repositionEdge(edge: Edge, force: boolean = false){
     let { source, target } = edge;
-    this.repositionEdgeConnection(source, target, force);
-    this.repositionEdgeConnection(target, source, force);
+    this.repositionEdgeConnection(source.getInstance(), target, force);
+    this.repositionEdgeConnection(target.getInstance(), source, force);
   }
 
   private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection, force: boolean = false){

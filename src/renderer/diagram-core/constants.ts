@@ -10,6 +10,7 @@ export const MODULES = Object.freeze({
   COMPONENT_DELETER: 'component-deleted',
   TREE_MANAGER: 'tree-manager',
   INITIAL_EDGE_DRAGGING: 'initial-edge-dragging',
+  EDGE_MUTATOR: 'edges-mutator',
 });
 
 /**
@@ -47,6 +48,7 @@ export const EVENTS = Object.freeze({
   NODE_DRAGGED_OUT_OF_PARENT: 'node-dragged-out-of-parent',
   NODE_INITIAL_DROP: 'node-initial-drop',
   NODE_DELETED: 'node-deleted',
+  NODE_BUILT: 'node-built',
 
   EDGE_CREATED: 'edge-created',
   EDGE_ADDED: 'edge-added',
@@ -73,6 +75,7 @@ export const EVENTS = Object.freeze({
   DIAGRAM_DESTROY_EDGES: 'diagram-destroy-edges',
   DIAGRAM_BUILD_EDGES: 'diagram-build-edges',
   DIAGRAM_CHARTS_PATH_CHANGED: 'diagram-charts-path-changed',
+  DIAGRAM_CURRENT_NODE_CHANGED: 'diagram-current-node-changed',
 
   DIAGRAM_START_NODE_DRAGGING: 'diagram-start-node-dragging',
   DIAGRAM_START_EDGE_DRAGGING: 'diagram-start-edge-dragging',
@@ -107,6 +110,8 @@ export const CLASSES = Object.freeze({
   EDGES_NOT_CLICKABLE: 'edges-not-clickable',
   HIGHLIGHTED: 'highlighted',
   EDGE_DRAWER_ACTIVE: 'edge-drawer-active',
+  DRAGGING: 'dragging',
+  SUB_CHART: 'sub-chart',
 })
 
 export const DATA_COMMANDS = Object.freeze({

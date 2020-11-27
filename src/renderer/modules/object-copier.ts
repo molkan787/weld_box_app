@@ -1,4 +1,4 @@
-import { EdgesBucket } from "../classes/edges-bucket";
+import { EdgesBucket } from "../diagram-core/helper-classes/edges-bucket";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
 import { MyObject } from "../interfaces/MyObject";
@@ -24,7 +24,7 @@ export class ObjectCopier{
     for(let o of objects){
       objectsClones.push(this.copyObject(o, edgesBucket));
     }
-    const edges = edgesBucket.getAll().map(edge => this.copyEdge(edge));
+    const edges = edgesBucket.getAll().map(edge => this.copyEdge(<MyEdge>edge));
     return {
       objects: objectsClones,
       edges: edges

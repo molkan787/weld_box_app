@@ -159,15 +159,15 @@ export class Node extends Component{
   /**
    * Returns all descendents (This node, childs nodes and recursively all sub-childs).
    * This method its self doesn't use recursive calls, it use stack approach instead
-   * @param skipHiddenNodes set to true to skip children of nodes with hidden content, with exception of calling node's children
+   * @param skipHiddenNodes set to true to skip children of sub-chart's nodes, with exception of calling node's children
    */
-  public getAllDescendentsNodes(skipHiddenNodes: boolean = false): Node[]{
+  public getAllDescendentsNodes(skipSubChartChilds: boolean = false, skipDirectChildsAlso: boolean = false): Node[]{
     const allNodes: Node[] = [];
     const stack: Node[] = [this];
     while(stack.length > 0){
       const n = <Node>stack.shift();
       allNodes.push(n);
-      if(!(skipHiddenNodes && !n.showContent && n !== this)){
+      if(!(skipSubChartChilds && !n.showContent && (n !== this || skipDirectChildsAlso))){
         stack.push(...n.children);
       }
     }
@@ -273,6 +273,13 @@ export class Node extends Component{
    * @param d3node D3's selection of node's DOM element
    */
   public DOMElementBuilt(d3node: D3Node){}
+
+  /**
+   * A life cycle hook, called before destroying DOM element of the node.
+   * Can be used to clean up custom content
+   * @param d3node D3's selection of node's DOM element
+   */
+  public BeforeDOMElementDestroy(d3node: D3Node){}
 
 }
 

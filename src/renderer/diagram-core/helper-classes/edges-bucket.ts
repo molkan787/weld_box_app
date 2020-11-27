@@ -1,10 +1,10 @@
-import { MyEdge } from "../my-diagram/my-edge";
+import { Edge } from "../components/edge";
 
 export class EdgesBucket{
 
-  private hashmap: Map<number, MyEdge> = new Map();
+  private hashmap: Map<number, Edge> = new Map();
 
-  public add(edges: MyEdge[]){
+  public add(edges: Edge[]){
     const m = this.hashmap;
     for(let i = 0; i < edges.length; i++){
       const edge = edges[i];
@@ -12,7 +12,7 @@ export class EdgesBucket{
     }
   }
 
-  public getAll(): MyEdge[]{
+  public getAll(): Edge[]{
     return Array.from(this.hashmap.values());
   }
 

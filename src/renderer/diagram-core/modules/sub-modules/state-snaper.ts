@@ -71,20 +71,28 @@ export class StateSnaper{
   }
 
   public snapEdge(edge: Edge): EdgeSnap{
-    const { source, target } = edge;
+    const { source, target, isMultipart, multipartLocation, multipartType } = edge;
     return {
       edge,
       shapePoints: cloneArray(edge.shapePoints),
       source: this.snapEdgeConnection(source),
-      target: this.snapEdgeConnection(target)
+      target: this.snapEdgeConnection(target),
+      isMultipart,
+      multipartLocation,
+      multipartType
     }
   }
 
   public restoreEdge(snap: EdgeSnap){
-    const { edge, shapePoints, source, target } = snap;
+    const { edge, shapePoints, source, target, isMultipart, multipartLocation, multipartType } = snap;
     edge.shapePoints = cloneArray(shapePoints);
     this.restoreEdgeConnection(source);
     this.restoreEdgeConnection(target);
+    if(isMultipart){
+      edge.convertToMultipart(multipartLocation, multipartType);
+    }else{
+      edge.convertToNormal();
+    }
   }
 
 

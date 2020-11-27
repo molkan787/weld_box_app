@@ -16,25 +16,23 @@ export class NodeRenderer{
   private nodesLayer: D3Node | null = null;
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node))
-    store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node))
-    store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node))
+    store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node));
+    store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node));
+    store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
     // store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node));
     // store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node, true));
-    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onContentHidded(e));
-    store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onContentShown(e));
+    // store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onContentHidded(e));
+    // store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onContentShown(e));
+    store.on(EVENTS.NODE_CONVERTED_TO_SUBCHART,({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
+    store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
     store.on(EVENTS.NODE_DELETED, ({ node }: DiagramEvent) => this.destroyNode(<Node>node));
     store.on(EVENTS.EDGE_ADDED, e => this.onEdgeAdded(e));
     store.on(EVENTS.EDGE_CONVERTED_TO_MULTIPART, e => this.onEdgeConvertedToMultipart(e));
     store.on(EVENTS.EDGE_DELETED, e => this.onEdgeDeleted(e));
+    store.on(EVENTS.EDGE_CONNECTIONS_UPDATED, e => this.onEdgeConnectionsUpdated(e));
     store.on(EVENTS.EDGECONNECTION_DESTROYED, e => this.onEdgeConnectionDestroyed(e));
     store.on(EVENTS.EDGECONNECTION_RESTORED, e => this.onEdgeConnectionRestored(e));
-
-    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
-    store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
-    store.on(EVENTS.NODE_GOT_OPEN, (e: DiagramEvent) => console.log(e.type, e.node?.id));
-    store.on(EVENTS.NODE_CLOSING, (e: DiagramEvent) => console.log(e.type, e.node?.id));
   }
 
   public setLayer(layer: D3Node){
@@ -42,6 +40,7 @@ export class NodeRenderer{
   }
 
   build(container: D3Node, node: Node){
+    console.log(`building ${node.name}`)
     const child = node.parent != null;
     const con = child ? container.select(cs(CLASSES.NODE_BODY)) : container;
     const root = con.append('div');
@@ -59,10 +58,15 @@ export class NodeRenderer{
 
       this.addResizeHandles(root, node.id);
     }
-    root.classed('circle', node.isCircle);
+    root.classed('circle', node.isCircle)
+        .classed(CLASSES.SUB_CHART, node.isSubChart);
 
     this.store.setD3Node(node.id, root);
     this.update(node);
+
+    this.buildEdgesAttachBoxes(node, !node.isOpen);
+
+    this.store.emit(EVENTS.NODE_BUILT, { node });
 
     node.DOMElementBuilt(root);
   }
@@ -89,8 +93,11 @@ export class NodeRenderer{
   }
 
   updateAttributes(node: Node){
-    const d3Node = this.getD3Node(node);
-    d3Node.classed(CLASSES.CONTENT_HIDDEN, !node.showContent);
+    if(!node.isOpen){
+      const d3Node = this.getD3Node(node);
+      d3Node.classed(CLASSES.CONTENT_HIDDEN, !node.showContent);
+      d3Node.classed(CLASSES.SUB_CHART, node.isSubChart);
+    }
   }
 
   /** Updates element's position in the dom tree,
@@ -112,6 +119,7 @@ export class NodeRenderer{
 
   updateDecoration(node: Node){
     const d3Node = this.getD3Node(node);
+    if(!d3Node) return;
 
     // Apply outline, usually used when the node is the drop target for a child node
     d3Node.classed('highlighted', node.highlighted);
@@ -204,6 +212,15 @@ export class NodeRenderer{
     this.buildPotentialAttachBox(e.data.edge);
   }
 
+  onEdgeConnectionsUpdated(e: DiagramEvent){
+    const edge = <Edge>e.edge;
+    if(edge.isMultipart){
+      const { source, target } = edge;
+      if(source.attachType == AttachType.NodeBody) this.updateEdgeAttachBoxPosition(source);
+      if(target.attachType == AttachType.NodeBody) this.updateEdgeAttachBoxPosition(target);
+    }
+  }
+
   buildPotentialAttachBox(edge: Edge){
     if(
       edge.multipartType == MultipartEdgeType.Starting &&
@@ -256,7 +273,6 @@ export class NodeRenderer{
   }
 
   buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection, isInner: boolean = false){
-    const wall = edge.nodeWall;
     let eab: D3Node = select(this.getAttachSelector(edge));
     if(eab.size() == 0){
       eab = container.append('span');
@@ -264,22 +280,32 @@ export class NodeRenderer{
     eab.classed(CLASSES.ATTACH_BOX, true)
         .classed(`node-${node.id}-` + CLASSES.ATTACH_BOX, true)
         .classed('inner', isInner)
-        .attr(ATTR.WALL_SIDE, wall)
         .attr(ATTR.COMPONENT_ID, edge.id);
+    this.updateEdgeAttachBoxPosition(edge, eab);
+  }
 
-    if(edge.offset){
-      const pad = this.store.diagramOptions.nodeBorderWidth;
-      const pos = cloneObject(edge.offset);
-      const isVertical = wall == Side.Top || wall == Side.Bottom;
-      if(isVertical){
-        pos.y += pos.y < 0 ? -pad : pad;
-        pos.y *= -1;
-      }else{
-        pos.x += pos.x < 0 ? -pad : pad;
-        pos.x *= -1;
-      }
-      eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
+  updateEdgeAttachBoxPosition(ec: EdgeConnection, eab?: D3Node){
+    const ab = ec.getInstance();
+    if(typeof eab == 'undefined') eab = select(this.getAttachSelector(ab));
+    const wall = ab.nodeWall;
+    eab.attr(ATTR.WALL_SIDE, wall);
+    const node = <Node>ab.node;
+    const size = node.size, nodePos = node.getAbsolutePosition(true);
+    const pad = this.store.diagramOptions.nodeBorderWidth;
+    const pos = cloneObject(ab.coordinates);
+    const isVertical = wall == Side.Top || wall == Side.Bottom;
+    pos.x -= nodePos.x;
+    pos.y -= nodePos.y;
+    if(isVertical){
+      pos.x -= size.width / 2;
+      if(wall == Side.Bottom) pos.y -= size.height;
+      pos.y -= wall == Side.Top ? pad : -pad;
+    }else{
+      pos.y -= size.height / 2;
+      if(wall == Side.Right) pos.x -= size.width;
+      pos.x -= wall == Side.Left ? pad : -pad;
     }
+    eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
   }
 
   private destroyNode(node: Node){
@@ -290,7 +316,7 @@ export class NodeRenderer{
 
   private getD3Node(node: Node | number): D3Node{
     const id = node instanceof Node ? node.id : node;
-    const d3Node = this.store.getD3Node(id);
+    const d3Node = this.store.getD3Node(id, true);
     return d3Node;
   }
 

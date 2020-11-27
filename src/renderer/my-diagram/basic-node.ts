@@ -32,4 +32,9 @@ export abstract class BasicNode extends Node{
     this.propsArchiver.unlock();
   }
 
+  BeforeDOMElementDestroy(){
+    this.vm?.$destroy();
+    this.vm = undefined;
+  }
+
 }

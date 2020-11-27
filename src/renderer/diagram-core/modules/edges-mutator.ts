@@ -1,22 +1,24 @@
 import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
-import { EVENTS } from "../constants";
+import { EVENTS, MODULES } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { RepositionRequest } from "../interfaces/RepositionRequest";
+import { DiagramModule } from "../module";
 
 /**
  * This modules Split or merge inter-chart edges when a node is converted to sub-chart or back to normal node
  */
-export class EdgesMutator{
+export class EdgesMutator extends DiagramModule{
 
   constructor(readonly store: DiagramStore){
-    store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onNodeContentGotHidden(e));
-    store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onNodeContentGotShown(e));
+    super(store, MODULES.EDGE_MUTATOR);
+    store.on(EVENTS.NODE_CONVERTED_TO_SUBCHART, e => this.onNodeConvertedToSubChart(e));
+    store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, e => this.onNodeConvertedToNormal(e));
   }
 
-  private onNodeContentGotHidden(event: DiagramEvent){
+  private onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
     if(node.props.isOpen || event.skipMutation) return;
     const foreignEdgesConnections = this.getForeignEdges(node);
@@ -25,13 +27,32 @@ export class EdgesMutator{
     }
   }
 
-  private onNodeContentGotShown(event: DiagramEvent){
+  private onNodeConvertedToNormal(event: DiagramEvent){
     const node = <Node>event.node;
     if(node.props.isOpen || event.skipMutation) return;
     const bridgedEdges = node.edges.filter(ec => ec.isBridge);
+    const singles = this.getMultipartSigleEdges(node.edges);
     for(let ec of bridgedEdges){
       this.mergeBridgedEdge(ec);
     }
+    this.enableActionGrouping();
+    singles.forEach(se => this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: se }));
+    this.disableActionGrouping();
+  }
+
+  private getMultipartSigleEdges(edgeConnections: EdgeConnection[]){
+    const edges: Edge[] = [];
+    const len = edgeConnections.length;
+    for(let i = 0; i < len; i++){
+      const ec = edgeConnections[i];
+      const edge = ec.edge;
+      const rm = edge && edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting
+                  && ec.bridgeFrom === null;
+      if(rm && edge){
+        edges.push(edge);
+      }
+    }
+    return edges;
   }
 
   private splitEdge(nodeInContext: Node, foreignEC: EdgeConnection){

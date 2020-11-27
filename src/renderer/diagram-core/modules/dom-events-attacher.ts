@@ -18,7 +18,7 @@ export class DomEventsAttacher{
   private readonly draggedThrottler: throttle<(e: DiagramEvent) => void>;
 
   constructor(private readonly store: DiagramStore){
-    store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
+    store.on(EVENTS.NODE_BUILT, e => this.onNodeBuilt(e));
     store.on(EVENTS.INIT_CANVAS_CREATED, (e: DiagramEvent) => this.onCanvasCreated(e));
 
     this.dragController = drag()
@@ -33,7 +33,6 @@ export class DomEventsAttacher{
           e.stopPropagation();
           return false;
         }
-        console.log(this.store.activeModule?.name)
         if(this.store.activeModule?.name !== MODULES.NODE_DRAGGING) return true;
         if(node.props.isOpen){
           return this.isResizeHandleEvent(e);
@@ -63,7 +62,7 @@ export class DomEventsAttacher{
     });
   }
 
-  onNodeAdded(e: DiagramEvent): void {
+  onNodeBuilt(e: DiagramEvent): void {
     const node = <Node>e.node;
     const d3node = this.store.getD3Node(node.id);
     d3node.on('contextmenu', this.handlers.contextmenu)
@@ -80,6 +79,8 @@ export class DomEventsAttacher{
   }
 
   onDoubleClick(e: MouseEvent, node: Node){
+    e.stopPropagation();
+    e.preventDefault();
     this.store.emit(EVENTS.NODE_DOUBLE_CLICK, { node, sourceEvent: e });
   }
 

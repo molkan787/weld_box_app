@@ -1,4 +1,4 @@
-import { curveBasis, Line, line } from "d3";
+import { curveBasis, Line, line, select } from "d3";
 import { Edge } from "../components/edge";
 import { AttachType } from "../components/edge-connection";
 import { ATTR, CLASSES, EVENTS } from "../constants";
@@ -36,7 +36,8 @@ export class EdgeRenderer{
   }
 
   prepareLayer(layer: D3Node){
-    const container = layer.append('defs');
+    const svgEl = layer.node().parentNode;
+    const container = <D3Node><any>select(svgEl).append('defs');
     this.buildEdgeMarker(container, false);
     this.buildEdgeMarker(container, true);
   }
@@ -69,6 +70,7 @@ export class EdgeRenderer{
   build(container: D3Node, edge: Edge){
     const htmlId = 'edge-' + edge.id;
     const g = container.append('g');
+    g.data([edge]);
     g.classed('edge', true)
       .attr('id', htmlId);
 
@@ -179,7 +181,7 @@ export class EdgeRenderer{
   }
 
   updateDecoration(edge: Edge){
-    const d3Node = this.store.getD3Node(edge.id);
+    const d3Node = this.store.getD3Node(edge.id, true);
     if(typeof d3Node === 'undefined') return;
     d3Node.classed(CLASSES.HIGHLIGHTED, edge.highlighted);
     d3Node.select('path')

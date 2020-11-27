@@ -44,6 +44,7 @@ export class MyEdge extends Edge implements ObjectProps{
 
   BeforeDOMElementDestroy(){
     this.vm?.$destroy();
+    this.vm = undefined;
   }
 
   DOMElementBuilt(d3node: D3Node){

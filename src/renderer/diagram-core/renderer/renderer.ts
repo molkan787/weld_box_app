@@ -4,7 +4,9 @@ import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
+import { EdgesBucket } from "../helper-classes/edges-bucket";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { Visibility } from "../modules/sub-modules/visibility";
 import { D3Node } from "../types/aliases";
 import { EdgeRenderer } from "./edge-renderer";
 import { NodeRenderer } from "./node-renderer";
@@ -19,6 +21,8 @@ export class Renderer{
   constructor(readonly store: DiagramStore){
     this.nodeRenderer = new NodeRenderer(this.store);
     this.edgeRenderer = new EdgeRenderer(this.store);
+
+    store.on(EVENTS.DIAGRAM_CURRENT_NODE_CHANGED, e => this.onCurrentNodeChanged(e));
 
     store.on(EVENTS.NODE_BBOX_CHANGED, e => this.onNodeBBoxChanged(e));
     store.on(EVENTS.NODE_ADDED, e => this.onNodeAdded(e));
@@ -38,6 +42,7 @@ export class Renderer{
     // if a node got selected, diselect any selected edge
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => {
       if(e.node) store.emit(EVENTS.EDGE_SELECTED, { simulated: true });
+      if(e.node) console.log(e.node)
       store.selectedComponent = e.node || null;
     })
     // if an edge got selected, diselect any selected node
@@ -61,19 +66,86 @@ export class Renderer{
     this.edgeRenderer.prepareLayer(edgesLayer);
   }
 
+  onCurrentNodeChanged(event: DiagramEvent){
+    const currentNode = <Node | null>event.node;
+    console.log('CurrentNode', currentNode);
+    this.clearContent();
+    this.buildChart(currentNode);
+    if(currentNode){
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode })
+    }
+  }
+
+  clearContent(){
+    const d3Nodes = this.store.d3NodesMap.values();
+    for(let d3Node of d3Nodes){
+      const component = <any>d3Node.data()[0];
+      component.BeforeDOMElementDestroy(d3Node);
+    }
+    this.store.d3NodesMap.clear();
+
+    const nl = <HTMLElement>this.nodesLayer?.node();
+    const el = <HTMLElement>this.edgesLayer?.node();
+    nl.innerHTML = '';
+    el.innerHTML = '';
+  }
+
+  buildChart(chartNode: Node | null){
+    if(chartNode){
+      const components = this.getNodeVisibleContent(chartNode);
+      this.buildComponents(components);
+    }else{
+      const topLevelNodes = this.store.getTopLevelNodes();
+      this.buildComponents(topLevelNodes);
+    }
+  }
+
+  rebuildInChartNodeHierachy(node: Node){
+    const componentsToDestroy = this.getNodeVisibleContent(node, true);
+    const componentsToBuild = this.getNodeVisibleContent(node);
+    this.destroyComponents(componentsToDestroy.reverse());
+    this.buildComponents(componentsToBuild);
+  }
+
+  buildComponents(components: Component[]){
+    for(let component of components){
+      this.buildComponent(null, component);
+    }
+  }
+
   /**
-   * Build a DOM element repesenting the diagram component
+   * Build a DOM element repesenting the component
    * @param container DOM element to which add childs elements
-   * @param component Diagram component, either `Node` or `Edge` instance
+   * @param component Component, either `Node` or `Edge` instance
    */
-  build(container: D3Node | null, component: Component){
+  buildComponent(container: D3Node | null, component: Component){
     if(component.type === ComponentType.Node){
-      this.nodeRenderer.build(container || <D3Node>this.nodesLayer, <Node>component);
+      this.nodeRenderer.build(container || this.getNodeDomParent(<Node>component) || <D3Node>this.nodesLayer, <Node>component);
     }else if(component.type === ComponentType.Edge){
       const edge = <Edge>component;
       const _container = container || this.getEdgeContainer(edge);
       this.edgeRenderer.build(_container, <Edge>component);
     }
+  }
+
+  destroyComponents(components: Component[]){
+    const len = components.length;
+    for(let i = 0; i < len; i++){
+      try {
+        console.log('destorying ' + (<any>components[i]).name)
+        this.destroyComponent(components[i]);
+      } catch (error) {
+
+      }
+    }
+  }
+
+  destroyComponent(component: Component){
+    const d3Node = this.store.getD3Node(component.id);
+    const com = <Node | Edge>component;
+    com.BeforeDOMElementDestroy(d3Node);
+    d3Node.remove();
+    this.store.d3NodesMap.delete(component.id);
   }
 
   /**
@@ -88,9 +160,42 @@ export class Renderer{
     }
   }
 
+  getNodeVisibleContent(node: Node, forceIncludeDirectChilds: boolean = false): Component[]{
+    const nodes: Component[] = node.getAllDescendentsNodes(true, !forceIncludeDirectChilds);
+    const edges: Component[] = this.getNodesVisibleEdges(<Node[]>nodes);
+    return nodes.concat(edges);
+  }
+
+  getNodesVisibleEdges(nodes: Node[]): Edge[]{
+    const bucket = new EdgesBucket();
+
+    const len = nodes.length;
+    for(let i = 0; i < len; i++){
+      bucket.add(
+        this.getNodeVisibleEdges(nodes[i])
+      );
+    }
+
+    return bucket.getAll();
+  }
+
+  getNodeVisibleEdges(node: Node): Edge[]{
+    const result: Edge[] = [];
+    const ecs = node.edges;
+    const len = ecs.length;
+    for(let i = 0; i < len; i++){
+      const ec = ecs[i];
+      const edge = ec.edge;
+      if(edge && Visibility.isEdgeVisible(edge)){
+        result.push(edge);
+      }
+    }
+    return result;
+  }
+
   rebuildEdge(edge: Edge){
     this.edgeRenderer.destroyElement(edge);
-    this.build(null, edge);
+    this.buildComponent(null, edge);
   }
 
   getEdgeContainer(edge: Edge): D3Node{
@@ -133,20 +238,23 @@ export class Renderer{
 
   onNodeAdded(event: DiagramEvent){
     const node = <Node>event.node;
-    const domParent = node.parent && this.store.getD3Node(node.parent.id);
-    const container = <D3Node>domParent;
-    this.build(container, node);
+    const container = this.getNodeDomParent(node);
+    this.buildComponent(container, node);
   }
 
   onEdgeAdded(event: DiagramEvent){
     const edge = <Edge>event.edge;
-    const { isMultipart, multipartLocation, multipartType, source, target } = edge;
-    const owningNode = multipartType == MultipartEdgeType.Starting ? target.node : source.node;
-    const skipRendering = isMultipart && multipartLocation == MultipartEdgeLocation.Inner && !owningNode?.props.isOpen;
-    if(!skipRendering){
-      this.build(null, edge);
+    const shouldRender = Visibility.isEdgeVisible(edge);
+    console.log('shouldRender', shouldRender, edge)
+    if(shouldRender){
+      this.buildComponent(null, edge);
       this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: edge });
     }
+  }
+
+  getNodeDomParent(node: Node){
+    const domParent = node.parent && this.store.getD3Node(node.parent.id);
+    return <D3Node | null>domParent;
   }
 
   /**
@@ -155,23 +263,6 @@ export class Renderer{
   onNodeBBoxChanged(event: DiagramEvent){
     const node = <Node>event.node;
     this.nodeRenderer.update(node);
-
-    if(!node.props.isOpen){
-      const edges = <Edge[]>(
-        node.edges
-        .filter(ec => (
-          ec.edge && !(
-            ec.edge.isMultipart && ec.edge.multipartLocation == MultipartEdgeLocation.Inner && ec.attachType == AttachType.NodeBody
-          )
-        ))
-        .map(ec => ec.edge)
-      );
-
-      // Updating positions of all edges that are connected to the Node currently being moved
-      for(let edge of edges){
-        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
-      }
-    }
 
     // If node's content (childs) are hidden we don't need to update them
     if(!node.showContent) return;
@@ -215,17 +306,25 @@ export class Renderer{
 
   onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
-    if(!event.simulated){
+    if(!event.simulated || event.isRestore){
       this.pushNodeSubChartConvertionAction(node, true);
     }
+    setTimeout(() => this.rebuildConvertedNode(node), 0);
   }
 
   onNodeConvertedToNormal(event: DiagramEvent){
     const node = <Node>event.node;
-    if(!event.simulated){
+    if(!event.simulated || event.isRestore){
       this.pushNodeSubChartConvertionAction(node, false);
     }
-    // this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
+    setTimeout(() => this.rebuildConvertedNode(node), 0);
+  }
+
+  rebuildConvertedNode(node: Node){
+    this.store.forceSynchronousUpdates = true;
+    this.rebuildInChartNodeHierachy(node);
+    this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node });
+    this.store.forceSynchronousUpdates = false;
   }
 
   pushNodeSubChartConvertionAction(node: Node, isSubChart: boolean){
@@ -253,7 +352,7 @@ export class Renderer{
   onBuildEdges(event: DiagramEvent){
     const edges = <Edge[]>event.data;
     for(const edge of edges){
-      this.build(null, edge);
+      this.buildComponent(null, edge);
     }
   }
 

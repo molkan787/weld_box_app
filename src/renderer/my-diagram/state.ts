@@ -78,6 +78,11 @@ export class State extends Node implements ObjectProps{
     this.propsArchiver.unlock();
   }
 
+  BeforeDOMElementDestroy(){
+    this.vm?.$destroy();
+    this.vm = undefined;
+  }
+
 }
 
 export enum StateDecomposition{

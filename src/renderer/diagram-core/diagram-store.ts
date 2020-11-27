@@ -197,9 +197,9 @@ export class DiagramStore extends EventEmitter{
    * Gets D3Node from hash-table/map by Id
    * @param id Id of the Node
    */
-  public getD3Node(id: number){
+  public getD3Node(id: number, failGently: boolean = false){
     const n = this.d3NodesMap.get(id);
-    if(typeof n === 'undefined'){
+    if(!failGently && typeof n === 'undefined'){
       throw new Error(`Node #${id} was not found in D3NodesMap`);
     }
     return <D3Node>n;
@@ -264,6 +264,19 @@ export class DiagramStore extends EventEmitter{
   public refreshNode(node: Node){
     this.removeNode(node);
     this.addNode(node);
+  }
+
+  public getTopLevelNodes(){
+    const nodes = this.nodes;
+    const len = nodes.length;
+    const topLevelNodes: Node[] = [];
+    for(let i = 0; i < len; i++){
+      const node = nodes[i];
+      if(node.getParent() == null && node.isSubChart){
+        topLevelNodes.push(node);
+      }
+    }
+    return topLevelNodes;
   }
 
   /**
@@ -354,11 +367,9 @@ export class MyRBush extends RBush<Node>{
     super();
   }
 
-  // TODO: Cache absolute position instead of re-calculate each time
-
   toBBox(node: Node){
     const s = node.size;
-    const p = node.getAbsolutePosition();
+    const p = node.getAbsolutePosition(true);
     return {
       minX: p.x,
       minY: p.y,
@@ -368,14 +379,14 @@ export class MyRBush extends RBush<Node>{
   }
 
   compareMinX(a: Node, b: Node){
-    const ap = a.getAbsolutePosition();
-    const bp = b.getAbsolutePosition();
+    const ap = a.getAbsolutePosition(true);
+    const bp = b.getAbsolutePosition(true);
     return ap.x - bp.x;
   }
 
   compareMinY(a: Node, b: Node){
-    const ap = a.getAbsolutePosition();
-    const bp = b.getAbsolutePosition();
+    const ap = a.getAbsolutePosition(true);
+    const bp = b.getAbsolutePosition(true);
     return ap.y - bp.y;
   }
 

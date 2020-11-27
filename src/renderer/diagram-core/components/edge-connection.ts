@@ -23,8 +23,8 @@ export class EdgeConnection extends Component{
   }
 
   /** Cached result of getCoordinates() method */
-  public coordinates: Position = { x: 0, y: 0 };
-  private lastSpacingOffset: number = 0;
+  private _coordinates: Position = { x: 0, y: 0 };
+  public lastSpacingOffset: number = 0;
 
   constructor(
     public attachType: AttachType = AttachType.Position,
@@ -89,19 +89,39 @@ export class EdgeConnection extends Component{
     return this.edge?.source === this
   }
 
+  public getCoordinates(skipOffset: boolean = false): Position{
+    if(this.bridgeTo){
+      return this.bridgeTo.getCoordinates();
+    }
+    if(skipOffset || this.attachType == AttachType.Position){
+      return this.getOrigin();
+    }else{
+      return this._coordinates;
+    }
+  }
+
+  public get coordinates(){
+    return this.getCoordinates();
+  }
+
   /**
    * Calculates & returns the absolute position
    * @param skipOffset if `true` the offset won't be added to the position
    */
-  public getCoordinates(skipOffset: boolean = false): Position{
+  public calculateCoordinates(): Position{
+    if(this.bridgeTo){
+      const coords = this.bridgeTo.calculateCoordinates();
+      this._coordinates = coords;
+      return coords;
+    }
     let result = this.getOrigin();
-    if(!skipOffset && this.offset){
+    if(this.offset){
       const {x: x1, y: y1} = result;
       let {x: x2, y: y2} = this.offset;
 
       const node = this.node;
 
-      if(node?.props.isOpen && this.attachType === AttachType.NodeBody){
+      if(node?.isOpen && this.attachType === AttachType.NodeBody){
         // if the attach type is NodeBody and its node is open,
         // we need to invert the secondary axis's offset
         // because the attachement box of the edge should be outside node's rectangle if it the node is open (open as a sub-chart)
@@ -134,7 +154,7 @@ export class EdgeConnection extends Component{
         const radius = isX ? hw : hh;
         let change = 0;
         if(radius - Math.abs(value) < 6){
-          change = 11 * dir * -1;
+          change = 12 * dir * -1;
         }else{
           change = 6 * dir;
         }
@@ -145,7 +165,7 @@ export class EdgeConnection extends Component{
     }
 
 
-    this.coordinates = result;
+    this._coordinates = result;
     return result;
   }
 
@@ -185,9 +205,9 @@ export class EdgeConnection extends Component{
     const axis = this.getVariableAxis();
     const mypos = position[axis];
     for(let i = 0; i < others.length; i++){
-      const pos = others[i].coordinates[axis];
+      const pos = others[i]._coordinates[axis];
       const diff = mypos - pos;
-      if(Math.abs(diff) < 5) return diff;
+      if(Math.abs(diff) < 8) return diff;
     }
     return 0;
   }
@@ -198,6 +218,7 @@ export class EdgeConnection extends Component{
   private getSameSideSources(): EdgeConnection[]{
     const node = <Node>this.node
     return node.edges.filter(ec => (
+      ec.isAttachedToNode(true) &&
       ec.nodeWall == this.nodeWall && ec !== this
     ));
   }

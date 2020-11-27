@@ -64,7 +64,7 @@ export default Vue.extend({
   }),
   methods: {
     breadcrumbItemClick(node: Node){
-      this.diagram?.jumpToNode(node);
+      setTimeout(() => this.diagram?.jumpToNode(node), 1);
     },
     handleObjectSelected(e: DiagramEvent){
       if(e.type == EVENTS.NODE_SELECTED){

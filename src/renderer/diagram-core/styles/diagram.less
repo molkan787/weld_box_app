@@ -47,25 +47,36 @@
   .node{
     transition: opacity 0.3s;
 
+    &.dragging{
+      opacity: 0.4 !important;
+      cursor: move !important;
+    }
+
     &.content-hidden{
       & > .svg-layer, & > .node-body{
         display: none;
       }
-      span.attach-box{
-        &[data-wall-side="1"]{ margin-top: 24px; }
-        &[data-wall-side="2"]{ margin-left: 24px; }
-        &[data-wall-side="4"]{ margin-bottom: 24px; }
-        &[data-wall-side="8"]{ margin-right: 24px; }
-      }
+      // span.attach-box{
+      //   &[data-wall-side="1"]{ margin-top: 24px; }
+      //   &[data-wall-side="2"]{ margin-left: 24px; }
+      //   &[data-wall-side="4"]{ margin-bottom: 24px; }
+      //   &[data-wall-side="8"]{ margin-right: 24px; }
+      // }
     }
 
     &.circle{
       border-radius: 50%;
     }
 
+    &.sub-chart{
+      & > span.attach-box{
+        display: block;
+      }
+    }
+
     span.attach-box{
       position: absolute;
-      display: block;
+      display: none;
       box-sizing: border-box;
       width: @ab-width;
       height: @ab-width;
@@ -77,7 +88,6 @@
       &[data-wall-side="2"]{ top: 50%; left: 0; }
       &[data-wall-side="4"]{ bottom: 0; left: 50%; }
       &[data-wall-side="8"]{ top: 50%; right: 0; }
-
     }
 
     .svg-layer{

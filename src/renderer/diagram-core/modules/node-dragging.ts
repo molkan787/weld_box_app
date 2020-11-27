@@ -61,6 +61,9 @@ export class NodeDragging extends DiagramModule{
 
     // bring the dragged node to the front and change his cursor
     d3Node.raise().style('cursor', this.resizing ? 'default' : 'move');
+    // if(!this.resizing){
+    //   d3Node.classed(CLASSES.DRAGGING, true);
+    // }
 
     this.changed = false;
   }
@@ -145,7 +148,8 @@ export class NodeDragging extends DiagramModule{
     const node = <Node>e.node;
     const d3Node = this.store.getD3Node(node.id);
 
-    d3Node.style('cursor', 'default');
+    d3Node.style('cursor', 'default')
+          .classed(CLASSES.DRAGGING, false);
 
     if(this.changed){
       const snapShot = this.nodeSnapshot;

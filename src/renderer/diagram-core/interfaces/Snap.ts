@@ -1,4 +1,4 @@
-import { Edge } from "../components/edge";
+import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
 import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { Side } from "../helpers/geometry";
@@ -20,6 +20,9 @@ export interface EdgeSnap{
   shapePoints: Position[];
   source: EdgeConnectionSnap;
   target: EdgeConnectionSnap;
+  isMultipart: boolean;
+  multipartLocation: MultipartEdgeLocation;
+  multipartType: MultipartEdgeType;
 }
 
 export interface EdgeConnectionSnap{
