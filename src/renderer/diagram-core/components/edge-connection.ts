@@ -226,7 +226,7 @@ export class EdgeConnection extends Component{
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.isAttachedToNode(true) &&
-      ec.nodeWall == this.nodeWall && ec !== this
+      ec.nodeWall == this.nodeWall && ec !== this && !ec.isBridge
     ));
   }
 

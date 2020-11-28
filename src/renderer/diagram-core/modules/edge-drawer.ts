@@ -459,8 +459,10 @@ export class EdgeDrawer extends DiagramModule{
 
   private repositionEdge(edge: Edge, force: boolean = false){
     let { source, target } = edge;
-    this.repositionEdgeConnection(source.getInstance(), target, force);
-    this.repositionEdgeConnection(target.getInstance(), source, force);
+    const wallChanged = this.repositionEdgeConnection(source.getInstance(), target, force);
+    if(!wallChanged){
+      this.repositionEdgeConnection(target.getInstance(), source, force);
+    }
   }
 
   private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection, force: boolean = false){
@@ -469,9 +471,12 @@ export class EdgeDrawer extends DiagramModule{
       const _pointsTo = pointsTo.getInstance();
       const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);
+      const wallChanged = wall !== subject.nodeWall;
       subject.offset = offset;
       subject.nodeWall = wall;
+      return wallChanged;
     }
+    return false;
   }
 
   private findBestPositionToPoint(node: Node, point: Position, secondAxisOffset: number = 0){
@@ -518,7 +523,7 @@ export class EdgeDrawer extends DiagramModule{
     }else{
       return {
         wall: horizontalSide,
-        distanceSquared: minHorizontal,
+        distance: minHorizontal,
         offset: {
           y: this.calcOffset(point.y, y, height, padd, scale) / (height / 2) * 50,
           x: sao ? (horizontalSide == Side.Left ? sao : -sao) : 0
