@@ -232,7 +232,7 @@ export class EdgeDrawer extends DiagramModule{
   private postDraw(edge: Edge, canBecomeMultipart: boolean){
     const { target } = edge;
     const chartNode = this.store.currentlyOpenNode;
-    if(chartNode && canBecomeMultipart){
+    if(chartNode && chartNode.getParent() && canBecomeMultipart){
       const { position: pos, size } = chartNode;
       const top = pos.y,
             left = pos.x,

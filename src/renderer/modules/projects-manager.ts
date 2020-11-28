@@ -9,7 +9,7 @@ import { store } from "../store";
 import { DiagramProject } from "./diagram-project";
 import { Menu } from "./menu";
 
-const FORMAT_CHECK_VALUE = 19112020;
+const FORMAT_CHECK_VALUE = 28112020;
 
 class ProjectsManager{
 
