@@ -1,0 +1,21 @@
+image: electronuserland/builder:wine
+
+before_script:
+  - node -v
+
+stages:
+  - build
+
+build:
+  stage: build
+  only:
+    - master
+  script:
+    - npm install
+    - npm run compile
+    - npm run build-win
+    - npm run build-linux
+
+  artifacts:
+    paths:
+      - installer/
