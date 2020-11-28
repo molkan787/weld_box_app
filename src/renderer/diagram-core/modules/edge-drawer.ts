@@ -415,7 +415,7 @@ export class EdgeDrawer extends DiagramModule{
       const ec = allEdgesConnections[i];
       const e = <Edge>ec.edge;
       if(Visibility.isEdgeVisible(e, ec)){
-        this.updateEdge(e);
+        this.updateEdge(e, event.simulated);
         this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: e });
       }else{
         ec.calculateCoordinates();
@@ -512,7 +512,7 @@ export class EdgeDrawer extends DiagramModule{
         distance: minVertical,
         offset: {
           y: sao ? (verticalSide == Side.Top ? sao : -sao) : 0,
-          x: this.calcOffset(point.x, x, width, padd, scale)
+          x: this.calcOffset(point.x, x, width, padd, scale) / (width / 2) * 50
         }
       }
     }else{
@@ -520,7 +520,7 @@ export class EdgeDrawer extends DiagramModule{
         wall: horizontalSide,
         distanceSquared: minHorizontal,
         offset: {
-          y: this.calcOffset(point.y, y, height, padd, scale),
+          y: this.calcOffset(point.y, y, height, padd, scale) / (height / 2) * 50,
           x: sao ? (horizontalSide == Side.Left ? sao : -sao) : 0
         }
       }

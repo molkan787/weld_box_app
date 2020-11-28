@@ -120,6 +120,14 @@ export class EdgeConnection extends Component{
       let {x: x2, y: y2} = this.offset;
 
       const node = this.node;
+      const axis = this.getVariableAxis();
+      if(this.isAttachedToNode(true)){
+        if(axis == 'x'){
+          x2 *= (node?.size.width || 100) / 100;
+        }else{
+          y2 *= (node?.size.height || 100) / 100;
+        }
+      }
 
       if(node?.isOpen && this.attachType === AttachType.NodeBody){
         // if the attach type is NodeBody and its node is open,
@@ -143,7 +151,6 @@ export class EdgeConnection extends Component{
 
       // applying previous spacing or calculating a new one,
       // this is needed to avoid edges overlapping
-      const axis = this.getVariableAxis();
       result[axis] += this.lastSpacingOffset;
 
       const spacing = this.needSpacingOffset(result);

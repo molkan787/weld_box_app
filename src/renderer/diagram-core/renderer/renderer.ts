@@ -72,7 +72,7 @@ export class Renderer{
     this.clearContent();
     this.buildChart(currentNode);
     if(currentNode){
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode })
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode, simulated: true })
     }
   }
 
@@ -269,13 +269,13 @@ export class Renderer{
 
     if(this.store.forceSynchronousUpdates){
       for(let child of node.children){
-        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event, simulated: event.simulated });
       }
     }else{
       const childs = node.children;
       for(let i = 0; i < childs.length; i++){
         setTimeout(() => {
-          this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event });
+          this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event, simulated: event.simulated });
         }, 1);
       }
     }
