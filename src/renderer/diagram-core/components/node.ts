@@ -1,6 +1,7 @@
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { addPoints, Side } from "../helpers/geometry";
+import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { ZeroMargin } from "../interfaces/Margin";
 import { Position } from "../interfaces/Position";
 import { Size } from "../interfaces/Size";
@@ -103,11 +104,15 @@ export class Node extends Component{
    * Convert the Node to a Sub Chart Node
    * @param {boolean} simulated set to `true` to bypass Undo/Redo system
    */
-  public convertToSubChart(simulated?: boolean){
-    if(this._isSubChart) return;
+  public convertToSubChart(simulated?: boolean): boolean{
+    if(this._isSubChart) return false;
+    const event: DiagramEvent = { node: this };
+    this.store?.emit(EVENTS.NODE_CONVERTING_TO_SUBCHART, event);
+    if(event.prevented) return false;
     this._isSubChart = true;
     this.store?.emit(EVENTS.NODE_CONVERTED_TO_SUBCHART, { node: this, simulated });
     this.setShowContent(false, simulated);
+    return true;
   }
 
   /**

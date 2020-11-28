@@ -186,7 +186,7 @@ export class Renderer{
     for(let i = 0; i < len; i++){
       const ec = ecs[i];
       const edge = ec.edge;
-      if(edge && Visibility.isEdgeVisible(edge)){
+      if(edge && Visibility.isEdgeVisible(edge, ec)){
         result.push(edge);
       }
     }
@@ -244,7 +244,7 @@ export class Renderer{
 
   onEdgeAdded(event: DiagramEvent){
     const edge = <Edge>event.edge;
-    const shouldRender = Visibility.isEdgeVisible(edge);
+    const shouldRender = Visibility.isEdgeVisible(edge, null);
     console.log('shouldRender', shouldRender, edge)
     if(shouldRender){
       this.buildComponent(null, edge);

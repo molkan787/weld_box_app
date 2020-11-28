@@ -1,9 +1,10 @@
 import { Edge, MultipartEdgeLocation, MultipartEdgeType } from "../components/edge";
-import { EdgeConnection } from "../components/edge-connection";
+import { AttachType, EdgeConnection } from "../components/edge-connection";
 import { Node } from "../components/node";
-import { EVENTS, MODULES } from "../constants";
+import { EVENTS, MODULES, MUTATION_ERRORS, MUTATION_ERROR_REASONS } from "../constants";
 import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
+import { MutationError } from "../interfaces/MutationError";
 import { RepositionRequest } from "../interfaces/RepositionRequest";
 import { DiagramModule } from "../module";
 
@@ -15,15 +16,33 @@ export class EdgesMutator extends DiagramModule{
   constructor(readonly store: DiagramStore){
     super(store, MODULES.EDGE_MUTATOR);
     store.on(EVENTS.NODE_CONVERTED_TO_SUBCHART, e => this.onNodeConvertedToSubChart(e));
+    store.on(EVENTS.NODE_CONVERTING_TO_SUBCHART, e => this.onNodeConvertingToSubChart(e));
     store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, e => this.onNodeConvertedToNormal(e));
+  }
+
+  private onNodeConvertingToSubChart(event: DiagramEvent){
+    const node = <Node>event.node;
+    if(node.isOpen || event.skipMutation) return;
+    const foreignEdgesConnections = this.getForeignEdges(node);
+    const len = foreignEdgesConnections.length;
+
+    for(let i = 0; i < len; i++){
+      const ec = foreignEdgesConnections[i];
+      if(ec.edge?.isMultipart){
+        this.nodeToSubChartError(event);
+        return;
+      }
+    }
   }
 
   private onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
-    if(node.props.isOpen || event.skipMutation) return;
+    if(node.isOpen || event.skipMutation) return;
     const foreignEdgesConnections = this.getForeignEdges(node);
-    for(let ec of foreignEdgesConnections){
-      this.splitEdge(node, ec);
+    const len = foreignEdgesConnections.length;
+
+    for(let i = 0; i < len; i++){
+      this.splitEdge(node, foreignEdgesConnections[i]);
     }
   }
 
@@ -40,13 +59,26 @@ export class EdgesMutator extends DiagramModule{
     this.disableActionGrouping();
   }
 
+  private nodeToSubChartError(sourceEvent: DiagramEvent){
+    sourceEvent.prevented = true;
+    this.store.emit(EVENTS.MUTATION_ERROR, {
+      sourceEvent: sourceEvent,
+      data: <MutationError>{
+        type: MUTATION_ERRORS.CANNOT_CONVERT_NODE_TO_SUBCHART,
+        reason: MUTATION_ERROR_REASONS.UNRELATED_MUTIPART_EDGE_PASSES_THRU_NODE_WALL,
+        component: sourceEvent.node
+      }
+    })
+  }
+
   private getMultipartSigleEdges(edgeConnections: EdgeConnection[]){
     const edges: Edge[] = [];
     const len = edgeConnections.length;
     for(let i = 0; i < len; i++){
       const ec = edgeConnections[i];
       const edge = ec.edge;
-      const rm = edge && edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting
+      const rm = ec.attachType == AttachType.NodeBody && edge && edge.isMultipart
+                  && edge.multipartType == MultipartEdgeType.Starting
                   && ec.bridgeFrom === null;
       if(rm && edge){
         edges.push(edge);

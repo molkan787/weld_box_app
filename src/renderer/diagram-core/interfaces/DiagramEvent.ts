@@ -3,6 +3,7 @@ import { Node } from "../components/node";
 
 export interface DiagramEvent{
   type?: string;
+  prevented?: boolean;
   readonly isRestore?: boolean;
   readonly sender?: any;
   readonly sourceEvent?: any;

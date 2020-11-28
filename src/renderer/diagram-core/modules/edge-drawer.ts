@@ -239,7 +239,7 @@ export class EdgeDrawer extends DiagramModule{
             bottom = top + size.height,
             right = left + size.width;
 
-      const { x, y } = target.getCoordinates();
+      const { x, y } = target.calculateCoordinates();
       const xOutside = (left - x) > 0 || (x - right) > 0;
       const yOutside = (top - y) > 0 || (y - bottom) > 0;
       if(xOutside || yOutside){
@@ -354,9 +354,9 @@ export class EdgeDrawer extends DiagramModule{
       }
     }
 
-    if(subject === null){
+    if(subject === null && this.currentEdge && !this.currentEdge.isMultipart){
       for(const node of nodes){
-        if((node.isSubChart && !node.isOpen && this.currentEdge) || node.isCircle){
+        if((node.isSubChart && !node.isOpen) || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);
@@ -409,19 +409,18 @@ export class EdgeDrawer extends DiagramModule{
 
   private onNodeBBoxChanged(event: DiagramEvent){
     const node = <Node>event.node;
-    const allEdges = <Edge[]>node.edges.map(ec => ec.edge);
-    const toUpdate: Edge[] = [];
-    const len = allEdges.length;
+    const allEdgesConnections = node.edges;
+    const len = allEdgesConnections.length;
     for(let i = 0; i < len; i++){
-      const e = allEdges[i];
-      if(Visibility.isEdgeVisible(e)){
-        toUpdate.push(e);
+      const ec = allEdgesConnections[i];
+      const e = <Edge>ec.edge;
+      if(Visibility.isEdgeVisible(e, ec)){
+        this.updateEdge(e);
+        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: e });
+      }else{
+        ec.calculateCoordinates();
+        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: e, skipRendering: true });
       }
-    }
-
-    for(let edge of toUpdate){
-      this.updateEdge(edge);
-      this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
     }
   }
 
@@ -451,9 +450,9 @@ export class EdgeDrawer extends DiagramModule{
     });
   }
 
-  private updateEdge(edge: Edge){
+  private updateEdge(edge: Edge, skipRepositioning: boolean = false){
     const { source, target } = edge;
-    this.repositionEdge(edge);
+    if(!skipRepositioning) this.repositionEdge(edge);
     source.calculateCoordinates();
     target.calculateCoordinates();
   }
