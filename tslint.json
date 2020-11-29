@@ -1,6 +1,6 @@
 {
   "extends": "tslint:recommended",
-  "defaultSeverity": "error",
+  "defaultSeverity": "warning",
   "rules": {
     "indent": [true, "spaces"],
     "ter-indent": [true, 2],

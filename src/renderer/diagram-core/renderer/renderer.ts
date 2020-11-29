@@ -1,6 +1,5 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge, MultipartEdgeLocation } from "../components/edge";
-import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -203,7 +202,7 @@ export class Renderer{
     const node1 = source.isAttachedToNode() ? source.node : null;
     const node2 = target.isAttachedToNode() ? target.node : null;
     const usePublicGetter = edge.isMultipart && edge.multipartLocation == MultipartEdgeLocation.Inner;
-    const stickToSource = source.attachType == AttachType.Node && source.node?.isSubChart;
+    const stickToSource = edge.isStart && (node1 !== node2);
     const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2, usePublicGetter);
 
     if(parent === null){

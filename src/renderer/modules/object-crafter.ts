@@ -4,7 +4,7 @@ import { EventNode } from "../my-diagram/EventNode";
 import { EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
-import { MyEdge } from "../my-diagram/my-edge";
+import { EdgeType, MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
 import { Junction } from "../my-diagram/junction";
@@ -155,6 +155,7 @@ export class ObjectCrafter{
     edge.name = name;
     edge.properties = cloneObject(properties);
     edge.shapePoints = cloneArray(shapePoints);
+    edge.isStart = properties.type == EdgeType.START;
     edge.propsArchiver.unlock();
     return edge;
   }

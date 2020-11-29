@@ -103,6 +103,7 @@ export default {
       target.position = { x: 50, y: 0 };
       const edge = new MyEdge(source, target);
       edge.properties.type = EdgeType.START;
+      edge.isStart = true;
       return edge;
     }
   }

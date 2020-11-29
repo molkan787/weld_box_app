@@ -10,6 +10,11 @@ export class Visibility{
   public static isEdgeVisible(edge: Edge, relativeEC: EdgeConnection | null){
     const { isMultipart, multipartLocation, multipartType, source, target } = edge;
 
+    if(edge.isStart && source.node){
+      // Start Edges can be visible only when their source node is Open
+      return source.node.isOpen;
+    }
+
     const h1 = relativeEC && relativeEC.attachType == AttachType.NodeWall && relativeEC.node?.isOpen;
     if(h1) return false;
 

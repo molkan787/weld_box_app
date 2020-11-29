@@ -188,6 +188,18 @@ export class EdgeDrawer extends DiagramModule{
       subject.highlightedWall = null;
       subject.highlighted = false;
       this.currentEdge = null;
+
+      if(edge.isStart){
+        const src = edge.source;
+        const trgPos = targetConnection.calculateCoordinates();
+        const srcPos = src.getCoordinates();
+        const offset: Position = {
+          x: srcPos.x - trgPos.x,
+          y: srcPos.y - trgPos.y
+        }
+        src.toSecondEndOffset = offset;
+      }
+
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }else if(edge && edge.source.node){
@@ -454,9 +466,27 @@ export class EdgeDrawer extends DiagramModule{
 
   private updateEdge(edge: Edge, skipRepositioning: boolean = false){
     const { source, target } = edge;
-    if(!skipRepositioning) this.repositionEdge(edge);
-    source.calculateCoordinates();
-    target.calculateCoordinates();
+    const posRelatedEnds = edge.isStart && target.attachType != AttachType.Position;
+    if(!skipRepositioning && !posRelatedEnds) this.repositionEdge(edge);
+    if(posRelatedEnds && source.node){
+      const coords = target.calculateCoordinates();
+      const trgWall = target.nodeWall;
+      const srcNodePos = source.node.getAbsolutePosition(true);
+      const offset = {
+        x: coords.x - srcNodePos.x,
+        y: coords.y - srcNodePos.y
+      }
+      const dist = 40;
+      if(trgWall == Side.Top) offset.y -= dist;
+      else if(trgWall == Side.Bottom) offset.y += dist;
+      else if(trgWall == Side.Left) offset.x -= dist;
+      else if(trgWall == Side.Right) offset.x += dist;
+      source.offset = offset;
+      source.calculateCoordinates();
+    }else{
+      source.calculateCoordinates();
+      target.calculateCoordinates();
+    }
   }
 
   private repositionEdge(edge: Edge, force: boolean = false){

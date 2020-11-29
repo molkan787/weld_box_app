@@ -37,7 +37,7 @@ export default {
   }),
   computed: {
     isStart(){
-      const o = this.object;
+      const o = this.edge;
       return o.what == ObjectType.Edge && o.properties.type == EdgeType.START;
     },
   },

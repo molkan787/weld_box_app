@@ -44,6 +44,8 @@ export class Edge extends Component{
     return this._multipartType;
   }
 
+  public isStart: boolean = false
+
   constructor(
     private _source: EdgeConnection,
     private _target: EdgeConnection,

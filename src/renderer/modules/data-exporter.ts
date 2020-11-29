@@ -85,7 +85,6 @@ export class DataExporter{
                         )
                       ))
                       .map(ec => <MyEdge>ec.edge);
-    console.log(node.edges)
     const data = edges.map(e => this.getEdgeData(e));
     return data;
   }

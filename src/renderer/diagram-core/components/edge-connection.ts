@@ -13,6 +13,7 @@ export class EdgeConnection extends Component{
   public bridgeTo: EdgeConnection | null = null;
   public bridgeFrom: EdgeConnection | null = null;
   private _node: Node | null = null;
+  public toSecondEndOffset: Position = { x: 0, y: 0 };
 
   public get node(): Node | null{
     return this._node;
