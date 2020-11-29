@@ -354,9 +354,10 @@ export class EdgeDrawer extends DiagramModule{
       }
     }
 
-    if(subject === null && this.currentEdge && !this.currentEdge.isMultipart){
+    const isMultipart = this.currentEdge?.isMultipart;
+    if(subject === null && this.currentEdge){
       for(const node of nodes){
-        if((node.isSubChart && !node.isOpen) || node.isCircle){
+        if((node.isSubChart && !node.isOpen && !isMultipart) || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);
