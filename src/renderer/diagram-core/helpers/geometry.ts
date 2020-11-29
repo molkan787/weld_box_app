@@ -112,3 +112,10 @@ export function addPoints(p1: Position, p2: Position): Position{
     y: p1.y + p2.y
   }
 }
+
+export function polarToCartesian(r: number, theta: number): Position{
+  return {
+      x: r * Math.cos(theta),
+      y: r * Math.sin(theta)
+  }
+}

@@ -1,4 +1,4 @@
-import { Side, GetRectWallCenterPoint } from "../helpers/geometry";
+import { Side, GetRectWallCenterPoint, polarToCartesian } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { Position } from "../interfaces/Position";
 import { Component, ComponentType } from "./component";
@@ -114,12 +114,22 @@ export class EdgeConnection extends Component{
       this._coordinates = coords;
       return coords;
     }
+    const node = this.node;
     let result = this.getOrigin();
-    if(this.offset){
+
+    if(this.attachType == AttachType.NodeBody && node && node.isCircle){
+
+      const offset = this.calcCircleOffset(result);
+      result.x += offset.x;
+      result.y += offset.y;
+
+      this._coordinates = result;
+      return result;
+
+    }else if(this.offset){
       const {x: x1, y: y1} = result;
       let {x: x2, y: y2} = this.offset;
 
-      const node = this.node;
       const axis = this.getVariableAxis();
       if(this.isAttachedToNode(true)){
         if(axis == 'x'){
@@ -176,6 +186,21 @@ export class EdgeConnection extends Component{
     return result;
   }
 
+  private calcCircleOffset(center: Position): Position{
+    const otherPoint = this.getOtherEcPosition();
+    if(otherPoint){
+      const angle = Math.atan2(otherPoint.y - center.y, otherPoint.x - center.x);
+      return polarToCartesian(7.5, angle);
+    }else{
+      return { x: 0, y: 0 };
+    }
+  }
+
+  private getOtherEcPosition(){
+    const otherEc = this.isSource() ? this.edge?.target : this.edge?.source;
+    return otherEc?.coordinates;
+  }
+
   /**
    * Calculates & returns the absolute position without adding the offset
    */
@@ -183,6 +208,13 @@ export class EdgeConnection extends Component{
     const node = this.node;
     if(this.attachType == AttachType.Position && this.position){
       return this.position;
+    }else if(this.attachType == AttachType.NodeBody && node && node.isCircle){
+      const position = node.getAbsolutePosition();
+      const { width, height } = node.size;
+      return {
+        x: position.x + width / 2,
+        y: position.y + height / 2
+      }
     }else if((this.attachType == AttachType.NodeWall || this.attachType == AttachType.NodeBody) && node){
       const offset = GetRectWallCenterPoint(node.size, this.nodeWall);
       const position = node.getAbsolutePosition();
