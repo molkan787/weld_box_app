@@ -180,7 +180,7 @@ export class EdgeDrawer extends DiagramModule{
     if(subject && edge){
       const targetConnection = subject.createEdgeConnection(subject.highlightedWall || undefined);
       edge.setTarget(targetConnection);
-      if(!subject.highlightedWall && !edge.isMultipart){
+      if(!subject.highlightedWall && !subject.isCircle && !edge.isMultipart){
         // if there isn't any highlighted wall, the attach type will be NodeBody,
         // so the the drawn edge should be converted to a multipart edge
         edge.convertToMultipart(MultipartEdgeLocation.Outer, MultipartEdgeType.Starting);
