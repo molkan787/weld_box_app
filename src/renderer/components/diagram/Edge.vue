@@ -53,7 +53,8 @@ export default {
       return this.edgeProps.type == EdgeType.REGULAR && (this.condition || this.edge.showCondition || this.inputElement);
     },
     edgeProps(){
-      return this.edge.properties;
+      const edge = this.edge.getInstance();
+      return edge.properties;
     },
     condition(){
       const edge = this.edge.getInstance();

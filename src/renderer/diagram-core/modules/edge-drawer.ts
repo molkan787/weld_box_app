@@ -188,6 +188,18 @@ export class EdgeDrawer extends DiagramModule{
       subject.highlightedWall = null;
       subject.highlighted = false;
       this.currentEdge = null;
+
+      if(edge.isStart){
+        const src = edge.source;
+        const trgPos = targetConnection.calculateCoordinates();
+        const srcPos = src.getCoordinates();
+        const offset: Position = {
+          x: srcPos.x - trgPos.x,
+          y: srcPos.y - trgPos.y
+        }
+        src.toSecondEndOffset = offset;
+      }
+
       this.store.emit(EVENTS.NODE_DECORATION_CHANGED, { node: subject });
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });
     }else if(edge && edge.source.node){
@@ -232,14 +244,14 @@ export class EdgeDrawer extends DiagramModule{
   private postDraw(edge: Edge, canBecomeMultipart: boolean){
     const { target } = edge;
     const chartNode = this.store.currentlyOpenNode;
-    if(chartNode && canBecomeMultipart){
+    if(chartNode && chartNode.getParent() && canBecomeMultipart){
       const { position: pos, size } = chartNode;
       const top = pos.y,
             left = pos.x,
             bottom = top + size.height,
             right = left + size.width;
 
-      const { x, y } = target.getCoordinates();
+      const { x, y } = target.calculateCoordinates();
       const xOutside = (left - x) > 0 || (x - right) > 0;
       const yOutside = (top - y) > 0 || (y - bottom) > 0;
       if(xOutside || yOutside){
@@ -354,9 +366,10 @@ export class EdgeDrawer extends DiagramModule{
       }
     }
 
+    const isMultipart = this.currentEdge?.isMultipart;
     if(subject === null){
       for(const node of nodes){
-        if((node.isSubChart && !node.isOpen && this.currentEdge) || node.isCircle){
+        if((this.currentEdge && node.isSubChart && !node.isOpen && !isMultipart) || node.isCircle){
           const pos = node.getAbsolutePosition(true);
           const size = node.size;
           const rect = new DOMRect(pos.x, pos.y, size.width, size.height);
@@ -409,19 +422,18 @@ export class EdgeDrawer extends DiagramModule{
 
   private onNodeBBoxChanged(event: DiagramEvent){
     const node = <Node>event.node;
-    const allEdges = <Edge[]>node.edges.map(ec => ec.edge);
-    const toUpdate: Edge[] = [];
-    const len = allEdges.length;
+    const allEdgesConnections = node.edges;
+    const len = allEdgesConnections.length;
     for(let i = 0; i < len; i++){
-      const e = allEdges[i];
-      if(Visibility.isEdgeVisible(e)){
-        toUpdate.push(e);
+      const ec = allEdgesConnections[i];
+      const e = <Edge>ec.edge;
+      if(Visibility.isEdgeVisible(e, ec)){
+        this.updateEdge(e, event.simulated);
+        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: e });
+      }else{
+        ec.calculateCoordinates();
+        this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge: e, skipRendering: true });
       }
-    }
-
-    for(let edge of toUpdate){
-      this.updateEdge(edge);
-      this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
     }
   }
 
@@ -443,6 +455,7 @@ export class EdgeDrawer extends DiagramModule{
     source.calculateCoordinates();
     target.calculateCoordinates();
     this.updateEdge(edge);
+    this.updateEdge(edge);
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, {
       edge: event.edge,
       sender: this,
@@ -451,17 +464,37 @@ export class EdgeDrawer extends DiagramModule{
     });
   }
 
-  private updateEdge(edge: Edge){
+  private updateEdge(edge: Edge, skipRepositioning: boolean = false){
     const { source, target } = edge;
-    this.repositionEdge(edge);
-    source.calculateCoordinates();
-    target.calculateCoordinates();
+    const posRelatedEnds = edge.isStart && target.attachType != AttachType.Position;
+    if(!skipRepositioning && !posRelatedEnds) this.repositionEdge(edge);
+    if(posRelatedEnds && source.node){
+      const coords = target.calculateCoordinates();
+      const trgWall = target.nodeWall;
+      const srcNodePos = source.node.getAbsolutePosition(true);
+      const offset = {
+        x: coords.x - srcNodePos.x,
+        y: coords.y - srcNodePos.y
+      }
+      const dist = 40;
+      if(trgWall == Side.Top) offset.y -= dist;
+      else if(trgWall == Side.Bottom) offset.y += dist;
+      else if(trgWall == Side.Left) offset.x -= dist;
+      else if(trgWall == Side.Right) offset.x += dist;
+      source.offset = offset;
+      source.calculateCoordinates();
+    }else{
+      source.calculateCoordinates();
+      target.calculateCoordinates();
+    }
   }
 
   private repositionEdge(edge: Edge, force: boolean = false){
     let { source, target } = edge;
-    this.repositionEdgeConnection(source.getInstance(), target, force);
-    this.repositionEdgeConnection(target.getInstance(), source, force);
+    const wallChanged = this.repositionEdgeConnection(source.getInstance(), target, force);
+    if(!wallChanged){
+      this.repositionEdgeConnection(target.getInstance(), source, force);
+    }
   }
 
   private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection, force: boolean = false){
@@ -470,9 +503,12 @@ export class EdgeDrawer extends DiagramModule{
       const _pointsTo = pointsTo.getInstance();
       const sao = subject.attachType === AttachType.NodeBody ? 15 : 0;
       const { wall, offset } = this.findBestPositionToPoint(subject.node, _pointsTo.getCoordinates(), sao);
+      const wallChanged = wall !== subject.nodeWall;
       subject.offset = offset;
       subject.nodeWall = wall;
+      return wallChanged;
     }
+    return false;
   }
 
   private findBestPositionToPoint(node: Node, point: Position, secondAxisOffset: number = 0){
@@ -513,15 +549,15 @@ export class EdgeDrawer extends DiagramModule{
         distance: minVertical,
         offset: {
           y: sao ? (verticalSide == Side.Top ? sao : -sao) : 0,
-          x: this.calcOffset(point.x, x, width, padd, scale)
+          x: this.calcOffset(point.x, x, width, padd, scale) / (width / 2) * 50
         }
       }
     }else{
       return {
         wall: horizontalSide,
-        distanceSquared: minHorizontal,
+        distance: minHorizontal,
         offset: {
-          y: this.calcOffset(point.y, y, height, padd, scale),
+          y: this.calcOffset(point.y, y, height, padd, scale) / (height / 2) * 50,
           x: sao ? (horizontalSide == Side.Left ? sao : -sao) : 0
         }
       }

@@ -34,6 +34,7 @@ export interface StateExportData extends ObjectExportData{
 export interface StatementBlockExportData extends ObjectExportData{
   properties: {
     execution: string;
+    priority: number;
   },
   body: string[]
 }

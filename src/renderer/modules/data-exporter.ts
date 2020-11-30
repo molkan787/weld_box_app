@@ -85,7 +85,6 @@ export class DataExporter{
                         )
                       ))
                       .map(ec => <MyEdge>ec.edge);
-    console.log(node.edges)
     const data = edges.map(e => this.getEdgeData(e));
     return data;
   }
@@ -126,7 +125,7 @@ export class DataExporter{
         decomposition: properties.decomposition,
         execution: 0
       },
-      body: statementBlocks.map(sb => this.getStatementBlockData(sb))
+      body: statementBlocks.map((sb, i) => this.getStatementBlockData(sb, i + 1))
     }
   }
 
@@ -143,7 +142,7 @@ export class DataExporter{
         priority: properties.priority,
         historic: properties.historic ? 1 : 0
       },
-      body: statementBlocks.map(sb => this.getStatementBlockData(sb))
+      body: statementBlocks.map((sb, i) => this.getStatementBlockData(sb, i + 1))
     }
   }
 
@@ -156,7 +155,7 @@ export class DataExporter{
     }
   }
 
-  private getStatementBlockData(statementBlock: StatementBlock): StatementBlockExportData{
+  private getStatementBlockData(statementBlock: StatementBlock, priority: number): StatementBlockExportData{
     const { id, name, statements, execution } = statementBlock;
     const exec = [];
     execution.ex && exec.push('ex');
@@ -170,6 +169,7 @@ export class DataExporter{
       },
       properties: {
         execution: exec.join(','),
+        priority
       },
       body: statements.split('\n').map(ln => ln.trim()).filter(ln => ln.length)
     }

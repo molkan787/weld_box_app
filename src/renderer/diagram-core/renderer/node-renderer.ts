@@ -46,6 +46,8 @@ export class NodeRenderer{
     const root = con.append('div');
     root.data([node]).classed('node', true);
 
+    let customContentLayer: D3Node | null = null;
+
     if(node.isBasic){
       root.classed('basic', true);
     }else{
@@ -57,6 +59,7 @@ export class NodeRenderer{
             .append('g');
 
       this.addResizeHandles(root, node.id);
+      customContentLayer = root.append('div').classed('custom-content', true);
     }
     root.classed('circle', node.isCircle)
         .classed(CLASSES.SUB_CHART, node.isSubChart);
@@ -68,7 +71,7 @@ export class NodeRenderer{
 
     this.store.emit(EVENTS.NODE_BUILT, { node });
 
-    node.DOMElementBuilt(root);
+    node.DOMElementBuilt(customContentLayer || root);
   }
 
 

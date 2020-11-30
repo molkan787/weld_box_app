@@ -1,6 +1,5 @@
 import { Component, ComponentType } from "../components/component";
 import { Edge, MultipartEdgeLocation } from "../components/edge";
-import { AttachType } from "../components/edge-connection";
 import { Node } from "../components/node";
 import { EVENTS } from "../constants";
 import { DiagramStore } from "../diagram-store";
@@ -72,7 +71,7 @@ export class Renderer{
     this.clearContent();
     this.buildChart(currentNode);
     if(currentNode){
-      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode })
+      this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: currentNode, simulated: true })
     }
   }
 
@@ -186,7 +185,7 @@ export class Renderer{
     for(let i = 0; i < len; i++){
       const ec = ecs[i];
       const edge = ec.edge;
-      if(edge && Visibility.isEdgeVisible(edge)){
+      if(edge && Visibility.isEdgeVisible(edge, ec)){
         result.push(edge);
       }
     }
@@ -203,7 +202,7 @@ export class Renderer{
     const node1 = source.isAttachedToNode() ? source.node : null;
     const node2 = target.isAttachedToNode() ? target.node : null;
     const usePublicGetter = edge.isMultipart && edge.multipartLocation == MultipartEdgeLocation.Inner;
-    const stickToSource = source.attachType == AttachType.Node && source.node?.isSubChart;
+    const stickToSource = edge.isStart && (node1 !== node2);
     const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2, usePublicGetter);
 
     if(parent === null){
@@ -244,7 +243,7 @@ export class Renderer{
 
   onEdgeAdded(event: DiagramEvent){
     const edge = <Edge>event.edge;
-    const shouldRender = Visibility.isEdgeVisible(edge);
+    const shouldRender = Visibility.isEdgeVisible(edge, null);
     console.log('shouldRender', shouldRender, edge)
     if(shouldRender){
       this.buildComponent(null, edge);
@@ -269,13 +268,13 @@ export class Renderer{
 
     if(this.store.forceSynchronousUpdates){
       for(let child of node.children){
-        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event });
+        this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: child, sourceEvent: event, simulated: event.simulated });
       }
     }else{
       const childs = node.children;
       for(let i = 0; i < childs.length; i++){
         setTimeout(() => {
-          this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event });
+          this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node: childs[i], sourceEvent: event, simulated: event.simulated });
         }, 1);
       }
     }

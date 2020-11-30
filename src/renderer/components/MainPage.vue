@@ -22,7 +22,7 @@ import PropertiesPanel from './PropertiesPanel.vue';
 import Breadcrumb from './Breadcrumb.vue';
 import Welcome from './Welcome.vue';
 import Vue from 'vue';
-import { EVENTS } from '../diagram-core/constants';
+import { EVENTS, MUTATION_ERRORS, MUTATION_ERROR_REASONS } from '../diagram-core/constants';
 import { DiagramEvent } from '../diagram-core/interfaces/DiagramEvent';
 import { ObjectProps } from '../interfaces/ObjectProps';
 import { ObjectType } from '../interfaces/ObjectType';
@@ -35,6 +35,7 @@ import { mapState } from 'vuex';
 import { CodeGenerator } from '../modules/code-generator';
 import { StatusController } from '../status-controller';
 import { Dialog } from '../dialog';
+import { MutationError } from '../diagram-core/interfaces/MutationError';
 const codeGenerator = new CodeGenerator();
 interface MyData {
   selectedObject: Component & ObjectProps | null,
@@ -96,6 +97,19 @@ export default Vue.extend({
         if(object.what == ObjectType.Message || object.what == ObjectType.Event){
           e.node?.select();
           (<any>this.$refs.propsPanel).show();
+        }
+      });
+
+      this.diagram.on(EVENTS.MUTATION_ERROR, (e: DiagramEvent) => {
+        const error = <MutationError>e.data;
+        const name = (<any>error.component).name;
+        if(error.type == MUTATION_ERRORS.CANNOT_CONVERT_NODE_TO_SUBCHART){
+          const title = `Cannot convert State "${name}" to a Sub-Task`;
+          let message = '';
+          if(error.reason == MUTATION_ERROR_REASONS.UNRELATED_MUTIPART_EDGE_PASSES_THRU_NODE_WALL){
+            message = 'Reason: One or more unrelated Inter-Task edge(s) passes thru State\'s wall';
+          }
+          Dialog.info(message || title, { title });
         }
       });
     },

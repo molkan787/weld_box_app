@@ -1,4 +1,4 @@
-import { Side, GetRectWallCenterPoint } from "../helpers/geometry";
+import { Side, GetRectWallCenterPoint, polarToCartesian } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { Position } from "../interfaces/Position";
 import { Component, ComponentType } from "./component";
@@ -13,6 +13,7 @@ export class EdgeConnection extends Component{
   public bridgeTo: EdgeConnection | null = null;
   public bridgeFrom: EdgeConnection | null = null;
   private _node: Node | null = null;
+  public toSecondEndOffset: Position = { x: 0, y: 0 };
 
   public get node(): Node | null{
     return this._node;
@@ -114,12 +115,30 @@ export class EdgeConnection extends Component{
       this._coordinates = coords;
       return coords;
     }
+    const node = this.node;
     let result = this.getOrigin();
-    if(this.offset){
+
+    if(this.attachType == AttachType.NodeBody && node && node.isCircle){
+
+      const offset = this.calcCircleOffset(result);
+      result.x += offset.x;
+      result.y += offset.y;
+
+      this._coordinates = result;
+      return result;
+
+    }else if(this.offset){
       const {x: x1, y: y1} = result;
       let {x: x2, y: y2} = this.offset;
 
-      const node = this.node;
+      const axis = this.getVariableAxis();
+      if(this.isAttachedToNode(true)){
+        if(axis == 'x'){
+          x2 *= (node?.size.width || 100) / 100;
+        }else{
+          y2 *= (node?.size.height || 100) / 100;
+        }
+      }
 
       if(node?.isOpen && this.attachType === AttachType.NodeBody){
         // if the attach type is NodeBody and its node is open,
@@ -143,7 +162,6 @@ export class EdgeConnection extends Component{
 
       // applying previous spacing or calculating a new one,
       // this is needed to avoid edges overlapping
-      const axis = this.getVariableAxis();
       result[axis] += this.lastSpacingOffset;
 
       const spacing = this.needSpacingOffset(result);
@@ -169,6 +187,21 @@ export class EdgeConnection extends Component{
     return result;
   }
 
+  private calcCircleOffset(center: Position): Position{
+    const otherPoint = this.getOtherEcPosition();
+    if(otherPoint){
+      const angle = Math.atan2(otherPoint.y - center.y, otherPoint.x - center.x);
+      return polarToCartesian(7.5, angle);
+    }else{
+      return { x: 0, y: 0 };
+    }
+  }
+
+  private getOtherEcPosition(){
+    const otherEc = this.isSource() ? this.edge?.target : this.edge?.source;
+    return otherEc?.coordinates;
+  }
+
   /**
    * Calculates & returns the absolute position without adding the offset
    */
@@ -176,6 +209,13 @@ export class EdgeConnection extends Component{
     const node = this.node;
     if(this.attachType == AttachType.Position && this.position){
       return this.position;
+    }else if(this.attachType == AttachType.NodeBody && node && node.isCircle){
+      const position = node.getAbsolutePosition();
+      const { width, height } = node.size;
+      return {
+        x: position.x + width / 2,
+        y: position.y + height / 2
+      }
     }else if((this.attachType == AttachType.NodeWall || this.attachType == AttachType.NodeBody) && node){
       const offset = GetRectWallCenterPoint(node.size, this.nodeWall);
       const position = node.getAbsolutePosition();
@@ -219,7 +259,7 @@ export class EdgeConnection extends Component{
     const node = <Node>this.node
     return node.edges.filter(ec => (
       ec.isAttachedToNode(true) &&
-      ec.nodeWall == this.nodeWall && ec !== this
+      ec.nodeWall == this.nodeWall && ec !== this && !ec.isBridge
     ));
   }
 

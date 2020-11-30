@@ -16,8 +16,8 @@
     <div title="State" class="icon" @mousedown="onMouseDown($event, 'event')">
       <EventIcon />
     </div>
-    <div title="Junction" class="icon" @mousedown="onMouseDown($event, 'junction')">
-      <JunctionIcon />
+    <div title="Junction" class="icon ma" @mousedown="onMouseDown($event, 'junction')">
+      <JunctionIcon :size="40" />
     </div>
   </div>
 </template>
@@ -103,6 +103,7 @@ export default {
       target.position = { x: 50, y: 0 };
       const edge = new MyEdge(source, target);
       edge.properties.type = EdgeType.START;
+      edge.isStart = true;
       return edge;
     }
   }
@@ -131,6 +132,12 @@ export default {
     padding: 8px;
     border-radius: 10px;
     cursor: pointer;
+
+    &.ma{
+       svg{
+        margin: -10px;
+      }
+    }
 
     &:hover{
       background-color: #fff3;

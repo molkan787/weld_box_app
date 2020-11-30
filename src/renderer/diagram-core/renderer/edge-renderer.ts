@@ -121,8 +121,8 @@ export class EdgeRenderer{
     const { x: x1, y: y1 } = source.getCoordinates();
     const { x: x2, y: y2 } = target.getCoordinates();
 
-    const sourceNodeWall = source.isAttachedToNode(true) ? source.nodeWall : null;
-    const targetNodeWall = target.isAttachedToNode() ? target.nodeWall : null;
+    const sourceNodeWall = source.isAttachedToNode(true) && !source.node?.isCircle ? source.nodeWall : null;
+    const targetNodeWall = target.isAttachedToNode() && !target.node?.isCircle ? target.nodeWall : null;
 
     const pathData = this.generatorCurvePath(
       sourceNodeWall, x1, y1, sourceOffset,

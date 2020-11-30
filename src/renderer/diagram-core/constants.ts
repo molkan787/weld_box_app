@@ -36,6 +36,7 @@ export const EVENTS = Object.freeze({
   NODE_PARENT_CHANGED: 'node-parent-changed',
   NODE_ATTRS_CHANGED: 'node-attrs-changed',
   NODE_CONVERTED_TO_SUBCHART: 'node-converted-to-subchart',
+  NODE_CONVERTING_TO_SUBCHART: 'node-converting-to-subchart',
   NODE_CONVERTED_TO_NORMAL: 'node-converted-to-normal',
   NODE_CONTENT_GOT_SHOWN: 'node-content-got-shown',
   NODE_CONTENT_GOT_HIDDEN: 'node-content-got-hidden',
@@ -83,6 +84,7 @@ export const EVENTS = Object.freeze({
   DIAGRAM_ACTIVE_MODULE_CHANGED: 'diagram-active-module-changed',
   DIAGRAM_RESTORE_COMPONENT: 'diagram-restore-component',
 
+  MUTATION_ERROR: 'mutation-error',
 
   CANVAS_MOUSEMOVE: 'canvas-mousemove',
   CANVAS_MOUSEUP: 'canvas-mouseup',
@@ -117,3 +119,11 @@ export const CLASSES = Object.freeze({
 export const DATA_COMMANDS = Object.freeze({
   DESTROY_MULTIPART_INNER_EDGES: 'destroy-bridged-edges',
 });
+
+export const MUTATION_ERRORS = Object.freeze({
+  CANNOT_CONVERT_NODE_TO_SUBCHART: 'cannot-convert-node-to-subchart',
+});
+
+export const MUTATION_ERROR_REASONS = Object.freeze({
+  UNRELATED_MUTIPART_EDGE_PASSES_THRU_NODE_WALL: 'unrelated-multipart-edge-passes-thru-node-wall',
+})
