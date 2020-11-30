@@ -23,7 +23,7 @@ export class StateSnaper{
         parent: n.getParent(),
         size: cloneObject(n.size),
         position: cloneObject(n.position),
-        edges: this.snapEdges(node.edges.map(ec => <Edge>ec.edge))
+        // edges: this.snapEdges(node.edges.map(ec => <Edge>ec.edge))
       };
       snap.push(state)
     }
@@ -32,7 +32,7 @@ export class StateSnaper{
 
   public restoreNode(snap: NodeSnap){
     for(let i = 0; i < snap.length; i++){
-      const { node, parent, size, position, edges } = snap[i];
+      const { node, parent, size, position } = snap[i];
       const currentParent = node.getParent();
       if(currentParent !== parent){
         if(currentParent) currentParent.removeChild(node);
@@ -40,7 +40,7 @@ export class StateSnaper{
       }
       node.size = cloneObject(size);
       node.position = cloneObject(position);
-      this.restoreEdges(edges);
+      // this.restoreEdges(edges);
     }
   }
 
