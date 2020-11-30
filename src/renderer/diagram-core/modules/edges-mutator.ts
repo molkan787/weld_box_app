@@ -102,7 +102,9 @@ export class EdgesMutator extends DiagramModule{
       outerEdgeLocalEC.setBridge(innerEdgeSecondEC);
     }
     edge.convertToMultipart(MultipartEdgeLocation.Outer, foreignECisSource ? MultipartEdgeType.Starting : MultipartEdgeType.Ending);
-    const innerEdge = foreignECisSource ? EF(innerEdgeSecondEC, localEC) : EF(localEC, innerEdgeSecondEC);
+    const innerEdge = foreignECisSource
+                        ? EF(innerEdgeSecondEC, localEC, undefined, undefined, undefined, foreignEC.edge)
+                        : EF(localEC, innerEdgeSecondEC, undefined, undefined, undefined, foreignEC.edge);
     innerEdge.convertToMultipart(MultipartEdgeLocation.Inner, foreignECisSource ? MultipartEdgeType.Ending : MultipartEdgeType.Starting);
     outerEdgeLocalEC.edge = edge;
     foreignECisSource ? (edge.setTarget(outerEdgeLocalEC)) : (edge.setSource(outerEdgeLocalEC));

@@ -9,7 +9,11 @@ export class DiagramModule{
   constructor(
     readonly store: DiagramStore,
     readonly name: string
-  ){}
+  ){
+    if(!name){
+      throw new Error('Module name cannot be empty');
+    }
+  }
 
   public get stateSnaper(){
     return this.store.stateSnaper;
@@ -47,6 +51,14 @@ export class DiagramModule{
 
   protected disableActionGrouping(){
     this.store.actionsArchiver.disableGrouping();
+  }
+
+  protected lockActionsArchiver(){
+    this.store.actionsArchiver.lock();
+  }
+
+  protected unlockActionsArchiver(){
+    this.store.actionsArchiver.unlock();
   }
 
 }

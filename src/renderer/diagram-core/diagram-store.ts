@@ -14,7 +14,7 @@ import { DiagramModule } from "./module";
 import { ActionsArchiver } from "./modules/actions-archiver";
 import { StateSnaper } from "./modules/sub-modules/state-snaper";
 import { EdgeConnection } from "./components/edge-connection";
-import { EdgeInstanceCreator } from "./interfaces/EdgeInstanceCreator";
+import { EdgeFactory } from "./interfaces/EdgeInstanceCreator";
 
 /**
  * `DiagramStore` acts as a Central State Store and an Event Bus for all diagram's modules
@@ -101,7 +101,7 @@ export class DiagramStore extends EventEmitter{
   /**
    * The EdgeFactory passed in the options when constructing the Diagram class instance
    */
-  private _edgeFactory: EdgeInstanceCreator;
+  private _edgeFactory: EdgeFactory;
   public get edgeFactory(){
     return this._edgeFactory;
   }

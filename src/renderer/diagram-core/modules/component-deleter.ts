@@ -81,6 +81,7 @@ export class ComponentDeleter extends DiagramModule{
     }
 
     const { source, target } = edge;
+    const sourceNode = source.node;
     if(source.isAttachedToNode()){
       source.node?.removeEdgeConnection(source);
     }
@@ -88,7 +89,6 @@ export class ComponentDeleter extends DiagramModule{
       target.node?.removeEdgeConnection(target);
     }
     this.store.edgesMap.delete(edge.id);
-    this.store.emit(EVENTS.EDGE_DELETED, { edge, sourceEvent });
 
     if(!sourceEvent.isRestore && snapRestorer){
       this.pushAction({
@@ -108,6 +108,8 @@ export class ComponentDeleter extends DiagramModule{
         ]
       })
     }
+
+    this.store.emit(EVENTS.EDGE_DELETED, { edge, sourceEvent, data: sourceNode, isRestore: sourceEvent.isRestore });
 
     if(edge.isMultipart && edge.multipartType == MultipartEdgeType.Starting && target.bridgeFrom){
       const secondEdge = target.bridgeFrom.edge;

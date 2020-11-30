@@ -36,6 +36,13 @@ export class PropsChangeArchiver{
 
   }
 
+  public flush(rootProp: string){
+    const debouncer = this.debouncers[rootProp];
+    if(debouncer){
+      debouncer.flush();
+    }
+  }
+
   private isLocked(){
     return this._locked || this.store?.actionsArchiver.isLocked();
   }

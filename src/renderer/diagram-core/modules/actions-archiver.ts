@@ -92,25 +92,30 @@ export class ActionsArchiver extends DiagramModule{
   public undo(removeAction?: boolean){
     this.activate();
     const action = this.current(removeAction);
-    console.log(action)
+    console.log('undo', action);
+    this.store.forceSynchronousUpdates = true;
     if(action){
       const tasks = action.undo;
       for(const t of tasks){
         this.doTask(t);
       }
     }
+    this.store.forceSynchronousUpdates = false;
     this.deactivate();
   }
 
   public redo(){
     this.activate();
     const action = this.next();
+    console.log('redo', action);
+    this.store.forceSynchronousUpdates = true;
     if(action){
       const tasks = action.redo;
       for(const t of tasks){
         this.doTask(t);
       }
     }
+    this.store.forceSynchronousUpdates = false;
     this.deactivate();
   }
 

@@ -43,7 +43,7 @@ export class Diagram{
   private readonly renderer = new Renderer(this.store);
 
   /** An object containing refference to all Diagram's modules */
-  private readonly modules: any;
+  protected readonly modules: any;
 
   constructor(parentSelector: string, public readonly options: DiagramOptions){
     const { width, height, chartClasses } = options;

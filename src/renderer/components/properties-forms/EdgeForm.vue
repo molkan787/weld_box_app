@@ -3,7 +3,7 @@
 
     <template v-if="!isStart">
       <FormField label="Priority">
-        <input v-model.number="edge.properties.priority" type="number" min="0" max="99">
+        <input @input="priorityInput" :value="edge.properties.priority" type="number" min="1" max="99">
       </FormField>
 
       <FormField label="Condition">
@@ -20,6 +20,7 @@ import BaseForm from './base';
 import FormField from '../skeletons/FormField';
 import { ObjectType } from '../../interfaces/ObjectType';
 import { EdgeType } from '../../my-diagram/my-edge';
+import { MY_EVENTS } from '../../my-diagram/my-events';
 export default {
   components: {
     Form,
@@ -47,6 +48,23 @@ export default {
       immediate: true,
       handler(){
         this.edge = this.object.getInstance();
+      }
+    }
+  },
+  methods: {
+    priorityInput(e){
+      const prevPriority = this.edge.properties.priority;
+      const value = e.target.value;
+      let priority = parseInt(value || '1');
+      if(priority > 99) priority = 99;
+      this.edge.properties.priority = priority;
+
+      const store = this.edge.store;
+      if(prevPriority !== priority && store){
+        store.emit(MY_EVENTS.EDGE_PRIORITY_CHANGED_BY_USER, {
+          edge: this.edge,
+          data: prevPriority
+        })
       }
     }
   }
