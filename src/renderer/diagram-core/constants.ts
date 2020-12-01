@@ -34,6 +34,7 @@ export const EVENTS = Object.freeze({
   NODE_ADDED: 'node-added',
   NODE_DECORATION_CHANGED: 'node-decoration-changed',
   NODE_PARENT_CHANGED: 'node-parent-changed',
+  NODE_SWITCHED_PARENT: 'node-switched-parent',
   NODE_ATTRS_CHANGED: 'node-attrs-changed',
   NODE_CONVERTED_TO_SUBCHART: 'node-converted-to-subchart',
   NODE_CONVERTING_TO_SUBCHART: 'node-converting-to-subchart',

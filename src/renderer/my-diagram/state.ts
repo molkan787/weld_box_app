@@ -13,7 +13,7 @@ export class State extends Node implements ObjectProps{
 
   // Internal props
   private vm?: Vue;
-  private propsArchiver: PropsChangeArchiver;
+  public readonly propsArchiver: PropsChangeArchiver;
 
   // Business props
   public what: ObjectType = ObjectType.State;

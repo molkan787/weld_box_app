@@ -31,7 +31,6 @@ export class InitialNodeDragging extends DiagramModule{
       const node = this.subject;
       this.subject = null;
       this.store.emit(EVENTS.NODE_DROPPED, { node, sourceEvent, simulated: true });
-      this.store.emit(EVENTS.NODE_INITIAL_DROP, { node, sourceEvent, simulated: true });
       this.pushAction({
         undo: [
           {
@@ -48,6 +47,7 @@ export class InitialNodeDragging extends DiagramModule{
           }
         ]
       })
+      this.store.emit(EVENTS.NODE_INITIAL_DROP, { node, sourceEvent, simulated: true });
     }
   }
 

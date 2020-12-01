@@ -23,15 +23,16 @@ export class ComponentDeleter extends DiagramModule{
   }
 
   deleteNode(node: Node, sourceEvent: DiagramEvent): void {
-    if(node.props.isOpen) return;
+    if(node.isOpen) return;
 
     let snapRestorer: Function | null = null;
     if(!sourceEvent.isRestore){
       snapRestorer = this.stateSnaper.snapNodeAsRestorer(node);
     }
 
-    if(node.parent){
-      node.parent.removeChild(node);
+    const parent = node.parent;
+    if(parent){
+      parent.removeChild(node);
     }
 
     if(!sourceEvent.isRestore && snapRestorer){
@@ -64,10 +65,10 @@ export class ComponentDeleter extends DiagramModule{
     const childs = node.children;
     for(let i = childs.length - 1; i >= 0; i--){
       this.enableActionGrouping();
-      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: childs[i] });
+      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: childs[i], sender: this });
     }
 
-    this.store.emit(EVENTS.NODE_DELETED, { node, sourceEvent });
+    this.store.emit(EVENTS.NODE_DELETED, { node, sourceEvent, data: parent });
     this.store.removeNode(node);
 
     this.disableActionGrouping();

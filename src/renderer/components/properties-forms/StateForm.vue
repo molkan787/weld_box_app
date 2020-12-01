@@ -2,7 +2,7 @@
   <BaseForm :object="object">
 
     <FormField v-if="needsPriority" label="Priority">
-      <input type="number" v-model.number="props.priority">
+      <input type="number" min="1" @input="priorityInput" :value="props.priority">
     </FormField>
 
     <FormField label="Type">
@@ -21,6 +21,7 @@ import BaseForm from './base';
 import FormField from '../skeletons/FormField';
 import RadioButtonGroup from '../skeletons/RadioButtonGroup';
 import { StateDecomposition } from '../../my-diagram/state';
+import { MY_EVENTS } from '../../my-diagram/my-events';
 export default {
   components: {
     BaseForm,
@@ -47,6 +48,22 @@ export default {
       { text: 'Serial', value: 'serial' },
       { text: 'Parallel', value: 'parallel' }
     ]
-  })
+  }),
+  methods: {
+    priorityInput(e){
+      const prevPriority = this.props.priority;
+      const value = e.target.value;
+      let priority = parseInt(value || '1');
+      this.props.priority = priority;
+
+      const store = this.object.store;
+      if(prevPriority !== priority && store){
+        store.emit(MY_EVENTS.NODE_PRIORITY_CHANGED_BY_USER, {
+          node: this.object,
+          data: prevPriority
+        })
+      }
+    }
+  }
 }
 </script>

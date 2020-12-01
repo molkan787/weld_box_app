@@ -1,9 +1,10 @@
-import { EVENTS, Node } from "../../diagram-core";
+import { EVENTS, MODULES, Node } from "../../diagram-core";
 import { DiagramStore } from "../../diagram-core/diagram-store";
 import { DiagramEvent } from "../../diagram-core/interfaces/DiagramEvent";
 import { DiagramModule } from "../../diagram-core/module";
 import { MyEdge } from "../my-edge";
 import { MY_EVENTS } from "../my-events";
+import { State } from "../state";
 
 export class PriorityAssigner extends DiagramModule{
 
@@ -13,7 +14,14 @@ export class PriorityAssigner extends DiagramModule{
     store.on(EVENTS.EDGE_CREATED, e => this.onEdgeCreated(e));
     store.on(EVENTS.EDGE_DELETED, e => this.onEdgeDeleted(e));
     store.on(MY_EVENTS.EDGE_PRIORITY_CHANGED_BY_USER, e => this.onEdgePriorityChangedByUser(e));
+
+    store.on(EVENTS.NODE_SWITCHED_PARENT, e => this.onNodeSwitchedParent(e));
+    store.on(EVENTS.NODE_INITIAL_DROP, e => this.onNodeSwitchedParent(e));
+    store.on(EVENTS.NODE_DELETED, e => this.onNodeDeleted(e));
+    store.on(MY_EVENTS.NODE_PRIORITY_CHANGED_BY_USER, e => this.onNodePriorityChangedByUser(e));
   }
+
+//#region Edges
 
   private onEdgePriorityChangedByUser(event: DiagramEvent){
     const edge = <MyEdge>event.edge;
@@ -94,5 +102,100 @@ export class PriorityAssigner extends DiagramModule{
       .filter(ec => ec.isSource() && !ec.isBridge)
       .map(ec => <MyEdge>ec.edge);
   }
+
+//#endregion
+
+//#region Nodes
+
+  private onNodeSwitchedParent(event: DiagramEvent){
+    const state = <State>event.node;
+    const oldParent = <State | null>event.data;
+    const newParent = <State | null>state.parent;
+
+    this.enableActionGrouping();
+    if(oldParent){
+      this.stateRemovedFromState(state, oldParent);
+    }
+    if(newParent){
+      this.stateAddedToState(state);
+    }
+    this.disableActionGrouping();
+
+  }
+
+  private onNodeDeleted(event: DiagramEvent){
+    const srcEvent = event.sourceEvent;
+    // if the sender of the event is the Component deleter,
+    // it means that this is a subsequent call (deleting childs of the originally deleted node)
+    // and so we should skip handling this event
+    if(srcEvent?.sender?.name == MODULES.COMPONENT_DELETER) return;
+    const state = <State>event.node;
+    const oldParent = <State | null>event.data; // data prop should contain deleted node's parent
+    if(oldParent){
+      this.stateRemovedFromState(state, oldParent);
+    }
+  }
+
+  private onNodePriorityChangedByUser(event: DiagramEvent){
+    const state = <State>event.node;
+    const prevPriority = <number>event.data;
+    this.statePriorityChanged(state, prevPriority);
+  }
+
+  private statePriorityChanged(state: State, prevPriority: number){
+    const UP = 1, DOWN = -1;
+    const priority = state.properties.priority;
+    if(priority == prevPriority) return;
+    const siblings = <State[]>(state.parent?.children || [])
+    const dir = priority > prevPriority ? UP : DOWN;
+    let others: State[];
+    if(dir == UP){
+      others = siblings.filter(s => {
+        const p = s.properties.priority;
+        return p > prevPriority && p <= priority && s != state;
+      })
+    }else{
+      others = siblings.filter(s => {
+        const p = s.properties.priority;
+        return p >= priority && p < prevPriority && s != state;
+      })
+    }
+    state.propsArchiver.flush('properties');
+    this.enableActionGrouping();
+    this.adjustStatesPriority(others, dir * -1)
+    this.disableActionGrouping();
+  }
+
+  private stateRemovedFromState(state: State, parent: State){
+    const priority = state.properties.priority;
+    const oldSiblings = <State[]>parent.children;
+    const oldHigher = oldSiblings.filter(os => os.properties.priority > priority);
+    this.adjustStatesPriority(oldHigher, -1);
+  }
+
+  private stateAddedToState(state: State){
+    const siblings = this.getStateSiblings(state);
+    state.properties.priority = 1;
+    state.propsArchiver.flush('properties');
+    this.adjustStatesPriority(siblings, 1);
+  }
+
+  private adjustStatesPriority(states: State[], by: number){
+    for(let state of states){
+      state.properties.priority += by;
+      state.propsArchiver.flush('properties');
+    }
+  }
+
+  private getStateSiblings(state: State): State[]{
+    const parent = state.parent;
+    if(parent){
+      return <State[]>parent.children.filter(c => c !== state);
+    }else{
+      return [];
+    }
+  }
+
+//#endregion
 
 }
