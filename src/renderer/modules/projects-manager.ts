@@ -70,6 +70,7 @@ class ProjectsManager{
     }
     const diagram = new MyDiagram('#canvas');
     const { setting, data } = project;
+    setting.location = filename;
     store.state.projectSetting = setting;
     store.state.diagram = diagram;
 
