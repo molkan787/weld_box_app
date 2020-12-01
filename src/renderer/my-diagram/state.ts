@@ -25,6 +25,8 @@ export class State extends Node implements ObjectProps{
   public statementBlocks: StatementBlock[] = [];
   private _isThread: boolean = false;
 
+  public codeblocksExpanded: boolean = true;
+
   constructor(
     position: Position = { x: 0, y: 0 },
     size: Size = { width: 200, height: 100, radius: 0 },

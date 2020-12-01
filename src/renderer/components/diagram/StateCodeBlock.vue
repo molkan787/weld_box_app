@@ -3,12 +3,12 @@
     <div @mousedown="mousedown" class="cb-resize-handle" preventDrag="true" ></div>
     <div class="header">
       Statements <span class="counts">{{ statementBlocks.length }}</span>
-      <div class="toggle" :class="{ collapsed: !expanded }" @click="expanded = !expanded">
+      <div class="toggle" :class="{ collapsed: !state.codeblocksExpanded }" @click="state.codeblocksExpanded = !state.codeblocksExpanded">
         <ArrowTopIcon :width="12" :height="7.5" />
       </div>
     </div>
 
-    <div v-if="expanded">
+    <div v-if="state.codeblocksExpanded">
       <div class="statement-blocks">
         <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
           <div class="sb-header">
