@@ -1,12 +1,12 @@
 <template>
   <modal name="new-project-modal" height="auto" width="500" :clickToClose="false">
-    <div class="header">
+    <div class="header" v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}">
       {{ modifyMode ? 'Project Setting' : 'Create Project' }}
     </div>
-    <div class="body">
+    <div class="body" v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}">
       <ProjectSettingForm :data="setting" :modifyMode="modifyMode" />
     </div>
-    <div class="buttons">
+    <div class="buttons" v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}">
         <button @click="cancelClick" style="width:120px" class="btn">Cancel</button>
         <button @click="okClick" style="width:120px" class="primary btn">Ok</button>
     </div>
@@ -19,6 +19,7 @@ import { projectsManager } from '../modules/projects-manager';
 import ProjectSettingForm from './forms/ProjectSettingForm';
 import { mapState } from 'vuex';
 import { Dialog } from '../dialog';
+import { USE_NATIVE_CLIPBOARD } from '../symbols';
 export default {
   components: {
     ProjectSettingForm
@@ -26,7 +27,8 @@ export default {
   computed: mapState(['projectSetting']),
   data:() => ({
     modifyMode: false,
-    setting: {}
+    setting: {},
+    USE_NATIVE_CLIPBOARD: USE_NATIVE_CLIPBOARD
   }),
   methods: {
     open(modifyMode){

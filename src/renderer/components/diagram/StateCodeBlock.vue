@@ -23,7 +23,7 @@
               <div :class="{checked: sb.execution.du}" @click="sb.execution.du = !sb.execution.du" class="item">DU</div>
               <div :class="{checked: sb.execution.ex}" @click="sb.execution.ex = !sb.execution.ex" class="item">EX</div>
             </div>
-            <textarea ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
+            <textarea v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
@@ -40,6 +40,7 @@
 <script>
 import { Component } from '../../diagram-core/components/component';
 import { textareaFitContentHeight } from '../../helpers/ui';
+import { USE_NATIVE_CLIPBOARD } from '../../symbols';
 import ArrowTopIcon from '../icons/ArrowTop';
 import CloseIcon from '../icons/Close';
 import PlusSignIcon from '../icons/PlusSign';
@@ -61,6 +62,7 @@ export default {
     startWidth: 0,
     resizing: false,
     rootWidth: 180,
+    USE_NATIVE_CLIPBOARD: USE_NATIVE_CLIPBOARD
   }),
   computed: {
     statementBlocks(){

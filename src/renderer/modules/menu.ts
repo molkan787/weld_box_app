@@ -1,5 +1,6 @@
 import { ipcRenderer } from "electron";
 import EventEmitter from "eventemitter3";
+import { USE_NATIVE_CLIPBOARD } from "../symbols";
 
 const PROJECT_ITEMS = [
   'save_as', 'close', 'copy', 'paste', 'cut', 'comment', 'generate_code'
@@ -40,6 +41,7 @@ class MenuClass extends EventEmitter{
     if(event.ctrlKey){
       const action = this.getAction(event.key);
       if(action){
+        if(!this.shouldHandleEvent(event, action)) return;
         event.preventDefault();
         this.onMenuClick(action);
       }
@@ -67,6 +69,23 @@ class MenuClass extends EventEmitter{
       default:
         return null;
     }
+  }
+
+  private shouldHandleEvent(event: KeyboardEvent, action: string): boolean{
+    const target = event.target;
+    if(target && ['copy', 'cut', 'paste'].includes(action)){
+      const path = <HTMLElement[]>(<any>event).path
+      if(path instanceof Array){
+        for(let i = 0; i < path.length; i++){
+          const el = path[i];
+          if(el.tagName == 'BODY') break;
+          if(el.getAttribute(USE_NATIVE_CLIPBOARD)){
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 
 }

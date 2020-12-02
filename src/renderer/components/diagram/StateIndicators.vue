@@ -1,7 +1,7 @@
 <template>
   <div class="state-indicators">
     <div class="priority" v-if="requirePriority">
-      <input type="number" min="1" @keypress="onKeyPress" @blur="priorityInput" :value="props.priority">
+      <input type="number" min="1" @keypress="onKeyPress" @blur="priorityInput" :value="props.priority" v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}">
       <PriorityIcon />
     </div>
     <ParallelIcon v-if="isParallel" />
@@ -12,6 +12,7 @@
 <script>
 import { MY_EVENTS } from '../../my-diagram/my-events';
 import { StateDecomposition } from '../../my-diagram/state';
+import { USE_NATIVE_CLIPBOARD } from '../../symbols';
 import HistoricIcon from '../icons/Historic';
 import ParallelIcon from '../icons/Parallel';
 import PriorityIcon from '../icons/Priority';
@@ -27,6 +28,9 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    USE_NATIVE_CLIPBOARD: USE_NATIVE_CLIPBOARD
+  }),
   computed: {
     props(){
       return this.state.properties;
