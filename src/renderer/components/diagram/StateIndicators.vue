@@ -1,7 +1,7 @@
 <template>
   <div class="state-indicators">
     <div class="priority" v-if="requirePriority">
-      <input type="number" min="1" @input="priorityInput" :value="props.priority">
+      <input type="number" min="1" @keypress="onKeyPress" @blur="priorityInput" :value="props.priority">
       <PriorityIcon />
     </div>
     <ParallelIcon v-if="isParallel" />
@@ -43,6 +43,11 @@ export default {
     }
   },
   methods: {
+    onKeyPress(e){
+      if(e.keyCode == 13){
+        this.priorityInput(e);
+      }
+    },
     priorityInput(e){
       const prevPriority = this.props.priority;
       const value = e.target.value;

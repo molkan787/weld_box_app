@@ -175,9 +175,10 @@ export class PriorityAssigner extends DiagramModule{
 
   private stateAddedToState(state: State){
     const siblings = this.getStateSiblings(state);
-    state.properties.priority = 1;
+    const priorities = siblings.map(s => s.properties.priority);
+    const highest = Math.max(...priorities, 0);
+    state.properties.priority = highest + 1;
     state.propsArchiver.flush('properties');
-    this.adjustStatesPriority(siblings, 1);
   }
 
   private adjustStatesPriority(states: State[], by: number){

@@ -2,7 +2,7 @@
   <BaseForm :object="object">
 
     <FormField v-if="needsPriority" label="Priority">
-      <input type="number" min="1" @input="priorityInput" :value="props.priority">
+      <input type="number" min="1" @keypress="onKeyPress" @blur="priorityInput" :value="props.priority">
     </FormField>
 
     <FormField label="Type">
@@ -50,6 +50,11 @@ export default {
     ]
   }),
   methods: {
+    onKeyPress(e){
+      if(e.keyCode == 13){
+        this.priorityInput(e);
+      }
+    },
     priorityInput(e){
       const prevPriority = this.props.priority;
       const value = e.target.value;
