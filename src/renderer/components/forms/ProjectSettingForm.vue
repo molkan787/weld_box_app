@@ -18,6 +18,9 @@
     <FormField label="Build Priority">
       <RadioButtonGroup v-model="data.build_priority" :items="buildPriorityOptions" showSeparators />
     </FormField>
+    <FormField label="Custom Headers">
+      <textarea v-model="data.headers" rows="4" placeholder="Custom Headers"></textarea>
+    </FormField>
   </Form>
 </template>
 
@@ -50,8 +53,8 @@ export default {
       { text: '32 bit', value: '32' },
     ],
     buildPriorityOptions: [
-      { text: 'Memory', value: 'memory' },
       { text: 'Execution', value: 'execution' },
+      { text: 'Memory', value: 'memory' },
     ]
   })
 }

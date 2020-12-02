@@ -83,7 +83,8 @@ export default {
         sourcesDir: '',
         headersDir: '',
         architecture: '8',
-        build_priority: 'memory',
+        build_priority: 'execution',
+        headers: '',
       };
     }
   }
@@ -92,6 +93,13 @@ export default {
 
 <style lang="less" scoped>
 .body{
-  padding: 2px !important;
+  padding: 0 !important;
+  margin: 2px !important;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 470px;
+}
+.buttons{
+  box-shadow: 0 0 6px #00000038;
 }
 </style>
