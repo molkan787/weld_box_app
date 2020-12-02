@@ -1,2 +1,3 @@
 import env from '../env.json';
-export const config = Object.freeze(env);
+import _config from '../config.json';
+export const config = Object.freeze(Object.assign({}, _config, env));

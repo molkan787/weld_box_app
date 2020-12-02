@@ -15,6 +15,8 @@ import { Menu } from "../modules/menu";
 import { promptFile, promptSaveFile } from "../helpers/fs";
 import { projectsManager } from "../modules/projects-manager";
 import { Dialog } from "../dialog";
+import { config } from "../config";
+import electron from 'electron';
 
 export default Vue.extend({
   components: {
@@ -64,6 +66,12 @@ export default Vue.extend({
           Dialog.error('An error occured when saving the project.');
         }
       }
+    },
+    openTermsOfUsePage(){
+      electron.shell.openExternal(config.terms_of_use_url);
+    },
+    openAboutPage(){
+      electron.shell.openExternal(config.about_url);
     }
   },
   created(){
@@ -74,6 +82,8 @@ export default Vue.extend({
     .on('save', () => this.saveProject())
     .on('save_as', () => this.saveAsProject())
     .on('close', () => this.closeProject())
+    .on('terms_of_use', () => this.openTermsOfUsePage())
+    .on('about', () => this.openAboutPage())
   }
 });
 </script>
