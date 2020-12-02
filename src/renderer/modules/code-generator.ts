@@ -7,6 +7,7 @@ import { ProjectExportData } from "../interfaces/ProjectExportData";
 import { ProjectSetting } from "../interfaces/ProjectSetting";
 import { DataExporter } from "./data-exporter";
 import Axios from "axios";
+import { UserID } from "./user-id";
 
 export class CodeGenerator{
 
@@ -23,7 +24,13 @@ export class CodeGenerator{
   }
 
   private async request(data: ProjectExportData): Promise<GenerateCodeResponse>{
-    const response = await Axios.post(config.BT_GENERATE_CODE_URL, data);
+    const userId = UserID.getId();
+    console.log("userId", userId)
+    const response = await Axios.post(config.BT_GENERATE_CODE_URL, data, {
+      headers: {
+        user_token: userId
+      }
+    });
     return response.data;
   }
 
