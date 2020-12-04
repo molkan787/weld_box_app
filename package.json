@@ -40,6 +40,7 @@
         "electron-webpack": "2.8.2",
         "electron-webpack-ts": "^4.0.1",
         "eslint-plugin-html": "^6.1.0",
+        "javascript-obfuscator": "^2.9.4",
         "less": "^3.12.2",
         "less-loader": "^7.0.1",
         "rimraf": "^3.0.2",
@@ -48,9 +49,15 @@
         "tslint-loader": "^3.6.0",
         "typescript": "3.8.3",
         "vue": "^2.6.12",
-        "webpack": "^4.44.1"
+        "webpack": "^4.44.1",
+        "webpack-obfuscator": "2.5.0"
     },
     "resolutions": {
         "webpack-sources": "1.4.3"
+    },
+    "electronWebpack": {
+        "renderer": {
+            "webpackConfig": "webpack.renderer.js"
+        }
     }
 }
