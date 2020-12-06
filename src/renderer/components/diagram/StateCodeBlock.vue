@@ -2,7 +2,7 @@
   <div class="code-block" :style="`width:${rootWidth}px`">
     <div @mousedown="mousedown" class="cb-resize-handle" preventDrag="true" ></div>
     <div class="header">
-      Statements <span class="counts">{{ statementBlocks.length }}</span>
+      Actions <span class="counts">{{ statementBlocks.length }}</span>
       <div class="toggle" :class="{ collapsed: !state.codeblocksExpanded }" @click="state.codeblocksExpanded = !state.codeblocksExpanded">
         <ArrowTopIcon :width="12" :height="7.5" />
       </div>
@@ -11,17 +11,20 @@
     <div v-if="state.codeblocksExpanded">
       <div class="statement-blocks">
         <div v-for="(sb, index) in statementBlocks" :key="sb + index" class="item">
-          <div class="sb-header">
+          <!-- <div class="sb-header">
             <input v-model="sb.name" type="text">
-            <button @click="removeBlock(index)" title="Remove">
+            <button class="rm-block-btn" @click="removeBlock(index)" title="Remove">
               <CloseIcon :size="9" />
             </button>
-          </div>
+          </div> -->
           <div class="statements">
             <div class="execution">
               <div :class="{checked: sb.execution.en}" @click="sb.execution.en = !sb.execution.en" class="item">EN</div>
               <div :class="{checked: sb.execution.du}" @click="sb.execution.du = !sb.execution.du" class="item">DU</div>
               <div :class="{checked: sb.execution.ex}" @click="sb.execution.ex = !sb.execution.ex" class="item">EX</div>
+              <button class="rm-block-btn" @click="removeBlock(index)" title="Remove">
+                <CloseIcon :size="9" />
+              </button>
             </div>
             <textarea v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
@@ -30,7 +33,6 @@
 
       <button @click="addBlockClick" class="add-block">
         <PlusSignIcon :size="14" />
-        Add Statement Block
       </button>
     </div>
 
@@ -122,8 +124,8 @@ export default {
       const arr = this.state.statementBlocks;
       const block = {
         id: Component.genId(),
-        name: `Statement Block ${arr.length + 1}`,
-        statements: 'Statement#1;',
+        name: `Action Block ${arr.length + 1}`,
+        statements: 'Action#1;',
         execution: {
           en: false,
           du: false,
@@ -208,18 +210,20 @@ export default {
             outline: 1px solid #23BB72;
           }
         }
-        button{
-          width: 24px;
-          border: none;
-          background: none;
-          outline: none;
-          cursor: pointer;
-        }
+      }
+      .rm-block-btn{
+        width: 24px;
+        border: none;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        float: right;
+        margin-top: 4px;
       }
       .statements{
-        margin-left: 10px;
+        margin-left: 5px;
         border-left: 2px solid #68696D;
-        padding: 5px;
+        padding-left: 3px;
 
         textarea{
           width: 96%;
@@ -264,7 +268,7 @@ export default {
     outline: none;
     font-size: 14px;
     white-space: nowrap;
-    padding: 9px;
+    padding: 3px 9px;
     cursor: pointer;
     transition: background-color 0.2s;
     &:hover{
@@ -273,7 +277,7 @@ export default {
     svg{
       position: relative;
       top: 2px;
-      left: -5px;
+      // left: -5px;
     }
   }
 
