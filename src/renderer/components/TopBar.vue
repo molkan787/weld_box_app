@@ -71,11 +71,11 @@ export default {
       deep: false,
       handler(){
         this.projectState.saved = true;
-        this.diagram.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.projectState.saved = false);
+        this.diagram && this.diagram.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.projectState.saved = false);
       }
     },
     'actionsArchiver.pointer'(){
-      this.projectState.saved = false;
+      this.diagram && (this.projectState.saved = false);
     },
     canUndo: {
       immediate: true,
