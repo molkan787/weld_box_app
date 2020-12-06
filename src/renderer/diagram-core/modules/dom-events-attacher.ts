@@ -29,7 +29,8 @@ export class DomEventsAttacher{
       .filter((e: any, node: any) => {
         this.store.emit(EVENTS.CANVAS_MOUSEDOWN, { sourceEvent: e, simulated: true });
         const tn = e.target.tagName;
-        if(tn == 'INPUT' || tn == 'TEXTAREA' || e.target.isContentEditable || e.target.getAttribute('preventDrag')){
+        const isFocusedInput = document.activeElement == e.target && (tn == 'INPUT' || tn == 'TEXTAREA' || e.target.isContentEditable);
+        if(isFocusedInput || e.target.getAttribute('preventDrag')){
           e.stopPropagation();
           return false;
         }

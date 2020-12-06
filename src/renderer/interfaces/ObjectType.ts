@@ -6,4 +6,5 @@ export enum ObjectType{
   Event = 'event',
   Junction = 'junction',
   StatementBlock = 'statement-block',
+  Comment = 'comment'
 }

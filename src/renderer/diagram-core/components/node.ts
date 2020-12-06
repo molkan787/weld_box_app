@@ -30,6 +30,7 @@ export class Node extends Component{
 
   public highlighted: boolean = false;
   public highlightedWall: Side | null = null;
+  public readonly classes: string[];
 
   public name: string;
 
@@ -57,6 +58,7 @@ export class Node extends Component{
     this._showContent = typeof sc == 'boolean' ? sc : true;
     if(options?.basic) this.isBasic = true;
     if(options?.circle) this.isCircle = true;
+    this.classes = options?.classes || [];
   }
 
   /**
@@ -293,4 +295,5 @@ export interface NodeOptions{
   showContent?: boolean;
   basic?: boolean;
   circle?: boolean;
+  classes?: string[];
 }

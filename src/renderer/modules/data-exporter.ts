@@ -3,6 +3,7 @@ import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
 import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData } from "../interfaces/ObjectExportData";
+import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 import { ProjectExportData } from "../interfaces/ProjectExportData";
 import { ProjectSetting } from "../interfaces/ProjectSetting";
@@ -43,6 +44,9 @@ export class DataExporter{
     const len = nodes.length;
     for(let i = 0; i < len; i++){
       const node = nodes[i];
+      // ignore comment nodes
+      if((<ObjectProps><any>node).what == ObjectType.Comment) continue;
+
       const parentId = node.getParent()?.id;
       const data = this.getObjectData(<any>node);
       const edgesData = this.getNodeEdgesData(node);

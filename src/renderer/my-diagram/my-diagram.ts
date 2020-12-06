@@ -10,6 +10,7 @@ import { DiagramEvent } from "../diagram-core/interfaces/DiagramEvent";
 import { ObjectType } from "../interfaces/ObjectType";
 import { PriorityAssigner } from "./modules/priority-assigner";
 import { cloneObject } from "../diagram-core/utils";
+import { CommentNode } from "./comment-node";
 
 export class MyDiagram extends Diagram{
 
@@ -48,6 +49,21 @@ export class MyDiagram extends Diagram{
 
     state.convertToThread();
 
+  }
+
+  public spawnCommentNode(parent?: State){
+    const state = parent || this.currentNode;
+    if(!state) return;
+    let { width, height } = state.size;
+    width -= 220;
+    height -= 100;
+    const x = Math.random() * width + 10;
+    const y = Math.random() * height + 40;
+    const comment = new CommentNode({ x, y });
+    state.addChild(comment);
+    this.addNode(comment);
+
+    setTimeout(() => comment.focusInput(), 500);
   }
 
   /**
