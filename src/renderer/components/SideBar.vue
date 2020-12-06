@@ -1,22 +1,22 @@
 <template>
-  <div class="side-bar blured-bg" @mousemove="onMouseMove">
-    <div title="State" class="icon" @mousedown="onMouseDown($event, 'state')">
+  <div class="side-bar blured-bg" @mousemove="onMouseMove" @mouseleave="onMouseLeave" @mouseup="onMouseUp">
+    <div :title="onlyThreadsAllowed ? 'Thread' : 'State'" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
-    <div title="Edge (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="edgeClick()">
+    <div :disabled="onlyThreadsAllowed" title="Edge (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="edgeClick()">
       <TransitionIcon />
     </div>
-    <div title="Start edge" class="icon" @mousedown="onMouseDown($event, 'start-edge')">
+    <div :disabled="onlyThreadsAllowed" title="Start edge" class="icon" @mousedown="onMouseDown($event, 'start-edge')">
       <StartTransitionIcon />
     </div>
     <div class="separator"></div>
-    <div title="State" class="icon" @mousedown="onMouseDown($event, 'message')">
+    <div :disabled="onlyThreadsAllowed" title="Message" class="icon" @mousedown="onMouseDown($event, 'message')">
       <MessageIcon />
     </div>
-    <div title="State" class="icon" @mousedown="onMouseDown($event, 'event')">
+    <div :disabled="onlyThreadsAllowed" title="Event" class="icon" @mousedown="onMouseDown($event, 'event')">
       <EventIcon />
     </div>
-    <div title="Junction" class="icon ma" @mousedown="onMouseDown($event, 'junction')">
+    <div :disabled="onlyThreadsAllowed" title="Junction" class="icon ma" @mousedown="onMouseDown($event, 'junction')">
       <JunctionIcon :size="40" />
     </div>
   </div>
@@ -58,8 +58,15 @@ export default {
     activeTool(){
       const s = this.diagram && this.diagram.store;
       return s && s.activeModule && s.activeModule.name;
+    },
+    onlyThreadsAllowed(){
+      const s = this.diagram && this.diagram.store;
+      return s && !s.currentlyOpenNode;
     }
   },
+  data: () => ({
+    spawnObjectType: '',
+  }),
   methods: {
     onMouseMove(event){
       this.diagram.simulateCanvasMouseMove(event);
@@ -68,6 +75,15 @@ export default {
       if(this.activeTool == MODULES.EDGE_DRAWER){
         this.diagram.deactivateEdgeDrawer();
       }
+      this.spawnObjectType = objectType;
+    },
+    onMouseUp(){
+      this.spawnObjectType = '';
+    },
+    onMouseLeave(event){
+      const objectType = this.spawnObjectType;
+      if(!objectType) return;
+      this.spawnObjectType = '';
       const { clientX: x, clientY: y } = event;
       if(objectType == 'start-edge'){
         this.diagram.spawnEdgeAt({ x, y }, this.createStartEdge());
@@ -85,7 +101,7 @@ export default {
     createObjectInstance(_objectType){
       switch (_objectType) {
         case ObjectType.State:
-          return new State();
+          return this.createState();
         case ObjectType.Message:
           return new MessageNode({ x: 0, y: 0 });
         case ObjectType.Event:
@@ -95,6 +111,15 @@ export default {
         default:
           throw new Error(`Unsupported object type '${_objectType}'`);
       }
+    },
+    createState(){
+      const state = new State();
+      if(this.onlyThreadsAllowed){
+        state.size = { width: 400, height: 300, radius: 0 };
+        state.convertToThread();
+        state.propsArchiver.lock();
+      }
+      return state;
     },
     createStartEdge(){
       const source = new EdgeConnection(AttachType.Position);
@@ -132,6 +157,11 @@ export default {
     padding: 8px;
     border-radius: 10px;
     cursor: pointer;
+
+    &[disabled]{
+      opacity: 0.3;
+      pointer-events: none;
+    }
 
     &.ma{
        svg{
