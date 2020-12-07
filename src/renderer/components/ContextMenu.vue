@@ -16,6 +16,12 @@
     <li @click="props.historic = !props.historic">
       Historic <CheckedIcon class="checked-icon" v-if="props.historic" />
     </li>
+    <template v-if="node.showContent">
+      <li class="separator"></li>
+      <li @click="addCommentClick">
+        Add comment
+      </li>
+    </template>
   </ContextMenu>
 </template>
 
@@ -28,6 +34,12 @@ export default {
   components: {
     CheckedIcon,
     ContextMenu
+  },
+  props: {
+    diagram: {
+      type: Object,
+      default: null
+    }
   },
   data: () => ({
     node: {},
@@ -55,8 +67,10 @@ export default {
         this.$refs.menu.open(sourceEvent);
       }
     },
-    onClick(){
-
+    addCommentClick(){
+      if(this.diagram){
+        this.diagram.spawnCommentNode(this.node);
+      }
     }
   }
 }

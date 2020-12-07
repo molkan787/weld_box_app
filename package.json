@@ -14,12 +14,14 @@
         "axios": "^0.21.0",
         "d3": "^6.1.1",
         "debounce": "^1.2.0",
+        "electron-webpack-vue": "^2.4.0",
         "eventemitter3": "^4.0.7",
         "on-change": "^2.1.4",
         "rbush": "^3.0.1",
         "set-value": "^3.0.2",
         "source-map-support": "^0.5.19",
         "throttle-debounce": "^3.0.1",
+        "uuid": "^8.3.1",
         "vue-context-menu": "^2.0.6",
         "vue-js-modal": "^2.0.0-rc.6",
         "vuex": "^3.5.1"
@@ -30,13 +32,15 @@
         "@types/rbush": "^3.0.0",
         "@types/set-value": "^2.0.0",
         "@types/throttle-debounce": "^2.1.0",
+        "@types/uuid": "^8.3.0",
         "css-loader": "^4.3.0",
         "electron": "10.1.2",
         "electron-builder": "^20.8.0",
+        "electron-devtools-installer": "^3.1.1",
         "electron-webpack": "2.8.2",
         "electron-webpack-ts": "^4.0.1",
-        "electron-webpack-vue": "^2.4.0",
         "eslint-plugin-html": "^6.1.0",
+        "javascript-obfuscator": "^2.9.4",
         "less": "^3.12.2",
         "less-loader": "^7.0.1",
         "rimraf": "^3.0.2",
@@ -45,9 +49,15 @@
         "tslint-loader": "^3.6.0",
         "typescript": "3.8.3",
         "vue": "^2.6.12",
-        "webpack": "^4.44.1"
+        "webpack": "^4.44.1",
+        "webpack-obfuscator": "2.5.0"
     },
     "resolutions": {
         "webpack-sources": "1.4.3"
+    },
+    "electronWebpack": {
+        "renderer": {
+            "webpackConfig": "webpack.renderer.js"
+        }
     }
 }

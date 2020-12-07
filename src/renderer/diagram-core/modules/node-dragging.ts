@@ -159,7 +159,10 @@ export class NodeDragging extends DiagramModule{
       // so if the node is snapped before changing the parent, the snap will be outdated
       setTimeout(() => {
         const events = [EVENTS.NODE_BBOX_CHANGED];
-        if(snapShot[0].parent !== node.parent){
+        const oldParent = snapShot[0].parent;
+        const newParent = node.parent;
+        const changedParent = oldParent !== newParent;
+        if(changedParent){
           events.push(EVENTS.NODE_PARENT_CHANGED);
         }
 
@@ -179,6 +182,11 @@ export class NodeDragging extends DiagramModule{
             }
           ]
         });
+
+        if(changedParent){
+          this.store.emit(EVENTS.NODE_SWITCHED_PARENT, { node, data: oldParent });
+        }
+
       }, 0);
     }
 

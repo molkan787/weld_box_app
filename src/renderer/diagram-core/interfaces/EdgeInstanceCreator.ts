@@ -4,10 +4,11 @@ import { EdgeConnection } from "../components/edge-connection";
 /**
  * A factory function to create an `Edge` instance
  */
-export declare type EdgeInstanceCreator = (
+export declare type EdgeFactory = (
   source: EdgeConnection,
   target: EdgeConnection,
   isMultipart?: boolean,
   multipartLocation?: MultipartEdgeLocation,
-  multipartType?: MultipartEdgeType
+  multipartType?: MultipartEdgeType,
+  replaces?: Edge | null,
 ) => Edge;

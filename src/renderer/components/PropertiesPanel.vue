@@ -1,6 +1,6 @@
 <template>
   <Panel text="Properties" ref="panel">
-    <div class="properties-panel">
+    <div class="properties-panel" v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}">
       <template v-if="object">
         <StateForm v-if="what == 'state' || what == 'thread'" :object="object" />
         <MessageForm v-else-if="what == 'message'" :object="object" />
@@ -27,6 +27,7 @@ import EdgeForm from './properties-forms/EdgeForm';
 import BaseForm from './properties-forms/base';
 import { ObjectType } from '../interfaces/ObjectType';
 import { EdgeType } from '../my-diagram/my-edge';
+import { USE_NATIVE_CLIPBOARD } from '../symbols';
 export default {
   components: {
     Panel,
@@ -42,6 +43,9 @@ export default {
       default: null
     }
   },
+  data: () => ({
+    USE_NATIVE_CLIPBOARD: USE_NATIVE_CLIPBOARD,
+  }),
   computed: {
     what(){
       return this.object.what;

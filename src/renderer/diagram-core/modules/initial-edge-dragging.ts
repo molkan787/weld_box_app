@@ -48,7 +48,11 @@ export class InitialEdgeDragging extends DiagramModule{
     if(node){
       const source = edge.source;
       const newSource = new EdgeConnection(AttachType.Node);
-      newSource.offset = cloneObject(source.position);
+      const nodePos = node.position;
+      const offset = cloneObject(source.position) || { x: 0, y: 0 };
+      offset.x -= nodePos.x;
+      offset.y -= nodePos.y;
+      newSource.offset = offset;
       node.addEdgeConnection(newSource);
       edge.setSource(newSource);
       this.store.emit(EVENTS.EDGE_CONNECTIONS_CHANGED, { edge });

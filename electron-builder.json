@@ -1,6 +1,13 @@
 {
     "appId": "pl.dahmane.boxtree",
     "productName": "BoxTree",
+    "files": [
+        "!node_modules/**/*",
+        "node_modules/source-map-support",
+        "node_modules/buffer-from",
+        "node_modules/source-map",
+        "node_modules/eventemitter3"
+    ],
     "directories": {
         "output": "installer"
     },

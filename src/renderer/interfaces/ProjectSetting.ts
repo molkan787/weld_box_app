@@ -5,4 +5,5 @@ export interface ProjectSetting{
   headersDir: string;
   architecture: '8' | '16' | '32';
   build_priority: 'memory' | 'execution';
+  headers: string;
 }

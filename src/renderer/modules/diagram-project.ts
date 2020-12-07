@@ -77,10 +77,13 @@ export class DiagramProject{
       }
 
     }
-    this.putZoomTransforms(diagram, zoomTransforms);
+    const zooms = this.putZoomTransforms(diagram, zoomTransforms);
     Component.idPointer = idPointer;
     if(currentNode){
       diagram.store.emit(EVENTS.DIAGRAM_JUMP_TO_NODE, { node: currentNode });
+    }else{
+      const zoom = zooms.get(0);
+      zoom && diagram.store.emit(EVENTS.DIAGRAM_SET_ZOOM, { data: zoom });
     }
   }
 
@@ -113,6 +116,7 @@ export class DiagramProject{
       const transform = zoomIdentity.translate(x, y).scale(k);
       map.set(ref, transform);
     }
+    return map;
   }
 
 //#endregion

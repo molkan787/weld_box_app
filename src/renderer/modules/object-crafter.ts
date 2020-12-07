@@ -1,13 +1,14 @@
 import { EdgeConnection, Node } from "../diagram-core";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
-import { EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
+import { CommentCloneData, EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { EdgeType, MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
 import { Junction } from "../my-diagram/junction";
+import { CommentNode } from "../my-diagram/comment-node";
 
 export class ObjectCrafter{
 
@@ -47,6 +48,8 @@ export class ObjectCrafter{
       node = this.craftMessageNode(<MessageCloneData>data);
     }else if(cloneData.what == ObjectType.Junction){
       node = this.craftJunction(<JunctionCloneData>data);
+    }else if(cloneData.what == ObjectType.Comment){
+      node = this.craftComment(<CommentCloneData>data);
     }else{
       throw new Error(`Unsupported object type '${what}'`);
     }
@@ -60,11 +63,12 @@ export class ObjectCrafter{
   }
 
   public craftState(data: StateCloneData, what: ObjectType): State{
-    const { props, name, properties, statementBlocks, position, size, showContent, isSubChart } = data;
+    const { props, name, properties, statementBlocks, position, size, showContent, isSubChart, codeblocksExpanded } = data;
     const state = new State(cloneObject(position), cloneObject(size));
     state.props = cloneNestedObject(props);
     state.properties = cloneObject(properties);
     state.statementBlocks = cloneArray(statementBlocks);
+    state.codeblocksExpanded = typeof codeblocksExpanded == 'boolean' ? codeblocksExpanded : true;
     if(isSubChart){
       state.convertToSubChart(true);
     }
@@ -98,8 +102,16 @@ export class ObjectCrafter{
 
   public craftJunction(data: JunctionCloneData): Junction{
     const { position, size } = data;
-    const node = new Junction(position);
+    const node = new Junction(cloneObject(position));
     node.size = cloneObject(size);
+    return node;
+  }
+
+  public craftComment(data: CommentCloneData): CommentNode{
+    const { position, size, text } = data;
+    const node = new CommentNode(cloneObject(position));
+    node.size = cloneObject(size);
+    node.text = text;
     return node;
   }
 

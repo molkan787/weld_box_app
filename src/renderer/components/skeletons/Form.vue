@@ -17,7 +17,7 @@
       padding-left: 2px;
       font-size: 14px;
     }
-    input:not([type="checkbox"]), select{
+    input:not([type="checkbox"]), select, textarea{
       width: 100%;
       box-sizing: border-box;
       border-radius: 6px;
@@ -29,6 +29,11 @@
       font-weight: bold;
       outline: none;
       margin-top: 4px;
+      resize: none;
+    }
+    textarea{
+      font-family: inherit;
+      font-weight: lighter;
     }
     &.disabled{
       input, select{

@@ -1,4 +1,4 @@
-import { EdgeInstanceCreator } from "./EdgeInstanceCreator";
+import { EdgeFactory } from "./EdgeInstanceCreator";
 
 export interface DiagramOptions {
   /** Canvas width in pixel */
@@ -16,5 +16,5 @@ export interface DiagramOptions {
    * and return an `Edge` instance, should be used when extending the `Edge` class
    * so that the EdgeDrawer module uses that extended Edge
    */
-  edgeFactory?: EdgeInstanceCreator;
+  edgeFactory?: EdgeFactory;
 }

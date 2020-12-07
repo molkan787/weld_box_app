@@ -64,6 +64,10 @@ export class NodeRenderer{
     root.classed('circle', node.isCircle)
         .classed(CLASSES.SUB_CHART, node.isSubChart);
 
+    for(let _class of node.classes){
+      root.classed(_class, true);
+    }
+
     this.store.setD3Node(node.id, root);
     this.update(node);
 

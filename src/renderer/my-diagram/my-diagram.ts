@@ -1,5 +1,5 @@
 import { Diagram, EVENTS, Node } from "../diagram-core";
-import { EdgeType, MyEdge } from "./my-edge";
+import { MyEdge } from "./my-edge";
 import { State } from "./state";
 import { ObjectCopier } from "../modules/object-copier";
 import { MyObject } from "../interfaces/MyObject";
@@ -8,6 +8,9 @@ import { ObjectCopyResult } from "../interfaces/ObjectCopyResult";
 import { Component } from "../diagram-core/components/component";
 import { DiagramEvent } from "../diagram-core/interfaces/DiagramEvent";
 import { ObjectType } from "../interfaces/ObjectType";
+import { PriorityAssigner } from "./modules/priority-assigner";
+import { cloneObject } from "../diagram-core/utils";
+import { CommentNode } from "./comment-node";
 
 export class MyDiagram extends Diagram{
 
@@ -21,20 +24,22 @@ export class MyDiagram extends Diagram{
       height: window.innerHeight - 70,
       nodeBorderWidth: 3,
       nodeHeaderHeight: 30,
-      edgeFactory: (s, t, im, ml, mt) => {
-        const edge = new MyEdge(s, t);
-        edge.propsArchiver.lock();
-        edge.properties = {
-          priority: 0,
-          condition: '',
-          type: EdgeType.REGULAR
-        };
-        edge.propsArchiver.unlock();
-        return new MyEdge(s, t, im, ml, mt);
+      edgeFactory: (s, t, im, ml, mt, rep) => {
+        const edge = new MyEdge(s, t, im, ml, mt);
+        if(rep){
+          const oe = <MyEdge>rep;
+          edge.propsArchiver.lock();
+          edge.name = oe.name;
+          edge.properties = cloneObject(oe.properties);
+        }
+        return edge;
       }
     });
     this.on(EVENTS.NODE_DROPPED, e => this.onNodeDropped(e));
-    this.on(EVENTS.EDGE_CREATED, e => this.onEdgeAdded(<MyEdge>e.edge));
+    this.modules.priorityAssigner = new PriorityAssigner(this.store);
+
+    // @ts-ignore
+    window.store = this.store;
   }
 
   buildInitialDiagram(){
@@ -46,26 +51,19 @@ export class MyDiagram extends Diagram{
 
   }
 
-  /**
-   * Handles EdgeAdded event, To auto assign edge's priority if needed
-   * @param edge The `Edge` instance that was added
-   */
-  private onEdgeAdded(edge: MyEdge){
-    const thisSource = edge.source;
-    const node = thisSource.node;
-    if(edge.properties.priority == 0 && node && node.edges.length > 1){
-      this.lockActionsArchiver();
-      const sources = node.edges.filter(ec => ec.isSource() && ec !== thisSource);
-      const sourceEdges = <MyEdge[]>sources.map(ec => ec.edge).filter(e => !!e);
-      if(sourceEdges.length == 1){
-        const props = sourceEdges[0].properties;
-        props.priority == 0 && (props.priority = 1); // if the priority is 0 set it to 1
-      }
-      const priorities = sourceEdges.map(e => e.properties.priority);
-      const highestPriority = Math.max(0, ...priorities);
-      edge.properties.priority = highestPriority + 1;
-      this.unlockActionsArchiver();
-    }
+  public spawnCommentNode(parent?: State){
+    const state = parent || this.currentNode;
+    if(!state) return;
+    let { width, height } = state.size;
+    width -= 220;
+    height -= 100;
+    const x = Math.random() * width + 10;
+    const y = Math.random() * height + 40;
+    const comment = new CommentNode({ x, y });
+    state.addChild(comment);
+    this.addNode(comment);
+
+    setTimeout(() => comment.focusInput(), 500);
   }
 
   /**
@@ -104,13 +102,6 @@ export class MyDiagram extends Diagram{
         }
       }
     }
-    // const len = nodes.length;
-    // for(let i = len - 1; i >= 0; i--){
-    //   const n = nodes[i];
-    //   if(!n.showContent){
-    //     this.store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node: n })
-    //   }
-    // }
   }
 
   /**

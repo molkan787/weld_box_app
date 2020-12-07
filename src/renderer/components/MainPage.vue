@@ -9,7 +9,7 @@
     <StatusBar />
     <Breadcrumb v-if="diagram" @item-click="breadcrumbItemClick" :nodes="chartsPathNodes" />
     <PropertiesPanel v-if="diagram" ref="propsPanel" :object="selectedObject" />
-    <ContextMenu ref="menu" />
+    <ContextMenu ref="menu" :diagram="diagram" />
   </div>
 </template>
 
@@ -157,6 +157,9 @@ export default Vue.extend({
       }else{
         Dialog.error('Cannot generate code\nError Code: diagram_not_found');
       }
+    })
+    .on('comment', () => {
+      this.diagram.spawnCommentNode();
     });
 
   }

@@ -12,7 +12,7 @@ export interface NodeSnapState{
   parent: Node | null;
   size: Size;
   position: Position;
-  edges: EdgeSnap[];
+  // edges: EdgeSnap[];
 }
 
 export interface EdgeSnap{

@@ -118,16 +118,18 @@ export class TreeManager extends DiagramModule{
       x: cp.x - pp.x - left,
       y: cp.y - pp.y - top,
     }
+    const oldParent = node.parent;
     node.parent?.removeChild(node);
     newParent.addChild(node);
-    this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node });
+    this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node, data: oldParent });
   }
 
   private onNodeDraggedOutOfParent(e: DiagramEvent): void {
     const node = <Node>e.node;
     node.position = node.getAbsolutePosition();
+    const oldParent = node.parent;
     node.parent?.removeChild(node);
-    this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node });
+    this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node, data: oldParent });
   }
 
 }

@@ -41,6 +41,7 @@ import RedoIcon from './icons/Redo.vue';
 import SettingIcon from './icons/Setting.vue';
 import PlayIcon from './icons/Play.vue';
 import { mapState } from 'vuex';
+import { EVENTS } from '../diagram-core';
 export default {
   components: {
     LogoIcon,
@@ -70,10 +71,11 @@ export default {
       deep: false,
       handler(){
         this.projectState.saved = true;
+        this.diagram && this.diagram.on(EVENTS.DIAGRAM_ZOOM_CHANGED, () => this.projectState.saved = false);
       }
     },
     'actionsArchiver.pointer'(){
-      this.projectState.saved = false;
+      this.diagram && (this.projectState.saved = false);
     },
     canUndo: {
       immediate: true,

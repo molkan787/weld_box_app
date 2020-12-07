@@ -12,9 +12,11 @@ import MainPage from "@/components/MainPage.vue";
 import ProjectSettingModal from "@/components/ProjectSettingModal.vue";
 import DialogComponent from './Dialog';
 import { Menu } from "../modules/menu";
-import { promptFile } from "../helpers/fs";
+import { promptFile, promptSaveFile } from "../helpers/fs";
 import { projectsManager } from "../modules/projects-manager";
 import { Dialog } from "../dialog";
+import { config } from "../config";
+import electron from 'electron';
 
 export default Vue.extend({
   components: {
@@ -38,7 +40,7 @@ export default Vue.extend({
     },
     async saveProject(){
       try {
-        projectsManager.save();
+        await projectsManager.save();
       } catch (error) {
         console.error(error);
         Dialog.error('An error occured when saving the project.');
@@ -53,6 +55,23 @@ export default Vue.extend({
       if(await projectsManager.canLeaveCurrentProject()){
         projectsManager.close();
       }
+    },
+    async saveAsProject(){
+      const filename = await promptSaveFile();
+      if(filename){
+        try {
+          await projectsManager.save(filename);
+        } catch (error) {
+          console.error(error);
+          Dialog.error('An error occured when saving the project.');
+        }
+      }
+    },
+    openTermsOfUsePage(){
+      electron.shell.openExternal(config.terms_of_use_url);
+    },
+    openAboutPage(){
+      electron.shell.openExternal(config.about_url);
     }
   },
   created(){
@@ -61,7 +80,10 @@ export default Vue.extend({
     .on('setting', () => this.$refs.ProjectSettingModal.open(true)) // passing `true` to set editing mode rather than new project mdoe
     .on('open', () => this.openProject())
     .on('save', () => this.saveProject())
+    .on('save_as', () => this.saveAsProject())
     .on('close', () => this.closeProject())
+    .on('terms_of_use', () => this.openTermsOfUsePage())
+    .on('about', () => this.openAboutPage())
   }
 });
 </script>

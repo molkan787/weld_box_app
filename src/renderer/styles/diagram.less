@@ -1,12 +1,35 @@
 .diagram{
   background-color: #18191D;
 
+  & > .nodes-layer > .node.content-hidden{
+    @borderColor: #3B3D44;
+    background: #24252A !important;
+    border-color: @borderColor !important;
+    & > .header{
+      background-color: @borderColor !important;
+    }
+  }
+
   .node{
     @borderWidth: 3px;
     background-color: #24252A;
     border: @borderWidth solid #3B3D44;
     color: white;
     border-radius: 6px;
+
+    &.comment{
+      background-color: transparent !important;
+      border: none !important;
+    }
+
+    &.content-hidden{
+      @borderColor: #0e0f10;
+      background: #18191D;
+      border-color: @borderColor;
+      & > .header{
+        background-color: @borderColor;
+      }
+    }
 
     &.basic{
       background-color: #3B3D44;

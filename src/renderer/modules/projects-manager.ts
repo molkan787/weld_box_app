@@ -42,7 +42,7 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
-  public async save(){
+  public async save(filename?: string){
     StatusController.setStatusText('Saving project...');
     const { projectSetting, diagram } = store.state;
     if(!diagram || !projectSetting) return;
@@ -55,9 +55,9 @@ class ProjectsManager{
     }
     const json = JSON.stringify(project);
 
-    await writeFile(projectSetting.location, json);
+    await writeFile(filename || projectSetting.location, json);
     StatusController.setStatusText(null);
-    console.log('after writeFile')
+    console.log('project saved')
   }
 
   public async load(filename: string){
@@ -70,6 +70,7 @@ class ProjectsManager{
     }
     const diagram = new MyDiagram('#canvas');
     const { setting, data } = project;
+    setting.location = filename;
     store.state.projectSetting = setting;
     store.state.diagram = diagram;
 

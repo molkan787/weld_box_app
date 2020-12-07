@@ -10,6 +10,7 @@ import VModal from 'vue-js-modal';
 import { store } from './store';
 import './modules/menu';
 import { test } from './test';
+import { UserID } from './modules/user-id';
 
 Vue.use(VModal);
 
@@ -20,3 +21,5 @@ new Vue({
 }).$mount('#app');
 
 setTimeout(() => test(), 500);
+
+UserID.init();
