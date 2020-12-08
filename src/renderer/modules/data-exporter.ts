@@ -128,7 +128,7 @@ export class DataExporter{
       },
       properties: {
         decomposition: properties.decomposition,
-        execution: 0
+        execution: properties.execution,
       },
       body: statementBlocks.map((sb, i) => this.getStatementBlockData(sb, i + 1))
     }

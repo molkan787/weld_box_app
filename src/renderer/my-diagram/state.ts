@@ -20,7 +20,8 @@ export class State extends Node implements ObjectProps{
   public properties = {
     historic: false,
     priority: 0,
-    decomposition: StateDecomposition.Serial
+    decomposition: StateDecomposition.Serial,
+    execution: 0,
   };
   public statementBlocks: StatementBlock[] = [];
   private _isThread: boolean = false;
@@ -33,7 +34,7 @@ export class State extends Node implements ObjectProps{
     options: NodeOptions = {}
   ){
     super(position, size, options);
-    this.name = 'State ' + this.id;
+    this.name = 'State' + this.id;
     this.propsArchiver = new PropsChangeArchiver({
       instance: this,
       props: ['name', 'properties', 'statementBlocks'],
@@ -62,7 +63,7 @@ export class State extends Node implements ObjectProps{
     this.convertToSubChart(true);
     this.what = ObjectType.Thread;
     this.propsArchiver.lock();
-    this.name = 'Thread ' + this.id;
+    this.name = 'Thread' + this.id;
     this.propsArchiver.unlock();
   }
 

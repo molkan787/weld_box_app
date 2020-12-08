@@ -67,6 +67,7 @@ export class ObjectCrafter{
     const state = new State(cloneObject(position), cloneObject(size));
     state.props = cloneNestedObject(props);
     state.properties = cloneObject(properties);
+    state.properties.execution = state.properties.execution || 0;
     state.statementBlocks = cloneArray(statementBlocks);
     state.codeblocksExpanded = typeof codeblocksExpanded == 'boolean' ? codeblocksExpanded : true;
     if(isSubChart){
