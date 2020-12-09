@@ -9,7 +9,7 @@ module.exports = function(config){
           splitStrings: true,
           splitStringsChunkLength: 3,
           selfDefending: true,
-          disableConsoleOutput: true
+          disableConsoleOutput: false
       })
     )
   }
