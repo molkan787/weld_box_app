@@ -6,7 +6,8 @@
         "node_modules/source-map-support",
         "node_modules/buffer-from",
         "node_modules/source-map",
-        "node_modules/eventemitter3"
+        "node_modules/eventemitter3",
+        "node_modules/on-change"
     ],
     "directories": {
         "output": "installer"

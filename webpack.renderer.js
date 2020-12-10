@@ -2,7 +2,7 @@ const WebpackObfuscator = require('webpack-obfuscator');
 
 module.exports = function(config){
   if(process.env.NODE_ENV !== 'development'){
-    config.externals = [];
+    config.externals = ['on-change'];
     config.plugins.push(
       new WebpackObfuscator ({
           rotateStringArray: true,
