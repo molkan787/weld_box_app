@@ -202,7 +202,7 @@ export class Renderer{
     const node1 = source.isAttachedToNode() ? source.node : null;
     const node2 = target.isAttachedToNode() ? target.node : null;
     const usePublicGetter = edge.isMultipart && edge.multipartLocation == MultipartEdgeLocation.Inner;
-    const stickToSource = edge.isStart && (node1 !== node2);
+    const stickToSource = edge.isStart;
     const parent = stickToSource ? node1 : this.findNearestCommonParent(node1, node2, usePublicGetter);
 
     if(parent === null){

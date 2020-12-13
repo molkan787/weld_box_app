@@ -296,7 +296,8 @@ export class NodeRenderer{
     if(typeof eab == 'undefined') eab = select(this.getAttachSelector(ab));
     const wall = ab.nodeWall;
     eab.attr(ATTR.WALL_SIDE, wall);
-    const node = <Node>ab.node;
+    const node = <Node | null>ab.node;
+    if(!node) return;
     const size = node.size, nodePos = node.getAbsolutePosition(true);
     const pad = this.store.diagramOptions.nodeBorderWidth;
     const pos = cloneObject(ab.coordinates);
@@ -317,7 +318,7 @@ export class NodeRenderer{
 
   private destroyNode(node: Node){
     const d3node = this.getD3Node(node);
-    d3node.remove();
+    d3node?.remove();
     console.log('deleted node', node)
   }
 

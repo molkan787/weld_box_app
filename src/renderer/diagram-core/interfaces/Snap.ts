@@ -32,4 +32,6 @@ export interface EdgeConnectionSnap{
   attachType: AttachType;
   nodeWall: Side;
   node: Node | null;
+  bridgeTo: EdgeConnection | null;
+  bridgeFrom: EdgeConnection | null;
 }
