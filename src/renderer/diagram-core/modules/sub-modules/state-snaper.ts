@@ -49,6 +49,7 @@ export class StateSnaper{
 
   public snapEdgeAsRestorer(edge: Edge): Function{
     const snap = this.snapEdge(edge);
+    console.log('snap', snap);
     return () => this.restoreEdge(snap);
   }
 
@@ -86,7 +87,8 @@ export class StateSnaper{
   public restoreEdge(snap: EdgeSnap){
     const { edge, shapePoints, source, target, isMultipart, multipartLocation, multipartType } = snap;
     edge.shapePoints = cloneArray(shapePoints);
-    this.restoreEdgeConnection(source);
+    edge.setSource(this.restoreEdgeConnection(source));
+    edge.setTarget(this.restoreEdgeConnection(target));
     this.restoreEdgeConnection(target);
     if(isMultipart){
       edge.convertToMultipart(multipartLocation, multipartType);
@@ -105,7 +107,9 @@ export class StateSnaper{
       offset: cloneObject(ec.offset),
       attachType: ec.attachType,
       nodeWall: ec.nodeWall,
-      node: ec.node
+      node: ec.node,
+      bridgeTo: ec.bridgeTo,
+      bridgeFrom: ec.bridgeFrom
     }
     return state;
   }
@@ -114,17 +118,22 @@ export class StateSnaper{
     const {
       edgeConnection: ec, position,
       offset, attachType, nodeWall,
-      node
+      node,
+      bridgeFrom,
+      bridgeTo
     } = state;
     ec.position = cloneObject(position);
     ec.offset = cloneObject(offset);
     ec.attachType = attachType;
     ec.nodeWall = nodeWall;
-    if(node){
+    ec.bridgeTo = bridgeTo;
+    ec.bridgeFrom = bridgeFrom;
+    if(node && ec.isAttachedToNode()){
       node.addEdgeConnection(ec);
     }else{
       ec.node = null;
     }
+    return ec;
   }
 
 }

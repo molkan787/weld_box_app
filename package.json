@@ -16,7 +16,7 @@
         "debounce": "^1.2.0",
         "electron-webpack-vue": "^2.4.0",
         "eventemitter3": "^4.0.7",
-        "on-change": "^2.1.4",
+        "on-change": "2.1.4",
         "rbush": "^3.0.1",
         "set-value": "^3.0.2",
         "source-map-support": "^0.5.19",

@@ -51,7 +51,7 @@ export class PriorityAssigner extends DiagramModule{
     const edge = <MyEdge>event.edge;
     const srcNode = <Node>event.data;
     const priority = edge.properties.priority;
-    const otherSources = this.getNodeSourceEdges(srcNode);
+    const otherSources = srcNode ? this.getNodeSourceEdges(srcNode) : [];
     const higherEdges = otherSources.filter(e => e.properties.priority > priority);
     this.enableActionGrouping();
     for(let he of higherEdges){
@@ -132,7 +132,9 @@ export class PriorityAssigner extends DiagramModule{
     const state = <State>event.node;
     const oldParent = <State | null>event.data; // data prop should contain deleted node's parent
     if(oldParent){
+      this.enableActionGrouping();
       this.stateRemovedFromState(state, oldParent);
+      this.disableActionGrouping();
     }
   }
 

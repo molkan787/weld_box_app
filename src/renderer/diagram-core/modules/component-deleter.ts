@@ -55,11 +55,18 @@ export class ComponentDeleter extends DiagramModule{
     }
 
     this.enableActionGrouping();
-    const edges = node.edges.map(ec => <Edge>ec.edge);
-    // Delete all edges associated with deleted node
-    for(let i = 0; i < edges.length; i++){
-      this.enableActionGrouping();
-      this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
+
+    // if the sender is this module we can skip deleting edges because it a sub-sequent call of a recursive deleting,
+    // so the remaining edges are attached between childs of the originally deleted node, hence they won't be visibile or rendered by any mean anyway
+    if(sourceEvent.sender !== this){
+      const edges = node.edges
+                        .map(ec => <Edge>ec.edge)
+                        .filter(e => !e.isMultipart || e.multipartType == MultipartEdgeType.Starting);
+      // Delete all edges associated with deleted node
+      for(let i = 0; i < edges.length; i++){
+        this.enableActionGrouping();
+        this.store.emit(EVENTS.DIAGRAM_DELETE_COMPONENT, { data: edges[i], sourceEvent });
+      }
     }
 
     const childs = node.children;

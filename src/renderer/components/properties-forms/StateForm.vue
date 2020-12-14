@@ -13,6 +13,10 @@
       </div>
     </FormField>
 
+    <FormField v-if="object.isThread" label="Execution Frequency (Hz)">
+      <input type="number" min="0" v-model.number="props.execution">
+    </FormField>
+
   </BaseForm>
 </template>
 
