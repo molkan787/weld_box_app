@@ -13,7 +13,8 @@ export class EventNode extends BasicNode implements ObjectProps{
   // Business props
   public readonly what: ObjectType = ObjectType.Event;
   public properties = {
-    clear: EventClear.MANUAL,
+    discard: EventDiscard.MANUAL,
+    mode: EventMode.FLAG,
     type: EventType.SINGLE_THREAD,
   };
 
@@ -31,10 +32,15 @@ export class EventNode extends BasicNode implements ObjectProps{
 
 }
 
-export enum EventClear{
+export enum EventDiscard{
   MANUAL = 'manual',
-  READ = 'read',
-  END = 'end'
+  THREAD = 'thread',
+  READ = 'read'
+}
+
+export enum EventMode{
+  FLAG = 'flag',
+  COUNTER = 'counter'
 }
 
 export enum EventType{

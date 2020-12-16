@@ -1,4 +1,4 @@
-import { EventClear, EventType } from "../my-diagram/EventNode";
+import { EventDiscard, EventMode, EventType } from "../my-diagram/EventNode";
 import { MessageType } from "../my-diagram/MessageNode";
 import { EdgeType } from "../my-diagram/my-edge";
 import { StateDecomposition } from "../my-diagram/state";
@@ -59,7 +59,8 @@ export interface MessageExportData extends ObjectExportData{
 
 export interface EventExportData extends ObjectExportData{
   properties: {
-    clear: EventClear;
+    discard: EventDiscard;
+    mode: EventMode;
     type: EventType;
   }
 }

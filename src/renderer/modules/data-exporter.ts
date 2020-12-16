@@ -229,7 +229,8 @@ export class DataExporter{
         what: ObjectType.Event,
       },
       properties: {
-        clear: properties.clear,
+        discard: properties.discard,
+        mode: properties.mode,
         type: properties.type
       }
     }
