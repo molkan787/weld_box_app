@@ -98,6 +98,11 @@ export enum Corner{
   BottomLeft = Side.Bottom | Side.Left
 }
 
+export enum Direction{
+  UP = 1,
+  DOWN = -1
+}
+
 const _GetRectWallCenterPoint_ScaleMatrices = {
   [Side.Top]: {x: 0.5, y: 0},
   [Side.Left]: {x: 0, y: 0.5},
@@ -118,4 +123,55 @@ export function polarToCartesian(r: number, theta: number): Position{
       x: r * Math.cos(theta),
       y: r * Math.sin(theta)
   }
+}
+
+interface UnidimensionalBlock{
+  start: number;
+  end: number;
+  flagged: boolean;
+}
+
+export function findEmptySpot(current: number, occupied: number[], minDistance: number, prefferedDirection: Direction, min: number, max: number): number{
+  if(minDistance == 0){
+    throw new Error('Finding empty spot when minDistance is 0 makes no sense!');
+  }
+  const hmd = minDistance;
+  let blocks: UnidimensionalBlock[] = occupied.map(n => ({ start: n - hmd, end: n + hmd, flagged: false }));
+  blocks.push({ start: current - hmd, end: current + hmd, flagged: true });
+  blocks = blocks.sort((a, b) => a.start - b.start);
+  const subjectIndex = blocks.findIndex(b => b.flagged);
+  let moved = moveBlockToEmptySpot(blocks, subjectIndex, prefferedDirection);
+  const center = (moved.start + moved.end) / 2;
+  if(center < min || center > max){
+    moved = moveBlockToEmptySpot(blocks, subjectIndex, prefferedDirection * -1);
+  }
+  return (moved.start + moved.end) / 2;
+}
+
+function moveBlockToEmptySpot(blocks: UnidimensionalBlock[], subjectIndex: number, direction: Direction): UnidimensionalBlock{
+  const cond = direction == Direction.UP ? (i: number) => i < blocks.length : (i: number) => i >= 0;
+  const inc = direction == Direction.UP ? 1 : -1;
+  const { start, end, flagged } = blocks[subjectIndex];
+  const subject: UnidimensionalBlock = { start, end, flagged };
+  const behind = blocks[subjectIndex + direction * -1];
+  behind && moveBlockOverBlock(subject, behind, direction);
+  for(let i = subjectIndex + inc; cond(i); i += inc){
+    const block = blocks[i];
+    moveBlockOverBlock(subject, block, direction);
+  }
+  return subject;
+}
+
+function moveBlockOverBlock(moveable: UnidimensionalBlock, immovable: UnidimensionalBlock, direction: Direction): boolean{
+  const { start: x1, end: y1 } = moveable, { start: x2, end: y2 } = immovable;
+  const overlaps = (x1 >= x2 && x1 <= y2) || (y1 >= x2 && y1 <= y2)
+  if(!overlaps) return false;
+  let delta = direction == Direction.UP
+                ? immovable.end - moveable.start
+                : immovable.start - moveable.end;
+  if(Math.sign(delta) != direction) return false;
+  delta = (Math.abs(delta) + 1) * Math.sign(delta);
+  moveable.start += delta;
+  moveable.end += delta;
+  return true;
 }

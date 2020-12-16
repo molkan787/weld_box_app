@@ -1,4 +1,4 @@
-import { Side, GetRectWallCenterPoint, polarToCartesian } from "../helpers/geometry";
+import { Side, GetRectWallCenterPoint, polarToCartesian, findEmptySpot } from "../helpers/geometry";
 import { capNumber } from "../helpers/math";
 import { Position } from "../interfaces/Position";
 import { Component, ComponentType } from "./component";
@@ -23,7 +23,7 @@ export class EdgeConnection extends Component{
     this._node = node;
   }
 
-  /** Cached result of getCoordinates() method */
+  /** Cached result of calculateCoordinates() method */
   private _coordinates: Position = { x: 0, y: 0 };
   public lastSpacingOffset: number = 0;
 
@@ -147,7 +147,7 @@ export class EdgeConnection extends Component{
         const isVertical = this.nodeWall === Side.Top || this.nodeWall === Side.Bottom;
         isVertical ? y2 *= -1 : x2 *= -1;
       }
-      const needCapping = this.isAttachedToNode() && this.attachType != AttachType.Node && node != null;
+      const needCapping = this.isAttachedToNode(true) && node != null;
       const hw = (node?.size.width || 1) / 2;
       const hh = (node?.size.height || 1) / 2;
       if(needCapping){
@@ -160,24 +160,15 @@ export class EdgeConnection extends Component{
         y: y1 + y2
       }
 
-      // applying previous spacing or calculating a new one,
-      // this is needed to avoid edges overlapping
-      result[axis] += this.lastSpacingOffset;
+      const n = <Node>node;
+      const min = n.getAbsolutePosition(true)[axis] || 1;
+      const max = min + n.size[axis == 'x' ? 'width' : 'height'] || 1;
 
-      const spacing = this.needSpacingOffset(result);
-      if(needCapping && node != null && spacing){
-        const value = result[axis];
-        const isX = axis == 'x';
-        let dir = spacing < 0 ? -1 : 1;
-        const radius = isX ? hw : hh;
-        let change = 0;
-        if(radius - Math.abs(value) < 6){
-          change = 12 * dir * -1;
-        }else{
-          change = 6 * dir;
+      for(let i = 0; i < 1; i++){
+        const spacing = this.needSpacingOffset(result, min + 10, max - 10);
+        if(needCapping && node != null && typeof spacing == 'number'){
+          result[axis] += spacing;
         }
-        this.lastSpacingOffset = change;
-        result[axis] += change;
       }
 
     }
@@ -234,22 +225,24 @@ export class EdgeConnection extends Component{
    * Returns one axis offset that this EdgeConnection needs to distance its self from other EdgeConnections if any is needed
    * @param position the position before distancing
    */
-  private needSpacingOffset(position: Position){
+  private needSpacingOffset(position: Position, min: number, max: number){
     const at = this.attachType;
     if(!(at == AttachType.NodeBody || AttachType.NodeWall)) return 0;
     const others = this.getSameSideSources();
     if(others.length == 0){
       this.lastSpacingOffset = 0;
-      return 0;
+      return false;
     }
     const axis = this.getVariableAxis();
     const mypos = position[axis];
-    for(let i = 0; i < others.length; i++){
-      const pos = others[i]._coordinates[axis];
-      const diff = mypos - pos;
-      if(Math.abs(diff) < 8) return diff;
+    const dir = Math.sign(this._coordinates[axis] - mypos) || 1;
+    const occupied = others.map(o => o._coordinates[axis]);
+    const newPos = findEmptySpot(mypos, occupied, 10, dir, min, max);
+    const diff = newPos - mypos;
+    if(Math.abs(diff) > 1){
+      return diff;
     }
-    return 0;
+    return false;
   }
 
   /**
