@@ -38,15 +38,11 @@ class MenuClass extends EventEmitter{
   }
 
   private onKeyDown(event: KeyboardEvent){
-    if(event.ctrlKey){
-      const action = this.getAction(event.key);
-      if(action){
-        if(!this.shouldHandleEvent(event, action)) return;
-        event.preventDefault();
-        this.onMenuClick(action);
-      }
-    }else if(event.key === 'Delete'){
-      this.onMenuClick('delete');
+    const action = this.getAction(event.key);
+    if(action){
+      if(!this.shouldHandleEvent(event, action)) return;
+      event.preventDefault();
+      this.onMenuClick(action);
     }
   }
 
@@ -65,6 +61,8 @@ class MenuClass extends EventEmitter{
       case 'v':
       case 'V':
         return 'paste';
+      case 'Delete':
+        return 'delete';
 
       default:
         return null;
@@ -73,7 +71,7 @@ class MenuClass extends EventEmitter{
 
   private shouldHandleEvent(event: KeyboardEvent, action: string): boolean{
     const target = event.target;
-    if(target && ['copy', 'cut', 'paste'].includes(action)){
+    if(target && ['copy', 'cut', 'paste', 'delete'].includes(action)){
       const path = <HTMLElement[]>(<any>event).path
       if(path instanceof Array){
         for(let i = 0; i < path.length; i++){

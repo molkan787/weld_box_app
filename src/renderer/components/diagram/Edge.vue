@@ -30,6 +30,7 @@
 import Vue from 'vue';
 import { Edge } from '../../diagram-core'
 import { EdgeType } from '../../my-diagram/my-edge';
+import { USE_NATIVE_CLIPBOARD } from '../../symbols';
 const conditionPlaceHolder = '@()if(){}{}';
 export default {
   props: {
@@ -99,6 +100,7 @@ export default {
       input.classList.add('condition-input');
       input.setAttribute('auto-focus', true);
       input.setAttribute('contenteditable', true);
+      input.setAttribute(USE_NATIVE_CLIPBOARD, true);
       input.innerText = condition;
       document.body.appendChild(input);
       this.inputElement = input;
