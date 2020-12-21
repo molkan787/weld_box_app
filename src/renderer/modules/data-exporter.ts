@@ -28,13 +28,14 @@ export class DataExporter{
   public exportData(diagram: Diagram, setting: ProjectSetting): ProjectExportData{
     const objects = DiagramProject.getTopLevelObjects(diagram);
     const threadsData = objects.map(ob => this.getFullHierarchyObjectsData(ob));
-    const { name, architecture, build_priority, headers } = setting;
+    const { name, architecture, build_priority, headers, uuid } = setting;
     return {
       attributes: {
+        uuid: uuid || '',
         name,
         architecture,
         build_priority,
-        headers
+        headers,
       },
       body: <ThreadExportData[]>threadsData
     }
