@@ -1,0 +1,582 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ObjectCopier | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_renderer_modules_object_copier_.html">&quot;renderer/modules/object-copier&quot;</a>
+				</li>
+				<li>
+					<a href="_renderer_modules_object_copier_.objectcopier.html">ObjectCopier</a>
+				</li>
+			</ul>
+			<h1>Class ObjectCopier</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Helper class that convert Diagram&#39;s object to json data (export like)</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">ObjectCopier</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copy" class="tsd-kind-icon">copy</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copycomment" class="tsd-kind-icon">copy<wbr>Comment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copyedge" class="tsd-kind-icon">copy<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_modules_object_copier_.objectcopier.html#copyedgeconnection" class="tsd-kind-icon">copy<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copyeventnode" class="tsd-kind-icon">copy<wbr>Event<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copyjunction" class="tsd-kind-icon">copy<wbr>Junction</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copymessagenode" class="tsd-kind-icon">copy<wbr>Message<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copyobject" class="tsd-kind-icon">copy<wbr>Object</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_modules_object_copier_.objectcopier.html#copystate" class="tsd-kind-icon">copy<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_modules_object_copier_.objectcopier.html#getstatepropsandbbox" class="tsd-kind-icon">get<wbr>State<wbr>Props<wbr>AndBBox</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copy" class="tsd-anchor"></a>
+					<h3>copy</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_interfaces_myobject_.html#myobject" class="tsd-signature-type">MyObject</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.objectcopyresult.html" class="tsd-signature-type">ObjectCopyResult</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:24</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy object/component&#39;s properties, and recursivly all of its childs</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <a href="../modules/_renderer_interfaces_myobject_.html#myobject" class="tsd-signature-type">MyObject</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.objectcopyresult.html" class="tsd-signature-type">ObjectCopyResult</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copycomment" class="tsd-anchor"></a>
+					<h3>copy<wbr>Comment</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Comment<span class="tsd-signature-symbol">(</span>comment<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_comment_node_.commentnode.html" class="tsd-signature-type">CommentNode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.commentclonedata.html" class="tsd-signature-type">CommentCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:190</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>Comment</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>comment: <a href="_renderer_my_diagram_comment_node_.commentnode.html" class="tsd-signature-type">CommentNode</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.commentclonedata.html" class="tsd-signature-type">CommentCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copyedge" class="tsd-anchor"></a>
+					<h3>copy<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Edge<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_my_edge_.myedge.html" class="tsd-signature-type">MyEdge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.edgeclonedata.html" class="tsd-signature-type">EdgeCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:207</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>Edge</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_my_diagram_my_edge_.myedge.html" class="tsd-signature-type">MyEdge</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.edgeclonedata.html" class="tsd-signature-type">EdgeCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="copyedgeconnection" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> copy<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>ec<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.edgeconnectionclonedata.html" class="tsd-signature-type">EdgeConnectionCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:231</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>EdgeConnection</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ec: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.edgeconnectionclonedata.html" class="tsd-signature-type">EdgeConnectionCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copyeventnode" class="tsd-anchor"></a>
+					<h3>copy<wbr>Event<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Event<wbr>Node<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_eventnode_.eventnode.html" class="tsd-signature-type">EventNode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.eventclonedata.html" class="tsd-signature-type">EventCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:137</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>Event</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="_renderer_my_diagram_eventnode_.eventnode.html" class="tsd-signature-type">EventNode</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.eventclonedata.html" class="tsd-signature-type">EventCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copyjunction" class="tsd-anchor"></a>
+					<h3>copy<wbr>Junction</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Junction<span class="tsd-signature-symbol">(</span>junction<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_junction_.junction.html" class="tsd-signature-type">Junction</a>, edgesBucket<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.junctionclonedata.html" class="tsd-signature-type">JunctionCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:173</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>Junction</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>junction: <a href="_renderer_my_diagram_junction_.junction.html" class="tsd-signature-type">Junction</a></h5>
+								</li>
+								<li>
+									<h5>edgesBucket: <a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Edges bucket used to store edges that are connected to this Junction</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.junctionclonedata.html" class="tsd-signature-type">JunctionCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copymessagenode" class="tsd-anchor"></a>
+					<h3>copy<wbr>Message<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Message<wbr>Node<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_messagenode_.messagenode.html" class="tsd-signature-type">MessageNode</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.messageclonedata.html" class="tsd-signature-type">MessageCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:154</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>Message</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="_renderer_my_diagram_messagenode_.messagenode.html" class="tsd-signature-type">MessageNode</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.messageclonedata.html" class="tsd-signature-type">MessageCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copyobject" class="tsd-anchor"></a>
+					<h3>copy<wbr>Object</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>Object<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_interfaces_myobject_.html#myobject" class="tsd-signature-type">MyObject</a>, edgesBucket<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.objectclonedata.html" class="tsd-signature-type">ObjectCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:44</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy object/component&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>object: <a href="../modules/_renderer_interfaces_myobject_.html#myobject" class="tsd-signature-type">MyObject</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Object to copy</p>
+									</div>
+								</li>
+								<li>
+									<h5>edgesBucket: <a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Edges bucket used to store edges that are connected to this Object</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.objectclonedata.html" class="tsd-signature-type">ObjectCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="copystate" class="tsd-anchor"></a>
+					<h3>copy<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">copy<wbr>State<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_state_.state.html" class="tsd-signature-type">State</a>, edgesBucket<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_interfaces_objectcopyresult_.stateclonedata.html" class="tsd-signature-type">StateCloneData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:80</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Copy <code>State</code>&#39;s properties</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>state: <a href="_renderer_my_diagram_state_.state.html" class="tsd-signature-type">State</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>State to copy</p>
+									</div>
+								</li>
+								<li>
+									<h5>edgesBucket: <a href="_renderer_diagram_core_helper_classes_edges_bucket_.edgesbucket.html" class="tsd-signature-type">EdgesBucket</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Edges bucket used to store edges that are connected to this State</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_interfaces_objectcopyresult_.stateclonedata.html" class="tsd-signature-type">StateCloneData</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getstatepropsandbbox" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>State<wbr>Props<wbr>AndBBox</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>Props<wbr>AndBBox<span class="tsd-signature-symbol">(</span>state<span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_state_.state.html" class="tsd-signature-type">State</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>absolutePosition<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>isOpen<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>normalState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>openState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/modules/object-copier.ts:107</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns extract properties of a State</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>state: <a href="_renderer_my_diagram_state_.state.html" class="tsd-signature-type">State</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>absolutePosition<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>isOpen<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>normalState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>openState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>absolutePosition<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>isOpen<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>normalState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">; </span>openState<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> }</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5><span class="tsd-flag ts-flagOptional">Optional</span> absolute<wbr>Position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Cached node&#39;s absolute position</p>
+												</div>
+											</div>
+										</li>
+										<li class="tsd-parameter">
+											<h5>is<wbr>Open<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Indicates whether the node is open or not</p>
+												</div>
+											</div>
+										</li>
+										<li class="tsd-parameter">
+											<h5>normal<wbr>State<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Holds node&#39;s state when it is not open</p>
+												</div>
+											</div>
+											<ul class="tsd-parameters">
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></h5>
+												</li>
+											</ul>
+										</li>
+										<li class="tsd-parameter">
+											<h5>open<wbr>State<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">; </span>size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a><span class="tsd-signature-symbol"> }</span></h5>
+											<div class="tsd-comment tsd-typography">
+												<div class="lead">
+													<p>Holds node&#39;s state when it is open</p>
+												</div>
+											</div>
+											<ul class="tsd-parameters">
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> position<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+												</li>
+												<li class="tsd-parameter">
+													<h5><span class="tsd-flag ts-flagOptional">Optional</span> size<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></h5>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li class="tsd-parameter">
+									<h5>size<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_renderer_modules_object_copier_.html">&quot;renderer/modules/object-<wbr>copier&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_modules_object_copier_.objectcopier.html" class="tsd-kind-icon">Object<wbr>Copier</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copy" class="tsd-kind-icon">copy</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copycomment" class="tsd-kind-icon">copy<wbr>Comment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copyedge" class="tsd-kind-icon">copy<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copyedgeconnection" class="tsd-kind-icon">copy<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copyeventnode" class="tsd-kind-icon">copy<wbr>Event<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copyjunction" class="tsd-kind-icon">copy<wbr>Junction</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copymessagenode" class="tsd-kind-icon">copy<wbr>Message<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copyobject" class="tsd-kind-icon">copy<wbr>Object</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#copystate" class="tsd-kind-icon">copy<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_modules_object_copier_.objectcopier.html#getstatepropsandbbox" class="tsd-kind-icon">get<wbr>State<wbr>Props<wbr>AndBBox</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

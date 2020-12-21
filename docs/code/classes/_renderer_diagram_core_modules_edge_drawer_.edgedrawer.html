@@ -1,0 +1,1541 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>EdgeDrawer | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_renderer_diagram_core_modules_edge_drawer_.html">&quot;renderer/diagram-core/modules/edge-drawer&quot;</a>
+				</li>
+				<li>
+					<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html">EdgeDrawer</a>
+				</li>
+			</ul>
+			<h1>Class EdgeDrawer</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This modules handles the process of drawing an Edge from source object to the target object,
+						Edge repositioning (adjust the distance with edge source and target so they are closer to each others)</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">EdgeDrawer</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#currentedge" class="tsd-kind-icon">current<wbr>Edge</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#nodeinsubject" class="tsd-kind-icon">node<wbr>InSubject</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#redrawing" class="tsd-kind-icon">redrawing</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#store" class="tsd-kind-icon">store</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#edgefactory" class="tsd-kind-icon">edge<wbr>Factory</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#isactive" class="tsd-kind-icon">is<wbr>Active</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#isinactive" class="tsd-kind-icon">is<wbr>Inactive</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#statesnaper" class="tsd-kind-icon">state<wbr>Snaper</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#activate" class="tsd-kind-icon">activate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#calcoffset" class="tsd-kind-icon">calc<wbr>Offset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#convertedgetoinnermultipart" class="tsd-kind-icon">convert<wbr>Edge<wbr>ToInner<wbr>Multipart</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#deactivate" class="tsd-kind-icon">deactivate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#disableactiongrouping" class="tsd-kind-icon">disable<wbr>Action<wbr>Grouping</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#enableactiongrouping" class="tsd-kind-icon">enable<wbr>Action<wbr>Grouping</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#endedgedrawing" class="tsd-kind-icon">end<wbr>Edge<wbr>Drawing</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#findbestpositiontopoint" class="tsd-kind-icon">find<wbr>Best<wbr>Position<wbr>ToPoint</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#followcursor" class="tsd-kind-icon">follow<wbr>Cursor</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#getedgeconnectionoffset" class="tsd-kind-icon">get<wbr>Edge<wbr>Connection<wbr>Offset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#getnodeedgeconnection" class="tsd-kind-icon">get<wbr>Node<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#lockactionsarchiver" class="tsd-kind-icon">lock<wbr>Actions<wbr>Archiver</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#oncanvasmousemove" class="tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Move</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#oncanvasmouseup" class="tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Up</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgeconnectionschanged" class="tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Changed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgecreated" class="tsd-kind-icon">on<wbr>Edge<wbr>Created</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgemousedownonends" class="tsd-kind-icon">on<wbr>Edge<wbr>Mouse<wbr>Down<wbr>OnEnds</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodebboxchanged" class="tsd-kind-icon">on<wbr>NodeBBox<wbr>Changed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodedragstart" class="tsd-kind-icon">on<wbr>Node<wbr>Drag<wbr>Start</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodedragged" class="tsd-kind-icon">on<wbr>Node<wbr>Dragged</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onrepositionedgeconnection" class="tsd-kind-icon">on<wbr>Reposition<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#postdraw" class="tsd-kind-icon">post<wbr>Draw</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushaction" class="tsd-kind-icon">push<wbr>Action</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushredrawnaction" class="tsd-kind-icon">push<wbr>ReDrawn<wbr>Action</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushspawnaction" class="tsd-kind-icon">push<wbr>Spawn<wbr>Action</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#raiseedgeend" class="tsd-kind-icon">raise<wbr>Edge<wbr>End</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#repositionedge" class="tsd-kind-icon">reposition<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#repositionedgeconnection" class="tsd-kind-icon">reposition<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#spawnnewedge" class="tsd-kind-icon">spawn<wbr>New<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#spawnnewedgefromattachbox" class="tsd-kind-icon">spawn<wbr>New<wbr>Edge<wbr>From<wbr>Attach<wbr>Box</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#unlockactionsarchiver" class="tsd-kind-icon">unlock<wbr>Actions<wbr>Archiver</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#updateedge" class="tsd-kind-icon">update<wbr>Edge</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#cache" class="tsd-kind-icon">cache</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Edge<wbr>Drawer<span class="tsd-signature-symbol">(</span>store<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html" class="tsd-signature-type">EdgeDrawer</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:37</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>store: <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html" class="tsd-signature-type">EdgeDrawer</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="currentedge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> current<wbr>Edge</h3>
+					<div class="tsd-signature tsd-kind-icon">current<wbr>Edge<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:23</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds reffernce to the edge that is current being drawn</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#name">name</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/module.ts:11</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="nodeinsubject" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> node<wbr>InSubject</h3>
+					<div class="tsd-signature tsd-kind-icon">node<wbr>InSubject<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:26</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Can be the Source node or target candidate</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="redrawing" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> redrawing</h3>
+					<div class="tsd-signature tsd-kind-icon">redrawing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates whether we&#39;re currently re-drawing en edge (changing an exiting edge)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="store" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> store</h3>
+					<div class="tsd-signature tsd-kind-icon">store<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#store">store</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/module.ts:10</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="edgefactory" class="tsd-anchor"></a>
+					<h3>edge<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> edgeFactory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_interfaces_edgeinstancecreator_.html#edgefactory" class="tsd-signature-type">EdgeFactory</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:35</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_renderer_diagram_core_interfaces_edgeinstancecreator_.html#edgefactory" class="tsd-signature-type">EdgeFactory</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="isactive" class="tsd-anchor"></a>
+					<h3>is<wbr>Active</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isActive<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#isactive">isActive</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:25</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns whether the Module is active or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="isinactive" class="tsd-anchor"></a>
+					<h3>is<wbr>Inactive</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isInactive<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#isinactive">isInactive</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:32</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns whether the Module is inactive or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="statesnaper" class="tsd-anchor"></a>
+					<h3>state<wbr>Snaper</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> stateSnaper<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_modules_sub_modules_state_snaper_.statesnaper.html" class="tsd-signature-type">StateSnaper</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#statesnaper">stateSnaper</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:18</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_modules_sub_modules_state_snaper_.statesnaper.html" class="tsd-signature-type">StateSnaper</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="activate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> activate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">activate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#activate">activate</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:39</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the calling module as the currently active module, Giving him the priority in handling events</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="calcoffset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> calc<wbr>Offset</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">calc<wbr>Offset<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, position<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, size<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, padding<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, scale<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:634</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A helper function that calculates the offset relativly rectangle (top, left, width, height)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>target: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>position: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>size: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>padding: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>scale: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="convertedgetoinnermultipart" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> convert<wbr>Edge<wbr>ToInner<wbr>Multipart</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>Edge<wbr>ToInner<wbr>Multipart<span class="tsd-signature-symbol">(</span>chartNode<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:293</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts a normal edge to multiart edge with location Inner and attach it the specified sub-chart</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>chartNode: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The sub-chart node that the edge will pass thru</p>
+									</div>
+								</li>
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The edge than need to be converted</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="deactivate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> deactivate</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">deactivate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#deactivate">deactivate</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:46</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unsets the calling module as the currently active module, Taking him the priority in handling events</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="disableactiongrouping" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> disable<wbr>Action<wbr>Grouping</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">disable<wbr>Action<wbr>Grouping<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#disableactiongrouping">disableActionGrouping</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:62</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="enableactiongrouping" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> enable<wbr>Action<wbr>Grouping</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">enable<wbr>Action<wbr>Grouping<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#enableactiongrouping">enableActionGrouping</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:58</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="endedgedrawing" class="tsd-anchor"></a>
+					<h3>end<wbr>Edge<wbr>Drawing</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">end<wbr>Edge<wbr>Drawing<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:200</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Finalize the drawing of the edge (create final edge target EdgeConnection and disable the EdgeDrawer tool)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">MouseEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="findbestpositiontopoint" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> find<wbr>Best<wbr>Position<wbr>ToPoint</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Best<wbr>Position<wbr>ToPoint<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, secondAxisOffset<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>distance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol">; </span>offset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:573</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the the closed position (on Node&#39;s wall) to an point (position)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The relative node, the calculated position will be on one of the Node&#39;s walls</p>
+									</div>
+								</li>
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The target point</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> secondAxisOffset: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optionally add offset to the constant axis (can be the X axis or Y axis)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>distance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol">; </span>offset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>distance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>offset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="followcursor" class="tsd-anchor"></a>
+					<h3>follow<wbr>Cursor</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">follow<wbr>Cursor<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:163</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the current edge&#39;s target position to the position of the cursor</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">MouseEvent</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getedgeconnectionoffset" class="tsd-anchor"></a>
+					<h3>get<wbr>Edge<wbr>Connection<wbr>Offset</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Edge<wbr>Connection<wbr>Offset<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a>, sourceEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:182</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates offset between Cursor position on the Node&#39;s wall position</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+								<li>
+									<h5>wall: <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a></h5>
+								</li>
+								<li>
+									<h5>sourceEvent: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getnodeedgeconnection" class="tsd-anchor"></a>
+					<h3>get<wbr>Node<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Node<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, edgeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:146</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fetches an edge connection by id from a particular Node instance</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+								<li>
+									<h5>edgeId: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="lockactionsarchiver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> lock<wbr>Actions<wbr>Archiver</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">lock<wbr>Actions<wbr>Archiver<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#lockactionsarchiver">lockActionsArchiver</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:66</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="oncanvasmousemove" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Canvas<wbr>Mouse<wbr>Move</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Move<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:381</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles mouse move event, to find attachement object (The object from which to start drawing edge, or to which attach the edge target)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">MouseEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="oncanvasmouseup" class="tsd-anchor"></a>
+					<h3>on<wbr>Canvas<wbr>Mouse<wbr>Up</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Up<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:158</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles mouse up to end edge drawing (finalizing)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">MouseEvent</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onedgeconnectionschanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Edge<wbr>Connections<wbr>Changed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Changed<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:497</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hanldes EdgeConnectionsChanged event to update and calculate edge ends (source &amp; target) coordinates</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onedgecreated" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Edge<wbr>Created</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Created<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:491</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles to EdgeCreated event to update the created Edge</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onedgemousedownonends" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Edge<wbr>Mouse<wbr>Down<wbr>OnEnds</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Mouse<wbr>Down<wbr>OnEnds<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:54</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles the event MouseDownOnEnds (emited when there was a mouse down triggered on an Edge end (arrow) )</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onnodebboxchanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>NodeBBox<wbr>Changed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>NodeBBox<wbr>Changed<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:466</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handle NodeBBoxChanged event to update all edges that are connected to it</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onnodedragstart" class="tsd-anchor"></a>
+					<h3>on<wbr>Node<wbr>Drag<wbr>Start</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Node<wbr>Drag<wbr>Start<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:83</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onnodedragged" class="tsd-anchor"></a>
+					<h3>on<wbr>Node<wbr>Dragged</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Node<wbr>Dragged<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:151</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles NodeDragged to simulate canvas move event (needed because when a drag event started, mouse move won&#39;t be triggered)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="onrepositionedgeconnection" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Reposition<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Reposition<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:484</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Handles Edge Reposition Request</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="postdraw" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> post<wbr>Draw</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">post<wbr>Draw<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a>, canBecomeMultipart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:269</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Called after edge drawing/redrawing ended, apply modification if needed</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+								</li>
+								<li>
+									<h5>canBecomeMultipart: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="pushaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> push<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">push<wbr>Action<span class="tsd-signature-symbol">(</span>action<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_action_.action.html" class="tsd-signature-type">Action</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#pushaction">pushAction</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:54</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds action to ActionsArchiver&#39;s stack</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>action: <a href="../interfaces/_renderer_diagram_core_interfaces_action_.action.html" class="tsd-signature-type">Action</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Action to be added</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="pushredrawnaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> push<wbr>ReDrawn<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">push<wbr>ReDrawn<wbr>Action<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:305</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an action of redrawing the specifed edge and add it to the ActionsArchiver</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The redrawn edge</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="pushspawnaction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> push<wbr>Spawn<wbr>Action</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">push<wbr>Spawn<wbr>Action<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:354</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create an action of spawning edge and add it to the ActionsArchiver</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The spawned edge</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="raiseedgeend" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> raise<wbr>Edge<wbr>End</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">raise<wbr>Edge<wbr>End<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a>, end<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_components_edge_connection_.edgeconnectiontype.html" class="tsd-signature-type">EdgeConnectionType</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:60</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Prepare the edge for redrawing (change it target to a position that will follow the cursor)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+								</li>
+								<li>
+									<h5>end: <a href="../enums/_renderer_diagram_core_components_edge_connection_.edgeconnectiontype.html" class="tsd-signature-type">EdgeConnectionType</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="repositionedge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> reposition<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">reposition<wbr>Edge<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a>, force<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:539</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adjust Edge ends position to be closer to each other (ex: moves the source from left wall to the right wall of the node because it is closer to the target)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> force: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="repositionedgeconnection" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> reposition<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">reposition<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>subject<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, pointsTo<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, force<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:553</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adjust EdgeConnection <code>subject</code> position to be closer to another EdgeConnection <code>pointsTo</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>subject: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The EdgeConnection than need to be repositioned</p>
+									</div>
+								</li>
+								<li>
+									<h5>pointsTo: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The EdgeConnection to which the subject to be closed to</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> force: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="spawnnewedge" class="tsd-anchor"></a>
+					<h3>spawn<wbr>New<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">spawn<wbr>New<wbr>Edge<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:131</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Spawns a new Edge from Node&#39;s body or wall</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+								<li>
+									<h5>wall: <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="spawnnewedgefromattachbox" class="tsd-anchor"></a>
+					<h3>spawn<wbr>New<wbr>Edge<wbr>From<wbr>Attach<wbr>Box</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">spawn<wbr>New<wbr>Edge<wbr>From<wbr>Attach<wbr>Box<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, attachBox<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:115</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Spanws a new Edge from an Attach box (the little squares rendered on sub-charts when there is edge going the its wall)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+								<li>
+									<h5>attachBox: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+								</li>
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="unlockactionsarchiver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> unlock<wbr>Actions<wbr>Archiver</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">unlock<wbr>Actions<wbr>Archiver<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_module_.diagrammodule.html">DiagramModule</a>.<a href="_renderer_diagram_core_module_.diagrammodule.html#unlockactionsarchiver">unlockActionsArchiver</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/module.ts:70</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="updateedge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> update<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Edge<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a>, skipRepositioning<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:513</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates Edge ends (source &amp; target) and calculates their coordinates</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> skipRepositioning: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> cache</h3>
+					<div class="tsd-signature tsd-kind-icon">cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:30</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="cache.previoustarget" class="tsd-anchor"></a>
+						<h3>previous<wbr>Target</h3>
+						<div class="tsd-signature tsd-kind-icon">previous<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol"> = &lt;EdgeConnection | null&gt;null</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:31</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="cache.previoustargetnode" class="tsd-anchor"></a>
+						<h3>previous<wbr>Target<wbr>Node</h3>
+						<div class="tsd-signature tsd-kind-icon">previous<wbr>Target<wbr>Node<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> = &lt;Node | null&gt;null</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/modules/edge-drawer.ts:32</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_renderer_diagram_core_modules_edge_drawer_.html">&quot;renderer/diagram-<wbr>core/modules/edge-<wbr>drawer&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html" class="tsd-kind-icon">Edge<wbr>Drawer</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#currentedge" class="tsd-kind-icon">current<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#nodeinsubject" class="tsd-kind-icon">node<wbr>InSubject</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#redrawing" class="tsd-kind-icon">redrawing</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#store" class="tsd-kind-icon">store</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#edgefactory" class="tsd-kind-icon">edge<wbr>Factory</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#isactive" class="tsd-kind-icon">is<wbr>Active</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#isinactive" class="tsd-kind-icon">is<wbr>Inactive</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#statesnaper" class="tsd-kind-icon">state<wbr>Snaper</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#activate" class="tsd-kind-icon">activate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#calcoffset" class="tsd-kind-icon">calc<wbr>Offset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#convertedgetoinnermultipart" class="tsd-kind-icon">convert<wbr>Edge<wbr>ToInner<wbr>Multipart</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#deactivate" class="tsd-kind-icon">deactivate</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#disableactiongrouping" class="tsd-kind-icon">disable<wbr>Action<wbr>Grouping</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#enableactiongrouping" class="tsd-kind-icon">enable<wbr>Action<wbr>Grouping</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#endedgedrawing" class="tsd-kind-icon">end<wbr>Edge<wbr>Drawing</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#findbestpositiontopoint" class="tsd-kind-icon">find<wbr>Best<wbr>Position<wbr>ToPoint</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#followcursor" class="tsd-kind-icon">follow<wbr>Cursor</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#getedgeconnectionoffset" class="tsd-kind-icon">get<wbr>Edge<wbr>Connection<wbr>Offset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#getnodeedgeconnection" class="tsd-kind-icon">get<wbr>Node<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#lockactionsarchiver" class="tsd-kind-icon">lock<wbr>Actions<wbr>Archiver</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#oncanvasmousemove" class="tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Move</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#oncanvasmouseup" class="tsd-kind-icon">on<wbr>Canvas<wbr>Mouse<wbr>Up</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgeconnectionschanged" class="tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgecreated" class="tsd-kind-icon">on<wbr>Edge<wbr>Created</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onedgemousedownonends" class="tsd-kind-icon">on<wbr>Edge<wbr>Mouse<wbr>Down<wbr>OnEnds</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodebboxchanged" class="tsd-kind-icon">on<wbr>NodeBBox<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodedragstart" class="tsd-kind-icon">on<wbr>Node<wbr>Drag<wbr>Start</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onnodedragged" class="tsd-kind-icon">on<wbr>Node<wbr>Dragged</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#onrepositionedgeconnection" class="tsd-kind-icon">on<wbr>Reposition<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#postdraw" class="tsd-kind-icon">post<wbr>Draw</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushaction" class="tsd-kind-icon">push<wbr>Action</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushredrawnaction" class="tsd-kind-icon">push<wbr>ReDrawn<wbr>Action</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#pushspawnaction" class="tsd-kind-icon">push<wbr>Spawn<wbr>Action</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#raiseedgeend" class="tsd-kind-icon">raise<wbr>Edge<wbr>End</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#repositionedge" class="tsd-kind-icon">reposition<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#repositionedgeconnection" class="tsd-kind-icon">reposition<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#spawnnewedge" class="tsd-kind-icon">spawn<wbr>New<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#spawnnewedgefromattachbox" class="tsd-kind-icon">spawn<wbr>New<wbr>Edge<wbr>From<wbr>Attach<wbr>Box</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#unlockactionsarchiver" class="tsd-kind-icon">unlock<wbr>Actions<wbr>Archiver</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#updateedge" class="tsd-kind-icon">update<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_modules_edge_drawer_.edgedrawer.html#cache" class="tsd-kind-icon">cache</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

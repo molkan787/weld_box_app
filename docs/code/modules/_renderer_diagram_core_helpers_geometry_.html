@@ -1,0 +1,835 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>&quot;renderer/diagram-core/helpers/geometry&quot; | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="_renderer_diagram_core_helpers_geometry_.html">&quot;renderer/diagram-core/helpers/geometry&quot;</a>
+				</li>
+			</ul>
+			<h1>Module &quot;renderer/diagram-core/helpers/geometry&quot;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Enumerations</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-kind-icon">Corner</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-kind-icon">Direction</a></li>
+								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-kind-icon">Side</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported"><a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-kind-icon">Unidimensional<wbr>Block</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#getrectwallcenterpoint" class="tsd-kind-icon">Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#getrectanglecornerposition" class="tsd-kind-icon">Get<wbr>Rectangle<wbr>Corner<wbr>Position</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#toucheswall" class="tsd-kind-icon">Touches<wbr>Wall</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#addpoints" class="tsd-kind-icon">add<wbr>Points</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#distsqrd" class="tsd-kind-icon">dist<wbr>Sqrd</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#findemptyspot" class="tsd-kind-icon">find<wbr>Empty<wbr>Spot</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_renderer_diagram_core_helpers_geometry_.html#getpointtobboxdistances" class="tsd-kind-icon">get<wbr>Point<wbr>ToBBox<wbr>Distances</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#ispointinsidebbox" class="tsd-kind-icon">is<wbr>Point<wbr>InsideBBox</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_renderer_diagram_core_helpers_geometry_.html#moveblockoverblock" class="tsd-kind-icon">move<wbr>Block<wbr>Over<wbr>Block</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-is-not-exported"><a href="_renderer_diagram_core_helpers_geometry_.html#moveblocktoemptyspot" class="tsd-kind-icon">move<wbr>Block<wbr>ToEmpty<wbr>Spot</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#movepoint" class="tsd-kind-icon">move<wbr>Point</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_renderer_diagram_core_helpers_geometry_.html#polartocartesian" class="tsd-kind-icon">polar<wbr>ToCartesian</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported"><a href="_renderer_diagram_core_helpers_geometry_.html#_getrectwallcenterpoint_scalematrices" class="tsd-kind-icon">_<wbr>Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point_<wbr><wbr>Scale<wbr>Matrices</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getrectwallcenterpoint" class="tsd-anchor"></a>
+					<h3>Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point<span class="tsd-signature-symbol">(</span>size<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a>, wall<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:72</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates and returns position of center point of rectangle&#39;s wall (side)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>size: <a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></h5>
+								</li>
+								<li>
+									<h5>wall: <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getrectanglecornerposition" class="tsd-anchor"></a>
+					<h3>Get<wbr>Rectangle<wbr>Corner<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Rectangle<wbr>Corner<wbr>Position<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, size<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a>, corner<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-signature-type">Corner</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:10</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates the position of a rectangle&#39;s corner</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>position: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Position of the rectangle</p>
+									</div>
+								</li>
+								<li>
+									<h5>size: <a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Size of the rectangle</p>
+									</div>
+								</li>
+								<li>
+									<h5>corner: <a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-signature-type">Corner</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The corner of the rectangle of which the position should be returned</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="toucheswall" class="tsd-anchor"></a>
+					<h3>Touches<wbr>Wall</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Touches<wbr>Wall<span class="tsd-signature-symbol">(</span>bbox<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMRect</span>, point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, maxDistance<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:28</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check if a point is on top of or close to rectangle&#39;s wall, and return the wall if there is any</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bbox: <span class="tsd-signature-type">DOMRect</span></h5>
+								</li>
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> maxDistance: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="addpoints" class="tsd-anchor"></a>
+					<h3>add<wbr>Points</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Points<span class="tsd-signature-symbol">(</span>p1<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, p2<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:143</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds up two points (x, y positions)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>p1: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+								<li>
+									<h5>p2: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="distsqrd" class="tsd-anchor"></a>
+					<h3>dist<wbr>Sqrd</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">dist<wbr>Sqrd<span class="tsd-signature-symbol">(</span>x1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, x2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:87</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates and return distance squarted between two points</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x1: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>y1: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>x2: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>y2: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="findemptyspot" class="tsd-anchor"></a>
+					<h3>find<wbr>Empty<wbr>Spot</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Empty<wbr>Spot<span class="tsd-signature-symbol">(</span>current<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, occupied<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, minDistance<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, prefferedDirection<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a>, min<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, max<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:177</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Find an emptyspot (a point that has enough distance from all other points) on a one dimentional axis</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>current: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The current point that need to be putted in an empty spot</p>
+									</div>
+								</li>
+								<li>
+									<h5>occupied: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Array of points that already exist on the axis (sort of immovale obstacles)</p>
+									</div>
+								</li>
+								<li>
+									<h5>minDistance: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The minimum distance between the points</p>
+									</div>
+								</li>
+								<li>
+									<h5>prefferedDirection: <a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If the current point needs to be moved, the algorithm will first try to do it in the specified <code>prefferedDirection</code> direction</p>
+									</div>
+								</li>
+								<li>
+									<h5>min: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The minimum value (position) of the point that can be used</p>
+									</div>
+								</li>
+								<li>
+									<h5>max: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The maximum value (position) of the point that can be used</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="getpointtobboxdistances" class="tsd-anchor"></a>
+					<h3>get<wbr>Point<wbr>ToBBox<wbr>Distances</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Point<wbr>ToBBox<wbr>Distances<span class="tsd-signature-symbol">(</span>bbox<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMRect</span>, point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>bottom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>top<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:44</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns distances between a point and all four side of a rectangle (bounding box)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bbox: <span class="tsd-signature-type">DOMRect</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Rectangle (bounding box)</p>
+									</div>
+								</li>
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Point</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>bottom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>top<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>bottom<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>left<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>right<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>top<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="ispointinsidebbox" class="tsd-anchor"></a>
+					<h3>is<wbr>Point<wbr>InsideBBox</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Point<wbr>InsideBBox<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, rect<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DOMRect</span>, p<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:61</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Check of a point is inside of a rectangle (bouding box)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Point to check for</p>
+									</div>
+								</li>
+								<li>
+									<h5>rect: <span class="tsd-signature-type">DOMRect</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The rectangle</p>
+									</div>
+								</li>
+								<li>
+									<h5>p: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Padding</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="moveblockoverblock" class="tsd-anchor"></a>
+					<h3>move<wbr>Block<wbr>Over<wbr>Block</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">move<wbr>Block<wbr>Over<wbr>Block<span class="tsd-signature-symbol">(</span>moveable<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a>, immovable<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a>, direction<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:208</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>moveable: <a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a></h5>
+								</li>
+								<li>
+									<h5>immovable: <a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a></h5>
+								</li>
+								<li>
+									<h5>direction: <a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+					<a name="moveblocktoemptyspot" class="tsd-anchor"></a>
+					<h3>move<wbr>Block<wbr>ToEmpty<wbr>Spot</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">move<wbr>Block<wbr>ToEmpty<wbr>Spot<span class="tsd-signature-symbol">(</span>blocks<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a><span class="tsd-signature-symbol">[]</span>, subjectIndex<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, direction<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:194</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>blocks: <a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5>subjectIndex: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>direction: <a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-signature-type">Direction</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-signature-type">UnidimensionalBlock</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="movepoint" class="tsd-anchor"></a>
+					<h3>move<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">move<wbr>Point<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, direction<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a>, moveBy<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:98</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds offset to a point (x, y position) by the specified amount in the specified direction</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>x: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Starting point&#39;s X</p>
+									</div>
+								</li>
+								<li>
+									<h5>y: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Starting point&#39;s Y</p>
+									</div>
+								</li>
+								<li>
+									<h5>direction: <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Offset direction</p>
+									</div>
+								</li>
+								<li>
+									<h5>moveBy: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Amount (offset) to add</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="polartocartesian" class="tsd-anchor"></a>
+					<h3>polar<wbr>ToCartesian</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">polar<wbr>ToCartesian<span class="tsd-signature-symbol">(</span>r<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, theta<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:155</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts polar coordinates to cartesian coordinates</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>r: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>theta: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+					<a name="_getrectwallcenterpoint_scalematrices" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> _<wbr>Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point_<wbr><wbr>Scale<wbr>Matrices</h3>
+					<div class="tsd-signature tsd-kind-icon">_<wbr>Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point_<wbr><wbr>Scale<wbr>Matrices<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:130</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="_getrectwallcenterpoint_scalematrices._side_bottom_" class="tsd-anchor"></a>
+						<h3>[<wbr>Side.<wbr>Bottom]</h3>
+						<div class="tsd-signature tsd-kind-icon">[<wbr>Side.<wbr>Bottom]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:133</li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_bottom_.x" class="tsd-anchor"></a>
+							<h3>x</h3>
+							<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.5</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:133</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_bottom_.y" class="tsd-anchor"></a>
+							<h3>y</h3>
+							<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:133</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="_getrectwallcenterpoint_scalematrices._side_left_" class="tsd-anchor"></a>
+						<h3>[<wbr>Side.<wbr>Left]</h3>
+						<div class="tsd-signature tsd-kind-icon">[<wbr>Side.<wbr>Left]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:132</li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_left_.x-1" class="tsd-anchor"></a>
+							<h3>x</h3>
+							<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:132</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_left_.y-1" class="tsd-anchor"></a>
+							<h3>y</h3>
+							<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.5</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:132</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="_getrectwallcenterpoint_scalematrices._side_right_" class="tsd-anchor"></a>
+						<h3>[<wbr>Side.<wbr>Right]</h3>
+						<div class="tsd-signature tsd-kind-icon">[<wbr>Side.<wbr>Right]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:134</li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_right_.x-2" class="tsd-anchor"></a>
+							<h3>x</h3>
+							<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:134</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_right_.y-2" class="tsd-anchor"></a>
+							<h3>y</h3>
+							<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.5</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:134</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
+						<a name="_getrectwallcenterpoint_scalematrices._side_top_" class="tsd-anchor"></a>
+						<h3>[<wbr>Side.<wbr>Top]</h3>
+						<div class="tsd-signature tsd-kind-icon">[<wbr>Side.<wbr>Top]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:131</li>
+							</ul>
+						</aside>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_top_.x-3" class="tsd-anchor"></a>
+							<h3>x</h3>
+							<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0.5</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:131</li>
+								</ul>
+							</aside>
+						</section>
+						<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
+							<a name="_getrectwallcenterpoint_scalematrices._side_top_.y-3" class="tsd-anchor"></a>
+							<h3>y</h3>
+							<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/helpers/geometry.ts:131</li>
+								</ul>
+							</aside>
+						</section>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html">&quot;renderer/diagram-<wbr>core/helpers/geometry&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-kind-icon">Corner</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/_renderer_diagram_core_helpers_geometry_.direction.html" class="tsd-kind-icon">Direction</a>
+					</li>
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-kind-icon">Side</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
+						<a href="../interfaces/_renderer_diagram_core_helpers_geometry_.unidimensionalblock.html" class="tsd-kind-icon">Unidimensional<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#getrectwallcenterpoint" class="tsd-kind-icon">Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#getrectanglecornerposition" class="tsd-kind-icon">Get<wbr>Rectangle<wbr>Corner<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#toucheswall" class="tsd-kind-icon">Touches<wbr>Wall</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#addpoints" class="tsd-kind-icon">add<wbr>Points</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#distsqrd" class="tsd-kind-icon">dist<wbr>Sqrd</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#findemptyspot" class="tsd-kind-icon">find<wbr>Empty<wbr>Spot</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#getpointtobboxdistances" class="tsd-kind-icon">get<wbr>Point<wbr>ToBBox<wbr>Distances</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#ispointinsidebbox" class="tsd-kind-icon">is<wbr>Point<wbr>InsideBBox</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#moveblockoverblock" class="tsd-kind-icon">move<wbr>Block<wbr>Over<wbr>Block</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#moveblocktoemptyspot" class="tsd-kind-icon">move<wbr>Block<wbr>ToEmpty<wbr>Spot</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#movepoint" class="tsd-kind-icon">move<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#polartocartesian" class="tsd-kind-icon">polar<wbr>ToCartesian</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-parent-kind-module tsd-is-not-exported">
+						<a href="_renderer_diagram_core_helpers_geometry_.html#_getrectwallcenterpoint_scalematrices" class="tsd-kind-icon">_<wbr>Get<wbr>Rect<wbr>Wall<wbr>Center<wbr>Point_<wbr><wbr>Scale<wbr>Matrices</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
