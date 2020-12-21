@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Submits the new priority from the input box to the Edge's properties
+     */
     priorityInput(e){
       const prevPriority = this.edge.properties.priority;
       const value = e.target.value;

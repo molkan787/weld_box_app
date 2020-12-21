@@ -13,6 +13,10 @@ import { DiagramModule } from "../module";
 import { cloneObject } from "../utils";
 import { Visibility } from "./sub-modules/visibility";
 
+/**
+ * This modules handles the process of drawing an Edge from source object to the target object,
+ * Edge repositioning (adjust the distance with edge source and target so they are closer to each others)
+ */
 export class EdgeDrawer extends DiagramModule{
 
   /** Holds reffernce to the edge that is current being drawn */
@@ -21,6 +25,7 @@ export class EdgeDrawer extends DiagramModule{
   /** Can be the Source node or target candidate */
   private nodeInSubject: Node | null = null;
 
+  /** Indicates whether we're currently re-drawing en edge (changing an exiting edge) */
   private redrawing: boolean = false;
   private cache = {
     previousTarget: <EdgeConnection | null>null,
@@ -45,11 +50,13 @@ export class EdgeDrawer extends DiagramModule{
     store.on(EVENTS.EDGE_MOUSEDOWN_ON_ENDS, (e) => this.onEdgeMouseDownOnEnds(e));
   }
 
+  /** Handles the event MouseDownOnEnds (emited when there was a mouse down triggered on an Edge end (arrow) ) */
   private onEdgeMouseDownOnEnds(event: DiagramEvent){
     const edge = <Edge>event.edge;
     this.raiseEdgeEnd(edge, EdgeConnectionType.Target);
   }
 
+  /** Prepare the edge for redrawing (change it target to a position that will follow the cursor) */
   private raiseEdgeEnd(edge: Edge, end: EdgeConnectionType){
     this.currentEdge = edge;
     if(end == EdgeConnectionType.Target){
@@ -72,6 +79,7 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Edge drawing logic
 
+  // Handles the drag start of Node, to spawn an edge that node as its source
   onNodeDragStart(event: DiagramEvent){
     if(this.isInactive || this.redrawing) return;
                                     // the first sourceEvent is the D3.Drag event, the second is the native MouseEvent
@@ -103,6 +111,7 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /** Spanws a new Edge from an Attach box (the little squares rendered on sub-charts when there is edge going the its wall) */
   spawnNewEdgeFromAttachBox(node: Node, attachBox: EdgeConnection, event: DiagramEvent){
     const srcEvent = event.sourceEvent;
     const { x, y } = srcEvent.sourceEvent;
@@ -118,6 +127,7 @@ export class EdgeDrawer extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
   }
 
+  /** Spawns a new Edge from Node's body or wall */
   spawnNewEdge(node: Node, wall: Side | null, event: DiagramEvent){
     const srcEvent = event.sourceEvent;
     const { x, y } = srcEvent.sourceEvent;
@@ -132,20 +142,24 @@ export class EdgeDrawer extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CREATED, { edge });
   }
 
+  /** Fetches an edge connection by id from a particular Node instance */
   getNodeEdgeConnection(node: Node, edgeId: number): EdgeConnection | null{
     return node.edges.find(e => e.id === edgeId) || null;
   }
 
+  /** Handles NodeDragged to simulate canvas move event (needed because when a drag event started, mouse move won't be triggered) */
   onNodeDragged(event: DiagramEvent){
     if(this.isInactive) return;
     const mouseevent = event.sourceEvent.sourceEvent;
     this.onCanvasMouseMove(mouseevent);
   }
 
+  /** Handles mouse up to end edge drawing (finalizing) */
   onCanvasMouseUp(event: MouseEvent){
     this.endEdgeDrawing(event);
   }
 
+  /** Set the current edge's target position to the position of the cursor*/
   followCursor(event: MouseEvent){
     if(this.currentEdge === null) return;
     const edge: Edge = this.currentEdge;
@@ -158,6 +172,13 @@ export class EdgeDrawer extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
   }
 
+
+  /**
+   * Calculates offset between Cursor position on the Node's wall position
+   * @param node
+   * @param wall
+   * @param sourceEvent
+   */
   getEdgeConnectionOffset(node: Node, wall: Side, sourceEvent: any): Position{
     const { sourceEvent: mouseevent } = sourceEvent;
     const { clientX, clientY } = mouseevent;
@@ -172,6 +193,10 @@ export class EdgeDrawer extends DiagramModule{
     return offset;
   }
 
+  /**
+   * Finalize the drawing of the edge (create final edge target EdgeConnection and disable the EdgeDrawer tool)
+   * @param event
+   */
   endEdgeDrawing(event: MouseEvent){
     if(this.isInactive) return;
 
@@ -260,6 +285,11 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /**
+   * Converts a normal edge to multiart edge with location Inner and attach it the specified sub-chart
+   * @param chartNode The sub-chart node that the edge will pass thru
+   * @param edge The edge than need to be converted
+   */
   private convertEdgeToInnerMultipart(chartNode: Node, edge: Edge){
     const newTarget = chartNode.createEdgeConnection();
     edge.setTarget(newTarget);
@@ -268,6 +298,10 @@ export class EdgeDrawer extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CONVERTED_TO_MULTIPART, { edge });
   }
 
+  /**
+   * Create an action of redrawing the specifed edge and add it to the ActionsArchiver
+   * @param edge The redrawn edge
+   */
   private pushReDrawnAction(edge: Edge){
     const oldTarget = <EdgeConnection>this.cache.previousTarget;
     const newTarget = edge.target;
@@ -313,6 +347,10 @@ export class EdgeDrawer extends DiagramModule{
 
   }
 
+  /**
+   * Create an action of spawning edge and add it to the ActionsArchiver
+   * @param edge The spawned edge
+   */
   private pushSpawnAction(edge: Edge){
     this.pushAction({
       undo: [
@@ -336,6 +374,10 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Attach object finding logic
 
+  /**
+   * Handles mouse move event, to find attachement object (The object from which to start drawing edge, or to which attach the edge target)
+   * @param event
+   */
   private onCanvasMouseMove(event: MouseEvent){
     if(this.isInactive) return;
     this.followCursor(event);
@@ -420,6 +462,7 @@ export class EdgeDrawer extends DiagramModule{
 
 //#region Edge Connections dynamic positioning logic
 
+  /** Handle NodeBBoxChanged event to update all edges that are connected to it */
   private onNodeBBoxChanged(event: DiagramEvent){
     const node = <Node>event.node;
     const allEdgesConnections = node.edges;
@@ -437,18 +480,20 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /** Handles Edge Reposition Request */
   private onRepositionEdgeConnection(event: DiagramEvent){
     const request = <RepositionRequest>event.data;
     const { subject, pointTo }  = request;
     this.repositionEdgeConnection(subject, pointTo, true)
   }
 
+  /** Handles to EdgeCreated event to update the created Edge */
   private onEdgeCreated(event: DiagramEvent){
     const edge = <Edge>event.edge;
     this.updateEdge(edge);
   }
 
-
+  /** Hanldes EdgeConnectionsChanged event to update and calculate edge ends (source & target) coordinates */
   private onEdgeConnectionsChanged(event: DiagramEvent){
     const edge = <Edge>event.edge;
     const { source, target } = edge;
@@ -464,6 +509,7 @@ export class EdgeDrawer extends DiagramModule{
     });
   }
 
+  /** Updates Edge ends (source & target) and calculates their coordinates */
   private updateEdge(edge: Edge, skipRepositioning: boolean = false){
     const { source, target } = edge;
     const posRelatedEnds = edge.isStart && target.attachType != AttachType.Position;
@@ -489,6 +535,7 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /** Adjust Edge ends position to be closer to each other (ex: moves the source from left wall to the right wall of the node because it is closer to the target) */
   private repositionEdge(edge: Edge, force: boolean = false){
     let { source, target } = edge;
     const wallChanged = this.repositionEdgeConnection(source.getInstance(), target, force);
@@ -497,6 +544,12 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /**
+   * Adjust EdgeConnection `subject` position to be closer to another EdgeConnection `pointsTo`
+   * @param subject The EdgeConnection than need to be repositioned
+   * @param pointsTo The EdgeConnection to which the subject to be closed to
+   * @param force
+   */
   private repositionEdgeConnection(subject: EdgeConnection, pointsTo: EdgeConnection, force: boolean = false){
     const eligibleAttach = subject.attachType == AttachType.NodeBody || subject.attachType == AttachType.NodeWall;
     if(subject.node && (force || (!subject.isBridge && eligibleAttach && !subject.node.props.isOpen))){
@@ -511,6 +564,12 @@ export class EdgeDrawer extends DiagramModule{
     return false;
   }
 
+  /**
+   * Calculates the the closed position (on Node's wall) to an point (position)
+   * @param node The relative node, the calculated position will be on one of the Node's walls
+   * @param point The target point
+   * @param secondAxisOffset Optionally add offset to the constant axis (can be the X axis or Y axis)
+   */
   private findBestPositionToPoint(node: Node, point: Position, secondAxisOffset: number = 0){
     const { x: tx, y: ty } = point;
     const { x, y } = node.getAbsolutePosition();
@@ -564,6 +623,14 @@ export class EdgeDrawer extends DiagramModule{
     }
   }
 
+  /**
+   * A helper function that calculates the offset relativly rectangle (top, left, width, height)
+   * @param target
+   * @param position
+   * @param size
+   * @param padding
+   * @param scale
+   */
   private calcOffset(target: number, position: number, size: number, padding: number, scale: number){
     return (capNumber(target, position + padding, position + size - padding) - position - size / 2) * scale;
   }

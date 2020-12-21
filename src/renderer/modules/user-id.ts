@@ -5,14 +5,23 @@ import { readFile, writeFile } from '../helpers/fs';
 
 const USER_ID_FILENAME = 'user-id';
 
+/**
+ * This module handle the user identity
+ */
 export class UserID{
 
   private static id: string = '';
 
+  /**
+   * Return the user id
+   */
   public static getId(){
     return this.id;
   }
 
+  /**
+   * Reads the user id from the filesystem, if it does not exits yet, it generate a new one and save it
+   */
   static async init(){
     const filename = this.getIdFilename();
     let userId = await this.readUserId(filename);
@@ -30,6 +39,10 @@ export class UserID{
     }
   }
 
+  /**
+   * Reads the user id from a file
+   * @param filename UserId's filename
+   */
   static async readUserId(filename: string){
     try {
       return await readFile(filename);
@@ -38,6 +51,9 @@ export class UserID{
     }
   }
 
+  /**
+   * Returns path/filename of the user id file
+   */
   static getIdFilename(){
     const userDataDir = remote.app.getPath('userData');
     return path.join(userDataDir, USER_ID_FILENAME);

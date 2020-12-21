@@ -36,6 +36,11 @@ export function TouchesWall(bbox: DOMRect, point: Position, maxDistance: number 
   return null;
 }
 
+/**
+ * Returns distances between a point and all four side of a rectangle (bounding box)
+ * @param bbox Rectangle (bounding box)
+ * @param point Point
+ */
 function getPointToBBoxDistances(bbox: DOMRect, point: Position){
   const { x, y } = point;
   const { top, bottom, right, left } = bbox;
@@ -47,18 +52,23 @@ function getPointToBBoxDistances(bbox: DOMRect, point: Position){
   }
 }
 
-  /**
-  *
-  * @param point Point to check if it is inside the rectangle
-  * @param rect The rectangle
-  * @param p Padding
-  */
-  export function isPointInsideBBox(point: Position, rect: DOMRect, p: number){
-    const { x, y } = point;
-    const { top, left, bottom, right } = rect;
-    return (x >= left + p) && (x <= right - p) && (y >= top + p) && (y <= bottom - p);
-  }
+/**
+ * Check of a point is inside of a rectangle (bouding box)
+ * @param point Point to check for
+ * @param rect The rectangle
+ * @param p Padding
+ */
+export function isPointInsideBBox(point: Position, rect: DOMRect, p: number){
+  const { x, y } = point;
+  const { top, left, bottom, right } = rect;
+  return (x >= left + p) && (x <= right - p) && (y >= top + p) && (y <= bottom - p);
+}
 
+/**
+ * Calculates and returns position of center point of rectangle's wall (side)
+ * @param size
+ * @param wall
+ */
 export function GetRectWallCenterPoint(size: Size, wall: Side){
   const scaleMatrix = _GetRectWallCenterPoint_ScaleMatrices[wall];
   return {
@@ -67,10 +77,24 @@ export function GetRectWallCenterPoint(size: Size, wall: Side){
   }
 }
 
+/**
+ * Calculates and return distance squarted between two points
+ * @param x1
+ * @param y1
+ * @param x2
+ * @param y2
+ */
 export function distSqrd(x1: number, y1: number, x2: number, y2: number): number{
   return Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
 }
 
+/**
+ * Adds offset to a point (x, y position) by the specified amount in the specified direction
+ * @param x Starting point's X
+ * @param y Starting point's Y
+ * @param direction Offset direction
+ * @param moveBy Amount (offset) to add
+ */
 export function movePoint(x: number, y: number, direction: Side, moveBy: number): [number, number]{
   switch (direction) {
     case Side.Top:
@@ -111,6 +135,11 @@ const _GetRectWallCenterPoint_ScaleMatrices = {
 }
 
 
+/**
+ * Adds up two points (x, y positions)
+ * @param p1
+ * @param p2
+ */
 export function addPoints(p1: Position, p2: Position): Position{
   return {
     x: p1.x + p2.x,
@@ -118,6 +147,11 @@ export function addPoints(p1: Position, p2: Position): Position{
   }
 }
 
+/**
+ * Converts polar coordinates to cartesian coordinates
+ * @param r
+ * @param theta
+ */
 export function polarToCartesian(r: number, theta: number): Position{
   return {
       x: r * Math.cos(theta),
@@ -131,6 +165,15 @@ interface UnidimensionalBlock{
   flagged: boolean;
 }
 
+/**
+ * Find an emptyspot (a point that has enough distance from all other points) on a one dimentional axis
+ * @param current The current point that need to be putted in an empty spot
+ * @param occupied Array of points that already exist on the axis (sort of immovale obstacles)
+ * @param minDistance The minimum distance between the points
+ * @param prefferedDirection If the current point needs to be moved, the algorithm will first try to do it in the specified `prefferedDirection` direction
+ * @param min The minimum value (position) of the point that can be used
+ * @param max The maximum value (position) of the point that can be used
+ */
 export function findEmptySpot(current: number, occupied: number[], minDistance: number, prefferedDirection: Direction, min: number, max: number): number{
   if(minDistance == 0){
     throw new Error('Finding empty spot when minDistance is 0 makes no sense!');

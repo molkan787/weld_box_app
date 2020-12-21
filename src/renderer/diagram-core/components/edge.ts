@@ -11,14 +11,17 @@ export class Edge extends Component{
 
   private _highlighted: boolean = false;
 
+  /** Array of points that makes the Edge shape (path) */
   public shapePoints: Position[] = [];
+  /** Position/Point slightly offsetted from the Edge's starting point */
   public offsettedStartPoint: Position = { x: 0, y: 0 };
+  /** The exact center point of the Edge shape (path) */
   public centerPoint: Position = { x: 0, y: 0 };
 
   private _isMultipart: boolean;
   /**
    * Indicates whether the edge is a multipart edge.
-   * (ex: inter-chart edge is combined of two separate edge the outer and the inner edges)
+   * (ex: inter-chart edge is combined of two separate multipart edges, the outer and the inner edges)
    * @readonly
    */
   public get isMultipart(): boolean{
@@ -44,6 +47,10 @@ export class Edge extends Component{
     return this._multipartType;
   }
 
+  /**
+   * Indicates whether the edge is a Start Edge.
+   * A start edge source cannot be connected to anything, it is by default relative to its target
+   */
   public isStart: boolean = false
 
   constructor(
@@ -61,6 +68,11 @@ export class Edge extends Component{
     this._multipartType = multipartType;
   }
 
+  /**
+   * Converts to a Multipart edge by speciying its parameters
+   * @param location
+   * @param type
+   */
   public convertToMultipart(location: MultipartEdgeLocation, type: MultipartEdgeType){
     this._isMultipart = true;
     this._multipartLocation = location;
@@ -89,6 +101,7 @@ export class Edge extends Component{
     target.edge = this;
   }
 
+  /** Indicates whether the edge is highlighted or not, After changing this value, an `EDGE_DECORATION_CHANGED` event is emited in order to render the new state */
   public get highlighted(){
     return this._highlighted;
   }
@@ -103,11 +116,11 @@ export class Edge extends Component{
 
   /**
    * Gets the actual edge instance,
-   * if this edge is a continuation of another edge returns that another edge,
+   * if this edge is a continuation of another edge returns it,
    * otherwise returns itself
    * @returns {Edge}
    */
-  public getInstance(){
+  public getInstance(): Edge{
     if(this.source.isBridge){
       const bt = this.source.bridgeTo;
       return (bt && bt.edge) || this;

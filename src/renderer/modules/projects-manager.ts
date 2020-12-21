@@ -11,15 +11,26 @@ import { Menu } from "./menu";
 
 const FORMAT_CHECK_VALUE = 28112020;
 
+/**
+ * This module handles the process of saving and loading projects
+ */
 class ProjectsManager{
 
   private diagramProject = new DiagramProject();
 
+  /**
+   * Sets current project's settings
+   * @param setting The new project settigns
+   */
   public async setSetting(setting: ProjectSetting){
     store.state.projectSetting = setting;
     await this.save();
   }
 
+  /**
+   * Creates new project
+   * @param setting Project settigns
+   */
   public async create(setting: ProjectSetting){
     this.close();
     StatusController.setStatusText('Creating new project...');
@@ -32,6 +43,9 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
+  /**
+   * Closes current ptoject
+   */
   public async close(){
     StatusController.setStatusText('Closing project...');
     store.state.projectSetting = null;
@@ -42,6 +56,10 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
+  /**
+   * Saves current project to file
+   * @param filename filename to write project data to
+   */
   public async save(filename?: string){
     StatusController.setStatusText('Saving project...');
     const { projectSetting, diagram } = store.state;
@@ -60,6 +78,10 @@ class ProjectsManager{
     console.log('project saved')
   }
 
+  /**
+   * Loads a project from a file
+   * @param filename Project's filename
+   */
   public async load(filename: string){
     this.close();
     StatusController.setStatusText(`Loading project ${filename}...`);

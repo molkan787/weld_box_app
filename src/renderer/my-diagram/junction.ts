@@ -5,6 +5,9 @@ import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 import { BasicNode } from "./basic-node";
 
+/**
+ * Junction node
+ */
 export class Junction extends BasicNode implements ObjectProps{
 
   // Internal props

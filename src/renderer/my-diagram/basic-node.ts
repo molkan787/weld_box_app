@@ -5,6 +5,9 @@ import Vue from 'vue';
 import { Position } from "../diagram-core/interfaces/Position";
 import { PropsChangeArchiver } from "../diagram-core/props-change-archiver";
 
+/**
+ * Base class for Message & Event nodes
+ */
 export abstract class BasicNode extends Node{
 
   // Internal props

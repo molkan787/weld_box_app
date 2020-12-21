@@ -5,4 +5,7 @@ import { Selection } from 'd3';
  */
 export type D3Node = Selection<any, unknown, HTMLElement, any>;
 
+/**
+ * A hashmap for keeping indecies of D3Node by their ids
+ */
 export type D3NodesMap = Map<number, D3Node>;

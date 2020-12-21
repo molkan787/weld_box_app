@@ -15,8 +15,16 @@ import { State } from "../my-diagram/state";
 import { StatementBlock } from "../my-diagram/statement-block";
 import { DiagramProject } from "./diagram-project";
 
+/**
+ * This modules export the important data of the Diagram's components for use in code generation
+ */
 export class DataExporter{
 
+  /**
+   * Exports data of the specfied Diagram
+   * @param diagram Diagram instance to export data from it
+   * @param setting Projects settings
+   */
   public exportData(diagram: Diagram, setting: ProjectSetting): ProjectExportData{
     const objects = DiagramProject.getTopLevelObjects(diagram);
     const threadsData = objects.map(ob => this.getFullHierarchyObjectsData(ob));
@@ -80,6 +88,10 @@ export class DataExporter{
     return rootData;
   }
 
+  /**
+   * Extracts data from specified Node's edges
+   * @param node
+   */
   private getNodeEdgesData(node: Node): EdgeExportData[]{
     const edges = node.edges
                       .filter(ec => (
@@ -118,6 +130,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Thread` instance
+   * @param thread
+   */
   private getThreadData(thread: State): ThreadExportData{
     const { id, name, properties, statementBlocks } = thread;
     return {
@@ -134,8 +150,12 @@ export class DataExporter{
     }
   }
 
-  private getStateData(thread: State): StateExportData{
-    const { id, name, properties, statementBlocks } = thread;
+  /**
+   * Extracts data from a `State` instance
+   * @param state
+   */
+  private getStateData(state: State): StateExportData{
+    const { id, name, properties, statementBlocks } = state;
     return {
       attributes: {
         what: ObjectType.State,
@@ -151,6 +171,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Junction` instance
+   * @param junction
+   */
   private getJunctionData(junction: Junction): JunctionExportData{
     return {
       attributes: {
@@ -160,6 +184,11 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `StatementBlock` instance
+   * @param statementBlock
+   * @param priority StatementBlock's Priority (it will included in the result)
+   */
   private getStatementBlockData(statementBlock: StatementBlock, priority: number): StatementBlockExportData{
     const { id, name, statements, execution } = statementBlock;
     const exec = [];
@@ -180,6 +209,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Edge` instance
+   * @param edge
+   */
   private getEdgeData(edge: MyEdge): EdgeExportData{
     const { id, name, properties, source, target } = edge;
     const isStart = properties.type == EdgeType.START;
@@ -204,6 +237,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Message` instance
+   * @param message
+   */
   private getMessageData(message: MessageNode): MessageExportData{
     const { id, name, properties, body } = message;
     return {
@@ -220,6 +257,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Event` instance
+   * @param event
+   */
   private getEventData(event: EventNode): EventExportData{
     const { id, name, properties } = event;
     return {

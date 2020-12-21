@@ -193,17 +193,29 @@ export class NodeDragging extends DiagramModule{
     this.changed = false;
   }
 
+  /**
+   * Emits an event indicating that a node was moved outside of its parent boundries
+   * @param node The node that was moved
+   */
   private nodeDraggedOutOfParent(node: Node){
     this.store.emit(EVENTS.NODE_DRAGGED_OUT_OF_PARENT, { node });
     this.startingPosition = this.startingAbsolutePosition;
   }
 
+  /**
+   * Updates node when its parent was changed
+   * @param event
+   */
   private onNodeParentChanged(event: DiagramEvent){
     const node = <Node>event.node;
     this.capNodeBBox(node);
     this.store.emit(EVENTS.NODE_BBOX_CHANGED, { node, sourceEvent: event });
   }
 
+  /**
+   * Caps the size of a node, (ex: if node's size exceeds parent's size, its size will be reduced to first its parent)
+   * @param node
+   */
   private capNodeBBox(node: Node){
     const { parent, position: p, size: s } = node;
     let changed = false;

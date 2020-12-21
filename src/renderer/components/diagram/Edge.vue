@@ -83,6 +83,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Adjust the position of the input box to match Edge's center location
+     */
     positionInput(){
       const { top, left, width, height } = this.$refs.conditionText.getClientRects()[0];
       const horizontalCenter = left + width / 2;
@@ -91,6 +94,9 @@ export default {
       const scale = (zt && zt.k) || 1;
       this.inputElement.setAttribute('style', `transform:translate(-50%, -50%) scale(${scale});top:${verticalCenter}px;left:${horizontalCenter}px;height:${height}px`);
     },
+    /**
+     * Creates and add an input box to the document to allow the user to edit Edge's condition
+     */
     showConditionInput(sourceEvent){
       this.destroyConditionInput();
       const condition = this.conditionOrDefault;
@@ -112,6 +118,12 @@ export default {
         this.setCaretPosition(input, cursorPos)
       }, 1);
     },
+    /**
+     * Sets the cursor position in the condition input box,
+     * Because when the user click the condition text,
+     * this text isn't an actual input box, so the cursor position won't be natively placed at position the user clicked,
+     * so the have to manually sets it
+     */
     setCaretPosition(el, pos) {
       const range = document.createRange()
       const sel = window.getSelection()
@@ -120,6 +132,9 @@ export default {
       sel.removeAllRanges()
       sel.addRange(range)
     },
+    /**
+     * Takes the value of input box and sets it as the Edge's condition, than removes the input box from the document
+     */
     hideConditionInput(){
       const edge = this.edge.getInstance();
       const props = edge.properties;
@@ -127,6 +142,9 @@ export default {
       props.condition = value == conditionPlaceHolder ? '' : value;
       this.destroyConditionInput();
     },
+    /**
+     * Remove the input box element from the document
+     */
     destroyConditionInput(){
       if(this.inputElement){
         try {
@@ -136,6 +154,9 @@ export default {
         this.inputElement = null;
       }
     },
+    /**
+     * Fixes reactivity issue (not working probably because of Proxies assigned by the 'on-change' library)
+     */
     repairReactivity(prop){
       delete this.edge[prop].__ob__;
       Vue.util.defineReactive(this.edge.__ob__.value, prop, this.edge[prop]);

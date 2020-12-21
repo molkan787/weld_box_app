@@ -5,6 +5,9 @@ import { BasicNode } from "./basic-node";
 import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 
+/**
+ * Event Node
+ */
 export class EventNode extends BasicNode implements ObjectProps{
 
   // internal props

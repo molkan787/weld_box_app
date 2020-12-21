@@ -7,14 +7,22 @@ import { Node } from "./node";
 
 export class EdgeConnection extends Component{
 
+  /** The parent edge instance */
   public edge: Edge | null = null;
+  /** The position of the EdgeConnection, when the `attachType` is `AttachType.Position` */
   public position?: Position;
+  /** The offset from the origin position (position of its connected target) of the EdgeConnection */
   public offset?: Position;
+  /** An EdgeConnection instance, if a value is assigned this instance will act as a shadow of the bridgeTo instance, which will use its position & offset */
   public bridgeTo: EdgeConnection | null = null;
+  /** An EdgeConnection instance, that bridges to this instance, used to keep bidirectional refference */
   public bridgeFrom: EdgeConnection | null = null;
+  /** Node instance to which this EdgeConnection is attached to */
   private _node: Node | null = null;
+  /** An offset relative the second end EdgeConnection of the parent edge */
   public toSecondEndOffset: Position = { x: 0, y: 0 };
 
+  /** Node instance to which this EdgeConnection is attached to */
   public get node(): Node | null{
     return this._node;
   }
@@ -35,14 +43,14 @@ export class EdgeConnection extends Component{
   }
 
   /**
-   * If this `EdgeConnection` instance is a bridge to another instance returns the last one, otherwise returns itself
+   * If this `EdgeConnection` instance is a bridged to another instance returns the last one, otherwise returns itself
    */
   public getInstance(): EdgeConnection{
     return this.bridgeTo ? this.bridgeTo.getInstance() : this;
   }
 
   /**
-   * Returns `true` if this instance is bridge (Points to another EdgeConnection instance).
+   * Returns `true` if this instance is bridge (It is shadow of another EdgeConnection instance).
    * @returns {boolean}
    */
   public get isBridge(){
@@ -90,6 +98,10 @@ export class EdgeConnection extends Component{
     return this.edge?.source === this
   }
 
+  /**
+   * Returns the absolute position
+   * @param skipOffset if `true` the returned position won't include the offset from the origin position
+   */
   public getCoordinates(skipOffset: boolean = false): Position{
     if(this.bridgeTo){
       return this.bridgeTo.getCoordinates();
@@ -101,13 +113,13 @@ export class EdgeConnection extends Component{
     }
   }
 
+  /** Returns the absolute position */
   public get coordinates(){
     return this.getCoordinates();
   }
 
   /**
-   * Calculates & returns the absolute position
-   * @param skipOffset if `true` the offset won't be added to the position
+   * Calculates & returns the absolute position, Also caches the result which can be later retived using `coordinates` getter
    */
   public calculateCoordinates(): Position{
     if(this.bridgeTo){
@@ -178,6 +190,10 @@ export class EdgeConnection extends Component{
     return result;
   }
 
+  /**
+   * Calculates the offset relative to Node with circular shape
+   * @param center The center point of the Node
+   */
   private calcCircleOffset(center: Position): Position{
     const otherPoint = this.getOtherEcPosition();
     if(otherPoint){
@@ -188,6 +204,9 @@ export class EdgeConnection extends Component{
     }
   }
 
+  /**
+   * Return the position of the second end (EdgeConnection) of the parent Edge
+   */
   private getOtherEcPosition(){
     const otherEc = this.isSource() ? this.edge?.target : this.edge?.source;
     return otherEc?.coordinates;
@@ -222,10 +241,10 @@ export class EdgeConnection extends Component{
   }
 
   /**
-   * Returns one axis offset that this EdgeConnection needs to distance its self from other EdgeConnections if any is needed
+   * Returns one axis offset that this EdgeConnection needs to distance its self from other EdgeConnections, if no offset is needed it returns `false`
    * @param position the position before distancing
    */
-  private needSpacingOffset(position: Position, min: number, max: number){
+  private needSpacingOffset(position: Position, min: number, max: number): number | false{
     const at = this.attachType;
     if(!(at == AttachType.NodeBody || AttachType.NodeWall)) return 0;
     const others = this.getSameSideSources();
@@ -277,6 +296,8 @@ export enum AttachType{
 }
 
 export enum EdgeConnectionType{
+  /** EdgeConnection is the Source of the Edge */
   Source = 'source',
+  /** EdgeConnection is the Target of the Edge */
   Target = 'target',
 }

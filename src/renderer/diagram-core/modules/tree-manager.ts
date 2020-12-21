@@ -5,6 +5,9 @@ import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramModule } from "../module";
 
+/**
+ * Handles the process of changing node's parent
+ */
 export class TreeManager extends DiagramModule{
 
   private dropTarget: Node | null = null;
@@ -16,6 +19,10 @@ export class TreeManager extends DiagramModule{
     store.on(EVENTS.NODE_DRAGGED_OUT_OF_PARENT, e => this.onNodeDraggedOutOfParent(e));
   }
 
+  /**
+   * When the drag event ends, checks if there was a target (new parent candidate)
+   * @param event
+   */
   private onNodeDropped(event: DiagramEvent){
     const target = this.dropTarget;
     const node = <Node>event.node;
@@ -27,6 +34,10 @@ export class TreeManager extends DiagramModule{
     }
   }
 
+  /**
+   * When ever the the node is dragged (moved), search for a potential new parent
+   * @param event
+   */
   private onNodeDragged(event: DiagramEvent){
     if(this.store.activeModule?.name != MODULES.NODE_DRAGGING) return;
     const node = <Node>event.node;
@@ -54,6 +65,10 @@ export class TreeManager extends DiagramModule{
     this.setDropTarget(null);
   }
 
+  /**
+   * Checks logicaly if a node is visibile on the canvas or not
+   * @param node Node to check if it is visible
+   */
   private isNodeHidden(node: Node){
     let n: Node | null = node;
     while(n = n.parent){
@@ -64,6 +79,12 @@ export class TreeManager extends DiagramModule{
     return false;
   }
 
+  /**
+   * Sort a list of nodes by distance to bounding box (rectangle)
+   * @param bbox The bouding box to which the distance should be relative to
+   * @param nodes List of nodes to be sorted
+   * @param excludes List of nodes to exclude from the result
+   */
   private sortNodesByDistance(bbox: BBox, nodes: Node[], excludes: Node[]): Node[]{
     const len = nodes.length;
     const items = [];
@@ -84,6 +105,11 @@ export class TreeManager extends DiagramModule{
     return items.sort((a, b) => a.dist - b.dist).map(item => item.node);
   }
 
+  /**
+   * Checks if a node belongs to other node's hierarchy (its childs or sub-childs recursivly)
+   * @param root The root node of the hierarchy
+   * @param target The node to check for
+   */
   private isInChildsBranches(root: Node, target: Node){
     const childs = root.children;
     const len = childs.length;
@@ -95,6 +121,10 @@ export class TreeManager extends DiagramModule{
     return false;
   }
 
+  /**
+   * Sets a node as a new parent candidate, ultimately highlighting it and cache its reference for later use (once the drag ends)
+   * @param node
+   */
   private setDropTarget(node: Node | null){
     if(this.dropTarget === node) return;
     if(this.dropTarget){
@@ -108,6 +138,11 @@ export class TreeManager extends DiagramModule{
     }
   }
 
+  /**
+   * Changes node's parent (removes it from the old one and add it to the new one), also updates child's position to be relative to the new parent
+   * @param node The child node
+   * @param newParent The new parent node
+   */
   private changeNodeParent(node: Node, newParent: Node){
     if(node.parent === newParent) return;
     if(node.containsNode(newParent)) return;
@@ -124,6 +159,10 @@ export class TreeManager extends DiagramModule{
     this.store.emit(EVENTS.NODE_PARENT_CHANGED, { node, data: oldParent });
   }
 
+  /**
+   * Removes the dragged node from its original parent, and makes it a top level parent, this is need to make possible dragging the node everywhere in the canvas
+   * @param e
+   */
   private onNodeDraggedOutOfParent(e: DiagramEvent): void {
     const node = <Node>e.node;
     node.position = node.getAbsolutePosition();

@@ -7,6 +7,9 @@ import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
 import { cloneObject } from "../utils";
 
+/**
+ * Handles the initial edge dragging from the ToolBox
+ */
 export class InitialEdgeDragging extends DiagramModule{
 
   private subject: Edge | null = null;
@@ -18,6 +21,11 @@ export class InitialEdgeDragging extends DiagramModule{
     store.on(EVENTS.CANVAS_MOUSEUP, (e: DiagramEvent) => this.onMouseUp(e.sourceEvent));
   }
 
+
+  /**
+   * Starts initial dragging process
+   * @param event
+   */
   private onStartEdgeDragging(event: DiagramEvent){
     const edge = <Edge>event.edge;
     const clientPoint = <Position>event.data;
@@ -26,12 +34,20 @@ export class InitialEdgeDragging extends DiagramModule{
     this.activate();
   }
 
+  /**
+   * Moves the edge to cursor's position
+   * @param sourceEvent
+   */
   private onMouseMove(sourceEvent: MouseEvent) {
     if(this.isInactive || !this.subject) return;
     const { clientX: x, clientY: y } = sourceEvent;
     this.setEdgePosition(this.subject, { x, y });
   }
 
+  /**
+   * End the dragging process
+   * @param sourceEvent
+   */
   private onMouseUp(sourceEvent: MouseEvent) {
     if(this.isActive){
       if(this.subject){
@@ -43,6 +59,10 @@ export class InitialEdgeDragging extends DiagramModule{
     }
   }
 
+  /**
+   * Attach the edge to node that is currently open as the sub-chart
+   * @param edge
+   */
   private attachEdgeSourceToCurrentNode(edge: Edge){
     const node = this.store.currentlyOpenNode;
     if(node){
@@ -60,6 +80,11 @@ export class InitialEdgeDragging extends DiagramModule{
     }
   }
 
+  /**
+   * Set's edge's source position to the specified position and the edge's target position offseted relativly to the source
+   * @param edge
+   * @param clientPoint
+   */
   private setEdgePosition(edge: Edge, clientPoint: Position){
     const sourcePoint = this.store.transformClientPoint(clientPoint);
     const targetPoint = cloneObject(sourcePoint);
@@ -70,6 +95,10 @@ export class InitialEdgeDragging extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
   }
 
+  /**
+   * Create and push edge spawn action
+   * @param edge
+   */
   private pushSpawnedAction(edge: Edge){
     this.pushAction({
       undo: [

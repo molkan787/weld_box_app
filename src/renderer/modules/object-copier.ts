@@ -17,6 +17,10 @@ import { CommentNode } from "../my-diagram/comment-node";
  */
 export class ObjectCopier{
 
+  /**
+   * Copy object/component's properties, and recursivly all of its childs
+   * @param object
+   */
   public copy(object: MyObject): ObjectCopyResult{
     const node = <Node><Component>object;
     const objects = <MyObject[]><any[]>node.getAllDescendentsNodes();
@@ -32,6 +36,11 @@ export class ObjectCopier{
     }
   }
 
+  /**
+   * Copy object/component's properties
+   * @param object Object to copy
+   * @param edgesBucket Edges bucket used to store edges that are connected to this Object
+   */
   public copyObject(object: MyObject, edgesBucket: EdgesBucket): ObjectCloneData{
     if(object.what === ObjectType.State || object.what === ObjectType.Thread){
       return {
@@ -63,6 +72,11 @@ export class ObjectCopier{
     }
   }
 
+  /**
+   * Copy `State`'s properties
+   * @param state State to copy
+   * @param edgesBucket Edges bucket used to store edges that are connected to this State
+   */
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
     const { id, name, properties, statementBlocks, edges, isSubChart, codeblocksExpanded } = state;
 
@@ -86,6 +100,10 @@ export class ObjectCopier{
     return data;
   }
 
+  /**
+   * Returns extract properties of a State
+   * @param state
+   */
   private getStatePropsAndBBox(state: State){
     const { props, position, size } = state;
     const _props = cloneNestedObject(props);
@@ -112,6 +130,10 @@ export class ObjectCopier{
     }
   }
 
+  /**
+   * Copy `Event`'s properties
+   * @param event
+   */
   public copyEventNode(event: EventNode): EventCloneData{
     const { id, parent, name, properties, position, size } = event;
     const data: EventCloneData = {
@@ -125,6 +147,10 @@ export class ObjectCopier{
     return data;
   }
 
+  /**
+   * Copy `Message`'s properties
+   * @param event
+   */
   public copyMessageNode(event: MessageNode): MessageCloneData{
     const { id, parent, name, properties, body, position, size } = event;
     const data: MessageCloneData = {
@@ -139,6 +165,11 @@ export class ObjectCopier{
     return data;
   }
 
+  /**
+   * Copy `Junction`'s properties
+   * @param junction
+   * @param edgesBucket Edges bucket used to store edges that are connected to this Junction
+   */
   public copyJunction(junction: Junction, edgesBucket: EdgesBucket): JunctionCloneData{
     const { id, parent, position, size, edges } = junction;
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge));
@@ -152,6 +183,10 @@ export class ObjectCopier{
     }
   }
 
+  /**
+   * Copy `Comment`'s properties
+   * @param comment
+   */
   public copyComment(comment: CommentNode): CommentCloneData{
     const { id, parent, position, size, text } = comment;
     return {
@@ -165,6 +200,10 @@ export class ObjectCopier{
     }
   }
 
+  /**
+   * Copy `Edge`'s properties
+   * @param edge
+   */
   public copyEdge(edge: MyEdge): EdgeCloneData{
     const {
       id, shapePoints, name, properties, source, target,
@@ -185,6 +224,10 @@ export class ObjectCopier{
     return data;
   }
 
+  /**
+   * Copy `EdgeConnection`'s properties
+   * @param ec
+   */
   private copyEdgeConnection(ec: EdgeConnection): EdgeConnectionCloneData{
     const node = <Node>ec.node;
     const { id, position, offset, attachType, nodeWall, bridgeTo, bridgeFrom } = ec;
