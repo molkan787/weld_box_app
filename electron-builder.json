@@ -1,6 +1,6 @@
 {
     "appId": "pl.dahmane.boxtree",
-    "productName": "BoxTree",
+    "productName": "Weld.dev",
     "files": [
         "!node_modules/**/*",
         "node_modules/source-map-support",
