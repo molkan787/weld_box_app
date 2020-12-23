@@ -31,7 +31,7 @@ export default {
   computed: {
     showName(){
       const w = this.object.what;
-      return (w == 'message' || w == 'event') && this.object.name;
+      return (w == 'message' || w == 'event' || w == 'var') && this.object.name;
     }
   },
   methods: {
