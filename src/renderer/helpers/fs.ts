@@ -26,12 +26,7 @@ export async function promptFile(): Promise<string | null> {
     ]
   })
   if (resp.canceled) return null
-  const Full_Ext = '.' + Weld_Extension;
-  let fn = resp.filePaths[0];
-  if(!fn.endsWith(Full_Ext)){
-    fn += Full_Ext;
-  }
-  return fn;
+  return resp.filePaths[0];
 }
 
 /**
@@ -45,7 +40,13 @@ export async function promptSaveFile(): Promise<string | null> {
   })
   if (resp.canceled) return null
 
-  return <string>resp.filePath
+  const Full_Ext = '.' + Weld_Extension;
+  let fn = <string>resp.filePath;
+  if(!fn.endsWith(Full_Ext)){
+    fn += Full_Ext;
+  }
+
+  return fn
 }
 
 /**
