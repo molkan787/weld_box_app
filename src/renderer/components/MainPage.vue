@@ -107,7 +107,7 @@ export default Vue.extend({
           const title = `Cannot convert State "${name}" to a Sub-Task`;
           let message = '';
           if(error.reason == MUTATION_ERROR_REASONS.UNRELATED_MUTIPART_EDGE_PASSES_THRU_NODE_WALL){
-            message = 'Reason: One or more unrelated Inter-Task edge(s) passes thru State\'s wall';
+            message = 'Reason: One or more unrelated Inter-Tasks Transition(s) passes thru State\'s wall';
           }
           Dialog.info(message || title, { title });
         }

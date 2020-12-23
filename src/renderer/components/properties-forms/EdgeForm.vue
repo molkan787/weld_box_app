@@ -1,5 +1,5 @@
 <template>
-  <BaseForm :object="edge" :showNameField="!isStart" :objectType="isStart ? 'Start Edge' : 'Edge'">
+  <BaseForm :object="edge" :showNameField="!isStart" :objectType="isStart ? 'Start Transition' : 'Transition'">
 
     <template v-if="!isStart">
       <FormField label="Priority">

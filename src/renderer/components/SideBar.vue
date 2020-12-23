@@ -3,10 +3,10 @@
     <div :title="onlyThreadsAllowed ? 'Thread' : 'State'" class="icon" @mousedown="onMouseDown($event, 'state')">
       <StateIcon />
     </div>
-    <div :disabled="onlyThreadsAllowed" title="Edge (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="edgeClick()">
+    <div :disabled="onlyThreadsAllowed" title="Transition (Toggle)" class="icon" :class="{active: isEdgeDrawerActive }" @click="edgeClick()">
       <TransitionIcon />
     </div>
-    <div :disabled="onlyThreadsAllowed" title="Start edge" class="icon" @mousedown="onMouseDown($event, 'start-edge')">
+    <div :disabled="onlyThreadsAllowed" title="Start Transition" class="icon" @mousedown="onMouseDown($event, 'start-edge')">
       <StartTransitionIcon />
     </div>
     <div class="separator"></div>
