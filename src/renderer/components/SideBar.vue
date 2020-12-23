@@ -16,6 +16,9 @@
     <div :disabled="onlyThreadsAllowed" title="Event" class="icon" @mousedown="onMouseDown($event, 'event')">
       <EventIcon />
     </div>
+    <div :disabled="onlyThreadsAllowed" title="Variable" class="icon" @mousedown="onMouseDown($event, 'var')">
+      <VariableIcon />
+    </div>
     <div :disabled="onlyThreadsAllowed" title="Junction" class="icon ma" @mousedown="onMouseDown($event, 'junction')">
       <JunctionIcon :size="40" />
     </div>
@@ -31,9 +34,11 @@ import StartTransitionIcon from './icons/StartTransition';
 import MessageIcon from './icons/Message';
 import EventIcon from './icons/Event';
 import JunctionIcon from './icons/Junction';
+import VariableIcon from './icons/Variable';
 import { MessageNode } from '../my-diagram/MessageNode';
 import { Junction } from '../my-diagram/junction';
 import { EventNode } from '../my-diagram/EventNode';
+import { VariableNode } from '../my-diagram/VariableNode';
 import { AttachType, EdgeConnection, MODULES } from '../diagram-core';
 import { ObjectType } from '../interfaces/ObjectType';
 import { EdgeType, MyEdge } from '../my-diagram/my-edge';
@@ -44,6 +49,7 @@ export default {
     MessageIcon,
     EventIcon,
     JunctionIcon,
+    VariableIcon,
     StartTransitionIcon
   },
   props: {
@@ -108,6 +114,8 @@ export default {
           return new EventNode({ x: 0, y: 0 });
         case ObjectType.Junction:
           return new Junction({ x: 0, y: 0 });
+        case ObjectType.Variable:
+          return new VariableNode({ x: 0, y: 0 });
         default:
           throw new Error(`Unsupported object type '${_objectType}'`);
       }

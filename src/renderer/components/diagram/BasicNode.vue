@@ -3,6 +3,7 @@
     <MessageIcon :size="34" v-if="object.what === 'message'" />
     <EventIcon :size="34" v-else-if="object.what === 'event'" />
     <JunctionIcon :size="42" v-else-if="object.what === 'junction'" />
+    <VariableIcon :size="34" v-else-if="object.what === 'var'" />
     <div v-if="showName" class="name-label">
       {{ object.name }}
     </div>
@@ -13,11 +14,13 @@
 import MessageIcon from '../icons/Message';
 import EventIcon from '../icons/Event';
 import JunctionIcon from '../icons/Junction';
+import VariableIcon from '../icons/Variable';
 export default {
   components: {
     MessageIcon,
     EventIcon,
-    JunctionIcon
+    JunctionIcon,
+    VariableIcon
   },
   props: {
     object: {

@@ -43,6 +43,8 @@ export interface MessageCloneData extends NodeCloneData{
   body: MessageDataItem[];
 }
 
+export interface VariableCloneData extends NodeCloneData{}
+
 export interface JunctionCloneData extends NodeCloneData{}
 
 export interface CommentCloneData extends NodeCloneData{

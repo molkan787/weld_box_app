@@ -2,7 +2,7 @@ import { Diagram, EdgeConnection, MultipartEdgeType, Node } from "../diagram-cor
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
-import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData } from "../interfaces/ObjectExportData";
+import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData, VariableExportData } from "../interfaces/ObjectExportData";
 import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 import { ProjectExportData } from "../interfaces/ProjectExportData";
@@ -13,6 +13,7 @@ import { MessageNode } from "../my-diagram/MessageNode";
 import { EdgeType, MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { StatementBlock } from "../my-diagram/statement-block";
+import { VariableNode } from "../my-diagram/VariableNode";
 import { DiagramProject } from "./diagram-project";
 
 /**
@@ -121,6 +122,8 @@ export class DataExporter{
         return this.getMessageData(<MessageNode>object);
       case ObjectType.Event:
         return this.getEventData(<EventNode>object);
+      case ObjectType.Variable:
+        return this.getVariableData(<VariableNode>object);
       case ObjectType.Junction:
         return this.getJunctionData(<Junction>object);
       case ObjectType.Thread:
@@ -273,6 +276,26 @@ export class DataExporter{
       properties: {
         discard: properties.discard,
         mode: properties.mode,
+        type: properties.type
+      }
+    }
+  }
+
+
+  /**
+   * Extracts data from a `Variable` instance
+   * @param event
+   */
+  private getVariableData(variable: VariableNode): VariableExportData{
+    const { id, name, properties } = variable;
+    return {
+      attributes: {
+        id,
+        name,
+        what: ObjectType.Variable,
+      },
+      properties: {
+        scope: properties.scope,
         type: properties.type
       }
     }

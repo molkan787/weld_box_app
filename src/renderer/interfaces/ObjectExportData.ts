@@ -2,6 +2,7 @@ import { EventDiscard, EventMode, EventType } from "../my-diagram/EventNode";
 import { MessageType } from "../my-diagram/MessageNode";
 import { EdgeType } from "../my-diagram/my-edge";
 import { StateDecomposition } from "../my-diagram/state";
+import { VariableScope } from "../my-diagram/VariableNode";
 import { MessageDataItem } from "./MessageDataItem";
 import { ObjectType } from "./ObjectType";
 
@@ -62,6 +63,13 @@ export interface EventExportData extends ObjectExportData{
     discard: EventDiscard;
     mode: EventMode;
     type: EventType;
+  }
+}
+
+export interface VariableExportData extends ObjectExportData{
+  properties: {
+    scope: VariableScope;
+    type: string;
   }
 }
 

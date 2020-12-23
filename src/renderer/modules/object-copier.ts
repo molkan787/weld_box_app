@@ -2,7 +2,7 @@ import { EdgesBucket } from "../diagram-core/helper-classes/edges-bucket";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
 import { MyObject } from "../interfaces/MyObject";
-import { EdgeCloneData, ObjectCloneData, StateCloneData, JunctionCloneData, EventCloneData, MessageCloneData, EdgeConnectionCloneData, ObjectCopyResult, CommentCloneData } from "../interfaces/ObjectCopyResult";
+import { EdgeCloneData, ObjectCloneData, StateCloneData, JunctionCloneData, EventCloneData, MessageCloneData, EdgeConnectionCloneData, ObjectCopyResult, CommentCloneData, VariableCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { MyEdge } from "../my-diagram/my-edge";
@@ -11,6 +11,7 @@ import { EdgeConnection, Node } from "../diagram-core";
 import { Component } from "../diagram-core/components/component";
 import { Junction } from "../my-diagram/junction";
 import { CommentNode } from "../my-diagram/comment-node";
+import { VariableNode } from "../my-diagram/VariableNode";
 
 /**
  * Helper class that convert Diagram's object to json data (export like)
@@ -56,6 +57,11 @@ export class ObjectCopier{
       return {
         what: ObjectType.Message,
         data: this.copyMessageNode(<MessageNode>object)
+      };
+    }else if(object.what === ObjectType.Variable){
+      return {
+        what: ObjectType.Variable,
+        data: this.copyVariableNode(<VariableNode>object)
       };
     }else if(object.what === ObjectType.Junction){
       return {
@@ -159,6 +165,23 @@ export class ObjectCopier{
       name: name,
       properties: cloneObject(properties),
       body: cloneArray(body),
+      position: cloneObject(position),
+      size: cloneObject(size)
+    };
+    return data;
+  }
+
+  /**
+   * Copy `Variable`'s properties
+   * @param event
+   */
+  public copyVariableNode(event: VariableNode): VariableCloneData{
+    const { id, parent, name, properties, position, size } = event;
+    const data: VariableCloneData = {
+      ref: id,
+      parentRef: parent?.id,
+      name: name,
+      properties: cloneObject(properties),
       position: cloneObject(position),
       size: cloneObject(size)
     };

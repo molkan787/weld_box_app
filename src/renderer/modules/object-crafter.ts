@@ -1,7 +1,7 @@
 import { EdgeConnection, Node } from "../diagram-core";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
-import { CommentCloneData, EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
+import { CommentCloneData, EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData, VariableCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { EdgeType, MyEdge } from "../my-diagram/my-edge";
@@ -9,6 +9,7 @@ import { State } from "../my-diagram/state";
 import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
 import { Junction } from "../my-diagram/junction";
 import { CommentNode } from "../my-diagram/comment-node";
+import { VariableNode } from "../my-diagram/VariableNode";
 
 /**
  * Helper class that convert json data to Diagram's objects  (import like)
@@ -61,6 +62,8 @@ export class ObjectCrafter{
       node = this.craftMessageNode(<MessageCloneData>data);
     }else if(cloneData.what == ObjectType.Junction){
       node = this.craftJunction(<JunctionCloneData>data);
+    }else if(cloneData.what == ObjectType.Variable){
+      node = this.craftVariableNode(<VariableCloneData>data);
     }else if(cloneData.what == ObjectType.Comment){
       node = this.craftComment(<CommentCloneData>data);
     }else{
@@ -107,6 +110,19 @@ export class ObjectCrafter{
   public craftEventNode(data: EventCloneData): EventNode{
     const { name, properties, position, size } = data;
     const node = new EventNode(cloneObject(position));
+    node.size = cloneObject(size);
+    node.name = name;
+    node.properties = cloneObject(properties);
+    return node;
+  }
+
+  /**
+   * Create an actual Variable node instance from data object
+   * @param data
+   */
+  public craftVariableNode(data: VariableCloneData): VariableNode{
+    const { name, properties, position, size } = data;
+    const node = new VariableNode(cloneObject(position));
     node.size = cloneObject(size);
     node.name = name;
     node.properties = cloneObject(properties);
