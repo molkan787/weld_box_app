@@ -1,5 +1,6 @@
 import { Component } from "../diagram-core/components/component";
 import { Dialog } from "../dialog";
+import { BinaryObject } from "../helpers/binary-object";
 import { readFile, writeFile } from "../helpers/fs";
 import { ProjectFileData } from "../interfaces/ProjectFileData";
 import { ProjectSetting } from "../interfaces/ProjectSetting";
@@ -71,9 +72,9 @@ class ProjectsManager{
       setting: projectSetting,
       data: data
     }
-    const json = JSON.stringify(project);
+    const binData = BinaryObject.encode(project);
 
-    await writeFile(filename || projectSetting.location, json);
+    await writeFile(filename || projectSetting.location, binData);
     StatusController.setStatusText(null);
     console.log('project saved')
   }
@@ -86,7 +87,7 @@ class ProjectsManager{
     this.close();
     StatusController.setStatusText(`Loading project ${filename}...`);
     const raw = await readFile(filename);
-    const project = <ProjectFileData>JSON.parse(raw);
+    const project = <ProjectFileData>BinaryObject.decode(raw);
     if(project?.formatCheck !== FORMAT_CHECK_VALUE){
       throw new Error('Invalid project file format');
     }

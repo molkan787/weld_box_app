@@ -1,5 +1,5 @@
 import path from "path";
-import { writeFile } from "../helpers/fs";
+import { writeTextFile } from "../helpers/fs";
 import { config } from "../config";
 import { Diagram } from "../diagram-core";
 import { GenerateCodeFile, GenerateCodeResponse } from "../interfaces/GenerateCodeResponse";
@@ -62,7 +62,7 @@ export class CodeGenerator{
         filename = path.join(headersDir, name);
       }
       if(filename){
-        await writeFile(filename, content);
+        await writeTextFile(filename, content);
       }
     }
   }

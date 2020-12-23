@@ -18,7 +18,11 @@ export async function promptDirectory(): Promise<string | null> {
  * Prompt the user to select a file to open/read
  */
 export async function promptFile(): Promise<string | null> {
-  const resp = await dialog.showOpenDialog({})
+  const resp = await dialog.showOpenDialog({
+    filters: [
+      { name: 'Weld Project', extensions: ['wld'] }
+    ]
+  })
   if (resp.canceled) return null
 
   return resp.filePaths[0]
@@ -30,7 +34,7 @@ export async function promptFile(): Promise<string | null> {
 export async function promptSaveFile(): Promise<string | null> {
   const resp = await dialog.showSaveDialog({
     filters: [
-      { name: 'JSON (Temporary)', extensions: ['json'] }
+      { name: 'Weld Project', extensions: ['wld'] }
     ]
   })
   if (resp.canceled) return null
@@ -39,13 +43,26 @@ export async function promptSaveFile(): Promise<string | null> {
 }
 
 /**
- * Reads file content and returns it (utf8 text files)
+ * Reads file content and returns
  * @param filename The filename to read
  */
-export function readFile(filename: string): Promise<string> {
+export function readFile(filename: string): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    fs.readFile(filename, 'utf8', (err: Error, contents: string) => {
+    fs.readFile(filename, (err: Error, contents: Buffer) => {
       err ? reject(err) : resolve(contents)
+    })
+  })
+}
+
+/**
+ * Write string data to a file
+ * @param filename Filename to write to
+ * @param data Data buffer to write
+ */
+export function writeFile(filename: string, data: Buffer): Promise<void> {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filename, data, (err: Error | null) => {
+      err ? reject(err) : resolve()
     })
   })
 }
@@ -55,10 +72,14 @@ export function readFile(filename: string): Promise<string> {
  * @param filename Filename to write to
  * @param data Data string to write
  */
-export function writeFile(filename: string, data: string): Promise<void> {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(filename, data, (err: Error | null) => {
-      err ? reject(err) : resolve()
-    })
-  })
+export function writeTextFile(filename: string, data: string){
+  return writeFile(filename, Buffer.from(data, 'utf8'));
+}
+
+/**
+ * Reads file content and returns it (utf8 text files)
+ * @param filename The filename to read
+ */
+export async function readTextFile(filename: string){
+  return (await readFile(filename)).toString();
 }

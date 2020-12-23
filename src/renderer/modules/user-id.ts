@@ -1,7 +1,7 @@
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { remote } from "electron";
-import { readFile, writeFile } from '../helpers/fs';
+import { readTextFile, writeTextFile } from '../helpers/fs';
 
 const USER_ID_FILENAME = 'user-id';
 
@@ -30,7 +30,7 @@ export class UserID{
     }else{
       userId = uuidv4();
       try {
-        await writeFile(filename, userId);
+        await writeTextFile(filename, userId);
         this.id = userId;
       } catch (error) {
         console.error('Couldn\'t save the generated User Id');
@@ -45,7 +45,7 @@ export class UserID{
    */
   static async readUserId(filename: string){
     try {
-      return await readFile(filename);
+      return await readTextFile(filename);
     } catch (error) {
       return '';
     }

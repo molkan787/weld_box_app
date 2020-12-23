@@ -13,6 +13,7 @@
     "dependencies": {
         "@types/webpack-env": "^1.15.3",
         "axios": "^0.21.0",
+        "bson": "^4.2.2",
         "d3": "^6.1.1",
         "debounce": "^1.2.0",
         "electron-webpack-vue": "^2.4.0",
