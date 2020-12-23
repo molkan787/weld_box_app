@@ -3,6 +3,9 @@
     <MessageIcon :size="34" v-if="object.what === 'message'" />
     <EventIcon :size="34" v-else-if="object.what === 'event'" />
     <JunctionIcon :size="42" v-else-if="object.what === 'junction'" />
+    <div v-if="showName" class="name-label">
+      {{ object.name }}
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,12 @@ export default {
       required: true
     }
   },
+  computed: {
+    showName(){
+      const w = this.object.what;
+      return (w == 'message' || w == 'event') && this.object.name;
+    }
+  },
   methods: {
     onClick(){
       this.object.select();
@@ -36,6 +45,17 @@ export default {
   height: 100%;
   .junction-icon{
     margin: -4px;
+  }
+  .name-label{
+    @width: 200px;
+    width: @width;
+    white-space: nowrap;
+    pointer-events: none;
+    position: relative;
+    top: 0px;
+    left: 50%;
+    transform: translateX(@width / -2);
+    text-align: center;
   }
 }
 </style>
