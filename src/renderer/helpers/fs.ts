@@ -2,6 +2,8 @@ import { remote } from 'electron';
 const { dialog } = remote;
 const fs = remote.require('fs');
 
+const Weld_Extension = 'wld';
+
 /**
  * Prompt the user to select a directory
  */
@@ -20,12 +22,16 @@ export async function promptDirectory(): Promise<string | null> {
 export async function promptFile(): Promise<string | null> {
   const resp = await dialog.showOpenDialog({
     filters: [
-      { name: 'Weld Project', extensions: ['wld'] }
+      { name: 'Weld Project', extensions: [Weld_Extension] }
     ]
   })
   if (resp.canceled) return null
-
-  return resp.filePaths[0]
+  const Full_Ext = '.' + Weld_Extension;
+  let fn = resp.filePaths[0];
+  if(!fn.endsWith(Full_Ext)){
+    fn += Full_Ext;
+  }
+  return fn;
 }
 
 /**
@@ -34,7 +40,7 @@ export async function promptFile(): Promise<string | null> {
 export async function promptSaveFile(): Promise<string | null> {
   const resp = await dialog.showSaveDialog({
     filters: [
-      { name: 'Weld Project', extensions: ['wld'] }
+      { name: 'Weld Project', extensions: [Weld_Extension] }
     ]
   })
   if (resp.canceled) return null
