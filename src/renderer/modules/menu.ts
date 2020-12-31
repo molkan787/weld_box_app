@@ -67,7 +67,7 @@ class MenuClass extends EventEmitter{
    */
   private onKeyDown(event: KeyboardEvent){
     const action = this.getAction(event.key);
-    if(action){
+    if((action && event.ctrlKey) || action == 'delete'){
       if(!this.shouldHandleEvent(event, action)) return;
       event.preventDefault();
       this.onMenuClick(action);
