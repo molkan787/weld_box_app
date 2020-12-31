@@ -1,6 +1,6 @@
 {
-    "name": "boxtree",
-    "version": "0.9.0",
+    "name": "weld.dev",
+    "version": "0.9.1",
     "scripts": {
         "clean": "rimraf dist installer",
         "compile": "electron-webpack",

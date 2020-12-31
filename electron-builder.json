@@ -1,5 +1,5 @@
 {
-    "appId": "pl.dahmane.boxtree",
+    "appId": "dev.weld",
     "productName": "Weld.dev",
     "files": [
         "!node_modules/**/*",
