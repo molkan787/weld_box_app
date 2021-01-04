@@ -5,6 +5,9 @@ import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { throttle } from 'throttle-debounce';
 
+/**
+ * Handles the process of attaching DOM events of the Canvas element and of all the Diagram Components
+ */
 export class DomEventsAttacher{
 
   private readonly handlers = {
@@ -12,9 +15,13 @@ export class DomEventsAttacher{
     dblclick: (e: any, node: any) => this.onDoubleClick(e, node),
   };
 
+  /** The D3 Drag Behavior instance */
   private readonly dragController: DragBehavior<Element, unknown, unknown>;
 
+  /** Throttler for mouse move event */
   private readonly mousemoveThrottler: throttle<(e: DiagramEvent) => void>;
+
+  /** Throttler for dragged event */
   private readonly draggedThrottler: throttle<(e: DiagramEvent) => void>;
 
   constructor(private readonly store: DiagramStore){

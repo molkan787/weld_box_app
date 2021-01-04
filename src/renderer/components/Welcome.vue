@@ -3,11 +3,11 @@
     <div class="col">
       <div class="header">
         <LogoIcon :size="100" />
-        <h1>BoxTree</h1>
-        <h4>Sub text</h4>
+        <h1>Weld.dev</h1>
+        <h4>{{ texts.app_logo_subheader }}</h4>
       </div>
-      <div class="big-text">Welcome</div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
+      <div class="big-text">{{ texts.header }}</div>
+      <p>{{ texts.body }}</p>
       <button @click="createClick" class="primary btn">Create Project...</button>
       <div style="height: 50px"></div>
     </div>
@@ -17,10 +17,14 @@
 <script>
 import { Menu } from '../modules/menu';
 import LogoIcon from './icons/Logo';
+import { config } from '../config';
 export default {
   components: {
     LogoIcon
   },
+  data: () => ({
+    texts: config.welcome_page
+  }),
   methods: {
     createClick(){
       Menu.emit('new');

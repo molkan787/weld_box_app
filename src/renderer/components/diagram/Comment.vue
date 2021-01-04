@@ -34,6 +34,9 @@ export default {
     onTextChange(){
       this.adjustSize();
     },
+    /**
+     * Calculates the size if the text and use it as the input box size
+     */
     adjustSize(){
       const node = this.node;
       let { width, height } = calcTextSize(node.text, {

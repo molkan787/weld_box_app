@@ -7,13 +7,16 @@ import { ObjectType } from "../interfaces/ObjectType";
 import Vue from 'vue';
 import CommentComponent from '../components/diagram/Comment.vue';
 
+/**
+ * Diagram's component for comments
+ */
 export class CommentNode extends Node implements ObjectProps{
 
   // Internal props
   private vm?: Vue;
   public readonly propsArchiver: PropsChangeArchiver;
 
-
+  // Business props
   public readonly what = ObjectType.Comment;
   public readonly properties = {};
   public text: string = '';
@@ -33,6 +36,9 @@ export class CommentNode extends Node implements ObjectProps{
     });
   }
 
+  /**
+   * Focus the comment input box
+   */
   focusInput(){
     (<any>this.vm)?.focusInput();
   }

@@ -34,6 +34,10 @@ export class Visibility{
     }
   }
 
+  /**
+   * Logicaly checks if a Node should be visible
+   * @param node Node to check
+   */
   public static isNodeVisible(node: Node){
     const path = node.getHierarchyPath();
     const len = path.length;

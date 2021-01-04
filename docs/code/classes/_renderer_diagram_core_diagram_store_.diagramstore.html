@@ -1,0 +1,1996 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>DiagramStore | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_renderer_diagram_core_diagram_store_.html">&quot;renderer/diagram-core/diagram-store&quot;</a>
+				</li>
+				<li>
+					<a href="_renderer_diagram_core_diagram_store_.diagramstore.html">DiagramStore</a>
+				</li>
+			</ul>
+			<h1>Class DiagramStore</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p><code>DiagramStore</code> acts as a Central State Store and an Event Bus for all diagram&#39;s modules</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">EventEmitter</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">DiagramStore</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-class"><a href="../interfaces/_renderer_diagram_core_diagram_store_.diagramstore.eventemitterstatic.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Static</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter"><a href="../interfaces/_renderer_diagram_core_diagram_store_.diagramstore.listenerfn.html" class="tsd-kind-icon">Listener<wbr>Fn</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#argumentmap" class="tsd-kind-icon">Argument<wbr>Map</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventargs" class="tsd-kind-icon">Event<wbr>Args</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventlistener" class="tsd-kind-icon">Event<wbr>Listener</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames" class="tsd-kind-icon">Event<wbr>Names</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-class tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#valideventtypes" class="tsd-kind-icon">Valid<wbr>Event<wbr>Types</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_currentlyopennode" class="tsd-kind-icon">_currently<wbr>Open<wbr>Node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_edgefactory" class="tsd-kind-icon">_edge<wbr>Factory</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_rootelement" class="tsd-kind-icon">_root<wbr>Element</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_zoomtransform" class="tsd-kind-icon">_zoom<wbr>Transform</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#actionsarchiver" class="tsd-kind-icon">actions<wbr>Archiver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#activemodule" class="tsd-kind-icon">active<wbr>Module</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#d3nodesmap" class="tsd-kind-icon">d3<wbr>Nodes<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#diagramoptions" class="tsd-kind-icon">diagram<wbr>Options</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#edgesmap" class="tsd-kind-icon">edges<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#forcesynchronousupdates" class="tsd-kind-icon">force<wbr>Synchronous<wbr>Updates</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#modulesstack" class="tsd-kind-icon">modules<wbr>Stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodepadding" class="tsd-kind-icon">node<wbr>Padding</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodes" class="tsd-kind-icon">nodes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodesspatialmap" class="tsd-kind-icon">nodes<wbr>Spatial<wbr>Map</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#selectedcomponent" class="tsd-kind-icon">selected<wbr>Component</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#statesnaper" class="tsd-kind-icon">state<wbr>Snaper</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventemitter" class="tsd-kind-icon">Event<wbr>Emitter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#prefixed" class="tsd-kind-icon">prefixed</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#canvasoffset" class="tsd-kind-icon">canvas<wbr>Offset</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#currentlyopennode" class="tsd-kind-icon">currently<wbr>Open<wbr>Node</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#edgefactory" class="tsd-kind-icon">edge<wbr>Factory</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#rootelement" class="tsd-kind-icon">root<wbr>Element</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#zoomtransform" class="tsd-kind-icon">zoom<wbr>Transform</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#activatemodule" class="tsd-kind-icon">activate<wbr>Module</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addedge" class="tsd-kind-icon">add<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addnode" class="tsd-kind-icon">add<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#deactivemodule" class="tsd-kind-icon">deactive<wbr>Module</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#emit" class="tsd-kind-icon">emit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#emitactivemodulechanged" class="tsd-kind-icon">emit<wbr>Active<wbr>Module<wbr>Changed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames-1" class="tsd-kind-icon">event<wbr>Names</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getd3node" class="tsd-kind-icon">get<wbr>D3Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getedgebyid" class="tsd-kind-icon">get<wbr>Edge<wbr>ById</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getnodesfrombbox" class="tsd-kind-icon">get<wbr>Nodes<wbr>FromBBox</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getnodesfrompoint" class="tsd-kind-icon">get<wbr>Nodes<wbr>From<wbr>Point</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#gettoplevelnodes" class="tsd-kind-icon">get<wbr>Top<wbr>Level<wbr>Nodes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#listenercount" class="tsd-kind-icon">listener<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#listeners" class="tsd-kind-icon">listeners</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#off" class="tsd-kind-icon">off</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#once" class="tsd-kind-icon">once</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#pointtobbox" class="tsd-kind-icon">point<wbr>ToBBox</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#refreshnode" class="tsd-kind-icon">refresh<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removealllisteners" class="tsd-kind-icon">remove<wbr>All<wbr>Listeners</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removenode" class="tsd-kind-icon">remove<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setactivemodule" class="tsd-kind-icon">set<wbr>Active<wbr>Module</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setcanvasoffset" class="tsd-kind-icon">set<wbr>Canvas<wbr>Offset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setcurrentlyopennode" class="tsd-kind-icon">set<wbr>Currently<wbr>Open<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setd3node" class="tsd-kind-icon">set<wbr>D3Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setrootelement" class="tsd-kind-icon">set<wbr>Root<wbr>Element</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setzoomtransform" class="tsd-kind-icon">set<wbr>Zoom<wbr>Transform</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#transformclientpoint" class="tsd-kind-icon">transform<wbr>Client<wbr>Point</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#transformpoint" class="tsd-kind-icon">transform<wbr>Point</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_canvasoffset" class="tsd-kind-icon">_canvas<wbr>Offset</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="argumentmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Argument<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">Argument<wbr>Map&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:109</li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></h4>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="eventargs" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Event<wbr>Args</h3>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Args&lt;T, K&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Parameters</span><span class="tsd-signature-symbol">&lt;</span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventlistener" class="tsd-signature-type">EventListener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:126</li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#valideventtypes" class="tsd-signature-type">ValidEventTypes</a></h4>
+						</li>
+						<li>
+							<h4>K<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames" class="tsd-signature-type">EventNames</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="eventlistener" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Event<wbr>Listener</h3>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Listener&lt;T, K&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ArgumentMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Extract</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:117</li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#valideventtypes" class="tsd-signature-type">ValidEventTypes</a></h4>
+						</li>
+						<li>
+							<h4>K<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames" class="tsd-signature-type">EventNames</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="eventnames" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Event<wbr>Names</h3>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Names&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">T</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:105</li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html#valideventtypes" class="tsd-signature-type">ValidEventTypes</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+					<a name="valideventtypes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Valid<wbr>Event<wbr>Types</h3>
+					<div class="tsd-signature tsd-kind-icon">Valid<wbr>Event<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:103</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p><code>object</code> should be in either of the following forms:</p>
+							<pre><code><span class="hljs-keyword">interface</span> EventTypes {
+  <span class="hljs-string">&#x27;event-with-parameters&#x27;</span>: <span class="hljs-built_in">any</span>[]
+  <span class="hljs-string">&#x27;event-with-example-handler&#x27;</span>: <span class="hljs-function">(<span class="hljs-params">...args: <span class="hljs-built_in">any</span>[]</span>) =&gt;</span> <span class="hljs-built_in">void</span>
+}</code></pre>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Diagram<wbr>Store<span class="tsd-signature-symbol">(</span>diagramOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramoptions_.diagramoptions.html" class="tsd-signature-type">DiagramOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:108</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>diagramOptions: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramoptions_.diagramoptions.html" class="tsd-signature-type">DiagramOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_currentlyopennode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _currently<wbr>Open<wbr>Node</h3>
+					<div class="tsd-signature tsd-kind-icon">_currently<wbr>Open<wbr>Node<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:49</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_edgefactory" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _edge<wbr>Factory</h3>
+					<div class="tsd-signature tsd-kind-icon">_edge<wbr>Factory<span class="tsd-signature-symbol">:</span> <a href="../modules/_renderer_diagram_core_interfaces_edgeinstancecreator_.html#edgefactory" class="tsd-signature-type">EdgeFactory</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:105</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The EdgeFactory passed in the options when constructing the Diagram class instance</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_rootelement" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _root<wbr>Element</h3>
+					<div class="tsd-signature tsd-kind-icon">_root<wbr>Element<span class="tsd-signature-symbol">:</span> <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:90</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds the root element (d3 selection of dom element)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_zoomtransform" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _zoom<wbr>Transform</h3>
+					<div class="tsd-signature tsd-kind-icon">_zoom<wbr>Transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZoomTransform</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:79</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds canvas zoom &amp; drag transform</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="actionsarchiver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> actions<wbr>Archiver</h3>
+					<div class="tsd-signature tsd-kind-icon">actions<wbr>Archiver<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_modules_actions_archiver_.actionsarchiver.html" class="tsd-signature-type">ActionsArchiver</a><span class="tsd-signature-symbol"> = new ActionsArchiver(this)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:42</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Actions Archiver instance of the diagram</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="activemodule" class="tsd-anchor"></a>
+					<h3>active<wbr>Module</h3>
+					<div class="tsd-signature tsd-kind-icon">active<wbr>Module<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:76</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds the current active diagram module</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="d3nodesmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> d3<wbr>Nodes<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">d3<wbr>Nodes<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3nodesmap" class="tsd-signature-type">D3NodesMap</a><span class="tsd-signature-symbol"> = new Map&lt;number, D3Node&gt;()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:63</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map to store Actual DOM/SVG elements by Node&#39;s id,</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="diagramoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> diagram<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">diagram<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_renderer_diagram_core_interfaces_diagramoptions_.diagramoptions.html" class="tsd-signature-type">DiagramOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:110</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="edgesmap" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> edges<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = new Map()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:32</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map of all edges added to the diagram, stores as edge.id =&gt; edge</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="forcesynchronousupdates" class="tsd-anchor"></a>
+					<h3>force<wbr>Synchronous<wbr>Updates</h3>
+					<div class="tsd-signature tsd-kind-icon">force<wbr>Synchronous<wbr>Updates<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:100</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Normaly recursive updates are slightly delayed (asynchronouse), setting this property to <code>true</code> will force synchronous update (without delays)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="modulesstack" class="tsd-anchor"></a>
+					<h3>modules<wbr>Stack</h3>
+					<div class="tsd-signature tsd-kind-icon">modules<wbr>Stack<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:71</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stack container diagram modules activation history</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodepadding" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> node<wbr>Padding</h3>
+					<div class="tsd-signature tsd-kind-icon">node<wbr>Padding<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_renderer_diagram_core_interfaces_margin_.margin.html" class="tsd-signature-type">Margin</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:97</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Node padding values used for calculate aboslute position of an object,
+								The values should have same values as in css, its also should count the borders width,
+							ex: if in css there is a <code>border-width: 3px</code> this padding should be { top: 3, right: 0, bottom: 0, left: 0 }</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> nodes</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:27</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>List of all nodes added to the Diagram</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodesspatialmap" class="tsd-anchor"></a>
+					<h3>nodes<wbr>Spatial<wbr>Map</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes<wbr>Spatial<wbr>Map<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_diagram_store_.myrbush.html" class="tsd-signature-type">MyRBush</a><span class="tsd-signature-symbol"> = new MyRBush()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:66</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A map to store Nodes in spacial grid to facilitate finding nodes by a 2D point in the canvas</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedcomponent" class="tsd-anchor"></a>
+					<h3>selected<wbr>Component</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>Component<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_component_.component.html" class="tsd-signature-type">Component</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:37</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds the currently selected Diagram Component</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="statesnaper" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> state<wbr>Snaper</h3>
+					<div class="tsd-signature tsd-kind-icon">state<wbr>Snaper<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_modules_sub_modules_state_snaper_.statesnaper.html" class="tsd-signature-type">StateSnaper</a><span class="tsd-signature-symbol"> = new StateSnaper()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:47</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>State Snaper instance</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="eventemitter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Event<wbr>Emitter</h3>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Emitter<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_main_topbar_menu_.topbarmenu.eventemitterstatic.html" class="tsd-signature-type">EventEmitterStatic</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:131</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="prefixed" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> prefixed</h3>
+					<div class="tsd-signature tsd-kind-icon">prefixed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#prefixed">prefixed</a></p>
+						<ul>
+							<li>Defined in node_modules/eventemitter3/index.d.ts:9</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="canvasoffset" class="tsd-anchor"></a>
+					<h3>canvas<wbr>Offset</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> canvasOffset<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:147</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns canvas offset from the top left corner of the page (inner part of the window)</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="currentlyopennode" class="tsd-anchor"></a>
+					<h3>currently<wbr>Open<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> currentlyOpenNode<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:53</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Access the Node that is currently open as a sub-chart</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="edgefactory" class="tsd-anchor"></a>
+					<h3>edge<wbr>Factory</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> edgeFactory<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_interfaces_edgeinstancecreator_.html#edgefactory" class="tsd-signature-type">EdgeFactory</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:106</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_renderer_diagram_core_interfaces_edgeinstancecreator_.html#edgefactory" class="tsd-signature-type">EdgeFactory</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="rootelement" class="tsd-anchor"></a>
+					<h3>root<wbr>Element</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> rootElement<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:161</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the root DOM element of the canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="zoomtransform" class="tsd-anchor"></a>
+					<h3>zoom<wbr>Transform</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> zoomTransform<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ZoomTransform</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:131</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the zoom transform (scale and offset translate) of the canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ZoomTransform</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="activatemodule" class="tsd-anchor"></a>
+					<h3>activate<wbr>Module</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">activate<wbr>Module<span class="tsd-signature-symbol">(</span>module<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:180</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Pushes the currently active module to the stack and sets the passed module as the active one</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>module: <a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The module to be activated</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addedge" class="tsd-anchor"></a>
+					<h3>add<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Edge<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:233</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds the passed Edge instance to the indecies</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Edge instance to be added</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="addlistener" class="tsd-anchor"></a>
+					<h3>add<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Listener&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, context<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#addlistener">addListener</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:45</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>fn: <span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <a href="" class="tsd-signature-type">Context</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addnode" class="tsd-anchor"></a>
+					<h3>add<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:262</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add a Node to diagram&#39;s indices store.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Node to be stored</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deactivemodule" class="tsd-anchor"></a>
+					<h3>deactive<wbr>Module</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">deactive<wbr>Module<span class="tsd-signature-symbol">(</span>module<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:193</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unsets the passed module as the active module, than pop another from the stack and sets it as the active one</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>module: <a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The module to be deactivated</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="emit" class="tsd-anchor"></a>
+					<h3>emit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#emit">emit</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:378</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Emits an event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>type: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Event&#39;s type name</p>
+									</div>
+								</li>
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Event&#39;s data</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="emitactivemodulechanged" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> emit<wbr>Active<wbr>Module<wbr>Changed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">emit<wbr>Active<wbr>Module<wbr>Changed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:213</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Emits an event whenever a module requests activation or deactivation of its self</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="eventnames-1" class="tsd-anchor"></a>
+					<h3>event<wbr>Names</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">event<wbr>Names<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#eventnames-1">eventNames</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:15</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return an array listing the events for which the emitter has registered
+									listeners.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getd3node" class="tsd-anchor"></a>
+					<h3>get<wbr>D3Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>D3Node<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, failGently<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:221</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets D3Node from hash-table/map by Id</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Id of the Node</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> failGently: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getedgebyid" class="tsd-anchor"></a>
+					<h3>get<wbr>Edge<wbr>ById</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Edge<wbr>ById<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:245</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the Edge instance from hash-table/map by Id</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The id of the Edge</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getnodesfrombbox" class="tsd-anchor"></a>
+					<h3>get<wbr>Nodes<wbr>FromBBox</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Nodes<wbr>FromBBox<span class="tsd-signature-symbol">(</span>bbox<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">BBox</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:319</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>bbox: <span class="tsd-signature-type">BBox</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getnodesfrompoint" class="tsd-anchor"></a>
+					<h3>get<wbr>Nodes<wbr>From<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Nodes<wbr>From<wbr>Point<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, radius<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:311</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Searches for and return nodes that overlaps with a point or bounding box (can be specified using <code>radius</code> parameter)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>2D Point thats specify where to search for nodes</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> radius: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Number of pixels to enlarge the target bouding box (ex: a radius of 2 gives a box of 4x4)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="gettoplevelnodes" class="tsd-anchor"></a>
+					<h3>get<wbr>Top<wbr>Level<wbr>Nodes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Top<wbr>Level<wbr>Nodes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:293</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return all top level Nodes (Nodes that does not have a parent, sort of direct childs of the diagram)</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="listenercount" class="tsd-anchor"></a>
+					<h3>listener<wbr>Count</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">listener<wbr>Count<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#listenercount">listenerCount</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:27</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the number of listeners listening to a given event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="listeners" class="tsd-anchor"></a>
+					<h3>listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">listeners&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#listeners">listeners</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:20</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the listeners registered for a given event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="off" class="tsd-anchor"></a>
+					<h3>off</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">off&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, fn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, context<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">Context</a>, once<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#off">off</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:69</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fn: <span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <a href="" class="tsd-signature-type">Context</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> once: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, context<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#on">on</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:40</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add a listener for a given event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>fn: <span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <a href="" class="tsd-signature-type">Context</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="once" class="tsd-anchor"></a>
+					<h3>once</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">once&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, fn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, context<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#once">once</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:54</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add a one-time listener for a given event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5>fn: <span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <a href="" class="tsd-signature-type">Context</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="pointtobbox" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> point<wbr>ToBBox</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">point<wbr>ToBBox<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, radius<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>maxX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>maxY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>minX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>minY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:325</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts Point to <code>RBush</code>s Bounding Box</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+								<li>
+									<h5>radius: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{ </span>maxX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>maxY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>minX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span>minY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>maxX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>maxY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>minX<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>minY<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="refreshnode" class="tsd-anchor"></a>
+					<h3>refresh<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">refresh<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:285</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Refresh Node&#39;s index in the Spatial Map/Index</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <code>Node</code> instance to be refreshed</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="removealllisteners" class="tsd-anchor"></a>
+					<h3>remove<wbr>All<wbr>Listeners</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>All<wbr>Listeners<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#removealllisteners">removeAllListeners</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:79</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove all listeners, or those of the specified event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> event: <span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+					<a name="removelistener" class="tsd-anchor"></a>
+					<h3>remove<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener&lt;T&gt;<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, fn<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, context<span class="tsd-signature-symbol">?: </span><a href="" class="tsd-signature-type">Context</a>, once<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_main_topbar_menu_.topbarmenu.html">TopBarMenu</a>.<a href="_main_topbar_menu_.topbarmenu.html#removelistener">removeListener</a></p>
+								<ul>
+									<li>Defined in node_modules/eventemitter3/index.d.ts:63</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove the listeners of a given event.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter.EventNames</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">T</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> fn: <span class="tsd-signature-type">EventEmitter.EventListener</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <a href="" class="tsd-signature-type">Context</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> once: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="removenode" class="tsd-anchor"></a>
+					<h3>remove<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:275</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove Node from diagram&#39;s indices store.
+										All <code>Node</code>s that was removed from the Diagram and/or was destroyed,
+									Need to be also removed from indices</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The <code>Node</code> instance to be removed</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="setactivemodule" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Active<wbr>Module</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Active<wbr>Module<span class="tsd-signature-symbol">(</span>module<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:204</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Store the active module reference</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>module: <a href="_renderer_diagram_core_module_.diagrammodule.html" class="tsd-signature-type">DiagramModule</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setcanvasoffset" class="tsd-anchor"></a>
+					<h3>set<wbr>Canvas<wbr>Offset</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Canvas<wbr>Offset<span class="tsd-signature-symbol">(</span>offset<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:154</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Store canvas offset from the top left corner of the page (inner part of the window) for later access using <code>canvasOffset</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>offset: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setcurrentlyopennode" class="tsd-anchor"></a>
+					<h3>set<wbr>Currently<wbr>Open<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Currently<wbr>Open<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:56</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setd3node" class="tsd-anchor"></a>
+					<h3>set<wbr>D3Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>D3Node<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, d3Node<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:254</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Store a <code>D3Node</code> in a hash table by the Node&#39;s Id</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Id of the Node</p>
+									</div>
+								</li>
+								<li>
+									<h5>d3Node: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A <code>D3Node</code> instance to be stored and referenced</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setrootelement" class="tsd-anchor"></a>
+					<h3>set<wbr>Root<wbr>Element</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Root<wbr>Element<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:168</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Stpre the root DOM element of the canvas for later access using <code>rootElement</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>element: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setzoomtransform" class="tsd-anchor"></a>
+					<h3>set<wbr>Zoom<wbr>Transform</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Zoom<wbr>Transform<span class="tsd-signature-symbol">(</span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ZoomTransform</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:139</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Cache the zoom transform (scale and offset translate) of the canvas,
+									And emits it change event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>transform: <span class="tsd-signature-type">ZoomTransform</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="transformclientpoint" class="tsd-anchor"></a>
+					<h3>transform<wbr>Client<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">transform<wbr>Client<wbr>Point<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, roundNumbers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:342</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Maps client point (relative to top left corner of the web page) to the canvas point.
+										Basically adds offset and scales the point accoding to the canvas zoom level and drag position,
+									also adds the offset of the canvas wrapper relative the the web page</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Point to be mapped</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> roundNumbers: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if <code>true</code> the returned x, y will be rounded to the nearest integers</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="transformpoint" class="tsd-anchor"></a>
+					<h3>transform<wbr>Point</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">transform<wbr>Point<span class="tsd-signature-symbol">(</span>point<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, roundNumbers<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/diagram-store.ts:355</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Maps point (relative to top left corner of diagram&#39;s root element) to the canvas point.
+									Basically adds offset and scales the point accoding to the canvas zoom level and drag position</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>point: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Point to be mapped</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> roundNumbers: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if <code>true</code> the returned x, y will be rounded to the nearest integers</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+					<a name="_canvasoffset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _canvas<wbr>Offset</h3>
+					<div class="tsd-signature tsd-kind-icon">_canvas<wbr>Offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/diagram-store.ts:85</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Holds canvas offset relative to the top left corner of the web page.
+							Correctness of this value is important for a correct user interaction</p>
+						</div>
+					</div>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="_canvasoffset.x" class="tsd-anchor"></a>
+						<h3>x</h3>
+						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/diagram-store.ts:85</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="_canvasoffset.y" class="tsd-anchor"></a>
+						<h3>y</h3>
+						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/diagram-store.ts:85</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_renderer_diagram_core_diagram_store_.html">&quot;renderer/diagram-<wbr>core/diagram-<wbr>store&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-kind-icon">Diagram<wbr>Store</a>
+						<ul>
+							<li class=" tsd-kind-interface tsd-parent-kind-class">
+								<a href="../interfaces/_renderer_diagram_core_diagram_store_.diagramstore.eventemitterstatic.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Static</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="../interfaces/_renderer_diagram_core_diagram_store_.diagramstore.listenerfn.html" class="tsd-kind-icon">Listener<wbr>Fn</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#argumentmap" class="tsd-kind-icon">Argument<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventargs" class="tsd-kind-icon">Event<wbr>Args</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventlistener" class="tsd-kind-icon">Event<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames" class="tsd-kind-icon">Event<wbr>Names</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-class tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#valideventtypes" class="tsd-kind-icon">Valid<wbr>Event<wbr>Types</a>
+							</li>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_currentlyopennode" class="tsd-kind-icon">_currently<wbr>Open<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_edgefactory" class="tsd-kind-icon">_edge<wbr>Factory</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_rootelement" class="tsd-kind-icon">_root<wbr>Element</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_zoomtransform" class="tsd-kind-icon">_zoom<wbr>Transform</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#actionsarchiver" class="tsd-kind-icon">actions<wbr>Archiver</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#activemodule" class="tsd-kind-icon">active<wbr>Module</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#d3nodesmap" class="tsd-kind-icon">d3<wbr>Nodes<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#diagramoptions" class="tsd-kind-icon">diagram<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#edgesmap" class="tsd-kind-icon">edges<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#forcesynchronousupdates" class="tsd-kind-icon">force<wbr>Synchronous<wbr>Updates</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#modulesstack" class="tsd-kind-icon">modules<wbr>Stack</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodepadding" class="tsd-kind-icon">node<wbr>Padding</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodes" class="tsd-kind-icon">nodes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#nodesspatialmap" class="tsd-kind-icon">nodes<wbr>Spatial<wbr>Map</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#selectedcomponent" class="tsd-kind-icon">selected<wbr>Component</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#statesnaper" class="tsd-kind-icon">state<wbr>Snaper</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventemitter" class="tsd-kind-icon">Event<wbr>Emitter</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#prefixed" class="tsd-kind-icon">prefixed</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#canvasoffset" class="tsd-kind-icon">canvas<wbr>Offset</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#currentlyopennode" class="tsd-kind-icon">currently<wbr>Open<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#edgefactory" class="tsd-kind-icon">edge<wbr>Factory</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#rootelement" class="tsd-kind-icon">root<wbr>Element</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#zoomtransform" class="tsd-kind-icon">zoom<wbr>Transform</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#activatemodule" class="tsd-kind-icon">activate<wbr>Module</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addedge" class="tsd-kind-icon">add<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addlistener" class="tsd-kind-icon">add<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#addnode" class="tsd-kind-icon">add<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#deactivemodule" class="tsd-kind-icon">deactive<wbr>Module</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#emit" class="tsd-kind-icon">emit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#emitactivemodulechanged" class="tsd-kind-icon">emit<wbr>Active<wbr>Module<wbr>Changed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#eventnames-1" class="tsd-kind-icon">event<wbr>Names</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getd3node" class="tsd-kind-icon">get<wbr>D3Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getedgebyid" class="tsd-kind-icon">get<wbr>Edge<wbr>ById</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getnodesfrombbox" class="tsd-kind-icon">get<wbr>Nodes<wbr>FromBBox</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#getnodesfrompoint" class="tsd-kind-icon">get<wbr>Nodes<wbr>From<wbr>Point</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#gettoplevelnodes" class="tsd-kind-icon">get<wbr>Top<wbr>Level<wbr>Nodes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#listenercount" class="tsd-kind-icon">listener<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#listeners" class="tsd-kind-icon">listeners</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#off" class="tsd-kind-icon">off</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#once" class="tsd-kind-icon">once</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#pointtobbox" class="tsd-kind-icon">point<wbr>ToBBox</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#refreshnode" class="tsd-kind-icon">refresh<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removealllisteners" class="tsd-kind-icon">remove<wbr>All<wbr>Listeners</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#removenode" class="tsd-kind-icon">remove<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setactivemodule" class="tsd-kind-icon">set<wbr>Active<wbr>Module</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setcanvasoffset" class="tsd-kind-icon">set<wbr>Canvas<wbr>Offset</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setcurrentlyopennode" class="tsd-kind-icon">set<wbr>Currently<wbr>Open<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setd3node" class="tsd-kind-icon">set<wbr>D3Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setrootelement" class="tsd-kind-icon">set<wbr>Root<wbr>Element</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#setzoomtransform" class="tsd-kind-icon">set<wbr>Zoom<wbr>Transform</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#transformclientpoint" class="tsd-kind-icon">transform<wbr>Client<wbr>Point</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#transformpoint" class="tsd-kind-icon">transform<wbr>Point</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_diagram_store_.diagramstore.html#_canvasoffset" class="tsd-kind-icon">_canvas<wbr>Offset</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_diagram_store_.myrbush.html" class="tsd-kind-icon">MyRBush</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

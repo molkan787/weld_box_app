@@ -1,5 +1,6 @@
 import { Component } from "../diagram-core/components/component";
 import { Dialog } from "../dialog";
+import { BinaryObject } from "../helpers/binary-object";
 import { readFile, writeFile } from "../helpers/fs";
 import { ProjectFileData } from "../interfaces/ProjectFileData";
 import { ProjectSetting } from "../interfaces/ProjectSetting";
@@ -11,15 +12,26 @@ import { Menu } from "./menu";
 
 const FORMAT_CHECK_VALUE = 28112020;
 
+/**
+ * This module handles the process of saving and loading projects
+ */
 class ProjectsManager{
 
   private diagramProject = new DiagramProject();
 
+  /**
+   * Sets current project's settings
+   * @param setting The new project settigns
+   */
   public async setSetting(setting: ProjectSetting){
     store.state.projectSetting = setting;
     await this.save();
   }
 
+  /**
+   * Creates new project
+   * @param setting Project settigns
+   */
   public async create(setting: ProjectSetting){
     this.close();
     StatusController.setStatusText('Creating new project...');
@@ -32,6 +44,9 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
+  /**
+   * Closes current ptoject
+   */
   public async close(){
     StatusController.setStatusText('Closing project...');
     store.state.projectSetting = null;
@@ -42,6 +57,10 @@ class ProjectsManager{
     StatusController.setStatusText(null);
   }
 
+  /**
+   * Saves current project to file
+   * @param filename filename to write project data to
+   */
   public async save(filename?: string){
     StatusController.setStatusText('Saving project...');
     const { projectSetting, diagram } = store.state;
@@ -53,18 +72,22 @@ class ProjectsManager{
       setting: projectSetting,
       data: data
     }
-    const json = JSON.stringify(project);
+    const binData = BinaryObject.encode(project);
 
-    await writeFile(filename || projectSetting.location, json);
+    await writeFile(filename || projectSetting.location, binData);
     StatusController.setStatusText(null);
     console.log('project saved')
   }
 
+  /**
+   * Loads a project from a file
+   * @param filename Project's filename
+   */
   public async load(filename: string){
     this.close();
     StatusController.setStatusText(`Loading project ${filename}...`);
     const raw = await readFile(filename);
-    const project = <ProjectFileData>JSON.parse(raw);
+    const project = <ProjectFileData>BinaryObject.decode(raw);
     if(project?.formatCheck !== FORMAT_CHECK_VALUE){
       throw new Error('Invalid project file format');
     }

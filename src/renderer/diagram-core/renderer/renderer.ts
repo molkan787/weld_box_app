@@ -10,6 +10,9 @@ import { D3Node } from "../types/aliases";
 import { EdgeRenderer } from "./edge-renderer";
 import { NodeRenderer } from "./node-renderer";
 
+/**
+ * This module handles the rendering logic for all Diagram's components
+ */
 export class Renderer{
 
   readonly nodeRenderer: NodeRenderer;
@@ -65,6 +68,10 @@ export class Renderer{
     this.edgeRenderer.prepareLayer(edgesLayer);
   }
 
+  /**
+   * Rebuilds the entire chart when the current node changes (the current node is the node that is currently open as a sub-chart)
+   * @param event
+   */
   onCurrentNodeChanged(event: DiagramEvent){
     const currentNode = <Node | null>event.node;
     console.log('CurrentNode', currentNode);
@@ -75,6 +82,9 @@ export class Renderer{
     }
   }
 
+  /**
+   * Removes all elements of all currently renderer diagram components from layers of the canvas
+   */
   clearContent(){
     const d3Nodes = this.store.d3NodesMap.values();
     for(let d3Node of d3Nodes){
@@ -89,6 +99,10 @@ export class Renderer{
     el.innerHTML = '';
   }
 
+  /**
+   * Renders a node and all its childs, sub-childs... and all visible connected edges
+   * @param chartNode The root node of the hierarchy to render
+   */
   buildChart(chartNode: Node | null){
     if(chartNode){
       const components = this.getNodeVisibleContent(chartNode);
@@ -99,6 +113,10 @@ export class Renderer{
     }
   }
 
+  /**
+   * Re-render a node and all its childs, sub-childs... and all visible connected edges
+   * @param node  The root node of the hierarchy to re-render
+   */
   rebuildInChartNodeHierachy(node: Node){
     const componentsToDestroy = this.getNodeVisibleContent(node, true);
     const componentsToBuild = this.getNodeVisibleContent(node);
@@ -106,6 +124,10 @@ export class Renderer{
     this.buildComponents(componentsToBuild);
   }
 
+  /**
+   * Renders a list diagram's components on the canvas
+   * @param components Components list to render
+   */
   buildComponents(components: Component[]){
     for(let component of components){
       this.buildComponent(null, component);
@@ -127,6 +149,10 @@ export class Renderer{
     }
   }
 
+  /**
+   * Removes a list of diagram's component's DOM elements from the canvas
+   * @param components List of components to destory
+   */
   destroyComponents(components: Component[]){
     const len = components.length;
     for(let i = 0; i < len; i++){
@@ -139,6 +165,10 @@ export class Renderer{
     }
   }
 
+  /**
+   * Destorys diagram's component's DOM element
+   * @param component The component to destroy
+   */
   destroyComponent(component: Component){
     const d3Node = this.store.getD3Node(component.id);
     const com = <Node | Edge>component;
@@ -159,12 +189,21 @@ export class Renderer{
     }
   }
 
+  /**
+   * Returns list of node's hierarchy components that are logically visible, assuming the root node is visible
+   * @param node The root node
+   * @param forceIncludeDirectChilds if `true` even if direct childs of the root node are not are logically not visible they will still be included in the result
+   */
   getNodeVisibleContent(node: Node, forceIncludeDirectChilds: boolean = false): Component[]{
     const nodes: Component[] = node.getAllDescendentsNodes(true, !forceIncludeDirectChilds);
     const edges: Component[] = this.getNodesVisibleEdges(<Node[]>nodes);
     return nodes.concat(edges);
   }
 
+  /**
+   * Returns list of edges that are logically visible, assuming the provided nodes are visible
+   * @param nodes Provided nodes will be used as the source of edges to search in
+   */
   getNodesVisibleEdges(nodes: Node[]): Edge[]{
     const bucket = new EdgesBucket();
 
@@ -178,6 +217,10 @@ export class Renderer{
     return bucket.getAll();
   }
 
+  /**
+   * Returns list of edges that are logically visible, assuming the provided node is visible
+   * @param node Provided node will be used as the source of edges to search in
+   */
   getNodeVisibleEdges(node: Node): Edge[]{
     const result: Edge[] = [];
     const ecs = node.edges;
@@ -192,11 +235,19 @@ export class Renderer{
     return result;
   }
 
+  /**
+   * Rebuilds edge's DOM element
+   * @param edge
+   */
   rebuildEdge(edge: Edge){
     this.edgeRenderer.destroyElement(edge);
     this.buildComponent(null, edge);
   }
 
+  /**
+   * Finds and returns most optimal parent container for an edge (it can be the root edges layer, or a specific node's edges layer)
+   * @param edge
+   */
   getEdgeContainer(edge: Edge): D3Node{
     const { source, target } = edge;
     const node1 = source.isAttachedToNode() ? source.node : null;
@@ -213,6 +264,12 @@ export class Renderer{
     }
   }
 
+  /**
+   * Return the first common parent (ancestor) of two nodes
+   * @param node1
+   * @param node2
+   * @param usePublicGetter if `true` an open node will be considered as a top level node (have no parent) event if it actuall does have a parent
+   */
   private findNearestCommonParent(node1: Node | null, node2: Node | null, usePublicGetter: boolean): Node | null{
     const h1 = node1?.getHierarchyPath(usePublicGetter) || [];
     const h2 = node2?.getHierarchyPath(usePublicGetter) || [];
@@ -235,12 +292,20 @@ export class Renderer{
     return parent;
   }
 
+  /**
+   * Builds node's DOM element when it got added to the Diagram
+   * @param event
+   */
   onNodeAdded(event: DiagramEvent){
     const node = <Node>event.node;
     const container = this.getNodeDomParent(node);
     this.buildComponent(container, node);
   }
 
+  /**
+   * Builds edge's DOM element if it is logically visivle when it got added to the Diagram
+   * @param event
+   */
   onEdgeAdded(event: DiagramEvent){
     const edge = <Edge>event.edge;
     const shouldRender = Visibility.isEdgeVisible(edge, null);
@@ -251,6 +316,11 @@ export class Renderer{
     }
   }
 
+  /**
+   * Return the parent DOM element on which the node should be renderer on,
+   * if node has no parent, then the nodes layer will be return, otheriwse the DOM element of its parent will be returned
+   * @param node
+   */
   getNodeDomParent(node: Node){
     const domParent = node.parent && this.store.getD3Node(node.parent.id);
     return <D3Node | null>domParent;
@@ -281,28 +351,49 @@ export class Renderer{
 
   }
 
+  /**
+   * Updates edge's DOM element when it was updated
+   * @param event
+   */
   onEdgeConnectionsUpdated(event: DiagramEvent){
     if(event.skipRendering) return;
     const edge = <Edge>event.edge;
     this.edgeRenderer.update(edge);
   }
 
+  /**
+   * Updates edge's DOM element when it was updated
+   * @param event
+   */
   onEdgeConnectionsChanged(event: DiagramEvent){
     if(event.skipRendering) return;
     const edge = <Edge>event.edge;
     this.rebuildEdge(edge);
   }
 
+  /**
+   * Updates edge's DOM element when its shape was changed
+   * @param event
+   */
   onEdgeReshaped(event: DiagramEvent){
     const edge = <Edge>event.edge;
     this.edgeRenderer.update(edge);
   }
 
+  /**
+   * Rebuilds all edges that are connected to a node that just changed his parent,
+   * this is needed because currently edges are renderer on the node's old parent
+   * @param event
+   */
   onNodeParentChanged(event: DiagramEvent){
     const edges = (<Node>event.node).edges;
     edges.forEach(ec => this.rebuildEdge(<Edge>ec.edge));
   }
 
+  /**
+   * Rebuids node when it got converted to a sub-chart
+   * @param event
+   */
   onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
     if(!event.simulated || event.isRestore){
@@ -311,6 +402,10 @@ export class Renderer{
     setTimeout(() => this.rebuildConvertedNode(node), 0);
   }
 
+  /**
+   * Rebuids node when it got converted to a normal node
+   * @param event
+   */
   onNodeConvertedToNormal(event: DiagramEvent){
     const node = <Node>event.node;
     if(!event.simulated || event.isRestore){
@@ -319,6 +414,10 @@ export class Renderer{
     setTimeout(() => this.rebuildConvertedNode(node), 0);
   }
 
+  /**
+   * Rebuilds a node that was converted to a sub-chart or back to a normal node
+   * @param node
+   */
   rebuildConvertedNode(node: Node){
     this.store.forceSynchronousUpdates = true;
     this.rebuildInChartNodeHierachy(node);
@@ -326,6 +425,11 @@ export class Renderer{
     this.store.forceSynchronousUpdates = false;
   }
 
+  /**
+   * Create and push/add action to ActionsArchiver when a not got converted
+   * @param node
+   * @param isSubChart
+   */
   pushNodeSubChartConvertionAction(node: Node, isSubChart: boolean){
     const toSubChart = () => node.convertToSubChart(true);
     const toNormal = () => node.convertToNormal(true);
@@ -341,6 +445,10 @@ export class Renderer{
     })
   }
 
+  /**
+   * Destorys a list of edges' DOM elements in response to an Request event
+   * @param event
+   */
   onDestroyEdges(event: DiagramEvent){
     const edges = <Edge[]>event.data;
     for(const edge of edges){
@@ -348,6 +456,10 @@ export class Renderer{
     }
   }
 
+  /**
+   * Renders a list of edges' DOM elements in response to an Request event
+   * @param event
+   */
   onBuildEdges(event: DiagramEvent){
     const edges = <Edge[]>event.data;
     for(const edge of edges){

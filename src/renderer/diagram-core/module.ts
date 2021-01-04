@@ -19,10 +19,16 @@ export class DiagramModule{
     return this.store.stateSnaper;
   }
 
+  /**
+   * Returns whether the Module is active or not
+   */
   public get isActive(){
     return this.store.activeModule === this;
   }
 
+  /**
+   * Returns whether the Module is inactive or not
+   */
   public get isInactive(){
     return this.store.activeModule !== this;
   }
@@ -41,6 +47,10 @@ export class DiagramModule{
     this.store.deactiveModule(this);
   }
 
+  /**
+   * Adds action to ActionsArchiver's stack
+   * @param action The Action to be added
+   */
   protected pushAction(action: Action){
     this.store.actionsArchiver.push(action);
   }

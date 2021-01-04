@@ -1,7 +1,7 @@
 import { EdgeConnection, Node } from "../diagram-core";
 import { cloneArray, cloneNestedObject, cloneObject } from "../diagram-core/utils";
 import { EventNode } from "../my-diagram/EventNode";
-import { CommentCloneData, EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData } from "../interfaces/ObjectCopyResult";
+import { CommentCloneData, EdgeCloneData, EdgeConnectionCloneData, EventCloneData, JunctionCloneData, MessageCloneData, NodeCloneData, ObjectCloneData, ObjectCopyResult, StateCloneData, VariableCloneData } from "../interfaces/ObjectCopyResult";
 import { ObjectType } from "../interfaces/ObjectType";
 import { MessageNode } from "../my-diagram/MessageNode";
 import { EdgeType, MyEdge } from "../my-diagram/my-edge";
@@ -9,9 +9,18 @@ import { State } from "../my-diagram/state";
 import { NodeCraftResult, NodesRefs, ObjectCraftResult } from "../interfaces/ObjectCraftResult";
 import { Junction } from "../my-diagram/junction";
 import { CommentNode } from "../my-diagram/comment-node";
+import { VariableNode } from "../my-diagram/VariableNode";
 
+/**
+ * Helper class that convert json data to Diagram's objects  (import like)
+ */
 export class ObjectCrafter{
 
+  /**
+   * Create an actual components instance from data objects (recursivly)
+   * @param copyResult The data objects previously return by the ObjectCopier module
+   * @param useRefsAsIds if `true` the "ref" included in the data objects will be used as the id of the component
+   */
   public craft(copyResult: ObjectCopyResult, useRefsAsIds?: boolean): ObjectCraftResult{
     const { objects, edges } = copyResult;
     const refs: NodesRefs = new Map();
@@ -37,6 +46,11 @@ export class ObjectCrafter{
     }
   }
 
+  /**
+   * Create an actual component instance from data object
+   * @param cloneData Data object
+   * @param useRefsAsIds if `true` the "ref" included in the data object will be used as the id of the component
+   */
   public craftNode(cloneData: ObjectCloneData, useRefsAsIds?: boolean): NodeCraftResult{
     const { what, data } = cloneData;
     let node: Node;
@@ -48,6 +62,8 @@ export class ObjectCrafter{
       node = this.craftMessageNode(<MessageCloneData>data);
     }else if(cloneData.what == ObjectType.Junction){
       node = this.craftJunction(<JunctionCloneData>data);
+    }else if(cloneData.what == ObjectType.Variable){
+      node = this.craftVariableNode(<VariableCloneData>data);
     }else if(cloneData.what == ObjectType.Comment){
       node = this.craftComment(<CommentCloneData>data);
     }else{
@@ -62,6 +78,11 @@ export class ObjectCrafter{
     };
   }
 
+  /**
+   * Create an actual State instance from data object
+   * @param data
+   * @param what A State and Thread share the same class, so a component type should be specified
+   */
   public craftState(data: StateCloneData, what: ObjectType): State{
     const { props, name, properties, statementBlocks, position, size, showContent, isSubChart, codeblocksExpanded } = data;
     const state = new State(cloneObject(position), cloneObject(size));
@@ -82,6 +103,10 @@ export class ObjectCrafter{
     return state;
   }
 
+  /**
+   * Create an actual Event node instance from data object
+   * @param data
+   */
   public craftEventNode(data: EventCloneData): EventNode{
     const { name, properties, position, size } = data;
     const node = new EventNode(cloneObject(position));
@@ -91,6 +116,23 @@ export class ObjectCrafter{
     return node;
   }
 
+  /**
+   * Create an actual Variable node instance from data object
+   * @param data
+   */
+  public craftVariableNode(data: VariableCloneData): VariableNode{
+    const { name, properties, position, size } = data;
+    const node = new VariableNode(cloneObject(position));
+    node.size = cloneObject(size);
+    node.name = name;
+    node.properties = cloneObject(properties);
+    return node;
+  }
+
+  /**
+   * Create an actual Message node instance from data object
+   * @param data
+   */
   public craftMessageNode(data: MessageCloneData): MessageNode{
     const { name, properties, body, position, size } = data;
     const node = new MessageNode(cloneObject(position));
@@ -101,6 +143,10 @@ export class ObjectCrafter{
     return node;
   }
 
+  /**
+   * Create an actual Junction instance from data object
+   * @param data
+   */
   public craftJunction(data: JunctionCloneData): Junction{
     const { position, size } = data;
     const node = new Junction(cloneObject(position));
@@ -108,6 +154,10 @@ export class ObjectCrafter{
     return node;
   }
 
+  /**
+   * Create an actual Comment instance from data object
+   * @param data
+   */
   public craftComment(data: CommentCloneData): CommentNode{
     const { position, size, text } = data;
     const node = new CommentNode(cloneObject(position));
@@ -116,6 +166,12 @@ export class ObjectCrafter{
     return node;
   }
 
+  /**
+   * Create an actual Edges instances from data objects
+   * @param edgesData Edges data objects
+   * @param nodesRef Because the edges data object keeps reference to the connected Node, a map need to be specified (map of Nodes instance mapped by their references)
+   * @param useRefsAsIds if `true` the "ref" included in the data object will be used as the id of the component
+   */
   public craftEdges(edgesData: EdgeCloneData[], nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge[]{
     const edges: MyEdge[] = [];
     const ecRefs = new Map<number, EdgeConnection>();
@@ -148,6 +204,12 @@ export class ObjectCrafter{
     return edges;
   }
 
+  /**
+   * Create an actual Edge instance from data object
+   * @param data Edge data object
+   * @param nodesRef Because the edges data object keeps reference to the connected Node, a map need to be specified (map of Nodes instance mapped by their references)
+   * @param useRefsAsIds if `true` the "ref" included in the data object will be used as the id of the component
+   */
   public craftEdge(data: EdgeCloneData, nodesRef: NodesRefs, useRefsAsIds?: boolean): MyEdge | null{
     const {
       ref, name, properties, shapePoints, source, target,
@@ -173,6 +235,11 @@ export class ObjectCrafter{
     return edge;
   }
 
+  /**
+   * Create an actual EdgeConnection instance from data object
+   * @param data EdgeConnection data object
+   * @param useRefsAsIds if `true` the "ref" included in the data object will be used as the id of the component
+   */
   private craftEdgeConnection(data: EdgeConnectionCloneData, useRefsAsIds?: boolean): EdgeConnection{
     const { ref, position, offset, attachType, nodeWall } = data;
     const ec = new EdgeConnection(attachType, nodeWall);

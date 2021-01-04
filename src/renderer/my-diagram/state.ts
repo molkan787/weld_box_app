@@ -56,7 +56,7 @@ export class State extends Node implements ObjectProps{
 
   /**
    * Converts this State instance to a Thread.
-   * Basicly it hide State's content and sets `isThread` flag to `true`
+   * Basicly it converts this Node to a sub-chart and sets `isThread` flag to `true`
    */
   public convertToThread(){
     this._isThread = true;

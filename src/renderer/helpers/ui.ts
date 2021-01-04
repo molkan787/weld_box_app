@@ -1,3 +1,7 @@
+/**
+ * Makes a `<textarea>` height automatically fit its text height
+ * @param textarea
+ */
 export function textareaFitContentHeight(textarea: HTMLTextAreaElement): void{
   const ta = <any>textarea;
   textarea.style.height = '';
@@ -10,6 +14,12 @@ export function textareaFitContentHeight(textarea: HTMLTextAreaElement): void{
   });
 }
 
+/**
+ * Calculate visual text size
+ * @param text
+ * @param style The style to apply to the text
+ * @param options
+ */
 export function calcTextSize(text: string, style: any, options?: { maxWidth: number }){
   const { maxWidth } = options || {};
   const el = prepareTextCalcElement();

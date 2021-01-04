@@ -59,7 +59,8 @@ export default class Main {
         nodeIntegration: true,
         enableRemoteModule: true,
         webSecurity: false
-      }
+      },
+      title: 'Weld.dev'
     });
     const topbarMenu = this.appMenu = new TopBarMenu();
     topbarMenu.handleItemClick = (item) => this.onMenuItemClick(item);

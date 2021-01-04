@@ -7,6 +7,9 @@ import { Size } from "./Size";
 
 export type NodeSnap = NodeSnapState[];
 
+/**
+ * A Node state snapshot, contains cached properties (used for later restoration)
+ */
 export interface NodeSnapState{
   node: Node;
   parent: Node | null;
@@ -15,6 +18,9 @@ export interface NodeSnapState{
   // edges: EdgeSnap[];
 }
 
+/**
+ * A Edge state snapshot, contains cached properties (used for later restoration)
+ */
 export interface EdgeSnap{
   edge: Edge;
   shapePoints: Position[];
@@ -25,6 +31,9 @@ export interface EdgeSnap{
   multipartType: MultipartEdgeType;
 }
 
+/**
+ * A EdgeConnection state snapshot, contains cached properties (used for later restoration)
+ */
 export interface EdgeConnectionSnap{
   edgeConnection: EdgeConnection;
   position?: Position;

@@ -6,7 +6,7 @@ import { Action, ActionTask } from "./interfaces/Action";
 import { clone, patchObject } from "./utils";
 
 /**
- * A Helper class that detects changes in Diagram's component properties and add changes history to the Actions Archiver
+ * A Helper class that detects changes in Diagram's component properties and add changes history to the ActionsArchiver
  */
 export class PropsChangeArchiver{
 
@@ -36,6 +36,10 @@ export class PropsChangeArchiver{
 
   }
 
+  /**
+   * Immidiatly adds any pending changes actions that ware debounced to the ActionsArchiver stack
+   * @param rootProp
+   */
   public flush(rootProp: string){
     const debouncer = this.debouncers[rootProp];
     if(debouncer){
@@ -43,10 +47,20 @@ export class PropsChangeArchiver{
     }
   }
 
+  /**
+   * Indicate whether the instance is Locked or not (a locked instance will ignore all changes)
+   */
   private isLocked(){
     return this._locked || this.store?.actionsArchiver.isLocked();
   }
 
+  /**
+   * Handles the changes and create for them the change action, than adds it to the ActionsArchiver or schedule it for debounced properties
+   * @param path
+   * @param value
+   * @param prevValue
+   * @param name
+   */
   private onChange(path: string, value: any, prevValue: any, name: string){
     if(path == 'properties.priority' && value == -Infinity){
       throw new Error('got value ' + value)
@@ -68,6 +82,11 @@ export class PropsChangeArchiver{
 
   }
 
+  /**
+   * Creates debouncer instance for the specifed property
+   * @param prop Property name
+   * @param interval Debounce time in milliseconds
+   */
   private createDebouncer(prop: string, interval: number){
     this.actions[prop] = [];
     this.debouncers[prop] = debounce(() => {
@@ -75,6 +94,10 @@ export class PropsChangeArchiver{
     }, interval);
   }
 
+  /**
+   * Creates proxy for the specified property
+   * @param prop
+   */
   private prepareProperty(prop: string){
     const data = this.data;
     Object.defineProperty(this.instance, prop, {
@@ -87,6 +110,12 @@ export class PropsChangeArchiver{
     });
   }
 
+  /**
+   * Create the change action for the specified property path and its old and new value
+   * @param path Path of the property that changed its value
+   * @param value The new value
+   * @param prevValue The old value
+   */
   private craftAction(path: string, value: any, prevValue: any): Action{
     const _value = clone(value);
     const _prevValue = clone(prevValue);
@@ -120,6 +149,10 @@ export class PropsChangeArchiver{
     return action;
   }
 
+  /**
+   * Adds actions of the debounced properties to ActionsArchiver stack
+   * @param prop
+   */
   private publishActions(prop: string){
     const actions: Action[] = this.actions[prop];
     this.actions[prop] = [];
@@ -136,18 +169,31 @@ export class PropsChangeArchiver{
     }
   }
 
+  /**
+   * Adds action to ActionsArchiver stack
+   * @param action
+   */
   private pushAction(action: Action){
     this.store?.actionsArchiver.push(action);
   }
 
+  /**
+   * Returns the Diagram Store instance of the Associated Diagram Component
+   */
   private get store(): DiagramStore{
     return this.instance.store;
   }
 
+  /**
+   * Locks this instance (ultimatly making it to ignore changes)
+   */
   public lock(){
     this._locked = true;
   }
 
+  /**
+   * Unlocks this instance (ultimatly making it to handle changes)
+   */
   public unlock(){
     this._locked = false;
   }

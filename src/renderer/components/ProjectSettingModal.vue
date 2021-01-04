@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
 import { cloneObject } from '../diagram-core/utils';
 import { projectsManager } from '../modules/projects-manager';
 import ProjectSettingForm from './forms/ProjectSettingForm';
@@ -78,6 +79,7 @@ export default {
     },
     clearForm(){
       this.setting = {
+        uuid: uuidv4(),
         name: '',
         location: '',
         sourcesDir: '',

@@ -6,6 +6,9 @@ import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { Position } from "../interfaces/Position";
 import { DiagramModule } from "../module";
 
+/**
+ * Handles the process of initial node dragging (dragging from the toolbox)
+ */
 export class InitialNodeDragging extends DiagramModule{
 
   private subject: Node | null = null;
@@ -17,6 +20,10 @@ export class InitialNodeDragging extends DiagramModule{
     store.on(EVENTS.DIAGRAM_START_NODE_DRAGGING, (e: DiagramEvent) => this.onStartNodeDragging(e));
   }
 
+  /**
+   * Starts the initial dragging process
+   * @param e
+   */
   onStartNodeDragging(e: DiagramEvent): void {
     const node = <Node>e.node;
     const clientPoint = <Position>e.data;
@@ -26,6 +33,10 @@ export class InitialNodeDragging extends DiagramModule{
     this.store.emit(EVENTS.NODE_DRAGSTART, { node, sourceEvent: e.sourceEvent});
   }
 
+  /**
+   * End dragging process
+   * @param sourceEvent
+   */
   onMouseUp(sourceEvent: MouseEvent): void {
     if(this.subject){
       const node = this.subject;
@@ -51,6 +62,10 @@ export class InitialNodeDragging extends DiagramModule{
     }
   }
 
+  /**
+   * Moves the node to cursor's position
+   * @param sourceEvent
+   */
   onMouseMove(sourceEvent: MouseEvent): void {
     if(this.subject == null) return;
     const node = this.subject;
@@ -61,6 +76,11 @@ export class InitialNodeDragging extends DiagramModule{
     this.store.emit(EVENTS.NODE_DRAGGED, { node, sourceEvent, simulated: true });
   }
 
+  /**
+   * Calculates node's position based on its size and cursor position
+   * @param nodeSize
+   * @param clientPoint
+   */
   getNodePositionFromClientPoint(nodeSize: Size, clientPoint: Position): Position{
     const point = this.store.transformClientPoint(clientPoint, true);
     const { width, height } = nodeSize;

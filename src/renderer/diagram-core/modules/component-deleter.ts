@@ -6,6 +6,9 @@ import { DiagramStore } from "../diagram-store";
 import { DiagramEvent } from "../interfaces/DiagramEvent";
 import { DiagramModule } from "../module";
 
+/**
+ * Handles the Component's deletion process
+ */
 export class ComponentDeleter extends DiagramModule{
 
   constructor(readonly store: DiagramStore){
@@ -13,6 +16,7 @@ export class ComponentDeleter extends DiagramModule{
     store.on(EVENTS.DIAGRAM_DELETE_COMPONENT, e => this.onDeleteComponent(e));
   }
 
+  /** Handles component delete event */
   onDeleteComponent(e: DiagramEvent): void {
     const component = <Component>e.data;
     if(component.type == ComponentType.Node){
@@ -22,6 +26,7 @@ export class ComponentDeleter extends DiagramModule{
     }
   }
 
+  /** Delete node from the canvas, this method will be called recursivly for all childs of the deleted nodes */
   deleteNode(node: Node, sourceEvent: DiagramEvent): void {
     if(node.isOpen) return;
 
@@ -82,6 +87,7 @@ export class ComponentDeleter extends DiagramModule{
 
   }
 
+  /** Deletes Edge from the canvas */
   deleteEdge(edge: Edge, sourceEvent: DiagramEvent): void {
     let snapRestorer: Function | null = null;
     if(!sourceEvent.isRestore){
