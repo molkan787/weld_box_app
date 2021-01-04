@@ -1,11 +1,11 @@
 {
-  "BT_GENERATE_CODE_URL": "https://weld-res-xcczm.ondigitalocean.app/api/v1/chart",
+  "BT_GENERATE_CODE_URL": "https://api.welddev.com/flow/v1",
   "terms_of_use_url": "https://github.com/electron/electron/blob/master/CODE_OF_CONDUCT.md",
   "about_url": "https://www.electronjs.org/",
 
   "welcome_page": {
-    "app_logo_subheader": "Sub text",
+    "app_logo_subheader": "Platform",
     "header": "Welcome",
-    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"
+    "body": "Finite-State Machine and Decision Logic Design and code Generation"
   }
 }
