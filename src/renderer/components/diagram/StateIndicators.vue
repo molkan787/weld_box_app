@@ -52,6 +52,9 @@ export default {
         this.priorityInput(e);
       }
     },
+    /**
+     * Submits the new priority from the input box to the State's properties
+     */
     priorityInput(e){
       const prevPriority = this.props.priority;
       const value = e.target.value;

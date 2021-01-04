@@ -10,6 +10,9 @@ import { D3Node } from "../types/aliases";
 import { cloneObject } from "../utils";
 import { cs } from "./utils";
 
+/**
+ * This module handles rendering and updating of Node's DOM element and its associated components
+ */
 export class NodeRenderer{
 
   private selectedNode: Node | null = null;
@@ -19,10 +22,6 @@ export class NodeRenderer{
     store.on(EVENTS.NODE_DECORATION_CHANGED, ({ node }: DiagramEvent) => this.updateDecoration(<Node>node));
     store.on(EVENTS.NODE_PARENT_CHANGED, ({ node }: DiagramEvent) => this.updateNodeParent(<Node>node));
     store.on(EVENTS.NODE_ATTRS_CHANGED, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
-    // store.on(EVENTS.NODE_GOT_OPEN, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node));
-    // store.on(EVENTS.NODE_CLOSING, ({ node }: DiagramEvent) => this.rebuildAttachBoxes(<Node>node, true));
-    // store.on(EVENTS.NODE_CONTENT_GOT_HIDDEN, e => this.onContentHidded(e));
-    // store.on(EVENTS.NODE_CONTENT_GOT_SHOWN, e => this.onContentShown(e));
     store.on(EVENTS.NODE_CONVERTED_TO_SUBCHART,({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
     store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, ({ node }: DiagramEvent) => this.updateAttributes(<Node>node));
     store.on(EVENTS.NODE_SELECTED, (e: DiagramEvent) => this.nodeSelected(e));
@@ -35,10 +34,19 @@ export class NodeRenderer{
     store.on(EVENTS.EDGECONNECTION_RESTORED, e => this.onEdgeConnectionRestored(e));
   }
 
+  /**
+   * Saves reference to Node layer (DOM element) in this module
+   * @param layer
+   */
   public setLayer(layer: D3Node){
     this.nodesLayer = layer;
   }
 
+  /**
+   * Build Node's DOM element on the canvas
+   * @param container Parent element
+   * @param node Node to built its element
+   */
   build(container: D3Node, node: Node){
     console.log(`building ${node.name}`)
     const child = node.parent != null;
@@ -79,6 +87,10 @@ export class NodeRenderer{
   }
 
 
+  /**
+   * Updates decoration (highlight color) of previously selected node and the newly selected one
+   * @param event
+   */
   nodeSelected(event: DiagramEvent): void {
     const node = event.node;
     const previous = this.selectedNode;
@@ -99,6 +111,10 @@ export class NodeRenderer{
     // this.updateHeader(node);
   }
 
+  /**
+   * Applies css classes based on Node's attributes
+   * @param node
+   */
   updateAttributes(node: Node){
     if(!node.isOpen){
       const d3Node = this.getD3Node(node);
@@ -107,8 +123,10 @@ export class NodeRenderer{
     }
   }
 
-  /** Updates element's position in the dom tree,
-   * this method need to be called each time Node's parent was changed */
+  /**
+   * Updates element's position in the dom tree,
+   * this method need to be called each time Node's parent was changed
+   */
   updateNodeParent(node: Node){
     const parentElement = <HTMLElement>(
       node.parent ? this.getD3Node(node.parent).select(cs(CLASSES.NODE_BODY))
@@ -124,6 +142,10 @@ export class NodeRenderer{
     setTimeout(() => element.style.opacity = '1', 500);
   }
 
+  /**
+   * Updates node's styling effects (ex: highlighting color/class)
+   * @param node
+   */
   updateDecoration(node: Node){
     const d3Node = this.getD3Node(node);
     if(!d3Node) return;
@@ -160,14 +182,27 @@ export class NodeRenderer{
     svgGroup.attr('transform', `translate(${-ap.x}, ${-ap.y})`)
   }
 
+  /**
+   * Returns css selector for the specified node's svg/edges layer (each node container and svg layer of edges that containers)
+   * @param node
+   */
   public getSVGGroupSelector(node: Node){
     return `#${this.getSVGLayerId(node)} g`
   }
 
+  /**
+   * Returns id of the specified node's svg/edges layer
+   * @param node
+   */
   public getSVGLayerId(node: Node){
     return `node-${node.id}-svg-layer`
   }
 
+  /**
+   * Builds resize handles (DOM element) for all four corner of the the node
+   * @param g The element parent for thus resize handles
+   * @param nodeId
+   */
   private addResizeHandles(g: D3Node, nodeId: number){
     this.createResizeHandle(g, nodeId, Corner.TopLeft);
     this.createResizeHandle(g, nodeId, Corner.TopRight);
@@ -175,6 +210,12 @@ export class NodeRenderer{
     this.createResizeHandle(g, nodeId, Corner.BottomLeft);
   }
 
+  /**
+   * Builds resize handle (DOM element) for the specified node's cordner
+   * @param g The element parent for this resize handle
+   * @param nodeId Node id
+   * @param corner Node's corner (where to build the resize handle)
+   */
   private createResizeHandle(g: D3Node, nodeId: number, corner: Corner){
     const cursor = corner === Corner.TopRight || corner === Corner.BottomLeft
                     ? 'nesw-resize' : 'nwse-resize';
@@ -185,40 +226,74 @@ export class NodeRenderer{
       .style('cursor', cursor);
   }
 
+  /**
+   * Rebuilds inter-chart attach boxes (connection points) when Node's content (body) got shown
+   * @param e
+   */
   onContentShown(e: DiagramEvent){
     setTimeout(() => {
       this.rebuildAttachBoxes(<Node>e.node, false);
     }, 1);
   }
 
+  /**
+   * Rebuilds inter-chart attach boxes (connection points) when Node's content (body) got hidden
+   * @param e
+   */
   onContentHidded(e: DiagramEvent){
     this.rebuildAttachBoxes(<Node>e.node, true);
   }
 
+  /**
+   * Builds attach box (connection point) when and new inter-chart edge got linked (pass thru) a node
+   * @param e
+   */
   onEdgeAdded(e: DiagramEvent){
     const edge = <Edge>e.edge;
     this.buildPotentialAttachBox(edge);
   }
 
+  /**
+   * Builds attach box (connection point) when an edge linked to (pass thru) a node got convert to a multipart edge
+   * @param e
+   */
   onEdgeConvertedToMultipart(e: DiagramEvent){
     const edge = <Edge>e.edge;
     this.buildPotentialAttachBox(edge);
   }
 
+  /**
+   * Destorys attach boxes (connection points) of an edge when it get deleted (if there was any attach box),
+   * In other words, removes attach box that are not needed anymore
+   * @param e
+   */
   onEdgeDeleted(e: DiagramEvent){
     const edge = <Edge>e.edge;
     this.destroyPotantialAttachBox(edge.source);
     this.destroyPotantialAttachBox(edge.target);
   }
 
+  /**
+   * Destorys attach boxes (connection points) of an edge connection when it get destoryed (if there was any attach box),
+   * In other words, removes attach box that are not needed anymore
+   * @param e
+   */
   onEdgeConnectionDestroyed(e: DiagramEvent){
     this.destroyPotantialAttachBox(e.data);
   }
 
+  /**
+   * Builds attach box (connection point) of a restored edge connection
+   * @param e
+   */
   onEdgeConnectionRestored(e: DiagramEvent){
     this.buildPotentialAttachBox(e.data.edge);
   }
 
+  /**
+   * Updates attach boxes (connection points) positions when their associated edge connection get update (position changed)
+   * @param e
+   */
   onEdgeConnectionsUpdated(e: DiagramEvent){
     const edge = <Edge>e.edge;
     if(edge.isMultipart){
@@ -228,6 +303,10 @@ export class NodeRenderer{
     }
   }
 
+  /**
+   * Builds attach boxes for an edge in they are needed
+   * @param edge
+   */
   buildPotentialAttachBox(edge: Edge){
     if(
       edge.multipartType == MultipartEdgeType.Starting &&
@@ -242,15 +321,28 @@ export class NodeRenderer{
     }
   }
 
+  /**
+   * Destorys attach box of an Edge connection if it exist
+   * @param ec
+   */
   destroyPotantialAttachBox(ec: EdgeConnection){
     const selector = this.getAttachSelector(ec);
     select(selector).remove();
   }
 
+  /**
+   * Returns css selecor of EdgeConnection's attach box
+   * @param attachbox
+   */
   getAttachSelector(attachbox: EdgeConnection){
     return `.${CLASSES.ATTACH_BOX}[${ATTR.COMPONENT_ID}="${attachbox.id}"]`;
   }
 
+  /**
+   * Rebuilds inter-chart attach boxes (connection points)
+   * @param node The node to rebuilt its attach boxes
+   * @param innerEdgesOnly
+   */
   rebuildAttachBoxes(node: Node, innerEdgesOnly: boolean = false){
     this.destoryEdgesAttachBoxes(node);
     this.buildEdgesAttachBoxes(node, innerEdgesOnly);
@@ -279,6 +371,13 @@ export class NodeRenderer{
     }
   }
 
+  /**
+   * Builds Attch box's DOM element on the containing Node DOM element
+   * @param node The node that container the Edge Connection
+   * @param container parent DOM element fror the attach box
+   * @param edge The Edge Connection to build its attach box
+   * @param isInner Indicate whether the attach box should be on the inner side of the node boundries (it should be `true` when the node is not open, and `false` when the node is open as the sub-chart)
+   */
   buildEdgeAttachBox(node: Node, container: D3Node, edge: EdgeConnection, isInner: boolean = false){
     let eab: D3Node = select(this.getAttachSelector(edge));
     if(eab.size() == 0){
@@ -291,6 +390,11 @@ export class NodeRenderer{
     this.updateEdgeAttachBoxPosition(edge, eab);
   }
 
+  /**
+   * Updates attach box visual position on the canvas
+   * @param ec The associated edge connection
+   * @param eab Attach box's DOM element
+   */
   updateEdgeAttachBoxPosition(ec: EdgeConnection, eab?: D3Node){
     const ab = ec.getInstance();
     if(typeof eab == 'undefined') eab = select(this.getAttachSelector(ab));
@@ -316,12 +420,20 @@ export class NodeRenderer{
     eab.style('transform', `translate(${pos.x}px,${pos.y}px)`);
   }
 
+  /**
+   * Destory Node's DOM element
+   * @param node
+   */
   private destroyNode(node: Node){
     const d3node = this.getD3Node(node);
     d3node?.remove();
     console.log('deleted node', node)
   }
 
+  /**
+   * Returns D3 selection of Node's DOM element
+   * @param node
+   */
   private getD3Node(node: Node | number): D3Node{
     const id = node instanceof Node ? node.id : node;
     const d3Node = this.store.getD3Node(id, true);

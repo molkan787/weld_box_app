@@ -1,17 +1,20 @@
 <template>
   <BaseForm :object="object">
 
-    <FormField label="Event clear">
-      <select v-model="object.properties.clear">
-        <option v-for="opt in eventClearOptions" :key="opt.value"
+    <FormField label="Discard Method">
+      <select v-model="object.properties.discard">
+        <option v-for="opt in discardClearOptions" :key="opt.value"
           :value="opt.value">{{ opt.text }}</option>
       </select>
+    </FormField>
+
+    <FormField label="Event Mode">
+      <RadioButtonGroup v-model="object.properties.mode" :items="eventModes" />
     </FormField>
 
     <FormField label="Type">
       <RadioButtonGroup v-model="object.properties.type" :items="eventTypes" />
     </FormField>
-
 
   </BaseForm>
 </template>
@@ -21,7 +24,7 @@ import Form from '../skeletons/Form';
 import BaseForm from './base';
 import FormField from '../skeletons/FormField';
 import RadioButtonGroup from '../skeletons/RadioButtonGroup';
-import { EventClear, EventType } from '../../my-diagram/EventNode';
+import { EventDiscard, EventMode, EventType } from '../../my-diagram/EventNode';
 export default {
   components: {
     Form,
@@ -46,18 +49,28 @@ export default {
         value: EventType.MULTI_THREAD
       }
     ],
-    eventClearOptions: [
+    eventModes: [
+      {
+        text: 'Flag',
+        value: EventMode.FLAG
+      },
+      {
+        text: 'Counter',
+        value: EventMode.COUNTER
+      }
+    ],
+    discardClearOptions: [
       {
         text: 'Manual',
-        value: EventClear.MANUAL
+        value: EventDiscard.MANUAL
       },
       {
-        text: 'Upon Read',
-        value: EventClear.READ
+        text: 'Thread End',
+        value: EventDiscard.THREAD
       },
       {
-        text: 'Upon Task End',
-        value: EventClear.END
+        text: 'After Read',
+        value: EventDiscard.READ
       }
     ]
   })

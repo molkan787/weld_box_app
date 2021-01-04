@@ -6,6 +6,9 @@ import { MessageDataItem } from "../interfaces/MessageDataItem";
 import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 
+/**
+ * Message Node
+ */
 export class MessageNode extends BasicNode implements ObjectProps{
 
   // internal props
@@ -35,6 +38,9 @@ export class MessageNode extends BasicNode implements ObjectProps{
     this.addDataItem();
   }
 
+  /**
+   * Adds a message's data item
+   */
   public addDataItem(){
     this.body.push({
       data_name: 'Data',
@@ -43,6 +49,10 @@ export class MessageNode extends BasicNode implements ObjectProps{
     });
   }
 
+  /**
+   * Removes message's data item
+   * @param index Index if the item to removed
+   */
   public removeDataItem(index: number){
     // const idx = this.body.indexOf(item);
     index >= 0 && this.body.splice(index, 1);

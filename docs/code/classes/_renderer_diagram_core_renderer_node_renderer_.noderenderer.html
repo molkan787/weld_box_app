@@ -1,0 +1,1325 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>NodeRenderer | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_renderer_diagram_core_renderer_node_renderer_.html">&quot;renderer/diagram-core/renderer/node-renderer&quot;</a>
+				</li>
+				<li>
+					<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html">NodeRenderer</a>
+				</li>
+			</ul>
+			<h1>Class NodeRenderer</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>This module handles rendering and updating of Node&#39;s DOM element and its associated components</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">NodeRenderer</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#nodeslayer" class="tsd-kind-icon">nodes<wbr>Layer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#selectednode" class="tsd-kind-icon">selected<wbr>Node</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#store" class="tsd-kind-icon">store</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#addresizehandles" class="tsd-kind-icon">add<wbr>Resize<wbr>Handles</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#build" class="tsd-kind-icon">build</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildedgeattachbox" class="tsd-kind-icon">build<wbr>Edge<wbr>Attach<wbr>Box</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildedgesattachboxes" class="tsd-kind-icon">build<wbr>Edges<wbr>Attach<wbr>Boxes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildpotentialattachbox" class="tsd-kind-icon">build<wbr>Potential<wbr>Attach<wbr>Box</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#createresizehandle" class="tsd-kind-icon">create<wbr>Resize<wbr>Handle</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destoryedgesattachboxes" class="tsd-kind-icon">destory<wbr>Edges<wbr>Attach<wbr>Boxes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destroynode" class="tsd-kind-icon">destroy<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destroypotantialattachbox" class="tsd-kind-icon">destroy<wbr>Potantial<wbr>Attach<wbr>Box</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getattachselector" class="tsd-kind-icon">get<wbr>Attach<wbr>Selector</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getd3node" class="tsd-kind-icon">get<wbr>D3Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getsvggroupselector" class="tsd-kind-icon">getSVGGroup<wbr>Selector</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getsvglayerid" class="tsd-kind-icon">getSVGLayer<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#nodeselected" class="tsd-kind-icon">node<wbr>Selected</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#oncontenthidded" class="tsd-kind-icon">on<wbr>Content<wbr>Hidded</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#oncontentshown" class="tsd-kind-icon">on<wbr>Content<wbr>Shown</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeadded" class="tsd-kind-icon">on<wbr>Edge<wbr>Added</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectiondestroyed" class="tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Destroyed</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectionrestored" class="tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Restored</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectionsupdated" class="tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Updated</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconvertedtomultipart" class="tsd-kind-icon">on<wbr>Edge<wbr>Converted<wbr>ToMultipart</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgedeleted" class="tsd-kind-icon">on<wbr>Edge<wbr>Deleted</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#rebuildattachboxes" class="tsd-kind-icon">rebuild<wbr>Attach<wbr>Boxes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#setlayer" class="tsd-kind-icon">set<wbr>Layer</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updateattributes" class="tsd-kind-icon">update<wbr>Attributes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatebbox" class="tsd-kind-icon">updateBBox</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatedecoration" class="tsd-kind-icon">update<wbr>Decoration</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updateedgeattachboxposition" class="tsd-kind-icon">update<wbr>Edge<wbr>Attach<wbr>Box<wbr>Position</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatenodeparent" class="tsd-kind-icon">update<wbr>Node<wbr>Parent</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Node<wbr>Renderer<span class="tsd-signature-symbol">(</span>store<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html" class="tsd-signature-type">NodeRenderer</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:19</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>store: <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html" class="tsd-signature-type">NodeRenderer</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="nodeslayer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> nodes<wbr>Layer</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes<wbr>Layer<span class="tsd-signature-symbol">:</span> <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:19</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="selectednode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> selected<wbr>Node</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>Node<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:18</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="store" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> store</h3>
+					<div class="tsd-signature tsd-kind-icon">store<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:21</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="addresizehandles" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> add<wbr>Resize<wbr>Handles</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Resize<wbr>Handles<span class="tsd-signature-symbol">(</span>g<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a>, nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:206</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds resize handles (DOM element) for all four corner of the the node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>g: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The element parent for thus resize handles</p>
+									</div>
+								</li>
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="build" class="tsd-anchor"></a>
+					<h3>build</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">build<span class="tsd-signature-symbol">(</span>container<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a>, node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:50</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Build Node&#39;s DOM element on the canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>container: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Parent element</p>
+									</div>
+								</li>
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Node to built its element</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="buildedgeattachbox" class="tsd-anchor"></a>
+					<h3>build<wbr>Edge<wbr>Attach<wbr>Box</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Edge<wbr>Attach<wbr>Box<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, container<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a>, edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, isInner<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:381</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds Attch box&#39;s DOM element on the containing Node DOM element</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The node that container the Edge Connection</p>
+									</div>
+								</li>
+								<li>
+									<h5>container: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>parent DOM element fror the attach box</p>
+									</div>
+								</li>
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The Edge Connection to build its attach box</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> isInner: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Indicate whether the attach box should be on the inner side of the node boundries (it should be <code>true</code> when the node is not open, and <code>false</code> when the node is open as the sub-chart)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="buildedgesattachboxes" class="tsd-anchor"></a>
+					<h3>build<wbr>Edges<wbr>Attach<wbr>Boxes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Edges<wbr>Attach<wbr>Boxes<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, innerEdgesOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:360</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Build edge target box</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> innerEdgesOnly: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="buildpotentialattachbox" class="tsd-anchor"></a>
+					<h3>build<wbr>Potential<wbr>Attach<wbr>Box</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">build<wbr>Potential<wbr>Attach<wbr>Box<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:310</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds attach boxes for an edge in they are needed</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="_renderer_diagram_core_components_edge_.edge.html" class="tsd-signature-type">Edge</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="createresizehandle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> create<wbr>Resize<wbr>Handle</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Resize<wbr>Handle<span class="tsd-signature-symbol">(</span>g<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a>, nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, corner<span class="tsd-signature-symbol">: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-signature-type">Corner</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Selection</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLSpanElement</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:219</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds resize handle (DOM element) for the specified node&#39;s cordner</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>g: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The element parent for this resize handle</p>
+									</div>
+								</li>
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Node id</p>
+									</div>
+								</li>
+								<li>
+									<h5>corner: <a href="../enums/_renderer_diagram_core_helpers_geometry_.corner.html" class="tsd-signature-type">Corner</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Node&#39;s corner (where to build the resize handle)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Selection</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLSpanElement</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="destoryedgesattachboxes" class="tsd-anchor"></a>
+					<h3>destory<wbr>Edges<wbr>Attach<wbr>Boxes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">destory<wbr>Edges<wbr>Attach<wbr>Boxes<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:352</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destorys attach box of all edges of the specified node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="destroynode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> destroy<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">destroy<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:427</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destory Node&#39;s DOM element</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="destroypotantialattachbox" class="tsd-anchor"></a>
+					<h3>destroy<wbr>Potantial<wbr>Attach<wbr>Box</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">destroy<wbr>Potantial<wbr>Attach<wbr>Box<span class="tsd-signature-symbol">(</span>ec<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:328</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destorys attach box of an Edge connection if it exist</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ec: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getattachselector" class="tsd-anchor"></a>
+					<h3>get<wbr>Attach<wbr>Selector</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Attach<wbr>Selector<span class="tsd-signature-symbol">(</span>attachbox<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:337</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns css selecor of EdgeConnection&#39;s attach box</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>attachbox: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="getd3node" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>D3Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>D3Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:437</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns D3 selection of Node&#39;s DOM element</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getsvggroupselector" class="tsd-anchor"></a>
+					<h3>getSVGGroup<wbr>Selector</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">getSVGGroup<wbr>Selector<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:189</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns css selector for the specified node&#39;s svg/edges layer (each node container and svg layer of edges that containers)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getsvglayerid" class="tsd-anchor"></a>
+					<h3>getSVGLayer<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">getSVGLayer<wbr>Id<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:197</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns id of the specified node&#39;s svg/edges layer</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="nodeselected" class="tsd-anchor"></a>
+					<h3>node<wbr>Selected</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">node<wbr>Selected<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:94</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates decoration (highlight color) of previously selected node and the newly selected one</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="oncontenthidded" class="tsd-anchor"></a>
+					<h3>on<wbr>Content<wbr>Hidded</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Content<wbr>Hidded<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:243</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Rebuilds inter-chart attach boxes (connection points) when Node&#39;s content (body) got hidden</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="oncontentshown" class="tsd-anchor"></a>
+					<h3>on<wbr>Content<wbr>Shown</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Content<wbr>Shown<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:233</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Rebuilds inter-chart attach boxes (connection points) when Node&#39;s content (body) got shown</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgeadded" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Added</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Added<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:251</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds attach box (connection point) when and new inter-chart edge got linked (pass thru) a node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgeconnectiondestroyed" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Connection<wbr>Destroyed</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Destroyed<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:281</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destorys attach boxes (connection points) of an edge connection when it get destoryed (if there was any attach box),
+									In other words, removes attach box that are not needed anymore</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgeconnectionrestored" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Connection<wbr>Restored</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Restored<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:289</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds attach box (connection point) of a restored edge connection</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgeconnectionsupdated" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Connections<wbr>Updated</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Updated<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:297</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates attach boxes (connection points) positions when their associated edge connection get update (position changed)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgeconvertedtomultipart" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Converted<wbr>ToMultipart</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Converted<wbr>ToMultipart<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:260</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds attach box (connection point) when an edge linked to (pass thru) a node got convert to a multipart edge</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onedgedeleted" class="tsd-anchor"></a>
+					<h3>on<wbr>Edge<wbr>Deleted</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Edge<wbr>Deleted<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:270</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destorys attach boxes (connection points) of an edge when it get deleted (if there was any attach box),
+									In other words, removes attach box that are not needed anymore</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>e: <a href="../interfaces/_renderer_diagram_core_interfaces_diagramevent_.diagramevent.html" class="tsd-signature-type">DiagramEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="rebuildattachboxes" class="tsd-anchor"></a>
+					<h3>rebuild<wbr>Attach<wbr>Boxes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">rebuild<wbr>Attach<wbr>Boxes<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>, innerEdgesOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:346</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Rebuilds inter-chart attach boxes (connection points)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The node to rebuilt its attach boxes</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> innerEdgesOnly: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setlayer" class="tsd-anchor"></a>
+					<h3>set<wbr>Layer</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Layer<span class="tsd-signature-symbol">(</span>layer<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:41</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Saves reference to Node layer (DOM element) in this module</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>layer: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="update" class="tsd-anchor"></a>
+					<h3>update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:107</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update node&#39;s visual representation</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateattributes" class="tsd-anchor"></a>
+					<h3>update<wbr>Attributes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Attributes<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:118</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Applies css classes based on Node&#39;s attributes</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatebbox" class="tsd-anchor"></a>
+					<h3>updateBBox</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">updateBBox<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:168</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates node&#39;s visual position &amp; size in the canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatedecoration" class="tsd-anchor"></a>
+					<h3>update<wbr>Decoration</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Decoration<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:149</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates node&#39;s styling effects (ex: highlighting color/class)</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateedgeattachboxposition" class="tsd-anchor"></a>
+					<h3>update<wbr>Edge<wbr>Attach<wbr>Box<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Edge<wbr>Attach<wbr>Box<wbr>Position<span class="tsd-signature-symbol">(</span>ec<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, eab<span class="tsd-signature-symbol">?: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:398</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates attach box visual position on the canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ec: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The associated edge connection</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> eab: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Attach box&#39;s DOM element</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatenodeparent" class="tsd-anchor"></a>
+					<h3>update<wbr>Node<wbr>Parent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Node<wbr>Parent<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in src/renderer/diagram-core/renderer/node-renderer.ts:130</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates element&#39;s position in the dom tree,
+									this method need to be called each time Node&#39;s parent was changed</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_renderer_diagram_core_renderer_node_renderer_.html">&quot;renderer/diagram-<wbr>core/renderer/node-<wbr>renderer&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html" class="tsd-kind-icon">Node<wbr>Renderer</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#nodeslayer" class="tsd-kind-icon">nodes<wbr>Layer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#selectednode" class="tsd-kind-icon">selected<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#store" class="tsd-kind-icon">store</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#addresizehandles" class="tsd-kind-icon">add<wbr>Resize<wbr>Handles</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#build" class="tsd-kind-icon">build</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildedgeattachbox" class="tsd-kind-icon">build<wbr>Edge<wbr>Attach<wbr>Box</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildedgesattachboxes" class="tsd-kind-icon">build<wbr>Edges<wbr>Attach<wbr>Boxes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#buildpotentialattachbox" class="tsd-kind-icon">build<wbr>Potential<wbr>Attach<wbr>Box</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#createresizehandle" class="tsd-kind-icon">create<wbr>Resize<wbr>Handle</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destoryedgesattachboxes" class="tsd-kind-icon">destory<wbr>Edges<wbr>Attach<wbr>Boxes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destroynode" class="tsd-kind-icon">destroy<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#destroypotantialattachbox" class="tsd-kind-icon">destroy<wbr>Potantial<wbr>Attach<wbr>Box</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getattachselector" class="tsd-kind-icon">get<wbr>Attach<wbr>Selector</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getd3node" class="tsd-kind-icon">get<wbr>D3Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getsvggroupselector" class="tsd-kind-icon">getSVGGroup<wbr>Selector</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#getsvglayerid" class="tsd-kind-icon">getSVGLayer<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#nodeselected" class="tsd-kind-icon">node<wbr>Selected</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#oncontenthidded" class="tsd-kind-icon">on<wbr>Content<wbr>Hidded</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#oncontentshown" class="tsd-kind-icon">on<wbr>Content<wbr>Shown</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeadded" class="tsd-kind-icon">on<wbr>Edge<wbr>Added</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectiondestroyed" class="tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Destroyed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectionrestored" class="tsd-kind-icon">on<wbr>Edge<wbr>Connection<wbr>Restored</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconnectionsupdated" class="tsd-kind-icon">on<wbr>Edge<wbr>Connections<wbr>Updated</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgeconvertedtomultipart" class="tsd-kind-icon">on<wbr>Edge<wbr>Converted<wbr>ToMultipart</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#onedgedeleted" class="tsd-kind-icon">on<wbr>Edge<wbr>Deleted</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#rebuildattachboxes" class="tsd-kind-icon">rebuild<wbr>Attach<wbr>Boxes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#setlayer" class="tsd-kind-icon">set<wbr>Layer</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#update" class="tsd-kind-icon">update</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updateattributes" class="tsd-kind-icon">update<wbr>Attributes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatebbox" class="tsd-kind-icon">updateBBox</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatedecoration" class="tsd-kind-icon">update<wbr>Decoration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updateedgeattachboxposition" class="tsd-kind-icon">update<wbr>Edge<wbr>Attach<wbr>Box<wbr>Position</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_renderer_diagram_core_renderer_node_renderer_.noderenderer.html#updatenodeparent" class="tsd-kind-icon">update<wbr>Node<wbr>Parent</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

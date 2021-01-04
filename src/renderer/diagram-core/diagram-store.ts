@@ -96,6 +96,7 @@ export class DiagramStore extends EventEmitter{
    */
   public readonly nodePadding: Margin;
 
+  /** Normaly recursive updates are slightly delayed (asynchronouse), setting this property to `true` will force synchronous update (without delays) */
   public forceSynchronousUpdates: boolean = false;
 
   /**
@@ -124,27 +125,46 @@ export class DiagramStore extends EventEmitter{
     this.on(EVENTS.NODE_DROPPED, ({ node }: DiagramEvent) => this.refreshNode(<Node>node))
   }
 
+  /**
+   * Returns the zoom transform (scale and offset translate) of the canvas
+   */
   public get zoomTransform(){
     return this._zoomTransform;
   }
 
+  /**
+   * Cache the zoom transform (scale and offset translate) of the canvas,
+   * And emits it change event
+   */
   public setZoomTransform(transform: ZoomTransform | null){
     this._zoomTransform = transform;
     this.emit(EVENTS.DIAGRAM_ZOOM_CHANGED, {});
   }
 
+  /**
+   * Returns canvas offset from the top left corner of the page (inner part of the window)
+   */
   public get canvasOffset(){
     return this._canvasOffset;
   }
 
+  /**
+   * Store canvas offset from the top left corner of the page (inner part of the window) for later access using `canvasOffset`
+   */
   public setCanvasOffset(offset: Position){
     this._canvasOffset = offset;
   }
 
+  /**
+   * Return the root DOM element of the canvas
+   */
   public get rootElement(){
     return <D3Node>this._rootElement;
   }
 
+  /**
+   * Stpre the root DOM element of the canvas for later access using `rootElement`
+   */
   public setRootElement(element: D3Node){
     if(this._rootElement != null){
       throw new Error('setRootElement() can be called only once and at initialization')
@@ -180,6 +200,7 @@ export class DiagramStore extends EventEmitter{
     this.emitActiveModuleChanged();
   }
 
+  /** Store the active module reference */
   private setActiveModule(module: DiagramModule | null){
     this.activeModule = module;
     const isEdgeDrawer = module?.name == MODULES.EDGE_DRAWER;
@@ -266,6 +287,9 @@ export class DiagramStore extends EventEmitter{
     this.addNode(node);
   }
 
+  /**
+   * Return all top level Nodes (Nodes that does not have a parent, sort of direct childs of the diagram)
+   */
   public getTopLevelNodes(){
     const nodes = this.nodes;
     const len = nodes.length;
@@ -367,6 +391,10 @@ export class MyRBush extends RBush<Node>{
     super();
   }
 
+  /**
+   * Converts Node's size and position to a Bounding box
+   * @param node
+   */
   toBBox(node: Node){
     const s = node.size;
     const p = node.getAbsolutePosition(true);

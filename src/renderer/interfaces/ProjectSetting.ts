@@ -1,4 +1,5 @@
 export interface ProjectSetting{
+  uuid: string;
   name: string;
   location: string;
   sourcesDir: string;

@@ -87,6 +87,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Starts the panel resizing process
+     */
     mousedown(e){
       this.startWidth = this.rootWidth;
       this.startX = e.clientX;

@@ -42,6 +42,9 @@ export class MyDiagram extends Diagram{
     window.store = this.store;
   }
 
+  /**
+   * Creates the initial diagram containing a single Thread Node at the root chart
+   */
   buildInitialDiagram(){
     const state = new State({ x: 140, y: 60 }, { width:750, height: 480, radius: 0 }, { name: 'Thread 1' });
 
@@ -51,6 +54,10 @@ export class MyDiagram extends Diagram{
 
   }
 
+  /**
+   * Creates a new comment node and place it inside the provided parent State at a random position
+   * @param parent Parent of the comment node (where to place the comment node)
+   */
   public spawnCommentNode(parent?: State){
     const state = parent || this.currentNode;
     if(!state) return;

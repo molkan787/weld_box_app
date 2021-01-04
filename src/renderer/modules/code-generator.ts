@@ -1,5 +1,5 @@
 import path from "path";
-import { writeFile } from "../helpers/fs";
+import { writeTextFile } from "../helpers/fs";
 import { config } from "../config";
 import { Diagram } from "../diagram-core";
 import { GenerateCodeFile, GenerateCodeResponse } from "../interfaces/GenerateCodeResponse";
@@ -9,8 +9,16 @@ import { DataExporter } from "./data-exporter";
 import Axios from "axios";
 import { UserID } from "./user-id";
 
+/**
+ * This module handles the process of generating code from the diagram
+ */
 export class CodeGenerator{
 
+  /**
+   * Generates code for the specified Diagram
+   * @param diagram Diagram instance to generate from it the code
+   * @param setting Projects settings
+   */
   public async generate(diagram: Diagram, setting: ProjectSetting){
     const data = new DataExporter().exportData(diagram, setting);
     console.log(data);
@@ -23,6 +31,10 @@ export class CodeGenerator{
     }
   }
 
+  /**
+   * Send request to the remote server for generate the code
+   * @param data Diagram's components data
+   */
   private async request(data: ProjectExportData): Promise<GenerateCodeResponse>{
     const userId = UserID.getId();
     console.log("userId", userId)
@@ -34,6 +46,11 @@ export class CodeGenerator{
     return response.data;
   }
 
+  /**
+   * Saves the response from the remote server
+   * @param setting
+   * @param files
+   */
   private async saveFiles(setting: ProjectSetting, files: GenerateCodeFile[]){
     const { sourcesDir, headersDir } = setting;
     for(let file of files){
@@ -45,7 +62,7 @@ export class CodeGenerator{
         filename = path.join(headersDir, name);
       }
       if(filename){
-        await writeFile(filename, content);
+        await writeTextFile(filename, content);
       }
     }
   }

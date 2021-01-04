@@ -6,6 +6,9 @@ import { MyEdge } from "../my-edge";
 import { MY_EVENTS } from "../my-events";
 import { State } from "../state";
 
+/**
+ * This module handles the process of assigning priorities to Edges and Childs of a parallel State
+ */
 export class PriorityAssigner extends DiagramModule{
 
   constructor(store: DiagramStore){
@@ -23,6 +26,10 @@ export class PriorityAssigner extends DiagramModule{
 
 //#region Edges
 
+  /**
+   * When user change priority of an edge, adjust the priority of other edges that start from the same source node
+   * @param event
+   */
   private onEdgePriorityChangedByUser(event: DiagramEvent){
     const edge = <MyEdge>event.edge;
     const prevPriority = <number>event.data;
@@ -31,7 +38,7 @@ export class PriorityAssigner extends DiagramModule{
 
 
   /**
-   * Handles EdgeAdded event, To auto assign edge's priority if needed
+   * Auto assign priority of a new created Edge
    * @param edge The `Edge` instance that was added
    */
   private onEdgeCreated(event: DiagramEvent){
@@ -46,6 +53,10 @@ export class PriorityAssigner extends DiagramModule{
     }
   }
 
+  /**
+   * When user change delete an edge, adjust the priority of other edges that start from the same source node
+   * @param event
+   */
   private onEdgeDeleted(event: DiagramEvent){
     if(event.isRestore) return;
     const edge = <MyEdge>event.edge;
@@ -61,6 +72,11 @@ export class PriorityAssigner extends DiagramModule{
     this.disableActionGrouping();
   }
 
+  /**
+   * Adjusts edges priorities based on change of a single edge priority
+   * @param edge The edge that its priority changed (the static priority)
+   * @param prevPriority The old priority of the provided edge
+   */
   private edgePriorityChanged(edge: MyEdge, prevPriority: number){
     const UP = 1, DOWN = -1;
     const priority = edge.properties.priority;
@@ -88,6 +104,10 @@ export class PriorityAssigner extends DiagramModule{
     this.disableActionGrouping();
   }
 
+  /**
+   * Returns all edges that have the same source Node as the provided Edge `refEdge`
+   * @param refEdge
+   */
   private getSameSourceEdges(refEdge: MyEdge): MyEdge[]{
     const srcNode = refEdge.source.node;
     if(srcNode){
@@ -97,6 +117,10 @@ export class PriorityAssigner extends DiagramModule{
     }
   }
 
+  /**
+   * Returns all source edge of the Specified Node (source edges all the edge that start from that Node)
+   * @param node The node to get its edges
+   */
   private getNodeSourceEdges(node: Node){
     return node.edges
       .filter(ec => ec.isSource() && !ec.isBridge)
@@ -105,8 +129,12 @@ export class PriorityAssigner extends DiagramModule{
 
 //#endregion
 
-//#region Nodes
+//#region States
 
+  /**
+   * Adjusts priorities of childs States of both the old and new parent of the state that changed parent
+   * @param event
+   */
   private onNodeSwitchedParent(event: DiagramEvent){
     const state = <State>event.node;
     const oldParent = <State | null>event.data;
@@ -123,6 +151,10 @@ export class PriorityAssigner extends DiagramModule{
 
   }
 
+  /**
+   * Adjusts priorities of deleted State's siblings
+   * @param event
+   */
   private onNodeDeleted(event: DiagramEvent){
     const srcEvent = event.sourceEvent;
     // if the sender of the event is the Component deleter,
@@ -138,12 +170,22 @@ export class PriorityAssigner extends DiagramModule{
     }
   }
 
+  /**
+   * When user change the priority of a State, adjusts the priorities of his siblings States
+   * @param event
+   */
   private onNodePriorityChangedByUser(event: DiagramEvent){
     const state = <State>event.node;
     const prevPriority = <number>event.data;
     this.statePriorityChanged(state, prevPriority);
   }
 
+  /**
+   * Adjusts States priorities based on change of a single State priority,
+   * in other words, its adjust priorities of the provided State's siblings (the states that share the same parent as the provided in State)
+   * @param state The State than changed its priority
+   * @param prevPriority The old priority of the provided State
+   */
   private statePriorityChanged(state: State, prevPriority: number){
     const UP = 1, DOWN = -1;
     const priority = state.properties.priority;
@@ -168,6 +210,11 @@ export class PriorityAssigner extends DiagramModule{
     this.disableActionGrouping();
   }
 
+  /**
+   * Adjusts priorities of removed State's siblings (when a state was removed from its parent)
+   * @param state
+   * @param parent
+   */
   private stateRemovedFromState(state: State, parent: State){
     const priority = state.properties.priority;
     const oldSiblings = <State[]>parent.children;
@@ -175,6 +222,11 @@ export class PriorityAssigner extends DiagramModule{
     this.adjustStatesPriority(oldHigher, -1);
   }
 
+  /**
+   * Adjusts priorities of childs of the new parent of the Specified State
+   * (when a state was added to a new parent, adjust the priorities of of that new parent's childs)
+   * @param state
+   */
   private stateAddedToState(state: State){
     const siblings = this.getStateSiblings(state);
     const priorities = siblings.map(s => s.properties.priority);
@@ -183,6 +235,11 @@ export class PriorityAssigner extends DiagramModule{
     state.propsArchiver.flush('properties');
   }
 
+  /**
+   * Add a specified number to priority of all of the specified States
+   * @param states
+   * @param by
+   */
   private adjustStatesPriority(states: State[], by: number){
     for(let state of states){
       state.properties.priority += by;
@@ -190,6 +247,10 @@ export class PriorityAssigner extends DiagramModule{
     }
   }
 
+  /**
+   * Returns all States that share the same parent as the specified State
+   * @param state
+   */
   private getStateSiblings(state: State): State[]{
     const parent = state.parent;
     if(parent){

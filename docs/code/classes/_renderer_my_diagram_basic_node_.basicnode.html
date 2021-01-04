@@ -1,0 +1,1403 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>BasicNode | boxtree</title>
+	<meta name="description" content="Documentation for boxtree">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">boxtree</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/_renderer_my_diagram_basic_node_.html">&quot;renderer/my-diagram/basic-node&quot;</a>
+				</li>
+				<li>
+					<a href="_renderer_my_diagram_basic_node_.basicnode.html">BasicNode</a>
+				</li>
+			</ul>
+			<h1>Class BasicNode</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Base class for Message &amp; Event nodes</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">BasicNode</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="_renderer_my_diagram_eventnode_.eventnode.html" class="tsd-signature-type">EventNode</a>
+									</li>
+									<li>
+										<a href="_renderer_my_diagram_messagenode_.messagenode.html" class="tsd-signature-type">MessageNode</a>
+									</li>
+									<li>
+										<a href="_renderer_my_diagram_junction_.junction.html" class="tsd-signature-type">Junction</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_renderer_my_diagram_basic_node_.basicnode.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#children" class="tsd-kind-icon">children</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#classes" class="tsd-kind-icon">classes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#edges" class="tsd-kind-icon">edges</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#highlighted" class="tsd-kind-icon">highlighted</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#highlightedwall" class="tsd-kind-icon">highlighted<wbr>Wall</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#isbasic" class="tsd-kind-icon">is<wbr>Basic</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#iscircle" class="tsd-kind-icon">is<wbr>Circle</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#position" class="tsd-kind-icon">position</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_renderer_my_diagram_basic_node_.basicnode.html#propsarchiver" class="tsd-kind-icon">props<wbr>Archiver</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#store" class="tsd-kind-icon">store</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_renderer_my_diagram_basic_node_.basicnode.html#vm" class="tsd-kind-icon">vm</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_renderer_my_diagram_basic_node_.basicnode.html#idpointer" class="tsd-kind-icon">id<wbr>Pointer</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#isopen" class="tsd-kind-icon">is<wbr>Open</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#issubchart" class="tsd-kind-icon">is<wbr>Sub<wbr>Chart</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#parent" class="tsd-kind-icon">parent</a></li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#showcontent" class="tsd-kind-icon">show<wbr>Content</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_renderer_my_diagram_basic_node_.basicnode.html#beforedomelementdestroy" class="tsd-kind-icon">BeforeDOMElement<wbr>Destroy</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_renderer_my_diagram_basic_node_.basicnode.html#domelementbuilt" class="tsd-kind-icon">DOMElement<wbr>Built</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#_setid" class="tsd-kind-icon">_set<wbr>Id</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#addchild" class="tsd-kind-icon">add<wbr>Child</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#addedgeconnection" class="tsd-kind-icon">add<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#containsnode" class="tsd-kind-icon">contains<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#converttonormal" class="tsd-kind-icon">convert<wbr>ToNormal</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#converttosubchart" class="tsd-kind-icon">convert<wbr>ToSub<wbr>Chart</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#createedgeconnection" class="tsd-kind-icon">create<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#getabsoluteposition" class="tsd-kind-icon">get<wbr>Absolute<wbr>Position</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#getalldescendentsnodes" class="tsd-kind-icon">get<wbr>All<wbr>Descendents<wbr>Nodes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#gethierarchypath" class="tsd-kind-icon">get<wbr>Hierarchy<wbr>Path</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#getparent" class="tsd-kind-icon">get<wbr>Parent</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#gettopparent" class="tsd-kind-icon">get<wbr>Top<wbr>Parent</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#open" class="tsd-kind-icon">open</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#removeedgeconnection" class="tsd-kind-icon">remove<wbr>Edge<wbr>Connection</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#select" class="tsd-kind-icon">select</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#setshowcontent" class="tsd-kind-icon">set<wbr>Show<wbr>Content</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_renderer_my_diagram_basic_node_.basicnode.html#genid" class="tsd-kind-icon">gen<wbr>Id</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-inherited">
+							<h3>Object literals</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-inherited"><a href="_renderer_my_diagram_basic_node_.basicnode.html#props" class="tsd-kind-icon">props</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Basic<wbr>Node<span class="tsd-signature-symbol">(</span>position<span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_renderer_diagram_core_components_node_.nodeoptions.html" class="tsd-signature-type">NodeOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_my_diagram_basic_node_.basicnode.html" class="tsd-signature-type">BasicNode</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in src/renderer/my-diagram/basic-node.ts:15</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>position: <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../interfaces/_renderer_diagram_core_components_node_.nodeoptions.html" class="tsd-signature-type">NodeOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_my_diagram_basic_node_.basicnode.html" class="tsd-signature-type">BasicNode</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="children" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> children</h3>
+					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#children">children</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:23</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Array of childs nodes</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="classes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> classes</h3>
+					<div class="tsd-signature tsd-kind-icon">classes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#classes">classes</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:41</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>List of CSS/HTML classes that are appiled to the Node&#39;s DOM element</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="edges" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> edges</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#edges">edges</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:25</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Edge Connections that are attached to this node</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="highlighted" class="tsd-anchor"></a>
+					<h3>highlighted</h3>
+					<div class="tsd-signature tsd-kind-icon">highlighted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#highlighted">highlighted</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:36</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates whether the node is highlighted or not</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="highlightedwall" class="tsd-anchor"></a>
+					<h3>highlighted<wbr>Wall</h3>
+					<div class="tsd-signature tsd-kind-icon">highlighted<wbr>Wall<span class="tsd-signature-symbol">:</span> <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#highlightedwall">highlightedWall</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:38</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates the highlighted wall of this node</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="isbasic" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> is<wbr>Basic</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Basic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#isbasic">isBasic</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:27</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates whether this node is basic. A basic node does not have header and body, instead is a simple square</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="iscircle" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> is<wbr>Circle</h3>
+					<div class="tsd-signature tsd-kind-icon">is<wbr>Circle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#iscircle">isCircle</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:29</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates whether this node is circular. A circular node renders as a simple circle</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#name">name</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:44</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Name of the node</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="position" class="tsd-anchor"></a>
+					<h3>position</h3>
+					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#position">position</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:64</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="propsarchiver" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> props<wbr>Archiver</h3>
+					<div class="tsd-signature tsd-kind-icon">props<wbr>Archiver<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_props_change_archiver_.propschangearchiver.html" class="tsd-signature-type">PropsChangeArchiver</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/my-diagram/basic-node.ts:15</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_renderer_diagram_core_interfaces_size_.size.html" class="tsd-signature-type">Size</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#size">size</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:65</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="store" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> store</h3>
+					<div class="tsd-signature tsd-kind-icon">store<span class="tsd-signature-symbol">:</span> <a href="_renderer_diagram_core_diagram_store_.diagramstore.html" class="tsd-signature-type">DiagramStore</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#store">store</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:18</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="type" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/_renderer_diagram_core_components_component_.componenttype.html" class="tsd-signature-type">ComponentType</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_component_.component.html">Component</a>.<a href="_renderer_diagram_core_components_component_.component.html#type">type</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/component.ts:28</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Component&#39;s type</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="vm" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> <span class="tsd-flag ts-flagOptional">Optional</span> vm</h3>
+					<div class="tsd-signature tsd-kind-icon">vm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Vue</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in src/renderer/my-diagram/basic-node.ts:14</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="idpointer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> id<wbr>Pointer</h3>
+					<div class="tsd-signature tsd-kind-icon">id<wbr>Pointer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_component_.component.html">Component</a>.<a href="_renderer_diagram_core_components_component_.component.html#idpointer">idPointer</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/component.ts:6</li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A static integer pointer, used for assigning a unique id for each of Diagram&#39;s component</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> id<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_component_.component.html">Component</a>.<a href="_renderer_diagram_core_components_component_.component.html#id">id</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/component.ts:20</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unique component id</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="isopen" class="tsd-anchor"></a>
+					<h3>is<wbr>Open</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isOpen<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#isopen">isOpen</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:80</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Indicate whether the Node is open or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="issubchart" class="tsd-anchor"></a>
+					<h3>is<wbr>Sub<wbr>Chart</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isSubChart<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#issubchart">isSubChart</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:117</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Indicate whether the Node is a Sub Chart or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a name="parent" class="tsd-anchor"></a>
+					<h3>parent</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> parent<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#parent">parent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:157</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the parent node only when the calling node is not open</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+					<a name="showcontent" class="tsd-anchor"></a>
+					<h3>show<wbr>Content</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> showContent<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> showContent<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#showcontent">showContent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:91</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Indicates whether node&#39;s content (body) is visible or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#showcontent">showContent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:95</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Indicates whether node&#39;s content (body) is visible or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="beforedomelementdestroy" class="tsd-anchor"></a>
+					<h3>BeforeDOMElement<wbr>Destroy</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">BeforeDOMElement<wbr>Destroy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#beforedomelementdestroy">BeforeDOMElementDestroy</a></p>
+								<ul>
+									<li>Defined in src/renderer/my-diagram/basic-node.ts:38</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="domelementbuilt" class="tsd-anchor"></a>
+					<h3>DOMElement<wbr>Built</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">DOMElement<wbr>Built<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#domelementbuilt">DOMElementBuilt</a></p>
+								<ul>
+									<li>Defined in src/renderer/my-diagram/basic-node.ts:25</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="../modules/_renderer_diagram_core_types_aliases_.html#d3node" class="tsd-signature-type">D3Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="_setid" class="tsd-anchor"></a>
+					<h3>_set<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">_set<wbr>Id<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_component_.component.html">Component</a>.<a href="_renderer_diagram_core_components_component_.component.html#_setid">_setId</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/component.ts:36</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets Component&#39;s id, It is used only in case of loading a project, Avoid using this method in other cases</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The new ID</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="addchild" class="tsd-anchor"></a>
+					<h3>add<wbr>Child</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Child<span class="tsd-signature-symbol">(</span>child<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#addchild">addChild</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:219</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds child node, of the child node is newly created, in addition to calling this method, Diagram.addNode(child) should be also called</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>child: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="addedgeconnection" class="tsd-anchor"></a>
+					<h3>add<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>connection<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, skipNodeSetting<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#addedgeconnection">addEdgeConnection</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:255</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add an exiting edge connection to this node,
+									calling this method isn&#39;t enough to make the edgeConenction fully connected to this node, you to also specify the correct attach type on the EdgeConnection itself</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>connection: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The EdgeConnection instance to be added</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> skipNodeSetting: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if <code>true</code> this node won&#39;t be assigned to the EdgeConnection as the attached node</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="containsnode" class="tsd-anchor"></a>
+					<h3>contains<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">contains<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#containsnode">containsNode</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:205</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks for given node&#39;s presence in childs hierarchy of this Node.
+									Returns <code>true</code> if found, otherwise returns <code>false</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Node to check for its presence</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="converttonormal" class="tsd-anchor"></a>
+					<h3>convert<wbr>ToNormal</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>ToNormal<span class="tsd-signature-symbol">(</span>simulated<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#converttonormal">convertToNormal</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:140</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert the Sub Chart Node to a normal Node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> simulated: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>set to <code>true</code> to bypass Undo/Redo system</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="converttosubchart" class="tsd-anchor"></a>
+					<h3>convert<wbr>ToSub<wbr>Chart</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">convert<wbr>ToSub<wbr>Chart<span class="tsd-signature-symbol">(</span>simulated<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#converttosubchart">convertToSubChart</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:125</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert the Node to a Sub Chart Node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> simulated: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>set to <code>true</code> to bypass Undo/Redo system</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="createedgeconnection" class="tsd-anchor"></a>
+					<h3>create<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>wall<span class="tsd-signature-symbol">?: </span><a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#createedgeconnection">createEdgeConnection</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:240</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Create a new <code>EdgeConnection</code> instance and link it to the current <code>Node</code> instance</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> wall: <a href="../enums/_renderer_diagram_core_helpers_geometry_.side.html" class="tsd-signature-type">Side</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Wall of node to which attach the created EdgeConnection</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getabsoluteposition" class="tsd-anchor"></a>
+					<h3>get<wbr>Absolute<wbr>Position</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Absolute<wbr>Position<span class="tsd-signature-symbol">(</span>useCachedPosition<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#getabsoluteposition">getAbsolutePosition</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:283</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calculates &amp; return Node&#39;s absolute position with respect of parent&#39;s absolute position and padding</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> useCachedPosition: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_renderer_diagram_core_interfaces_position_.position.html" class="tsd-signature-type">Position</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getalldescendentsnodes" class="tsd-anchor"></a>
+					<h3>get<wbr>All<wbr>Descendents<wbr>Nodes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>All<wbr>Descendents<wbr>Nodes<span class="tsd-signature-symbol">(</span>skipSubChartChilds<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, skipDirectChildsAlso<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#getalldescendentsnodes">getAllDescendentsNodes</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:187</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns all descendents (This node, childs nodes and recursively all sub-childs).
+									This method its self doesn&#39;t use recursive calls, it use stack approach instead</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> skipSubChartChilds: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> skipDirectChildsAlso: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="gethierarchypath" class="tsd-anchor"></a>
+					<h3>get<wbr>Hierarchy<wbr>Path</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Hierarchy<wbr>Path<span class="tsd-signature-symbol">(</span>usePublicGetter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#gethierarchypath">getHierarchyPath</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:173</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns full hierarchical path from the top level parent down to this node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> usePublicGetter: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>if <code>true</code> the method will use the public getter of its parent for its operations, the diffrence is when a node is open its public parent getter will return <code>null</code> (check Node.parent() getter/property)</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="getparent" class="tsd-anchor"></a>
+					<h3>get<wbr>Parent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Parent<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#getparent">getParent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:150</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the parent node, no matter if the calling node is open or not</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="gettopparent" class="tsd-anchor"></a>
+					<h3>get<wbr>Top<wbr>Parent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Top<wbr>Parent<span class="tsd-signature-symbol">(</span>fallback<span class="tsd-signature-symbol">?: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#gettopparent">getTopParent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:165</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return the first Node in the hirechy going upward starting from this node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> fallback: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> = null</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>This parameter can be ignored, it is used for internal functionality</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="open" class="tsd-anchor"></a>
+					<h3>open</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">open<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#open">open</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:84</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="removechild" class="tsd-anchor"></a>
+					<h3>remove<wbr>Child</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Child<span class="tsd-signature-symbol">(</span>child<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#removechild">removeChild</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:228</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes child node</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>child: <a href="_renderer_diagram_core_components_node_.node.html" class="tsd-signature-type">Node</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="removeedgeconnection" class="tsd-anchor"></a>
+					<h3>remove<wbr>Edge<wbr>Connection</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Edge<wbr>Connection<span class="tsd-signature-symbol">(</span>connection<span class="tsd-signature-symbol">: </span><a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a>, skipNodeSetting<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#removeedgeconnection">removeEdgeConnection</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:267</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unlink an edge connection and remove it from the node instance</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>connection: <a href="_renderer_diagram_core_components_edge_connection_.edgeconnection.html" class="tsd-signature-type">EdgeConnection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>EdgeConnection instance that need to be removed</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> skipNodeSetting: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="select" class="tsd-anchor"></a>
+					<h3>select</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">select<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#select">select</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:303</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Selects the node in Diagram&#39;s canvas</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setshowcontent" class="tsd-anchor"></a>
+					<h3>set<wbr>Show<wbr>Content</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Show<wbr>Content<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, simulated<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#setshowcontent">setShowContent</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/node.ts:104</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Shows or hides Node&#39;s content by passing a boolean value</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><code>true</code> to show the content, <code>false</code> to hide it</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> simulated: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>set to <code>true</code> to bypass Undo/Redo system</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="genid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> gen<wbr>Id</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">gen<wbr>Id<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_renderer_diagram_core_components_component_.component.html">Component</a>.<a href="_renderer_diagram_core_components_component_.component.html#genid">genId</a></p>
+								<ul>
+									<li>Defined in src/renderer/diagram-core/components/component.ts:11</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the current id pointer value, and increment it (so each time the return value is diffrent)</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+				<h2>Object literals</h2>
+				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-inherited">
+					<a name="props" class="tsd-anchor"></a>
+					<h3>props</h3>
+					<div class="tsd-signature tsd-kind-icon">props<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_renderer_diagram_core_components_node_.node.html">Node</a>.<a href="_renderer_diagram_core_components_node_.node.html#props">props</a></p>
+						<ul>
+							<li>Defined in src/renderer/diagram-core/components/node.ts:46</li>
+						</ul>
+					</aside>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="props.isopen-1" class="tsd-anchor"></a>
+						<h3>is<wbr>Open</h3>
+						<div class="tsd-signature tsd-kind-icon">is<wbr>Open<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> = false</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/components/node.ts:61</li>
+							</ul>
+						</aside>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="props.normalstate" class="tsd-anchor"></a>
+						<h3>normal<wbr>State</h3>
+						<div class="tsd-signature tsd-kind-icon">normal<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/components/node.ts:61</li>
+							</ul>
+						</aside>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+							</ul>
+						</div>
+					</section>
+					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
+						<a name="props.openstate" class="tsd-anchor"></a>
+						<h3>open<wbr>State</h3>
+						<div class="tsd-signature tsd-kind-icon">open<wbr>State<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+						<aside class="tsd-sources">
+							<ul>
+								<li>Defined in src/renderer/diagram-core/components/node.ts:61</li>
+							</ul>
+						</aside>
+						<div class="tsd-type-declaration">
+							<h4>Type declaration</h4>
+							<ul class="tsd-parameters">
+							</ul>
+						</div>
+					</section>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_renderer_my_diagram_basic_node_.html">&quot;renderer/my-<wbr>diagram/basic-<wbr>node&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
+						<a href="_renderer_my_diagram_basic_node_.basicnode.html" class="tsd-kind-icon">Basic<wbr>Node</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#children" class="tsd-kind-icon">children</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#classes" class="tsd-kind-icon">classes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#edges" class="tsd-kind-icon">edges</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#highlighted" class="tsd-kind-icon">highlighted</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#highlightedwall" class="tsd-kind-icon">highlighted<wbr>Wall</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#isbasic" class="tsd-kind-icon">is<wbr>Basic</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#iscircle" class="tsd-kind-icon">is<wbr>Circle</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#position" class="tsd-kind-icon">position</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#propsarchiver" class="tsd-kind-icon">props<wbr>Archiver</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#size" class="tsd-kind-icon">size</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#store" class="tsd-kind-icon">store</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#type" class="tsd-kind-icon">type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#vm" class="tsd-kind-icon">vm</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#idpointer" class="tsd-kind-icon">id<wbr>Pointer</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#isopen" class="tsd-kind-icon">is<wbr>Open</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#issubchart" class="tsd-kind-icon">is<wbr>Sub<wbr>Chart</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#parent" class="tsd-kind-icon">parent</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#showcontent" class="tsd-kind-icon">show<wbr>Content</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#beforedomelementdestroy" class="tsd-kind-icon">BeforeDOMElement<wbr>Destroy</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#domelementbuilt" class="tsd-kind-icon">DOMElement<wbr>Built</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#_setid" class="tsd-kind-icon">_set<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#addchild" class="tsd-kind-icon">add<wbr>Child</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#addedgeconnection" class="tsd-kind-icon">add<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#containsnode" class="tsd-kind-icon">contains<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#converttonormal" class="tsd-kind-icon">convert<wbr>ToNormal</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#converttosubchart" class="tsd-kind-icon">convert<wbr>ToSub<wbr>Chart</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#createedgeconnection" class="tsd-kind-icon">create<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#getabsoluteposition" class="tsd-kind-icon">get<wbr>Absolute<wbr>Position</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#getalldescendentsnodes" class="tsd-kind-icon">get<wbr>All<wbr>Descendents<wbr>Nodes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#gethierarchypath" class="tsd-kind-icon">get<wbr>Hierarchy<wbr>Path</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#getparent" class="tsd-kind-icon">get<wbr>Parent</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#gettopparent" class="tsd-kind-icon">get<wbr>Top<wbr>Parent</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#open" class="tsd-kind-icon">open</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#removechild" class="tsd-kind-icon">remove<wbr>Child</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#removeedgeconnection" class="tsd-kind-icon">remove<wbr>Edge<wbr>Connection</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#select" class="tsd-kind-icon">select</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#setshowcontent" class="tsd-kind-icon">set<wbr>Show<wbr>Content</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#genid" class="tsd-kind-icon">gen<wbr>Id</a>
+							</li>
+							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-inherited">
+								<a href="_renderer_my_diagram_basic_node_.basicnode.html#props" class="tsd-kind-icon">props</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

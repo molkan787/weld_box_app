@@ -2,7 +2,7 @@ import { Diagram, EdgeConnection, MultipartEdgeType, Node } from "../diagram-cor
 import { Component } from "../diagram-core/components/component";
 import { cloneArray } from "../diagram-core/utils";
 import { MyObject } from "../interfaces/MyObject";
-import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData } from "../interfaces/ObjectExportData";
+import { ObjectExportData, ThreadExportData, StateExportData, StatementBlockExportData, EdgeExportData, MessageExportData, EventExportData, JunctionExportData, VariableExportData } from "../interfaces/ObjectExportData";
 import { ObjectProps } from "../interfaces/ObjectProps";
 import { ObjectType } from "../interfaces/ObjectType";
 import { ProjectExportData } from "../interfaces/ProjectExportData";
@@ -13,20 +13,30 @@ import { MessageNode } from "../my-diagram/MessageNode";
 import { EdgeType, MyEdge } from "../my-diagram/my-edge";
 import { State } from "../my-diagram/state";
 import { StatementBlock } from "../my-diagram/statement-block";
+import { VariableNode } from "../my-diagram/VariableNode";
 import { DiagramProject } from "./diagram-project";
 
+/**
+ * This modules export the important data of the Diagram's components for use in code generation
+ */
 export class DataExporter{
 
+  /**
+   * Exports data of the specfied Diagram
+   * @param diagram Diagram instance to export data from it
+   * @param setting Projects settings
+   */
   public exportData(diagram: Diagram, setting: ProjectSetting): ProjectExportData{
     const objects = DiagramProject.getTopLevelObjects(diagram);
     const threadsData = objects.map(ob => this.getFullHierarchyObjectsData(ob));
-    const { name, architecture, build_priority, headers } = setting;
+    const { name, architecture, build_priority, headers, uuid } = setting;
     return {
       attributes: {
+        uuid: uuid || '',
         name,
         architecture,
         build_priority,
-        headers
+        headers,
       },
       body: <ThreadExportData[]>threadsData
     }
@@ -80,6 +90,10 @@ export class DataExporter{
     return rootData;
   }
 
+  /**
+   * Extracts data from specified Node's edges
+   * @param node
+   */
   private getNodeEdgesData(node: Node): EdgeExportData[]{
     const edges = node.edges
                       .filter(ec => (
@@ -108,6 +122,8 @@ export class DataExporter{
         return this.getMessageData(<MessageNode>object);
       case ObjectType.Event:
         return this.getEventData(<EventNode>object);
+      case ObjectType.Variable:
+        return this.getVariableData(<VariableNode>object);
       case ObjectType.Junction:
         return this.getJunctionData(<Junction>object);
       case ObjectType.Thread:
@@ -118,6 +134,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Thread` instance
+   * @param thread
+   */
   private getThreadData(thread: State): ThreadExportData{
     const { id, name, properties, statementBlocks } = thread;
     return {
@@ -134,8 +154,12 @@ export class DataExporter{
     }
   }
 
-  private getStateData(thread: State): StateExportData{
-    const { id, name, properties, statementBlocks } = thread;
+  /**
+   * Extracts data from a `State` instance
+   * @param state
+   */
+  private getStateData(state: State): StateExportData{
+    const { id, name, properties, statementBlocks } = state;
     return {
       attributes: {
         what: ObjectType.State,
@@ -151,6 +175,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Junction` instance
+   * @param junction
+   */
   private getJunctionData(junction: Junction): JunctionExportData{
     return {
       attributes: {
@@ -160,6 +188,11 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `StatementBlock` instance
+   * @param statementBlock
+   * @param priority StatementBlock's Priority (it will included in the result)
+   */
   private getStatementBlockData(statementBlock: StatementBlock, priority: number): StatementBlockExportData{
     const { id, name, statements, execution } = statementBlock;
     const exec = [];
@@ -180,6 +213,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Edge` instance
+   * @param edge
+   */
   private getEdgeData(edge: MyEdge): EdgeExportData{
     const { id, name, properties, source, target } = edge;
     const isStart = properties.type == EdgeType.START;
@@ -204,6 +241,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Message` instance
+   * @param message
+   */
   private getMessageData(message: MessageNode): MessageExportData{
     const { id, name, properties, body } = message;
     return {
@@ -220,6 +261,10 @@ export class DataExporter{
     }
   }
 
+  /**
+   * Extracts data from a `Event` instance
+   * @param event
+   */
   private getEventData(event: EventNode): EventExportData{
     const { id, name, properties } = event;
     return {
@@ -229,7 +274,28 @@ export class DataExporter{
         what: ObjectType.Event,
       },
       properties: {
-        clear: properties.clear,
+        discard: properties.discard,
+        mode: properties.mode,
+        type: properties.type
+      }
+    }
+  }
+
+
+  /**
+   * Extracts data from a `Variable` instance
+   * @param event
+   */
+  private getVariableData(variable: VariableNode): VariableExportData{
+    const { id, name, properties } = variable;
+    return {
+      attributes: {
+        id,
+        name,
+        what: ObjectType.Variable,
+      },
+      properties: {
+        scope: properties.scope,
         type: properties.type
       }
     }

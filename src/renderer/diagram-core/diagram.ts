@@ -262,6 +262,11 @@ export class Diagram{
     })
   }
 
+  /**
+   * Add an edge at the specified position and start its initial dragging process
+   * @param point
+   * @param edge
+   */
   public spawnEdgeAt(point: Position, edge: Edge){
     this.addEdge(edge);
     this.store.emit(EVENTS.DIAGRAM_START_EDGE_DRAGGING, {

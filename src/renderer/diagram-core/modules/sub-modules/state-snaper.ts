@@ -8,11 +8,19 @@ export class StateSnaper{
 
   // ----------------------- Node ------------------------
 
+  /**
+   * Snapshots Node and return function which upon call will restore that snapshot
+   * @param node Node to snap
+   */
   public snapNodeAsRestorer(node: Node): Function{
     const snap = this.snapNode(node);
     return () => this.restoreNode(snap);
   }
 
+  /**
+   * Snapshots Node's state (properties, ex: size, position...)
+   * @param node Node to snap
+   */
   public snapNode(node: Node): NodeSnap{
     const snap: NodeSnap = [];
     const nodes = node.showContent ? node.getAllDescendentsNodes(true) : [node];
@@ -30,6 +38,10 @@ export class StateSnaper{
     return snap;
   }
 
+  /**
+   * Restore Node's state (properties, ex: size, position...) from a previously taken snapshot
+   * @param snap Snapshot to restore from
+   */
   public restoreNode(snap: NodeSnap){
     for(let i = 0; i < snap.length; i++){
       const { node, parent, size, position } = snap[i];
@@ -47,12 +59,20 @@ export class StateSnaper{
 
   // ----------------------- Edge ------------------------
 
+  /**
+   * Snapshots Edge and return function which upon call will restore that snapshot
+   * @param edge Edge to snap
+   */
   public snapEdgeAsRestorer(edge: Edge): Function{
     const snap = this.snapEdge(edge);
     console.log('snap', snap);
     return () => this.restoreEdge(snap);
   }
 
+  /**
+   * Snapshots multiple Edges
+   * @param snaps
+   */
   public snapEdges(edges: Edge[]): EdgeSnap[]{
     const snaps: EdgeSnap[] = [];
     for(let i = 0; i < edges.length; i++){
@@ -64,6 +84,10 @@ export class StateSnaper{
   }
 
 
+  /**
+   * Restores multiple Edge Snapshots
+   * @param snaps
+   */
   public restoreEdges(snaps: EdgeSnap[]){
     for(let i = 0; i < snaps.length; i++){
       this.restoreEdge(snaps[i]);
@@ -71,6 +95,10 @@ export class StateSnaper{
     return snaps;
   }
 
+  /**
+   * Snapshots Edge's state (properties, ex: source, target...)
+   * @param edge Edge to snap
+   */
   public snapEdge(edge: Edge): EdgeSnap{
     const { source, target, isMultipart, multipartLocation, multipartType } = edge;
     return {
@@ -83,7 +111,10 @@ export class StateSnaper{
       multipartType
     }
   }
-
+  /**
+   * Restore Edge's state (properties, ex: source, target...) from a previously taken snapshot
+   * @param snap Snapshot to restore from
+   */
   public restoreEdge(snap: EdgeSnap){
     const { edge, shapePoints, source, target, isMultipart, multipartLocation, multipartType } = snap;
     edge.shapePoints = cloneArray(shapePoints);
@@ -100,6 +131,10 @@ export class StateSnaper{
 
   // ------------------ Edge Connection ------------------
 
+  /**
+   * Snapshots EdgeConnection's state (properties, ex: attachType, position...)
+   * @param ec EdgeConnection to snap
+   */
   public snapEdgeConnection(ec: EdgeConnection): EdgeConnectionSnap{
     const state: EdgeConnectionSnap = {
       edgeConnection: ec,
@@ -114,6 +149,10 @@ export class StateSnaper{
     return state;
   }
 
+  /**
+   * Restore EdgeConnection's state (properties, ex: attachType, position...) from a previously taken snapshot
+   * @param snap Snapshot to restore from
+   */
   public restoreEdgeConnection(state: EdgeConnectionSnap){
     const {
       edgeConnection: ec, position,

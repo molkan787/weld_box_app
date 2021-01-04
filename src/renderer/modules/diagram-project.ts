@@ -9,6 +9,9 @@ import { ObjectType } from "../interfaces/ObjectType";
 import { ObjectCopier } from "./object-copier";
 import { ObjectCrafter } from "./object-crafter";
 
+/**
+ * This module handles the process of importing and export Diagram and its components to serializable format
+ */
 export class DiagramProject{
 
   private objectCopier = new ObjectCopier();
@@ -17,7 +20,7 @@ export class DiagramProject{
 //#region export
 
   /**
-   * Exports Diagram's data to a portable json object
+   * Exports Diagram's data to a serializable json object
    * @param diagram `Diagram` instance to export from
    */
   public export(diagram: Diagram): DiagramExportData{
@@ -32,6 +35,10 @@ export class DiagramProject{
   }
 
 
+  /**
+   * Returns top level Node of a Diagram
+   * @param diagram
+   */
   public static getTopLevelObjects(diagram: Diagram){
     const result: MyObject[] = [];
     const objects = <MyObject[]><Component[]>diagram.store.nodes;
@@ -45,6 +52,10 @@ export class DiagramProject{
     return result;
   }
 
+  /**
+   * Returns zoom transforms for each of the Subchart Node
+   * @param diagram
+   */
   private getSubChartsZoomTransforms(diagram: Diagram){
     const subChart = <SubChart>diagram.getModule('subChart');
     const map = subChart.zoomTransforms;
@@ -60,6 +71,11 @@ export class DiagramProject{
 
 //#region import
 
+  /**
+   * Import a previously export data (components) into the specified diagram
+   * @param diagram
+   * @param data
+   */
   public import(diagram: Diagram, data: DiagramExportData){
     const { objects, currentNodeRef, zoomTransforms, idPointer } = data;
     const len = objects.length;
@@ -87,6 +103,11 @@ export class DiagramProject{
     }
   }
 
+  /**
+   * Adds the created components to the Diagram
+   * @param diagram
+   * @param objectCraftResult The result of object crafting returned by the ObjectCrafter module
+   */
   private putCraftResult(diagram: Diagram, objectCraftResult: ObjectCraftResult){
     const { nodes, edges } = objectCraftResult;
     diagram.addNode(nodes[0]);
@@ -95,18 +116,14 @@ export class DiagramProject{
     for(let i = 0; i < eLen; i++){
       const edge = edges[i];
       diagram.addEdge(edge);
-      // diagram.store.emit(EVENTS.EDGE_CONNECTIONS_UPDATED, { edge });
     }
-
-    // const store = diagram.store;
-    // for(let i = nodes.length - 1; i >= 0; i--){
-    //   const node = nodes[i];
-    //   if(!node.showContent){
-    //     store.emit(EVENTS.NODE_CONTENT_GOT_HIDDEN, { node, skipMutation: true });
-    //   }
-    // }
   }
 
+  /**
+   * Sets zoom transform for each sub-chart
+   * @param diagram
+   * @param items
+   */
   private putZoomTransforms(diagram: Diagram, items: ZoomTransformData[]){
     const subChart = <SubChart>diagram.getModule('subChart');
     const map = subChart.zoomTransforms;

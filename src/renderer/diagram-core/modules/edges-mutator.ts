@@ -20,6 +20,10 @@ export class EdgesMutator extends DiagramModule{
     store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, e => this.onNodeConvertedToNormal(e));
   }
 
+  /**
+   * Handles pre-convertion event to check whether the convertion is possible or not
+   * @param event
+   */
   private onNodeConvertingToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
     if(node.isOpen || event.skipMutation) return;
@@ -35,6 +39,10 @@ export class EdgesMutator extends DiagramModule{
     }
   }
 
+  /**
+   * Splits edges that pass thru the node that was converted to a sub-chart
+   * @param event
+   */
   private onNodeConvertedToSubChart(event: DiagramEvent){
     const node = <Node>event.node;
     if(node.isOpen || event.skipMutation) return;
@@ -46,6 +54,10 @@ export class EdgesMutator extends DiagramModule{
     }
   }
 
+  /**
+   * Merges multipart (splitted) edges that pass thru sub-chart node that was converted to normal node
+   * @param event
+   */
   private onNodeConvertedToNormal(event: DiagramEvent){
     const node = <Node>event.node;
     if(node.props.isOpen || event.skipMutation) return;
@@ -59,6 +71,10 @@ export class EdgesMutator extends DiagramModule{
     this.disableActionGrouping();
   }
 
+  /**
+   * Emits mutation error (the error that blocked the convertion of normal node to a sub-chart node)
+   * @param sourceEvent
+   */
   private nodeToSubChartError(sourceEvent: DiagramEvent){
     sourceEvent.prevented = true;
     this.store.emit(EVENTS.MUTATION_ERROR, {
@@ -71,6 +87,10 @@ export class EdgesMutator extends DiagramModule{
     })
   }
 
+  /**
+   * Filters out edges that are multipart but does not have any continuation (the second part of the edge)
+   * @param edgeConnections The Edges to filter out
+   */
   private getMultipartSigleEdges(edgeConnections: EdgeConnection[]){
     const edges: Edge[] = [];
     const len = edgeConnections.length;
@@ -87,6 +107,11 @@ export class EdgesMutator extends DiagramModule{
     return edges;
   }
 
+  /**
+   * Replace a single reglar edge by two multipart edges and link them
+   * @param nodeInContext The Sub-chart node that thus edges will connect thru
+   * @param foreignEC The EdgeConnection instance that is outside of the nodeInContext or its childs
+   */
   private splitEdge(nodeInContext: Node, foreignEC: EdgeConnection){
     const EF = this.store.edgeFactory;
     const edge = <Edge>foreignEC.edge;
@@ -120,6 +145,10 @@ export class EdgesMutator extends DiagramModule{
     this.store.emit(EVENTS.EDGE_CREATED, { edge: innerEdge });
   }
 
+  /**
+   * Replace two multipart edges by one regular edge
+   * @param localEC
+   */
   private mergeBridgedEdge(localEC: EdgeConnection){
     const localEdge = <Edge>localEC.edge;
     const localSecondEC = this.getSecondSideEdgeConnection(localEC);
@@ -138,6 +167,11 @@ export class EdgesMutator extends DiagramModule{
     console.log('removed localEdge', localEdge)
   }
 
+  /**
+   * Returns all edge connections that goes or come from outside of the specifed node,
+   * in other works, the edges its source or target aren't connect to that node or to one of its childs
+   * @param node
+   */
   private getForeignEdges(node: Node){
     const foreignEdges: EdgeConnection[] = [];
     const nodes = node.getAllDescendentsNodes();
@@ -157,6 +191,10 @@ export class EdgesMutator extends DiagramModule{
     return foreignEdges;
   }
 
+  /**
+   * Returns the seconds edge end, (ex: of the passed edge connection is the target of the edge, it will returns the source of the edge)
+   * @param ec Edge Connection
+   */
   private getSecondSideEdgeConnection(ec: EdgeConnection): EdgeConnection | null{
     const edge = ec.edge;
     if(!edge) return null;

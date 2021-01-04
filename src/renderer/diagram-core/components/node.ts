@@ -17,33 +17,46 @@ export class Node extends Component{
 
   public store?: DiagramStore;
 
+  /** Parent node */
   private _parent: Node | null = null;
+  /** Array of childs nodes */
   readonly children: Node[] = [];
   /** Edge Connections that are attached to this node */
   readonly edges: EdgeConnection[] = [];
+  /** Indicates whether this node is basic. A basic node does not have header and body, instead is a simple square */
   readonly isBasic: boolean = false;
+  /** Indicates whether this node is circular. A circular node renders as a simple circle */
   readonly isCircle: boolean = false;
 
   private _showContent: boolean = true;
 
   private _isSubChart: boolean = false;
 
+  /** Indicates whether the node is highlighted or not */
   public highlighted: boolean = false;
+  /** Indicates the highlighted wall of this node */
   public highlightedWall: Side | null = null;
+
+  /** List of CSS/HTML classes that are appiled to the Node's DOM element */
   public readonly classes: string[];
 
+  /** Name of the node */
   public name: string;
 
   public props: {
+    /** Indicates whether the node is open or not */
     isOpen: boolean,
+    /** Holds node's state when it is open */
     openState: {
       size?: Size,
       position?: Position
     },
+    /** Holds node's state when it is not open */
     normalState: {
       size?: Size,
       position?: Position
     },
+    /** Cached node's absolute position */
     absolutePosition?: Position
   } = { isOpen: false, openState: {}, normalState: {} };
 
@@ -72,6 +85,9 @@ export class Node extends Component{
     this.store?.emit(EVENTS.DIAGRAM_OPEN_NODE, { node: this });
   }
 
+  /**
+   * Indicates whether node's content (body) is visible or not
+   */
   public get showContent(){
     return this._showContent;
   }
@@ -196,6 +212,10 @@ export class Node extends Component{
     return false;
   }
 
+  /**
+   * Adds child node, of the child node is newly created, in addition to calling this method, Diagram.addNode(child) should be also called
+   * @param child
+   */
   addChild(child: Node){
     const exist = this.children.includes(child);
     if(!exist){
@@ -204,6 +224,7 @@ export class Node extends Component{
     child._parent = this;
   }
 
+  /** Removes child node */
   removeChild(child: Node){
     const index = this.children.indexOf(child);
     if(index >= 0){
@@ -214,7 +235,7 @@ export class Node extends Component{
 
   /**
    * Create a new `EdgeConnection` instance and link it to the current `Node` instance
-   * @param wall
+   * @param wall Wall of node to which attach the created EdgeConnection
    */
   createEdgeConnection(wall?: Side){
     const connection = typeof wall === 'undefined'
@@ -225,6 +246,12 @@ export class Node extends Component{
     return connection;
   }
 
+  /**
+   * Add an exiting edge connection to this node,
+   * calling this method isn't enough to make the edgeConenction fully connected to this node, you to also specify the correct attach type on the EdgeConnection itself
+   * @param connection The EdgeConnection instance to be added
+   * @param skipNodeSetting if `true` this node won't be assigned to the EdgeConnection as the attached node
+   */
   addEdgeConnection(connection: EdgeConnection, skipNodeSetting?: boolean){
     const index = this.edges.indexOf(connection);
     if(index == -1){
@@ -270,6 +297,9 @@ export class Node extends Component{
     return result;
   }
 
+  /**
+   * Selects the node in Diagram's canvas
+   */
   public select(){
     this.store?.emit(EVENTS.NODE_SELECTED, { node: this });
   }
@@ -290,6 +320,9 @@ export class Node extends Component{
 
 }
 
+/**
+ * Node constructor options
+ */
 export interface NodeOptions{
   name?: string;
   showContent?: boolean;

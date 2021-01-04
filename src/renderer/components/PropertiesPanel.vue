@@ -5,6 +5,7 @@
         <StateForm v-if="what == 'state' || what == 'thread'" :object="object" />
         <MessageForm v-else-if="what == 'message'" :object="object" />
         <EventForm v-else-if="what == 'event'" :object="object" />
+        <VariableForm v-else-if="what == 'var'" :object="object" />
         <EdgeForm v-else-if="what == 'edge'" :object="object" />
         <BaseForm v-else :object="object" :showNameField="false" />
       </template>
@@ -24,6 +25,7 @@ import StateForm from './properties-forms/StateForm';
 import MessageForm from './properties-forms/MessageForm';
 import EventForm from './properties-forms/EventForm';
 import EdgeForm from './properties-forms/EdgeForm';
+import VariableForm from './properties-forms/VariableForm';
 import BaseForm from './properties-forms/base';
 import { ObjectType } from '../interfaces/ObjectType';
 import { EdgeType } from '../my-diagram/my-edge';
@@ -35,7 +37,8 @@ export default {
     MessageForm,
     EventForm,
     EdgeForm,
-    BaseForm
+    BaseForm,
+    VariableForm
   },
   props: {
     object: {

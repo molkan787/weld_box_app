@@ -5,6 +5,9 @@ import { DiagramStore, MyRBush } from "../diagram-store";
 import { DiagramEvent } from '../interfaces/DiagramEvent';
 import { cloneObject } from "../utils";
 
+/**
+ * Handles the process of opening a node as sub-chart (displaying a node and its childs on the canvas)
+ */
 export class SubChart{
 
   public readonly zoomTransforms: Map<number, ZoomTransform> = new Map();
@@ -28,6 +31,10 @@ export class SubChart{
     store.on(EVENTS.NODE_CONVERTED_TO_NORMAL, e => this.onNodeConverted(e));
   }
 
+  /**
+   * Handles double click event on a node to open it
+   * @param e
+   */
   onNodeDoubleClick(e: DiagramEvent): void {
     const node = <Node>e.node;
 
@@ -37,12 +44,19 @@ export class SubChart{
     }
   }
 
+  /**
+   * Handles node convertion event (convertion to sub-chart or to normal node) to rebuild the spatial indecies/map
+   * @param e
+   */
   onNodeConverted(e: DiagramEvent){
     setTimeout(() => {
       this.rebuildSpatialMap(this.store.currentlyOpenNode)
     }, 10);
   }
 
+  /**
+   * Caches the zoom level for each open sub-chart, so it can restored when a node get reopened
+   */
   private onZoomChanged(): void {
     const key = this.currentNode?.id || 0;
     const zoom = this.store.zoomTransform;
@@ -51,6 +65,10 @@ export class SubChart{
     }
   }
 
+  /**
+   * Opens a specified node a the sub-chart and updates the breadcrumd / path to the current sub-chart node
+   * @param node
+   */
   public jumpTo(node: Node | null){
     if(node === this.currentNode) return;
     console.log('jumpTo', node)
@@ -78,6 +96,10 @@ export class SubChart{
     this.emitChangeEvent();
   }
 
+  /**
+   * Opens a specified node a the sub-chart
+   * @param node
+   */
   public openNode(node: Node){
 
     this.store.forceSynchronousUpdates = true;
@@ -96,6 +118,9 @@ export class SubChart{
     this.store.forceSynchronousUpdates = false;
   }
 
+  /**
+   * Close the current sub-chart, and show all top level Nodes
+   */
   public openRootChart(){
     const topLevelNodes = this.store.getTopLevelNodes();
     console.log('topLevelNodes', topLevelNodes)
@@ -105,6 +130,9 @@ export class SubChart{
     setTimeout(() => this.setSpatialMapNodes(topLevelNodes), 10);
   }
 
+  /**
+   * Close the currently open sub-chart
+   */
   public closeCurrent(){
     if(!this.currentNode) return;
     const node = this.currentNode;
@@ -114,6 +142,11 @@ export class SubChart{
     this.store.emit(EVENTS.NODE_GOT_CLOSED, { node: node });
   }
 
+  /**
+   * Switch between nodes state (a node have two state, open state and normal state)
+   * @param node Node to switch its state
+   * @param open if `true` the open state will be applied the node, otherwise the normal state will be applied
+   */
   private switchNodeState(node: Node, open: boolean){
     const { isOpen, openState, normalState } = node.props;
     const currentState = isOpen ? openState : normalState;
@@ -125,6 +158,10 @@ export class SubChart{
     node.props.isOpen = open;
   }
 
+  /**
+   * Rebuilds the spacial map/indecies for the specified node and all its childs and sub-childs
+   * @param rootNode The open node to add to the map
+   */
   private rebuildSpatialMap(rootNode: Node | null){
     console.time('rebuildSpatialMap');
     const nsm = this.store.nodesSpatialMap;
@@ -136,12 +173,19 @@ export class SubChart{
     console.timeEnd('rebuildSpatialMap');
   }
 
+  /**
+   * Removes all current nodes in the index/map and adds the specified nodes
+   * @param nodes Nodes to add
+   */
   private setSpatialMapNodes(nodes: Node[]){
     const nsm = this.store.nodesSpatialMap;
     nsm.clear();
     nsm.load(nodes);
   }
 
+  /**
+   * Emits diagram path changed event (means that the path to the currenlty open node changed)
+   */
   private emitChangeEvent(){
     const items = this.stack.map(si => si.node);
     items.push(this.currentNode);

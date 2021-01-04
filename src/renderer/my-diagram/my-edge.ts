@@ -11,6 +11,9 @@ export class MyEdge extends Edge implements ObjectProps{
   // Internal props
   private vm?: Vue;
   public readonly propsArchiver: PropsChangeArchiver;
+  /**
+   * Indicates whether the edge condition should be visible or not, used the fade in and out the condition when the user hover it with mouse's cursor
+   */
   // @ts-ignore
   private showCondition: boolean = false;
 

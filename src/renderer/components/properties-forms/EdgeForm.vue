@@ -1,5 +1,5 @@
 <template>
-  <BaseForm :object="edge" :showNameField="!isStart" :objectType="isStart ? 'Start Edge' : 'Edge'">
+  <BaseForm :object="edge" :showNameField="!isStart" :objectType="isStart ? 'Start Transition' : 'Transition'">
 
     <template v-if="!isStart">
       <FormField label="Priority">
@@ -52,6 +52,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Submits the new priority from the input box to the Edge's properties
+     */
     priorityInput(e){
       const prevPriority = this.edge.properties.priority;
       const value = e.target.value;
