@@ -14,6 +14,7 @@ export class State extends Node implements ObjectProps{
   // Internal props
   private vm?: Vue;
   public readonly propsArchiver: PropsChangeArchiver;
+  public errors: string[] | null = null;
 
   // Business props
   public what: ObjectType = ObjectType.State;
@@ -27,11 +28,12 @@ export class State extends Node implements ObjectProps{
   private _isThread: boolean = false;
 
   public codeblocksExpanded: boolean = true;
+  public codeblocksWidth: number = 180;
 
   constructor(
     position: Position = { x: 0, y: 0 },
     size: Size = { width: 200, height: 100, radius: 0 },
-    options: NodeOptions = {}
+    options: NodeOptions = {  }
   ){
     super(position, size, options);
     this.name = 'State' + this.id;

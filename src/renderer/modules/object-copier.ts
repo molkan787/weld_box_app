@@ -84,7 +84,7 @@ export class ObjectCopier{
    * @param edgesBucket Edges bucket used to store edges that are connected to this State
    */
   public copyState(state: State, edgesBucket: EdgesBucket): StateCloneData{
-    const { id, name, properties, statementBlocks, edges, isSubChart, codeblocksExpanded } = state;
+    const { id, name, properties, statementBlocks, edges, isSubChart, codeblocksExpanded, codeblocksWidth } = state;
 
     const parent = state.getParent();
     const { props, position, size } = this.getStatePropsAndBBox(state);
@@ -100,7 +100,8 @@ export class ObjectCopier{
       size: size,
       showContent: _showContent,
       isSubChart: isSubChart,
-      codeblocksExpanded: codeblocksExpanded
+      codeblocksExpanded: codeblocksExpanded,
+      codeblocksWidth
     }
     edgesBucket.add(edges.map(ec => <MyEdge>ec.edge))
     return data;
