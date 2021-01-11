@@ -84,13 +84,14 @@ export class ObjectCrafter{
    * @param what A State and Thread share the same class, so a component type should be specified
    */
   public craftState(data: StateCloneData, what: ObjectType): State{
-    const { props, name, properties, statementBlocks, position, size, showContent, isSubChart, codeblocksExpanded } = data;
+    const { props, name, properties, statementBlocks, position, size, showContent, isSubChart, codeblocksExpanded, codeblocksWidth } = data;
     const state = new State(cloneObject(position), cloneObject(size));
     state.props = cloneNestedObject(props);
     state.properties = cloneObject(properties);
     state.properties.execution = state.properties.execution || 0;
     state.statementBlocks = cloneArray(statementBlocks);
     state.codeblocksExpanded = typeof codeblocksExpanded == 'boolean' ? codeblocksExpanded : true;
+    state.codeblocksWidth = codeblocksWidth || 180;
     if(isSubChart){
       state.convertToSubChart(true);
     }

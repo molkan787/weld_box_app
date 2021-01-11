@@ -26,7 +26,7 @@
                 <CloseIcon :size="9" />
               </button>
             </div>
-            <textarea v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
+            <textarea v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" placeholder="Action#1;" ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
@@ -63,12 +63,14 @@ export default {
     startX: 0,
     startWidth: 0,
     resizing: false,
-    rootWidth: 180,
     USE_NATIVE_CLIPBOARD: USE_NATIVE_CLIPBOARD
   }),
   computed: {
     statementBlocks(){
       return this.state.statementBlocks;
+    },
+    rootWidth(){
+      return this.state.codeblocksWidth;
     }
   },
   watch: {
@@ -99,6 +101,20 @@ export default {
         this.resizing = false;
         window.removeEventListener('mousemove', mousemoveHandler);
         window.removeEventListener('mouseup', mouseupHandler);
+        if(this.startWidth !== this.rootWidth){
+          const oldWidth = this.startWidth;
+          const newWidth = this.rootWidth;
+          this.state.store.actionsArchiver.push({
+            undo: [{
+              events: [],
+              do: () => this.state.codeblocksWidth = oldWidth
+            }],
+            redo: [{
+              events: [],
+              do: () => this.state.codeblocksWidth = newWidth
+            }]
+          })
+        }
       };
       window.addEventListener('mousemove', mousemoveHandler);
       window.addEventListener('mouseup', mouseupHandler);
@@ -108,7 +124,7 @@ export default {
         const deltaX = e.clientX - this.startX;
         let width = this.startWidth + deltaX;
         if(width < 180) width = 180;
-        this.rootWidth = width;
+        this.state.codeblocksWidth = width;
         this.prepareTextareas();
       }
     },
@@ -128,7 +144,7 @@ export default {
       const block = {
         id: Component.genId(),
         name: `Action Block ${arr.length + 1}`,
-        statements: 'Action#1;',
+        statements: '',
         execution: {
           en: false,
           du: false,
@@ -230,7 +246,7 @@ export default {
 
         textarea{
           width: 96%;
-          height: 50px;
+          height: 34px;
           background: none;
           border: none;
           color: white;
