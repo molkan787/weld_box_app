@@ -35,6 +35,7 @@ export interface StateCloneData extends NodeCloneData{
   showContent: boolean;
   isSubChart: boolean;
   codeblocksExpanded: boolean;
+  codeblocksWidth: number;
 }
 
 export interface EventCloneData extends NodeCloneData{}
