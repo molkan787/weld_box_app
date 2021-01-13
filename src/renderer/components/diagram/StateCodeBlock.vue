@@ -26,7 +26,7 @@
                 <CloseIcon :size="9" />
               </button>
             </div>
-            <textarea-autosize v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" placeholder="Action#1;" ref="itemsTextAreas" v-model="sb.statements" :min-height="36" cols="30" rows="1"></textarea-autosize>
+            <textarea v-bind="{[USE_NATIVE_CLIPBOARD]: '1'}" placeholder="Action#1;" ref="itemsTextAreas" v-model="sb.statements" cols="30" rows="10"></textarea>
           </div>
         </div>
       </div>
@@ -73,6 +73,19 @@ export default {
       return this.state.codeblocksWidth;
     }
   },
+  watch: {
+    statementBlocks: {
+      deep: false,
+      handler(){
+        if(this.expanded){
+          this.$nextTick(() => this.prepareTextareas());
+        }
+      }
+    },
+    rootWidth(){
+      return this.state.codeblocksWidth;
+    }
+  },
   methods: {
     /**
      * Starts the panel resizing process
@@ -110,6 +123,15 @@ export default {
         let width = this.startWidth + deltaX;
         if(width < 180) width = 180;
         this.state.codeblocksWidth = width;
+        this.prepareTextareas();
+      }
+    },
+    prepareTextareas(){
+      const els = this.$refs.itemsTextAreas;
+      if(els){
+        for(let i = 0; i < els.length; i++){
+          textareaFitContentHeight(els[i]);
+        }
       }
     },
     removeBlock(index){
