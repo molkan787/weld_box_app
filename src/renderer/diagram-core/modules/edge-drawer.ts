@@ -280,7 +280,15 @@ export class EdgeDrawer extends DiagramModule{
       const xOutside = (left - x) > 0 || (x - right) > 0;
       const yOutside = (top - y) > 0 || (y - bottom) > 0;
       if(xOutside || yOutside){
-        this.convertEdgeToInnerMultipart(chartNode, edge);
+        console.log('wow');
+        if(edge.isStart){
+          // Undo the action if a start edge target was release outside of the Node boundries
+          setTimeout(() => {
+            this.store.actionsArchiver.undo(true);
+          }, 1); // delay it because the action will be added this function ( `postDraw()` ) returns
+        }else{
+          this.convertEdgeToInnerMultipart(chartNode, edge);
+        }
       }
     }
   }
